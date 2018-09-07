@@ -8,30 +8,18 @@ public class Solution5 {
     Stack<Integer> stack1 = new Stack<Integer>();
     Stack<Integer> stack2 = new Stack<Integer>();
 
-    public static void main(String... args){
-        Solution5 so = new Solution5();
-        int[] arr = {11,19,2018,9,4};
-
-        for (int i = 0; i < arr.length; i++) {
-            so.stack1.push(arr[i]);
-        }
-
-        System.out.print("Arr: ");
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(so.stack1.pop()+" ");
-        }
-        System.out.println("\\");
-
-
-    }
-
     public void push(int node) {
-
+        stack1.push(node);
     }
 
     public int pop() {
-        return 1;
+        int node;
+        if (stack2.empty()) {
+            while (!stack1.empty()) {
+                stack2.push(stack1.pop());
+            }
+        }
+        node = stack2.pop();
+        return node;
     }
-
-
 }

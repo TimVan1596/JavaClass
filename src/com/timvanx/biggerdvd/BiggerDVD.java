@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author TimVan
  * @date 2018年9月5日08:41:12
  */
-public class Main {
+public class BiggerDVD {
 
     /**
      * 系统主界面函数
@@ -76,10 +76,13 @@ public class Main {
 
         System.out.println("********** 欢迎来到BiggerDVD 管理系统 **************");
         System.out.println("**版本号 " + Constants.VERSION);
-        while (new Main().systemUI()) {
+        while (new BiggerDVD().systemUI()) {
 
         }
         System.out.println("** 已经安全退出系统，您可关闭此窗口 **");
+
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
 
     }
 }

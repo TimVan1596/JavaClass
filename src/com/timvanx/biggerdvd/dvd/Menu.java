@@ -1,6 +1,6 @@
 package com.timvanx.biggerdvd.dvd;
 
-import com.timvan.util.Constants;
+import com.timvanx.biggerdvd.util.Constants;
 
 import java.util.Scanner;
 
