@@ -1,4 +1,4 @@
-package com.company.algorithm;
+package com.timvanx.algorithm;
 /**
  * 二叉树示例
  * @author TimVan

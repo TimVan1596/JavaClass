@@ -1,4 +1,4 @@
-package com.company.nowcoder;
+package com.timvanx.nowcoder;
 
 
 //例如输入前序遍历序列{1,2,4,7,3,5,6,8}和

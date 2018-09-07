@@ -1,4 +1,4 @@
-package com.company.java0904;
+package com.timvanx.java0904;
 
 import java.util.Random;
 import java.util.Scanner;
