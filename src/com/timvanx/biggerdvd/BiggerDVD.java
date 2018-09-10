@@ -13,6 +13,65 @@ import java.util.Scanner;
  * @date 2018年9月5日08:41:12
  */
 public class BiggerDVD {
+    /**
+     * MAX_LOGIN_TIMES = 登录最大尝试次数
+     */
+    private static final int MAX_LOGIN_TIMES = 3;
+    private  Account account;
+
+    public BiggerDVD() {
+        account = new Account();
+    }
+
+
+    /**
+     * 登录选项
+     */
+    private boolean loginOption(){
+        int loginCNT = 0;
+        Scanner scanner = new Scanner(System.in);
+        boolean isProgramContinue = true;
+
+
+        for (int i = 0; i < MAX_LOGIN_TIMES; i++) {
+            System.out.println("请输入用户名");
+            String userName = scanner.nextLine();
+            System.out.println("请输入密码");
+            String userPassword = scanner.nextLine();
+            if (Account.login(userName, userPassword)) {
+                System.out.println("即将进入系统！");
+                Menu menu = new Menu();
+                menu.init(userName);
+                break;
+            }
+            loginCNT++;
+        }
+        if (loginCNT == MAX_LOGIN_TIMES) {
+            System.out.println("尝试次数过多，终止程序！");
+            isProgramContinue = false;
+        }
+        return isProgramContinue;
+    }
+
+    /**
+     * 注册选项
+     */
+    private boolean registerOption(){
+        Scanner scanner = new Scanner(System.in);
+        boolean isProgramContinue = true;
+
+        System.out.println("请输入新的用户名");
+        String userName = scanner.nextLine();
+        System.out.println("请输入密码");
+        String userPassword = scanner.nextLine();
+        if (Account.register(userName, userPassword)) {
+            System.out.println("注册成功！");
+        }else {
+            System.out.println("登录失败！请检查用户名或密码是否输入错误");
+        }
+
+        return isProgramContinue;
+    }
 
     /**
      * 系统主界面函数
@@ -27,37 +86,18 @@ public class BiggerDVD {
         for (SystemUIOption option : SystemUIOption.values()) {
             System.out.println(option.getKey() + "、" + option.getValue());
         }
-        Scanner scanner = new Scanner(System.in);
         System.out.print("请输入对应数字：");
 
         inputNum = Constants.scanfInt();
 
-        //记录用户类
-        Account account = new Account();
-        //最大尝试次数
-        final int MAX_LOGIN_TIMES = 3;
-
         switch (inputNum) {
             //登录
             case 1:
-                int loginCNT = 0;
-                for (int i = 0; i < MAX_LOGIN_TIMES; i++) {
-                    System.out.println("请输入用户名");
-                    String userName = scanner.nextLine();
-                    System.out.println("请输入密码");
-                    String userPassword = scanner.nextLine();
-                    if (account.login(userName, userPassword)) {
-                        System.out.println("即将进入系统！");
-                        Menu menu = new Menu();
-                        menu.init(userName);
-                        break;
-                    }
-                    loginCNT++;
-                }
-                if (loginCNT == MAX_LOGIN_TIMES) {
-                    System.out.println("尝试次数过多，终止程序！");
-                    isProgramContinue = false;
-                }
+                isProgramContinue = loginOption();
+                break;
+            //注册
+            case 2:
+                isProgramContinue = registerOption();
                 break;
             //退出
             case 0:
@@ -80,9 +120,6 @@ public class BiggerDVD {
 
         }
         System.out.println("** 已经安全退出系统，您可关闭此窗口 **");
-
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
     }
 }
 
