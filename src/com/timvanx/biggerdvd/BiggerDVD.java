@@ -83,7 +83,6 @@ public class BiggerDVD {
 
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
-
     }
 }
 
@@ -91,7 +90,7 @@ public class BiggerDVD {
  * 界面选项中数字-内容
  * */
 enum SystemUIOption {
-    Login(1, "登录"), Exit(0, "退出");
+    Login(1, "登录"), Exit(0, "退出程序");
     private final int key;
     private final String value;
 

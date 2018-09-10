@@ -2,6 +2,7 @@ package com.timvanx.biggerdvd.dvd;
 
 import com.timvanx.biggerdvd.util.Constants;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -14,18 +15,17 @@ public class Menu {
     /**
      * DVDArr = DVD集合信息
      */
-    private DVD[] DVDArr;
+    private ArrayList<DVD> DVDArr;
     private String userName = "用户";
 
     public Menu() {
-        DVDArr = new DVD[4];
+        DVDArr = new ArrayList<DVD>();
         DVD.setCnt(1000);
-
         //初始化DVD数组
-        DVDArr[0] = new DVD("《大校的女儿》");
-        DVDArr[1] = new DVD("《恰同学少年》");
-        DVDArr[2] = new DVD("《士兵突击》");
-        DVDArr[3] = new DVD("《士兵突击》");
+        DVDArr.add(new DVD("《大校的女儿》"));
+        DVDArr.add(new DVD("《恰同学少年》"));
+        DVDArr.add(new DVD("《士兵突击》"));
+        DVDArr.add(new DVD("《士兵突击》"));
 
     }
 
@@ -63,6 +63,18 @@ public class Menu {
             case 4:
                 returnDVD();
                 break;
+            //添加DVD
+            case 5:
+                add();
+                break;
+            //修改DVD
+            case 6:
+                update();
+                break;
+            //删除DVD
+            case 7:
+                delete();
+                break;
             //退出
             case 0:
                 isProgramContinue = false;
@@ -83,8 +95,8 @@ public class Menu {
         System.out.println("编号\t\t名称\t\t\t\t状态");
         System.out.println("--\t\t--\t\t\t\t--");
 
-        for (DVD dvd : DVDArr) {
-            System.out.println(dvd.toString());
+        for (Object dvd : DVDArr) {
+            System.out.println(((DVD) dvd).toString());
         }
 
         System.out.println("请输入数字0返回：");
@@ -142,8 +154,8 @@ public class Menu {
 
         //是否找到的标识符
         boolean isExist = false;
-        for (DVD dvd : DVDArr) {
-            if (dvd.getId() == inputNum){
+        for (Object dvd : DVDArr) {
+            if (((DVD) dvd).getId() == inputNum) {
                 System.out.println("编号\t\t名称\t\t\t\t状态");
                 System.out.println("--\t\t--\t\t\t\t--");
                 System.out.println(dvd.toString());
@@ -160,14 +172,15 @@ public class Menu {
      * 按名称查询-查看DVD
      */
     private void readByName(){
-        System.out.println("请输入DVD的精确名称：");
+        System.out.println("请输入DVD的精确名称（无书名号）：");
         Scanner scanner = new Scanner(System.in);
-        String inputString = scanner.nextLine();
+        String inputScanString = scanner.nextLine();
+        String inputString = "《" + inputScanString + "》";
 
         //是否找到的标识符
         boolean isExist = false;
-        for (DVD dvd : DVDArr) {
-            if (dvd.getName().equals(inputString)){
+        for (Object dvd : DVDArr) {
+            if (((DVD) dvd).getName().equals(inputString)) {
                 System.out.println("编号\t\t名称\t\t\t\t状态");
                 System.out.println("--\t\t--\t\t\t\t--");
                 System.out.println(dvd.toString());
@@ -198,8 +211,8 @@ public class Menu {
             //保存用户想借的DVD名称
             String dvdName = "null";
 
-            for (int i = 0; i < DVDArr.length; i++) {
-                DVD dvd = DVDArr[i];
+            for (int i = 0; i < DVDArr.size(); i++) {
+                DVD dvd = (DVD) DVDArr.get(i);
 
                 //是否存在
                 if (dvd.getId() == inputNum){
@@ -244,9 +257,10 @@ public class Menu {
         while (isProgramContinue){
             System.out.println("请输入要归还的DVD编号：");
             int inputNum = Constants.scanfInt();
-            System.out.println("请输入要归还的DVD精确名称：");
+            System.out.println("请输入要归还的DVD精确名称（无书名号）：");
             Scanner scanner = new Scanner(System.in);
-            String inputString = scanner.nextLine();
+            String inputScanString = scanner.nextLine();
+            String inputString = "《" + inputScanString + "》";
 
             //是否找到的标识符
             boolean isExist = false;
@@ -255,8 +269,8 @@ public class Menu {
             //保存用户想借的DVD名称
             String dvdName = "null";
 
-            for (int i = 0; i < DVDArr.length; i++) {
-                DVD dvd = DVDArr[i];
+            for (int i = 0; i < DVDArr.size(); i++) {
+                DVD dvd = (DVD) DVDArr.get(i);
                 //是否存在
                 if (dvd.getId() == inputNum &&
                         dvd.getName().equals(inputString)){
@@ -294,15 +308,163 @@ public class Menu {
     }
 
     /**
+     * 添加DVD
+     */
+    private void add() {
+        System.out.print("BiggerDVD系统" + Constants.VERSION + "---->");
+        System.out.println("添加DVD信息");
+        //退出借出循环的标识
+        boolean isProgramContinue = true;
+        while (isProgramContinue) {
+
+            System.out.println("请输入要添加的DVD名称（无书名号）：");
+            Scanner scanner = new Scanner(System.in);
+            String inputString = scanner.nextLine();
+            DVD newDvd = new DVD("《" + inputString + "》");
+            DVDArr.add(newDvd);
+            System.out.println("添加成功！新添加的DVD的编号为"
+                    + newDvd.getId());
+            //展示所有DVD信息
+            display();
+            //继续下一步或返回上一层
+            isProgramContinue = Constants.nextOrBack();
+        }
+    }
+
+    /**
+     * 修改DVD
+     */
+    private void update() {
+        System.out.print("BiggerDVD系统" + Constants.VERSION + "---->");
+        System.out.println("修改DVD信息");
+        //退出借出循环的标识
+        boolean isProgramContinue = true;
+        while (isProgramContinue) {
+            System.out.println("请输入要修改的DVD编号：");
+            int inputNum = Constants.scanfInt();
+            System.out.println("请输入原DVD名称（无书名号）：");
+            Scanner scanner = new Scanner(System.in);
+            String inputScanString = scanner.nextLine();
+            String inputString = "《" + inputScanString + "》";
+            System.out.println("请输入新DVD名称（无书名号）：");
+            String newInputScanString = scanner.nextLine();
+            String newInputString = "《" + newInputScanString + "》";
+
+            //是否找到的标识符
+            boolean isExist = false;
+            //是否未被修改的标识符
+            boolean isCouldUpdate = false;
+
+            for (int i = 0; i < DVDArr.size(); i++) {
+                DVD dvd = (DVD) DVDArr.get(i);
+                //是否存在
+                if (dvd.getId() == inputNum &&
+                        dvd.getName().equals(inputString)) {
+                    isExist = true;
+                    //是否未被借出
+                    if (!dvd.isStatus()) {
+                        dvd.setName(newInputString);
+                        System.out.println("修改成功！新DVD名称为" + newInputString);
+                        isCouldUpdate = true;
+                        break;
+                    }
+                }
+            }
+
+            //借出returnDVD()操作中的终结提示操作
+            if (!isExist) {
+                System.out.println("对不起，你输入的DVD编号或名称不存在！");
+            } else {
+                if (!isCouldUpdate) {
+                    System.out.println("对不起，" + inputString
+                            + "还未归还，无法进行修改操作！");
+                }
+                //展示所有DVD信息
+                display();
+            }
+
+            //继续下一步或返回上一层
+            isProgramContinue = Constants.nextOrBack();
+
+        }
+
+
+    }
+
+    /**
+     * 删除DVD
+     */
+    private void delete() {
+        System.out.print("BiggerDVD系统" + Constants.VERSION + "---->");
+        System.out.println("删除DVD信息");
+        //退出借出循环的标识
+        boolean isProgramContinue = true;
+        while (isProgramContinue) {
+            System.out.println("请输入要删除的DVD编号：");
+            int inputNum = Constants.scanfInt();
+            System.out.println("请输入要删除的DVD名称（无书名号）：");
+            Scanner scanner = new Scanner(System.in);
+            String inputScanString = scanner.nextLine();
+            String inputString = "《" + inputScanString + "》";
+
+
+            //是否找到的标识符
+            boolean isExist = false;
+            //是否未被修改的标识符
+            boolean isCouldUpdate = false;
+
+            for (int i = 0; i < DVDArr.size(); i++) {
+                DVD dvd = (DVD) DVDArr.get(i);
+                //是否存在
+                if (dvd.getId() == inputNum &&
+                        dvd.getName().equals(inputString)) {
+                    isExist = true;
+                    //是否未被借出
+                    if (!dvd.isStatus()) {
+                        DVDArr.remove(i);
+                        System.out.println(inputString + "删除成功");
+                        isCouldUpdate = true;
+                        break;
+                    }
+                }
+            }
+
+            //借出returnDVD()操作中的终结提示操作
+            if (!isExist) {
+                System.out.println("对不起，你输入的DVD编号或名称不存在！");
+            } else {
+                if (!isCouldUpdate) {
+                    System.out.println("对不起，" + inputString
+                            + "还未归还，无法进行删除操作！");
+                }
+                //展示所有DVD信息
+                display();
+            }
+
+            //继续下一步或返回上一层
+            isProgramContinue = Constants.nextOrBack();
+
+        }
+
+
+    }
+
+    /**
      * 入口
      */
     public void init(String userName) {
+//    public void init() {
         System.out.println("********** " + userName + "你好！欢迎进入系统 **************");
         Menu menu = new Menu();
         while (menu.selectOption()) {
         }
         System.out.println("** 退出登录 **");
 
+    }
+
+    public static void main(String... args) {
+        Menu menu = new Menu();
+        menu.init("用户");
     }
 
 }
@@ -312,7 +474,7 @@ public class Menu {
  * 界面选项中数字-内容
  */
 enum MenuOption {
-    Display(1, "显示DVD"), Read(2, "查看DVD"), Loan(3, "借出DVD"), Return(4, "归还DVD"), Logout(0, "注销");
+    Display(1, "显示DVD"), Read(2, "查看DVD"), Loan(3, "借出DVD"), Return(4, "归还DVD"), add(5, "添加DVD"), update(6, "修改DVD"), delete(7, "删除DVD"), Logout(0, "注销");
     private final int key;
     private final String value;
 
@@ -328,6 +490,8 @@ enum MenuOption {
     public String getValue() {
         return value;
     }
+
+
 }
 
 /**

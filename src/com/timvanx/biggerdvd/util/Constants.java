@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * 常量类
+ * 常量类（封装了一些常用变量、方法）
  * @author TimVan
  * @date 2018年9月5日08:58:34
  * */
@@ -12,7 +12,7 @@ public class Constants {
     /**
      *VERSION  = 版本号
      */
-    public static final String VERSION = "v0.1";
+    public static final String VERSION = "v0.2(集合版)";
 
     /**
      *带异常处理的输入Int值
@@ -33,7 +33,9 @@ public class Constants {
         return inputNum;
     }
 
-
+    /**
+     * 继续或返回上一步方法
+     */
     public static boolean nextOrBack(){
         //退出借出循环的标识
         boolean isProgramContinue = true;
