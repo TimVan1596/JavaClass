@@ -107,6 +107,8 @@ public class Homework {
 
     public static void main(String... args) {
         Homework work = new Homework();
+        Employee emp = new Employee();
+        emp.setId(123);
 
         //3.1 - 求1到100的偶数和
 //        System.out.println("1、求其1到100的偶数和 ："+ work.sumEven(1,100));
