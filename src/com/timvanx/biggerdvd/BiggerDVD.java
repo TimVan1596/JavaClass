@@ -15,14 +15,14 @@ import java.util.Scanner;
 public class BiggerDVD {
     /**
      * MAX_LOGIN_TIMES = 登录最大尝试次数
+     * account = 读取与录入账户
      */
     private static final int MAX_LOGIN_TIMES = 3;
-    private  Account account;
+    private static Account account;
 
-    public BiggerDVD() {
+    static {
         account = new Account();
     }
-
 
     /**
      * 登录选项

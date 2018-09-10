@@ -88,4 +88,5 @@ public class Account {
     public void setUsrPassword(String usrPassword) {
         this.usrPassword = usrPassword;
     }
+
 }
