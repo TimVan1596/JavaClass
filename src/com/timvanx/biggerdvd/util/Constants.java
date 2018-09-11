@@ -12,7 +12,7 @@ public class Constants {
     /**
      *VERSION  = 版本号
      */
-    public static final String VERSION = "v0.2(集合版)";
+    public static final String VERSION = "v0.3(文件版)";
 
     /**
      *带异常处理的输入Int值
@@ -60,6 +60,17 @@ public class Constants {
                 break;
         }
         return isProgramContinue;
+    }
+
+    /**
+     * 报告失败的问题
+     */
+    public static void reportError() {
+        System.out.println("数据加载错误");
+    }
+
+    public static void reportError(String errorInfo) {
+        System.out.println(errorInfo + "加载错误");
     }
 
 }

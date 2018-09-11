@@ -1,5 +1,8 @@
 package com.timvanx.biggerdvd.dvd;
 
+import com.timvanx.biggerdvd.util.Constants;
+
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +26,7 @@ public class Account {
 
     public Account() {
         accountArrayList = new ArrayList<>();
-        accountArrayList.add(new Account("root","root"));
+        loadAccountFromFile();
     }
 
     /**
@@ -68,6 +71,7 @@ public class Account {
         //若用户名不存在创建用户
         if (!isNameIsexist){
             accountArrayList.add(new Account(name,password));
+            saveAccountToFile(name, password);
         }
 
         return !isNameIsexist;
@@ -87,6 +91,60 @@ public class Account {
 
     public void setUsrPassword(String usrPassword) {
         this.usrPassword = usrPassword;
+    }
+
+    /**
+     * 将账户存入文件"account.txt"
+     */
+    private static void saveAccountToFile(String name, String password) {
+        File file = new File("account.txt");
+
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fileWriter = new FileWriter(file, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(name + "-" + password + "\r\n");
+            bufferedWriter.flush();
+            bufferedWriter.close();
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    /**
+     * 从文件"account.txt"读入到账户数组
+     */
+    private static void loadAccountFromFile() {
+        File file = new File("account.txt");
+
+        //账号文件"account.txt"是否存在，存在则读入
+        if (file.exists()) {
+
+            try {
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                //循环读取文件中的所有账户
+                String accountLine;
+                while ((accountLine = bufferedReader.readLine()) != null) {
+                    String[] accountLineStrings = accountLine.split("-");
+                    accountArrayList.add(new Account(accountLineStrings[0]
+                            , accountLineStrings[1]));
+                }
+
+            } catch (FileNotFoundException e) {
+                Constants.reportError("账户文件");
+                e.printStackTrace();
+            } catch (IOException e) {
+                Constants.reportError("读取数据");
+                e.printStackTrace();
+            }
+
+        }
+
+
     }
 
 }
