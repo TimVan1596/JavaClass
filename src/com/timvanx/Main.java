@@ -2,34 +2,43 @@ package com.timvanx;
 
 import java.util.ArrayList;
 import java.util.List;
-
-//这一行注释是给小方宇看的
-
 public class Main {
-    public static void main(String args[]) {
-        show(100);
-    }
+    public static void main(String[] args) {
+        Rodent[] animals = new Rodent[4];
+        animals[0] = new Rodent(){ };
+        animals[1] = new Mouse();
+        animals[2] = new Gebil();
+        animals[3] = new Hamster();
 
-    public static void show(int n) {
-        if (n <= 0) {
-            System.out.println("error");
-        } else if (n == 1) {
-            System.out.println("0");
-        } else if (n == 2) {
-            System.out.println("1");
-        } else {
-            n = n - 1;
-            int i = 2;
-            List list = new ArrayList();
-            list.add(0);
-            list.add(1);
-            while (i <= n) {
-                int tempa = (int)list.get(i - 1);
-                int tempb = (int)list.get(i - 2);
-                list.add(tempa+tempb);
-                i++;
-            }
-            System.out.println(list.get(n));
+        for(Rodent r : animals){
+            r.Eat();
         }
+    }
+}
+
+abstract class Rodent{
+    public void Eat(){
+        System.out.println("rodent is eating");
+    }
+}
+
+class Mouse extends Rodent{
+    @Override
+    public void Eat() {
+        System.out.println("mouse is eating");
+    }
+}
+
+class Gebil extends Mouse{
+    @Override
+    public void Eat() {
+        System.out.println("gebil is eating");
+    }
+}
+
+class Hamster extends Gebil{
+    @Override
+    public void Eat() {
+        System.out.println("hamster is eating");
     }
 }
