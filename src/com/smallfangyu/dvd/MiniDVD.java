@@ -485,7 +485,9 @@ public class MiniDVD {
 		}
 	}
 
-	// 当输入不在1-3范围或输入非法数字，系统会提示，并进行重新输入
+    /**
+     * 他如火如荼
+     */
 	public void reinput() {
 		// 判断值
 		boolean isReinputEnd = true;
