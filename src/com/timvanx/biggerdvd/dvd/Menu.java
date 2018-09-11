@@ -6,26 +6,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * 主菜单类
- *
+ * 主菜单类(包含所有核心方法！)
  * @author TimVan
  * @date 2018年9月6日08:53:18
  */
 public class Menu {
-    /**
-     * DVDArr = DVD集合信息
-     */
-    private ArrayList<DVD> DVDArr;
+    //保存用户名
     private String userName = "用户";
 
     public Menu() {
-        DVDArr = new ArrayList<DVD>();
-        DVD.setCnt(1000);
-        //初始化DVD数组
-        DVDArr.add(new DVD("《大校的女儿》"));
-        DVDArr.add(new DVD("《恰同学少年》"));
-        DVDArr.add(new DVD("《士兵突击》"));
-        DVDArr.add(new DVD("《士兵突击》"));
+
 
     }
 
@@ -95,7 +85,7 @@ public class Menu {
         System.out.println("编号\t\t名称\t\t\t\t状态");
         System.out.println("--\t\t--\t\t\t\t--");
 
-        for (Object dvd : DVDArr) {
+        for (Object dvd : DVD.getDVDArr()) {
             System.out.println(((DVD) dvd).toString());
         }
 
@@ -154,7 +144,7 @@ public class Menu {
 
         //是否找到的标识符
         boolean isExist = false;
-        for (Object dvd : DVDArr) {
+        for (Object dvd : DVD.getDVDArr()) {
             if (((DVD) dvd).getId() == inputNum) {
                 System.out.println("编号\t\t名称\t\t\t\t状态");
                 System.out.println("--\t\t--\t\t\t\t--");
@@ -179,7 +169,7 @@ public class Menu {
 
         //是否找到的标识符
         boolean isExist = false;
-        for (Object dvd : DVDArr) {
+        for (Object dvd : DVD.getDVDArr()) {
             if (((DVD) dvd).getName().equals(inputString)) {
                 System.out.println("编号\t\t名称\t\t\t\t状态");
                 System.out.println("--\t\t--\t\t\t\t--");
@@ -211,8 +201,8 @@ public class Menu {
             //保存用户想借的DVD名称
             String dvdName = "null";
 
-            for (int i = 0; i < DVDArr.size(); i++) {
-                DVD dvd = (DVD) DVDArr.get(i);
+            for (int i = 0; i < DVD.getDVDArr().size(); i++) {
+                DVD dvd = (DVD) DVD.getDVDArr().get(i);
 
                 //是否存在
                 if (dvd.getId() == inputNum){
@@ -269,8 +259,8 @@ public class Menu {
             //保存用户想借的DVD名称
             String dvdName = "null";
 
-            for (int i = 0; i < DVDArr.size(); i++) {
-                DVD dvd = (DVD) DVDArr.get(i);
+            for (int i = 0; i < DVD.getDVDArr().size(); i++) {
+                DVD dvd = (DVD) DVD.getDVDArr().get(i);
                 //是否存在
                 if (dvd.getId() == inputNum &&
                         dvd.getName().equals(inputString)){
@@ -321,7 +311,7 @@ public class Menu {
             Scanner scanner = new Scanner(System.in);
             String inputString = scanner.nextLine();
             DVD newDvd = new DVD("《" + inputString + "》");
-            DVDArr.add(newDvd);
+            DVD.getDVDArr().add(newDvd);
             System.out.println("添加成功！新添加的DVD的编号为"
                     + newDvd.getId());
             //展示所有DVD信息
@@ -355,8 +345,8 @@ public class Menu {
             //是否未被修改的标识符
             boolean isCouldUpdate = false;
 
-            for (int i = 0; i < DVDArr.size(); i++) {
-                DVD dvd = (DVD) DVDArr.get(i);
+            for (int i = 0; i < DVD.getDVDArr().size(); i++) {
+                DVD dvd = (DVD) DVD.getDVDArr().get(i);
                 //是否存在
                 if (dvd.getId() == inputNum &&
                         dvd.getName().equals(inputString)) {
@@ -413,15 +403,15 @@ public class Menu {
             //是否未被修改的标识符
             boolean isCouldUpdate = false;
 
-            for (int i = 0; i < DVDArr.size(); i++) {
-                DVD dvd = (DVD) DVDArr.get(i);
+            for (int i = 0; i < DVD.getDVDArr().size(); i++) {
+                DVD dvd = (DVD) DVD.getDVDArr().get(i);
                 //是否存在
                 if (dvd.getId() == inputNum &&
                         dvd.getName().equals(inputString)) {
                     isExist = true;
                     //是否未被借出
                     if (!dvd.isStatus()) {
-                        DVDArr.remove(i);
+                        DVD.getDVDArr().remove(i);
                         System.out.println(inputString + "删除成功");
                         isCouldUpdate = true;
                         break;
