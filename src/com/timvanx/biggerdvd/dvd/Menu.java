@@ -14,11 +14,10 @@ public class Menu {
     //保存用户名
     private String userName = "用户";
 
-    public Menu() {
-
-
+    static {
+        //初始化DVD集合DVDArr
+        DVD dvd = new DVD();
     }
-
 
     /**
      * 系统中主菜单选择选项
