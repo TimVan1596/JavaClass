@@ -1,27 +1,15 @@
-package com.smallfangyu.dvd;
+package com.smallfangyu.dvd.model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MiniDVD {
-	// 登陆次数初始化
-	static int loginCNT = 3;
+import com.smallfangyu.dvd.data.Data;
 
-	// 创建展示对象
-	static MiniDVD display = new MiniDVD();
-
-	// 创建账户密码对象
-	Person per = new Person();
-
-	// 初始化输入的账号
-	String account = null;
-
-	// 初始化输入的密码
-	String password = null;
-
-	// DVD dvds[]= {dvd1,dvd2,dvd3,dvd4};
-
-	static ArrayList<DVD> dvds = new ArrayList<DVD>();
+public class Menu {
+    
+	 Data data=new Data();
+	 //引用Data里面的show方法
+	 ArrayList<DVD> dvds =data.show();
 
 	// 初始化DVD编号
 	static int no = 0;
@@ -29,7 +17,18 @@ public class MiniDVD {
 	// 初始化DVD名称
 	static String dvdname = null;
 
-	// 主界面
+	// 登陆次数初始化
+	static int loginCNT = 3;
+
+	// 初始化输入的账号
+	String account = null;
+
+	// 初始化输入的密码
+	String password = null;
+
+	// 创建账户密码对象
+	User user = new User();
+
 	public void login() {
 		System.out.println("**************欢迎使用MiniDVD Mgr 1.0 管理系统**************");
 		System.out.println("---------------------------------");
@@ -39,6 +38,60 @@ public class MiniDVD {
 		System.out.println("请选择对应数字:");
 		// 调用 当输入不在1-3范围或输入非法数字，系统会提示，并进行重新输入
 		reinput();
+	}
+
+	// 当输入不在1-2范围或输入非法数字，系统会提示，并进行重新输入
+	public void reinput() {
+		// 判断值
+		boolean isReinputEnd = true;
+		int n = 0;
+		while (isReinputEnd) {
+			Scanner scanner = new Scanner(System.in);
+			try {
+				n = scanner.nextInt();
+				scanner.nextLine();
+				if (n >= 1 && n <= 2) {
+					isReinputEnd = false;
+				} else {
+					System.out.println("没有这个选项，请再次输入:");
+					isReinputEnd = true;
+				}
+			} catch (java.util.InputMismatchException e) {
+				System.out.println("输入的不是整数，请再次输入:");
+				isReinputEnd = true;
+			}
+		}
+		// 输入数字后两个界面
+		switch (n) {
+		case 1:
+			do {
+				System.out.println("请输入用户名:");
+				Scanner num = new Scanner(System.in);
+				account = num.next();
+				if (!(account.equals(user.getUsername()))) {
+					// 调用 判断用户名密码是否正确方法
+					judge();
+				} else {
+					do {
+						System.out.println("请输入密码:");
+						password = num.next();
+						if (password.equals(user.getPassword())) {
+							// 调用登录后界面
+							enter();
+						} else {
+							// 调用 判断用户名密码是否正确方法
+							judge();
+						}
+					} while (loginCNT > 0);
+				}
+				if (account.equals(user.getUsername()) && password.equals(user.getPassword())) {
+					break;
+				}
+			} while (loginCNT > 0);
+			break;
+		case 2:
+			System.exit(-1);
+		}
 
 	}
 
@@ -57,7 +110,7 @@ public class MiniDVD {
 		System.out.println("---------------------------------");
 		System.out.println("请选择对应数字:");
 		// 调用 当输入不在1-5范围或输入非法数字，系统会提示，并进行重新输入
-		display.reinputs();
+		reinputs(null);
 
 	}
 
@@ -80,14 +133,25 @@ public class MiniDVD {
 		try {
 			int n = scanner.nextInt();
 			if (n == 0) {
-				display.enter();
+				enter();
 			} else {
 				System.out.println("请输入正确的数字");
-				display.back();
+				back();
 			}
 		} catch (java.util.InputMismatchException e) {
 			System.out.println("请输入正确的数字");
-			display.back();
+			back();
+		}
+	}
+
+	// 判断用户名密码是否正确
+	public void judge() {
+		loginCNT--;
+		if (loginCNT > 0) {
+			System.out.println("用户名或密码不正确");
+			System.out.println("你还有" + loginCNT + "次机会");
+		} else {
+			System.out.println("对不起，你无权登陆本系统");
 		}
 	}
 
@@ -97,12 +161,13 @@ public class MiniDVD {
 		System.out.println("请输入要查询的DVD编号:");
 
 		Scanner scanner = new Scanner(System.in);
+
 		try {
 			no = scanner.nextInt();
 		} catch (java.util.InputMismatchException e) {
 			System.out.println("输入的不是整数，请再次输入:");
 			// 循环按编号查询
-			display.noquery();
+			noquery();
 		}
 		// 判断数组里是否有值
 		boolean queryhave = false;
@@ -117,6 +182,7 @@ public class MiniDVD {
 		}
 		if (!queryhave) {
 			System.out.println("所输入的DVD编号不正确!请重试!");
+			noquery();
 		}
 		// 判断是否继续
 		boolean keep = false;
@@ -124,9 +190,9 @@ public class MiniDVD {
 			System.out.println("是否继续? y/n");
 			String py = scanner.next();
 			if (py.equals("y")) {
-				display.noquery();
+				noquery();
 			} else if (py.equals("n")) {
-				display.back();
+				back();
 			} else {
 				System.out.println("请输入正确的字母");
 				keep = true;
@@ -161,9 +227,9 @@ public class MiniDVD {
 			System.out.println("是否继续? y/n");
 			String py = scanner.next();
 			if (py.equals("y")) {
-				display.dvdnamequery();
+				dvdnamequery();
 			} else if (py.equals("n")) {
-				display.back();
+				back();
 			} else {
 				System.out.println("请输入正确的字母");
 				keep = true;
@@ -201,10 +267,10 @@ public class MiniDVD {
 		}
 		switch (n) {
 		case 1:
-			display.noquery();
+			noquery();
 			break;
 		case 2:
-			display.dvdnamequery();
+			dvdnamequery();
 			break;
 		}
 	}
@@ -219,7 +285,7 @@ public class MiniDVD {
 		} catch (java.util.InputMismatchException e) {
 
 			System.out.println("输入的不是整数，请再次输入:");
-			display.lend();
+			lend();
 		}
 		// 判断DVD编号是否存在
 		// 定义一个判断量
@@ -228,7 +294,7 @@ public class MiniDVD {
 			if (no == dvd.getId() && (dvd.getState()).equals("可以借")) {
 				queryhave = true;
 				System.out.println("恭喜您！此DVD在系统中的状态为：可以借！");
-				display.display();
+				display();
 				dvd.setState("可以借");
 			}
 		}
@@ -242,9 +308,9 @@ public class MiniDVD {
 			System.out.println("是否继续? y/n");
 			String py = scanner.next();
 			if (py.equals("y")) {
-				display.lend();
+				lend();
 			} else if (py.equals("n")) {
-				display.back();
+				back();
 			} else {
 				System.out.println("请输入正确的字母");
 				keep = true;
@@ -262,7 +328,7 @@ public class MiniDVD {
 			scanner.nextLine();
 		} catch (java.util.InputMismatchException e) {
 			System.out.println("输入的不是整数，请再次输入:");
-			display.revert();
+			revert();
 		}
 
 		System.out.println("请输入要归还的DVD的名称:");
@@ -292,7 +358,7 @@ public class MiniDVD {
 			}
 		}
 		// 展示归还后的DVD界面
-		display.display();
+		display();
 
 		// 判断是否继续
 		boolean keep = false;
@@ -300,9 +366,9 @@ public class MiniDVD {
 			System.out.println("是否继续? y/n");
 			String py = scanner.next();
 			if (py.equals("y")) {
-				display.revert();
+				revert();
 			} else if (py.equals("n")) {
-				display.back();
+				back();
 			} else {
 				System.out.println("请输入正确的字母");
 				keep = true;
@@ -318,13 +384,13 @@ public class MiniDVD {
 			no = scanner.nextInt();
 		} catch (java.util.InputMismatchException e) {
 			System.out.println("输入的不是整数，请再次输入:");
-			display.add();
+			add();
 		}
 		// 判断输入的DVD编号是否重复
 		for (DVD dvd : dvds) {
 			if (no == dvd.getId()) {
 				System.out.println("当前DVD编号已存在，请重新输入:");
-				display.add();
+				add();
 			}
 		}
 		System.out.println("请输入添加的DVD名称:");
@@ -340,7 +406,7 @@ public class MiniDVD {
 
 		dvds.add(new DVD(no, dvdname, "可以借"));
 
-		display.display();
+		display();
 		System.out.println("DVD添加成功");
 
 		// 判断是否继续
@@ -349,9 +415,9 @@ public class MiniDVD {
 			System.out.println("是否继续? y/n");
 			String py = scanner.next();
 			if (py.equals("y")) {
-				display.add();
+				add();
 			} else if (py.equals("n")) {
-				display.back();
+				back();
 			} else {
 				System.out.println("请输入正确的字母");
 				keep = true;
@@ -367,7 +433,7 @@ public class MiniDVD {
 			no = scanner.nextInt();
 		} catch (java.util.InputMismatchException e) {
 			System.out.println("输入的不是整数，请再次输入:");
-			display.delete();
+			delete();
 		}
 		// 找出输入的编号在数组中的位置
 		int index = 0;
@@ -376,13 +442,12 @@ public class MiniDVD {
 			if (no == dvds.get(i).getId()) {
 				queryhave = true;
 				index = i;
-				;
 			}
 		}
 		// 判断输入的DVD编号是否存在
 		if (!queryhave) {
 			System.out.println("当前输入的DVD编号不存在，请重新输入:");
-			display.delete();
+			delete();
 		}
 
 		// 删除DVD
@@ -391,7 +456,7 @@ public class MiniDVD {
 		// }
 		dvds.remove(index);
 
-		display.display();
+		display();
 		System.out.println("DVD删除成功");
 
 		// 判断是否继续
@@ -400,9 +465,9 @@ public class MiniDVD {
 			System.out.println("是否继续? y/n");
 			String py = scanner.next();
 			if (py.equals("y")) {
-				display.delete();
+				delete();
 			} else if (py.equals("n")) {
-				display.back();
+				back();
 			} else {
 				System.out.println("请输入正确的字母");
 				keep = true;
@@ -419,7 +484,7 @@ public class MiniDVD {
 			no = scanner.nextInt();
 		} catch (java.util.InputMismatchException e) {
 			System.out.println("输入的不是整数，请再次输入:");
-			display.update();
+			update();
 		}
 		// 定义一个 判断输入的DVD编号是否存在 的量
 		boolean queryhave = false;
@@ -443,7 +508,7 @@ public class MiniDVD {
 
 					if ((dvdstate.equals("可以借")) || (dvdstate.equals("已借出"))) {
 						dvd.setState(dvdstate);
-						display.display();
+						display();
 						state = false;
 					} else {
 						System.out.println("修改的DVD状态不正确，请重新输入:");
@@ -455,7 +520,7 @@ public class MiniDVD {
 		// 判断输入的DVD编号是否存在
 		if (!queryhave) {
 			System.out.println("当前输入的DVD编号不存在，请重新输入:");
-			display.update();
+			update();
 		}
 
 		// 判断是否继续
@@ -464,9 +529,9 @@ public class MiniDVD {
 			System.out.println("是否继续? y/n");
 			String py = scanner.next();
 			if (py.equals("y")) {
-				display.update();
+				update();
 			} else if (py.equals("n")) {
-				display.back();
+				back();
 			} else {
 				System.out.println("请输入正确的字母");
 				keep = true;
@@ -474,76 +539,8 @@ public class MiniDVD {
 		} while (keep);
 	}
 
-	// 判断用户名密码是否正确
-	public void judge() {
-		loginCNT--;
-		if (loginCNT > 0) {
-			System.out.println("用户名或密码不正确");
-			System.out.println("你还有" + loginCNT + "次机会");
-		} else {
-			System.out.println("对不起，你无权登陆本系统");
-		}
-	}
-
-    /**
-     * 他如火如荼
-     */
-	public void reinput() {
-		// 判断值
-		boolean isReinputEnd = true;
-		int n = 0;
-		while (isReinputEnd) {
-			Scanner scanner = new Scanner(System.in);
-			try {
-				n = scanner.nextInt();
-				scanner.nextLine();
-				if (n >= 1 && n <= 2) {
-					isReinputEnd = false;
-				} else {
-					System.out.println("没有这个选项，请再次输入:");
-					isReinputEnd = true;
-				}
-			} catch (java.util.InputMismatchException e) {
-				System.out.println("输入的不是整数，请再次输入:");
-				isReinputEnd = true;
-			}
-		}
-		// 输入数字后两个界面
-		switch (n) {
-		case 1:
-			do {
-				System.out.println("请输入用户名:");
-				Scanner num = new Scanner(System.in);
-				account = num.next();
-				if (!(account.equals(per.getUsername()))) {
-					// 调用 判断用户名密码是否正确方法
-					display.judge();
-				} else {
-					do {
-						System.out.println("请输入密码:");
-						password = num.next();
-						if (password.equals(per.getPassword())) {
-							// 调用登录后界面
-							display.enter();
-						} else {
-							// 调用 判断用户名密码是否正确方法
-							display.judge();
-						}
-					} while (loginCNT > 0);
-				}
-				if (account.equals(per.getUsername()) && password.equals(per.getPassword())) {
-					break;
-				}
-			} while (loginCNT > 0);
-			break;
-		case 2:
-			System.exit(-1);
-		}
-
-	}
-
-	// 当输入不在1-5范围或输入非法数字，系统会提示，并进行重新输入
-	public void reinputs() {
+	// 当输入不在1-8范围或输入非法数字，系统会提示，并进行重新输入
+	public void reinputs(ArrayList<DVD> dvds) {
 		// 判断输入的数是否合法
 		boolean isReinputsEnd = true;
 		int n = 0;
@@ -566,60 +563,44 @@ public class MiniDVD {
 		switch (n) {
 		case 1:
 			// 调用显示DVD界面
-			display.display();
-			display.back();
+			display();
+			back();
 			break;
 
 		case 2:
 			// 调用查看界面
-			display.query();
+			query();
 
 			break;
 		case 3:
 			// 调用借出界面
-			display.lend();
+			lend();
 			break;
 
 		case 4:
 			// 调用归还界面
-			display.revert();
+			revert();
 			break;
 
 		case 5:
 			// 调用添加界面
-			display.add();
+			add();
 			break;
 
 		case 6:
 			// 调用删除界面
-			display.delete();
+			delete();
 			break;
 
 		case 7:
 			// 调用修改界面
-			display.update();
+			update();
 			break;
 
 		case 8:
 			// 调用登陆界面
-			display.login();
+			login();
 			break;
 		}
 	}
-
-	public static void main(String[] args) {
-
-		DVD dvd1 = new DVD(1000, "《大校的女儿》", "已借出");
-		DVD dvd2 = new DVD(1001, "《恰同学少年》", "可以借");
-		DVD dvd3 = new DVD(1002, "《士兵突击》", "已借出");
-		DVD dvd4 = new DVD(1003, "《士兵突击》", "可以借");
-		dvds.add(dvd1);
-		dvds.add(dvd2);
-		dvds.add(dvd3);
-		dvds.add(dvd4);
-		// 调用登陆界面
-		display.login();
-
-	}
-
 }

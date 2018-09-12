@@ -1,4 +1,4 @@
-package com.smallfangyu.dvd;
+package com.smallfangyu.dvd.model;
 
 public class DVD {
    private int id;
