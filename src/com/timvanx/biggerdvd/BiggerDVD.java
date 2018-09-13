@@ -6,6 +6,8 @@ import com.timvanx.biggerdvd.util.Constants;
 
 import java.util.Scanner;
 
+import static com.timvanx.biggerdvd.util.Constants.nextOrBack;
+
 /**
  * BiggerDVD 管理系统 ，比mini更Bigger
  *
@@ -28,7 +30,7 @@ public class BiggerDVD {
      * 登录选项
      */
     private boolean loginOption(){
-        int loginCNT = 0;
+
         Scanner scanner = new Scanner(System.in);
         boolean isProgramContinue = true;
 
@@ -44,9 +46,19 @@ public class BiggerDVD {
                 menu.init(userName);
                 break;
             }
-            loginCNT++;
+
+            //设置当前尝试登陆次数+1
+            Account.setLoginCNT(Account.getLoginCNT() + 1);
+            System.out.println("loginCNT=" + Account.getLoginCNT());
+            
+            //继续下一步或返回上一层
+            if (!nextOrBack()) {
+                break;
+            }
+
         }
-        if (loginCNT == MAX_LOGIN_TIMES) {
+
+        if (Account.getLoginCNT() == MAX_LOGIN_TIMES) {
             System.out.println("尝试次数过多，终止程序！");
             isProgramContinue = false;
         }

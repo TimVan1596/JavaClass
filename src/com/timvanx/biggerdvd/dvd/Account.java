@@ -15,9 +15,17 @@ public class Account {
     private  String usrPassword;
 
     /**
-     * accounts 保存所有的账户，静态
+     * accountArrayList  = 保存所有的账户-密码
+     * loginCNT = 保存用户尝试登陆的次数
      */
     private static ArrayList<Account> accountArrayList;
+    private static int loginCNT;
+
+    static {
+        accountArrayList = new ArrayList<>();
+        loginCNT = 0;
+
+    }
 
     private Account(String usrName,String usrPassword) {
         this.usrName = usrName;
@@ -25,7 +33,7 @@ public class Account {
     }
 
     public Account() {
-        accountArrayList = new ArrayList<>();
+        //从文件中读取所有的账户-密码信息
         loadAccountFromFile();
     }
 
@@ -75,6 +83,14 @@ public class Account {
         }
 
         return !isNameIsexist;
+    }
+
+    public static int getLoginCNT() {
+        return loginCNT;
+    }
+
+    public static void setLoginCNT(int loginCNT) {
+        Account.loginCNT = loginCNT;
     }
 
     public String getUsrName() {
