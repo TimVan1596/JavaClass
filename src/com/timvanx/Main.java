@@ -1,44 +1,27 @@
 package com.timvanx;
 
-import java.util.ArrayList;
-import java.util.List;
 public class Main {
     public static void main(String[] args) {
-        Rodent[] animals = new Rodent[4];
-        animals[0] = new Rodent(){ };
-        animals[1] = new Mouse();
-        animals[2] = new Gebil();
-        animals[3] = new Hamster();
-
-        for(Rodent r : animals){
-            r.Eat();
-        }
+        Child child = new Child();
     }
 }
 
-abstract class Rodent{
-    public void Eat(){
-        System.out.println("rodent is eating");
+class Parent {
+    static {
+        System.out.println("parent static code block");
+    }
+
+    public Parent() {
+        System.out.println("parent constructor");
     }
 }
 
-class Mouse extends Rodent{
-    @Override
-    public void Eat() {
-        System.out.println("mouse is eating");
+class Child extends Parent {
+    static {
+        System.out.println("child static code block");
     }
-}
 
-class Gebil extends Mouse{
-    @Override
-    public void Eat() {
-        System.out.println("gebil is eating");
-    }
-}
-
-class Hamster extends Gebil{
-    @Override
-    public void Eat() {
-        System.out.println("hamster is eating");
+    public Child() {
+        System.out.println("child constructor");
     }
 }
