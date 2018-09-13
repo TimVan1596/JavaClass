@@ -37,7 +37,7 @@ public class AddDVD {
 				System.out.println(dvds[i].getNo() + "\t" + dvds[i].getName() + "\t" + dvds[i].getState());
 			}
 		}
-	
+
 		while(true) {
 			System.out.println("是否继续？ y/n");
 			Scanner s11 = new Scanner(System.in); 
