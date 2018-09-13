@@ -30,14 +30,20 @@ public class TestCollections {
 		}
 		  // 留个思考： 集合里装入3个学生， 你能按照姓名排序（中文、英文） 输出名？ 按照年龄排序输出吗？
 		//构建2个学生
-			Student student1=new Student(1, "李雷",22);
-			Student student2=new Student(2, "韩梅梅",21);
-			Student student3=new Student(3, "吉姆",23);
-			List<Student> students=new ArrayList<Student>();
+		Student student1 = new Student(1, "李雷", 22);
+		Student student2 = new Student(2, "韩梅梅", 21);
+		Student student3 = new Student(3, "隔壁老王", 48);
+		Student student4 = new Student(4, "小明", 19);
+		Student student5 = new Student(5, "小明", 2);
+		Student student6 = new Student(6, "隔壁老王", 48);
+		List<Student> students=new ArrayList<Student>();
 			students.add(student1);
 			students.add(student2);
 			students.add(student3);
-			 Collections.sort(students);
+		    students.add(student4);
+		    students.add(student5);
+		    students.add(student6);
+			Collections.sort(students);
 			for (Student student : students) {
 				System.out.println(student);
 			}
