@@ -1,9 +1,18 @@
 package com.antianbao.sort;
-
-public class Person {
+/**
+ * 排序
+ * @author TinbaoAn
+ * @date 2018/9/13
+ */
+public class Person implements Comparable<Person>{
     private int no;
     private String name;
     private int height;
+
+    @Override
+    public int compareTo(Person o){
+        return this.name.compareTo(o.name);
+    }
 
     @Override
     public String toString(){

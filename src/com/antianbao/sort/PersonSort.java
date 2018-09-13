@@ -1,27 +1,37 @@
 package com.antianbao.sort;
 
 import java.util.*;
-
+/**
+ * 排序
+ * @author TinbaoAn
+ * @date 2018/9/13
+ */
 public class PersonSort {
 
     public static void main(String[] args) {
         PersonSort ps=new PersonSort();
         List<Person> list=ps.initPerson();
+
         ps.sortByAge(list);
         System.out.println("按照序号排序后");
+        ps.printList(list);
+
+        Collections.sort(list);
+        System.out.println("按照姓名排序后");
         ps.printList(list);
 
         ps.sortByHeight(list);
         System.out.println("按照身高排序后");
         ps.printList(list);
+
     }
 
     public List<Person> initPerson() {
-        List<Person> list=new ArrayList<Person>();
-        list.add(new Person(1001,"张三",178));
-        list.add(new Person(1002,"李四",185));
-        list.add(new Person(1004,"王五",165));
-        list.add(new Person(1003,"赵六",173));
+        List<Person> list=new ArrayList<>();
+        list.add(new Person(1001,"Z张三",178));
+        list.add(new Person(1002,"L李四",185));
+        list.add(new Person(1004,"W王五",165));
+        list.add(new Person(1003,"Z赵六",173));
         return list;
     }
 

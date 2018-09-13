@@ -165,6 +165,7 @@ public class Choice {
         System.out.println("----------------------------------");
         System.out.println("请选择查询的方式：");
 
+
         Scanner s = new Scanner(System.in);
         String Choice = s.nextLine();
         //判断选择的操作 1或2
