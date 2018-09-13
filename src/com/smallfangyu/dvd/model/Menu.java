@@ -347,7 +347,7 @@ public class Menu {
 				}
 			} else {
 				// 定义新数组来添加新的DVD
-				// DVD[] newdvds=new DVD[dvds.length+1] ;
+				// Dvd[] newdvds=new Dvd[dvds.length+1] ;
 				// for(int l=0;l<dvds.length;l++) {
 				// newdvds[l]=dvds[l];
 				// }
@@ -397,11 +397,11 @@ public class Menu {
 		dvdname = scanner.next();
 
 		// 定义新数组添加新的DVD
-		// DVD[] newdvds=new DVD[dvds.length+1];
+		// Dvd[] newdvds=new Dvd[dvds.length+1];
 		// for(int l=0;l<=dvds.length-1;l++) {
 		// newdvds[l]=dvds[l];
 		// }
-		// newdvds[dvds.length]= new DVD(no,dvdname,"可以借");
+		// newdvds[dvds.length]= new Dvd(no,dvdname,"可以借");
 		// dvds=newdvds;
 
 		dvds.add(new DVD(no, dvdname, "可以借"));

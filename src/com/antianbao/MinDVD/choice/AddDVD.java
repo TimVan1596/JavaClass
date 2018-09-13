@@ -18,7 +18,8 @@ public class AddDVD {
 
 		Choice c = new Choice();
 		//c.Choice();
-		DVD dvd = new DVD(no, name, "可以借");//将info转为dvd存储
+		//将info转为dvd存储
+		DVD dvd = new DVD(no, name, "可以借");
 
 		// 将归还的DVD添加到存放所有DVD的数组中
 		for(int i = 0; i < dvds.length; i++) {
