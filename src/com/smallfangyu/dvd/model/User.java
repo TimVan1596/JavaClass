@@ -1,10 +1,13 @@
-package com.smallfangyu.dvd;
+package com.smallfangyu.dvd.model;
 
-public class Person{
-	private String username="user";//�û�����ֵ
-	private String password="123";//���븳ֵ
+public class User{
+	private String username;
+	private String password;
 	
-	
+	public User(){
+		username="user";//用户名赋值
+		password="123";//密码赋值
+	}
     public String getUsername() {
     	return username;
       }
