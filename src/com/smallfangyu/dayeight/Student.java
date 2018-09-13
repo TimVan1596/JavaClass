@@ -8,7 +8,7 @@ public class Student implements Comparable<Student> {
     private String stuName;
     private int stuAge;
     
-    Collator cmp = Collator.getInstance(java.util.Locale.CHINA);
+
     
 	public int getStuAge() {
 		return stuAge;
@@ -52,11 +52,20 @@ public class Student implements Comparable<Student> {
 	@Override
 	public int compareTo(Student arg) {
 		// TODO 自动生成的方法存根
-		//return this.stuAge-arg0.stuAge;
+		//getInstance 来为给定的语言环境获得适当的 Collator 对象
+		Collator cmp = Collator.getInstance(java.util.Locale.CHINA);
+		//int result=this.stuName.compareTo(arg.stuName);
+		int result=cmp.compare(this.stuName,arg.stuName);
+         if(result==0){
+         	int resultt=this.stuAge-arg.stuAge;
+         	if(resultt==0) {
+				return this.stuId-arg.stuId;
+             }else{
+				return this.stuAge - arg.stuAge;
+			}
+        }
 		//return this.stuName.compareTo(arg.stuName);
-		
-		return cmp.compare(this.getStuName(), arg.getStuName());
-
+		return cmp.compare(this.stuName,arg.stuName);
 	}
     
 }
