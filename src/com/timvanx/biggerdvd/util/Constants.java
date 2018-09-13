@@ -1,5 +1,9 @@
 package com.timvanx.biggerdvd.util;
 
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,6 +17,8 @@ public class Constants {
      *VERSION  = 版本号
      */
     public static final String VERSION = "v0.3(文件版)";
+    public static final String DVD_INFO_FILENAME = "dvdInfo.txt";
+    public static final String ACCOUNT_FILENAME = "account.txt";
 
     /**
      *带异常处理的输入Int值
@@ -71,6 +77,27 @@ public class Constants {
 
     public static void reportError(String errorInfo) {
         System.out.println(errorInfo + "加载错误");
+    }
+
+    /**
+     * <p>Title: clearInfoForFile</p>
+     * <p>Description: 文件内容清空</p>
+     *
+     * @param fileName
+     */
+    public static void clearInfoForFile(String fileName) {
+        File file = new File(fileName);
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write("");
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

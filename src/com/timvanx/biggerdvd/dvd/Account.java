@@ -94,10 +94,10 @@ public class Account {
     }
 
     /**
-     * 将账户存入文件"account.txt"
+     * 将账户存入文件Constants.ACCOUNT_FILENAME
      */
     private static void saveAccountToFile(String name, String password) {
-        File file = new File("account.txt");
+        File file = new File(Constants.ACCOUNT_FILENAME);
 
         try {
             if (!file.exists()) {
@@ -115,12 +115,12 @@ public class Account {
     }
 
     /**
-     * 从文件"account.txt"读入到账户数组
+     * 从文件Constants.ACCOUNT_FILENAME读入到账户数组
      */
     private static void loadAccountFromFile() {
-        File file = new File("account.txt");
+        File file = new File(Constants.ACCOUNT_FILENAME);
 
-        //账号文件"account.txt"是否存在，存在则读入
+        //账号文件Constants.ACCOUNT_FILENAME是否存在，存在则读入
         if (file.exists()) {
 
             try {

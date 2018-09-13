@@ -1,5 +1,7 @@
 package com.timvanx.biggerdvd.dvd;
 
+import com.timvanx.biggerdvd.util.Constants;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -18,6 +20,9 @@ public class DVD {
      * status = 借出状态，未借出为false，反之亦然
      */
     private static int cnt = 1000;
+    private int id;
+    private String name;
+    private boolean status;
 
     public static ArrayList<DVD> getDVDArr() {
         return DVDArr;
@@ -40,17 +45,17 @@ public class DVD {
         this.id = id;
         this.name = name;
         this.status = status;
+        //读取时读入主键
+        cnt = id;
     }
-    private int id;
-    private String name;
-    private boolean status;
+
 
     public DVD() {
     }
 
     public DVD(String name) {
         //随着构造函数自增(ID赋值)
-        this.id = cnt++;
+        this.id = ++cnt;
         this.name = name;
         //默认为未借出
         this.status = false;
@@ -90,11 +95,11 @@ public class DVD {
 
 
     /**
-     * 将DVD信息存入文件"dvdInfo.txt"
+     * 将DVD信息存入文件Constants.DVD_INFO_FILENAME
      */
-    public static void saveDVDInfosToFile(String id, String name
+    public static void saveDVDInfosToFile(int id, String name
             , boolean status) {
-        File file = new File("dvdInfo.txt");
+        File file = new File(Constants.DVD_INFO_FILENAME);
 
         try {
             if (!file.exists()) {
@@ -103,9 +108,8 @@ public class DVD {
             FileWriter fileWriter = new FileWriter(file, true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             //格式化信息
-            String DVDInfosStrings =
-                    id + "-" + name + "-"
-                            + (status ? "已借出" : "未借出" + "\r\n");
+
+            String DVDInfosStrings = new StringBuffer().append(id).append("-").append(name).append("-").append((status ? "已借出" : "未借出")).append("\r\n").toString();
             bufferedWriter.write(DVDInfosStrings);
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -116,12 +120,25 @@ public class DVD {
     }
 
     /**
-     * 从文件"dvdInfo.txt"读入到DvdArr集合
+     * 将DVD信息存入文件Constants.DVD_INFO_FILENAME
+     */
+    public static void clearAndSaveDVDInfosToFile() {
+        //先清除Constants.DVD_INFO_FILENAME中所有DVD数据
+        Constants.clearInfoForFile(Constants.DVD_INFO_FILENAME);
+        //逐项写入文件
+        for (DVD dvd : DVDArr) {
+            saveDVDInfosToFile(dvd.getId(), dvd.getName(), dvd.isStatus());
+        }
+
+    }
+
+    /**
+     * 从文件Constants.DVD_INFO_FILENAME读入到DvdArr集合
      */
     private static void loadDVDInfosToFile() {
-        File file = new File("dvdInfo.txt");
+        File file = new File(Constants.DVD_INFO_FILENAME);
 
-        //账号文件"account.txt"是否存在，存在则读入
+        //账号文件"Constants.ACCOUNT_FILENAME"是否存在，存在则读入
         if (file.exists()) {
 
             try {

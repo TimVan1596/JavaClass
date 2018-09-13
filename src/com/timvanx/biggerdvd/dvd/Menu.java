@@ -5,6 +5,8 @@ import com.timvanx.biggerdvd.util.Constants;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static com.timvanx.biggerdvd.dvd.DVD.clearAndSaveDVDInfosToFile;
+
 /**
  * 主菜单类(包含所有核心方法！)
  * @author TimVan
@@ -228,7 +230,8 @@ public class Menu {
                 //展示所有DVD信息
                 display();
             }
-
+            //更新所有DVD数据
+            clearAndSaveDVDInfosToFile();
             //继续下一步或返回上一层
             isProgramContinue = Constants.nextOrBack();
 
@@ -286,7 +289,8 @@ public class Menu {
                 //展示所有DVD信息
                 display();
             }
-
+            //更新所有DVD数据
+            clearAndSaveDVDInfosToFile();
             //继续下一步或返回上一层
             isProgramContinue = Constants.nextOrBack();
 
@@ -314,7 +318,7 @@ public class Menu {
             DVD.getDVDArr().add(newDvd);
             Integer newId = newDvd.getId();
             //存入文件
-            DVD.saveDVDInfosToFile(newId.toString(), newDvd.getName()
+            DVD.saveDVDInfosToFile(newDvd.getId(), newDvd.getName()
                     , newDvd.isStatus());
 
             System.out.println("添加成功！新添加的DVD的编号为"
@@ -377,7 +381,8 @@ public class Menu {
                 //展示所有DVD信息
                 display();
             }
-
+            //更新所有DVD数据
+            clearAndSaveDVDInfosToFile();
             //继续下一步或返回上一层
             isProgramContinue = Constants.nextOrBack();
 
@@ -435,7 +440,8 @@ public class Menu {
                 //展示所有DVD信息
                 display();
             }
-
+            //更新所有DVD数据
+            clearAndSaveDVDInfosToFile();
             //继续下一步或返回上一层
             isProgramContinue = Constants.nextOrBack();
 
