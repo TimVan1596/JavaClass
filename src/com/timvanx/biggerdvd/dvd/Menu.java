@@ -310,9 +310,15 @@ public class Menu {
             Scanner scanner = new Scanner(System.in);
             String inputString = scanner.nextLine();
             DVD newDvd = new DVD("《" + inputString + "》");
+
             DVD.getDVDArr().add(newDvd);
+            Integer newId = newDvd.getId();
+            //存入文件
+            DVD.saveDVDInfosToFile(newId.toString(), newDvd.getName()
+                    , newDvd.isStatus());
+
             System.out.println("添加成功！新添加的DVD的编号为"
-                    + newDvd.getId());
+                    + newId);
             //展示所有DVD信息
             display();
             //继续下一步或返回上一层

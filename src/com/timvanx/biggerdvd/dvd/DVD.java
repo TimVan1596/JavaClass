@@ -1,7 +1,5 @@
 package com.timvanx.biggerdvd.dvd;
 
-import com.timvanx.biggerdvd.util.Constants;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -94,7 +92,7 @@ public class DVD {
     /**
      * 将DVD信息存入文件"dvdInfo.txt"
      */
-    private static void saveDVDInfosToFile(String id, String name
+    public static void saveDVDInfosToFile(String id, String name
             , boolean status) {
         File file = new File("dvdInfo.txt");
 
@@ -167,6 +165,6 @@ public class DVD {
 
     @Override
     public String toString() {
-        return id + "\t" + name + "\t\t" + (status == true ? "已借出" : "未借出");
+        return id + "\t" + name + "\t\t" + (status ? "已借出" : "未借出");
     }
 }
