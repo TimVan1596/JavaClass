@@ -1,0 +1,41 @@
+List<Person> ls = ps.sortByNo(list);
+        try {
+            FileWriter fw = new FileWriter("E:\\JAVA\\java_direction_class\\src\\com\\antianbao\\filesort914\\print", true);
+            fw.write("按照序号排序后\r\n");
+            fw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        addStudentInfo(ls);
+
+        List<Person> ls1 = ps.sortByName(list);
+        try {
+            FileWriter fw = new FileWriter("E:\\JAVA\\java_direction_class\\src\\com\\antianbao\\filesort914\\print", true);
+            fw.write("按照姓名排序后\r\n");
+            fw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        addStudentInfo(ls1);
+
+        List<Person> ls2 = ps.sortByHeight(list);
+        try {
+            FileWriter fw = new FileWriter("E:\\JAVA\\java_direction_class\\src\\com\\antianbao\\filesort914\\print", true);
+            fw.write("按照身高排序后\r\n");
+            fw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        addStudentInfo(ls2);
+
+        List<Person> list1 = ps.sortByNo(list);
+        List<Person> list2 = ps.sortByHeight(list1);
+        List<Person> ls3 = ps.sortByName(list2);
+        try {
+            FileWriter fw = new FileWriter("E:\\JAVA\\java_direction_class\\src\\com\\antianbao\\filesort914\\print", true);
+            fw.write("先排姓名 后排身高 最后序号\r\n");
+            fw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        addStudentInfo(ls3);
