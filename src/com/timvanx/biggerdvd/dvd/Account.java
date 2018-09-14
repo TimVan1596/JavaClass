@@ -67,14 +67,8 @@ public class Account {
      * @return boolean 是否注册成功
      */
     public static boolean register(String name, String password) {
-        boolean isNameIsexist = false;
-        //判断账户名是否存在和正确
-        for (Account account:accountArrayList){
-            if (account.getUsrName().equals(name)){
-                isNameIsexist = true;
-                break;
-            }
-        }
+        //检查用户名是否已存在
+        boolean isNameIsexist = isAccountExist(name);
 
         //若用户名不存在创建用户
         if (!isNameIsexist){
@@ -163,4 +157,25 @@ public class Account {
 
     }
 
+    /**
+     * 通过用户名检查该账户是否存在
+     */
+    public static boolean isAccountExist(String name) {
+        boolean isNameIsexist = false;
+        //判断账户名是否存在和正确
+        for (Account account : accountArrayList) {
+            if (account.getUsrName().equals(name)) {
+                isNameIsexist = true;
+                break;
+            }
+        }
+        return isNameIsexist;
+    }
+
+    /**
+     * 通过用户名修改密码
+     */
+    public static void changePasswordByName(String name, String password) {
+
+    }
 }

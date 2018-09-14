@@ -105,20 +105,28 @@ public class BiggerDVD {
         if (Account.register(userName, userPassword)) {
             System.out.println("注册成功！");
         }else {
-            System.out.println("登录失败！请检查用户名或密码是否输入错误");
+            System.out.println("注册失败！请检查用户名是否已存在");
         }
 
         return isProgramContinue;
     }
 
     /**
-     * 注册选项
+     * 忘记密码
      */
     private boolean forgetPasswordOption() {
         Scanner scanner = new Scanner(System.in);
         boolean isProgramContinue = true;
-        System.out.println("请输入新的用户名");
+        System.out.println("请输入您的用户名");
         String userName = scanner.nextLine();
+        //检查用户名是否存在
+        if (Account.isAccountExist(userName)) {
+            System.out.println("请输入您的新密码");
+            String userPassword = scanner.nextLine();
+
+        } else {
+            System.out.println("请输入您的用户不存在");
+        }
 
         return isProgramContinue;
     }
