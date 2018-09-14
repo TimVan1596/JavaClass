@@ -9,6 +9,28 @@ import java.util.Scanner;
 import static com.timvanx.biggerdvd.util.Constants.nextOrBack;
 
 /**
+ * 界面选项中数字-内容
+ */
+enum SystemUIOption {
+    Login(1, "登录"), Register(2, "注册"), ForgetPassword(3, "找回密码"), Exit(0, "退出程序");
+    private final int key;
+    private final String value;
+
+    SystemUIOption(int key, String value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+}
+
+/**
  * BiggerDVD 管理系统 ，比mini更Bigger
  *
  * @author TimVan
@@ -36,6 +58,13 @@ public class BiggerDVD {
 
 
         for (int i = 0; i < MAX_LOGIN_TIMES; i++) {
+
+            if (Account.getLoginCNT() >= MAX_LOGIN_TIMES) {
+                System.out.println("尝试次数过多，终止程序！");
+                isProgramContinue = false;
+                break;
+            }
+
             System.out.println("请输入用户名");
             String userName = scanner.nextLine();
             System.out.println("请输入密码");
@@ -50,7 +79,7 @@ public class BiggerDVD {
             //设置当前尝试登陆次数+1
             Account.setLoginCNT(Account.getLoginCNT() + 1);
             System.out.println("loginCNT=" + Account.getLoginCNT());
-            
+
             //继续下一步或返回上一层
             if (!nextOrBack()) {
                 break;
@@ -58,10 +87,7 @@ public class BiggerDVD {
 
         }
 
-        if (Account.getLoginCNT() == MAX_LOGIN_TIMES) {
-            System.out.println("尝试次数过多，终止程序！");
-            isProgramContinue = false;
-        }
+
         return isProgramContinue;
     }
 
@@ -81,6 +107,18 @@ public class BiggerDVD {
         }else {
             System.out.println("登录失败！请检查用户名或密码是否输入错误");
         }
+
+        return isProgramContinue;
+    }
+
+    /**
+     * 注册选项
+     */
+    private boolean forgetPasswordOption() {
+        Scanner scanner = new Scanner(System.in);
+        boolean isProgramContinue = true;
+        System.out.println("请输入新的用户名");
+        String userName = scanner.nextLine();
 
         return isProgramContinue;
     }
@@ -111,6 +149,10 @@ public class BiggerDVD {
             case 2:
                 isProgramContinue = registerOption();
                 break;
+            //找回密码
+            case 3:
+                isProgramContinue = forgetPasswordOption();
+                break;
             //退出
             case 0:
                 isProgramContinue = false;
@@ -132,28 +174,6 @@ public class BiggerDVD {
 
         }
         System.out.println("** 已经安全退出系统，您可关闭此窗口 **");
-    }
-}
-
-/**
- * 界面选项中数字-内容
- * */
-enum SystemUIOption {
-    Login(1, "登录"), Register(2, "注册"), Exit(0, "退出程序");
-    private final int key;
-    private final String value;
-
-    SystemUIOption(int key, String value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public int getKey() {
-        return key;
-    }
-
-    public String getValue() {
-        return value;
     }
 }
 
