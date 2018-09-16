@@ -4,10 +4,7 @@ public class User{
 	private String username;
 	private String password;
 	
-	public User(){
-		username="user";//用户名赋值
-		password="123";//密码赋值
-	}
+	public User(){}
     public String getUsername() {
     	return username;
       }
