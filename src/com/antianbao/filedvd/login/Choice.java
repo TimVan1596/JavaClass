@@ -1,14 +1,14 @@
-package com.antianbao.jhdvd.login;
+package com.antianbao.filedvd.login;
 
 import com.antianbao.jhdvd.main.Dvd;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * @author 安天宝
  * JAVA一班
- * 9月13日
+ * 9月16日
+ *
  * DisplayDVD 显示
  * CheckDVD 查看
  * LendDVD 借出
@@ -16,7 +16,6 @@ import java.util.Scanner;
  * AddDVD 添加
  * ModifyDVD 修改
  * DeleteDVD 删除
- *
  */
 public class Choice {
     static ArrayList<Dvd> dvds = new ArrayList<>();
