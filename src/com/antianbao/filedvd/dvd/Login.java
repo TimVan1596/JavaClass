@@ -1,5 +1,7 @@
-package com.antianbao.filedvd.login;
+package com.antianbao.filedvd.dvd;
 
+import com.antianbao.filedvd.user.User;
+import com.antianbao.filedvd.user.UserDaoImpl;
 import java.util.Scanner;
 /**
  * @author 安天宝
@@ -9,7 +11,6 @@ import java.util.Scanner;
  * 首页
  */
 public class Login {
-
     @SuppressWarnings({"resource"})
     public void loginManager() {
         System.out.println("********欢迎使用MiniDVD Mgr 3.0 管理系统********");
@@ -21,7 +22,6 @@ public class Login {
         Scanner s = new Scanner(System.in);
         System.out.println("请选择对应数字：");
         String login = s.nextLine();
-
         switch (login) {
             case "1":
                 while (true) {
@@ -76,7 +76,7 @@ public class Login {
                     if (flag) {
                         System.out.println("登录成功！");
                         Choice choice = new Choice();
-                        choice.ChoiceManager();
+                        choice.choiceManager();
                     } else {
                         i--;
                         if (i != 0) {

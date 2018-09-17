@@ -1,4 +1,4 @@
-package com.antianbao.filedvd.login;
+package com.antianbao.filedvd.user;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,12 +11,12 @@ import java.io.IOException;
  * @author 安天宝
  * JAVA一班
  * 9月16日
- * <p>
+ *
  * 注册写入文件 登陆读取文件
  */
 public class UserDaoImpl {
 
-    static File file = new File("E:\\JAVA\\java_direction_class\\src\\com\\antianbao\\filedvd\\login\\User");
+    static File file = new File("E:\\JAVA\\java_direction_class\\src\\com\\antianbao\\filedvd\\user\\User");
 
     //静态代码块，随着类的加载而加载
     static {
@@ -75,6 +75,7 @@ public class UserDaoImpl {
                     flag = true;
                 }
             }
+            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
