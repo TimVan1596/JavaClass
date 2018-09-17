@@ -71,11 +71,15 @@ public class Menu {
 
             serializeLoadAccountToFile();
             int number=users.size();
+            if(users.size()==0){
+                System.out.println("用户名不存在");
+                login();
+            }
             for (User us : users) {
                 number--;
 
             if (!(account.equals(us.getUsername()))) {
-                    // 调用 判断用户名密码是否正确方法
+                    // 调用 判断用户名是否正确方法
                 if(number<1) {
                     judge();
                 }else{
@@ -89,7 +93,7 @@ public class Menu {
                             // 调用登录后界面
                             enter();
                         } else {
-                            // 调用 判断用户名密码是否正确方法
+                            // 调用 判断用户密码是否正确方法
                             judge();
                         }
                     } while (loginCNT > 0);
