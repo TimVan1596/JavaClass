@@ -4,8 +4,6 @@ import com.timvanx.biggerdvd.dvd.Account;
 import com.timvanx.biggerdvd.dvd.Menu;
 import com.timvanx.biggerdvd.util.Constants;
 
-import javax.sound.midi.SoundbankResource;
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.Scanner;
 
 import static com.timvanx.biggerdvd.util.Constants.nextOrBack;
