@@ -1,9 +1,7 @@
 package com.timvanx.biggerdvd.util;
 
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,11 +12,17 @@ import java.util.Scanner;
  * */
 public class Constants {
     /**
-     *VERSION  = 版本号
+     * VERSION  = 版本号
+     * DVD_INFO_FILENAME = DVD信息txt版路径
+     * ACCOUNT_FILENAME = 账户密码txt版路径
+     * DVD_SER_PATH = DVD信息序列化路径
+     * ACCOUNT_PATH = 账户密码序列化路径
      */
-    public static final String VERSION = "v0.3(文件版)";
+    public static final String VERSION = "v0.35(文件序列化版)";
     public static final String DVD_INFO_FILENAME = "dvdInfo.txt";
     public static final String ACCOUNT_FILENAME = "account.txt";
+    public static final String DVD_SER_PATH = "dvdInfo.ser";
+    public static final String ACCOUNT_SER_PATH = "account.ser";
 
     /**
      *带异常处理的输入Int值
@@ -98,6 +102,15 @@ public class Constants {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * 使用序列化存入数据data到fileName文件
+     */
+    public static void serializeSaveDVDInfosToFile
+    (final String fileName, final String data) {
+
     }
 
 }

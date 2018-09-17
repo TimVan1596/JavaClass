@@ -10,21 +10,22 @@ import java.util.ArrayList;
  * @author TimVan
  * @date 2018年9月5日09:33:27
  * */
-public class Account {
+public class Account implements Serializable {
     private  String usrName;
     private  String usrPassword;
 
     /**
+     * serialVersionUID = 版本一致性
      * accountArrayList  = 保存所有的账户-密码
      * loginCNT = 保存用户尝试登陆的次数
      */
+    private static final long serialVersionUID = 1L;
     private static ArrayList<Account> accountArrayList;
     private static int loginCNT;
 
     static {
         accountArrayList = new ArrayList<>();
         loginCNT = 0;
-
     }
 
     private Account(String usrName,String usrPassword) {
@@ -34,7 +35,7 @@ public class Account {
 
     public Account() {
         //从文件中读取所有的账户-密码信息
-        loadAccountFromFile();
+        serializeLoadAccountToFile();
     }
 
     /**
@@ -73,7 +74,8 @@ public class Account {
         //若用户名不存在创建用户
         if (!isNameIsexist){
             accountArrayList.add(new Account(name,password));
-            saveAccountToFile(name, password);
+            //更新所有账户数据
+            clearAndSaveAccountToFile();
         }
 
         return !isNameIsexist;
@@ -103,57 +105,42 @@ public class Account {
         this.usrPassword = usrPassword;
     }
 
+
     /**
-     * 将账户存入文件Constants.ACCOUNT_FILENAME
+     * 将DVD信息存入文件Constants.ACCOUNT_SER_PATH
      */
-    private static void saveAccountToFile(String name, String password) {
-        File file = new File(Constants.ACCOUNT_FILENAME);
+    public static void clearAndSaveAccountToFile() {
+        //先清除Constants.ACCOUNT_SER_PATH文件
+        Constants.clearInfoForFile(Constants.ACCOUNT_SER_PATH);
+        //写入文件
+        serializeSaveAccountToFile();
 
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            FileWriter fileWriter = new FileWriter(file, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(name + "-" + password + "\r\n");
-            bufferedWriter.flush();
-            bufferedWriter.close();
-
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
     }
 
     /**
-     * 从文件Constants.ACCOUNT_FILENAME读入到账户数组
+     * 使用序列化将账户存入文件Constants.ACCOUNT_SER_PATH
      */
-    private static void loadAccountFromFile() {
-        File file = new File(Constants.ACCOUNT_FILENAME);
+    public static void serializeSaveAccountToFile() {
+        //DVD信息序列化路径
+        File file = new File(Constants.ACCOUNT_SER_PATH);
 
-        //账号文件Constants.ACCOUNT_FILENAME是否存在，存在则读入
-        if (file.exists()) {
-
-            try {
-                FileReader fileReader = new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-                //循环读取文件中的所有账户
-                String accountLine;
-                while ((accountLine = bufferedReader.readLine()) != null) {
-                    String[] accountLineStrings = accountLine.split("-");
-                    accountArrayList.add(new Account(accountLineStrings[0]
-                            , accountLineStrings[1]));
-                }
-
-            } catch (FileNotFoundException e) {
-                Constants.reportError("账户文件");
-                e.printStackTrace();
-            } catch (IOException e) {
-                Constants.reportError("读取数据");
-                e.printStackTrace();
+        try {
+            //检查文件是否存在，不存在则创建
+            if (!file.exists()) {
+                //创建文件
+                file.createNewFile();
             }
+            FileOutputStream fileOut =
+                    new FileOutputStream(file);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
+            out.writeObject(accountArrayList);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            Constants.reportError("序列化账户信息");
+            i.printStackTrace();
         }
-
 
     }
 
@@ -173,9 +160,57 @@ public class Account {
     }
 
     /**
+     * 使用序列化从文件Constants.ACCOUNT_SER_PATH读入到accountArrayList集合
+     */
+    public static void serializeLoadAccountToFile() {
+
+        //DVD信息序列化路径
+        File file = new File(Constants.ACCOUNT_SER_PATH);
+
+        try {
+            //检查文件是否存在
+            if (file.exists()) {
+                FileInputStream fileIn =
+                        new FileInputStream(file);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                accountArrayList = (ArrayList<Account>) in.readObject();
+                in.close();
+                fileIn.close();
+            }
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            c.printStackTrace();
+        }
+        return;
+
+
+    }
+
+    /**
      * 通过用户名修改密码
      */
-    public static void changePasswordByName(String name, String password) {
+    public static boolean changePasswordByName(String name, String password) {
+        boolean isAccountExist = false;
 
+        //判断账户名是否存在
+        if (isAccountExist(name)) {
+
+            for (int i = 0; i < accountArrayList.size(); i++) {
+                Account account = (Account) accountArrayList.get(i);
+                if (account.getUsrName().equals(name)) {
+                    //修改密码
+                    account.setUsrPassword(password);
+                    isAccountExist = true;
+                    //更新所有账户数据
+                    clearAndSaveAccountToFile();
+                    break;
+                }
+            }
+
+        }
+
+        return isAccountExist;
     }
 }

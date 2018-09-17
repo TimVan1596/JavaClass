@@ -4,6 +4,8 @@ import com.timvanx.biggerdvd.dvd.Account;
 import com.timvanx.biggerdvd.dvd.Menu;
 import com.timvanx.biggerdvd.util.Constants;
 
+import javax.sound.midi.SoundbankResource;
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.Scanner;
 
 import static com.timvanx.biggerdvd.util.Constants.nextOrBack;
@@ -78,7 +80,6 @@ public class BiggerDVD {
 
             //设置当前尝试登陆次数+1
             Account.setLoginCNT(Account.getLoginCNT() + 1);
-            System.out.println("loginCNT=" + Account.getLoginCNT());
 
             //继续下一步或返回上一层
             if (!nextOrBack()) {
@@ -119,14 +120,14 @@ public class BiggerDVD {
         boolean isProgramContinue = true;
         System.out.println("请输入您的用户名");
         String userName = scanner.nextLine();
-        //检查用户名是否存在
-        if (Account.isAccountExist(userName)) {
-            System.out.println("请输入您的新密码");
-            String userPassword = scanner.nextLine();
-
+        System.out.println("请输入新的密码");
+        String userPassword = scanner.nextLine();
+        if (!Account.changePasswordByName(userName, userPassword)) {
+            System.out.println("用户名未找到！");
         } else {
-            System.out.println("请输入您的用户不存在");
+            System.out.println("密码修改成功！");
         }
+
 
         return isProgramContinue;
     }
