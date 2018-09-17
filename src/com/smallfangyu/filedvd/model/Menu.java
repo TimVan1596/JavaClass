@@ -12,7 +12,7 @@ public class Menu {
 
     Data data = new Data();
     //引用Data里面的show方法
-    ArrayList<DVD> dvds = data.show();
+    ArrayList<DVD> dvds =data.show();
 
     // 初始化DVD编号
     static int no = 0;
@@ -36,7 +36,7 @@ public class Menu {
 
     //主界面
     public void login() {
-        System.out.println("**************欢迎使用MiniDVD Mgr 1.0 管理系统**************");
+        System.out.println("**************欢迎使用MiniDVD Mgr 文件流版 管理系统**************");
         System.out.println("---------------------------------");
         System.out.println("         1.登陆");
         System.out.println("         2.注册");
@@ -451,9 +451,10 @@ public class Menu {
         for (DVD dvd : dvds) {
             if (no == dvd.getId() && (dvd.getState()).equals("可以借")) {
                 queryhave = true;
-                System.out.println("恭喜您！此DVD在系统中的状态为：可以借！");
                 display();
-                dvd.setState("可以借");
+                System.out.println("恭喜您！此DVD在系统中的状态为：可以借！");
+                dvd.setState("已借出");
+                data.dvdWrite();
             }
         }
         if (!queryhave) {
@@ -489,18 +490,20 @@ public class Menu {
             revert();
         }
 
-        System.out.println("请输入要归还的DVD的名称:");
-        dvdname = scanner.next();
-
+        //System.out.println("请输入要归还的DVD的名称:");
+        //dvdname = scanner.next();
+          int num=dvds.size();
         for (DVD dvd : dvds) {
             // 判断DVD是否可以归还
+            num--;
             if (no == dvd.getId()) {
-                if (dvdname.equals(dvd.getDvdname()) && (dvd.getState().equals("已借出"))) {
+                if ( dvd.getState().equals("已借出")) {
                     dvd.setState("可以借");
+                    data.dvdWrite();
                     System.out.println("DVD已归还");
                     break;
                 } else {
-                    System.out.println("DVD名称不正确或DVD可以借");
+                    System.out.println("DVD并未借出");
                     break;
                 }
             } else {
@@ -509,10 +512,15 @@ public class Menu {
                 // for(int l=0;l<dvds.length;l++) {
                 // newdvds[l]=dvds[l];
                 // }
-                dvds.add(new DVD(no, dvdname, "可以借"));
+                //dvds.add(new DVD(no, dvdname, "可以借"));
+                //data.dvdWrite();
+                if(num<1){
+                    System.out.println("你输入的DVD编号未找到，请重输");
+                    revert();
+                 }else{
+                    continue;
+                }
 
-                System.out.println("DVD已归还");
-                break;
             }
         }
         // 展示归还后的DVD界面
@@ -562,8 +570,8 @@ public class Menu {
         // newdvds[dvds.length]= new Dvd(no,dvdname,"可以借");
         // dvds=newdvds;
 
-        dvds.add(new DVD(no, dvdname, "可以借"));
-
+        dvds.add(new DVD(no, "《"+dvdname+"》", "可以借"));
+        data.dvdWrite();
         display();
         System.out.println("DVD添加成功");
 
@@ -613,6 +621,7 @@ public class Menu {
         // dvds[l]=dvds[l+1];
         // }
         dvds.remove(index);
+        data.dvdWrite();
 
         display();
         System.out.println("DVD删除成功");
@@ -657,7 +666,7 @@ public class Menu {
 
                 System.out.println("请输入要修改的DVD名称:");
                 dvdname = scanner.next();
-                dvd.setDvdname(dvdname);
+                dvd.setDvdname("《"+dvdname+"》");
 
                 boolean state = true;
                 do {
@@ -666,6 +675,7 @@ public class Menu {
 
                     if ((dvdstate.equals("可以借")) || (dvdstate.equals("已借出"))) {
                         dvd.setState(dvdstate);
+                        data.dvdWrite();
                         display();
                         state = false;
                     } else {

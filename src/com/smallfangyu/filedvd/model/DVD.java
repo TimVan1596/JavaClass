@@ -1,6 +1,8 @@
 package com.smallfangyu.filedvd.model;
 
-public class DVD {
+import java.io.Serializable;
+
+public class DVD implements Serializable {
    private int id;
    private String dvdname;
    private String state;
