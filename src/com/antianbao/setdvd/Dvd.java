@@ -1,9 +1,8 @@
-package com.antianbao.jhdvd.main;
+package com.antianbao.setdvd;
 /**
  * @author 安天宝
  * JAVA一班
  * 9月13日
- *
  */
 public class Dvd {
 
