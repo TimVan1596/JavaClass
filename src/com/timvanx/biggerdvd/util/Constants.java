@@ -18,7 +18,7 @@ public class Constants {
      * DVD_SER_PATH = DVD信息序列化路径
      * ACCOUNT_PATH = 账户密码序列化路径
      */
-    public static final String VERSION = "v0.35(文件序列化版)";
+    public static final String VERSION = "v0.4(数据库版)";
     public static final String DVD_INFO_FILENAME = "dvdInfo.txt";
     public static final String ACCOUNT_FILENAME = "account.txt";
     public static final String DVD_SER_PATH = "dvdInfo.ser";
