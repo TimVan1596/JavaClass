@@ -127,7 +127,7 @@ public class Account implements Serializable {
         try {
             //检查文件是否存在，不存在则创建
             if (!file.exists()) {
-                //创建文件
+                //创建
                 file.createNewFile();
             }
             FileOutputStream fileOut =
@@ -135,8 +135,9 @@ public class Account implements Serializable {
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
             out.writeObject(accountArrayList);
-            out.close();
             fileOut.close();
+            out.close();
+
         } catch (IOException i) {
             Constants.reportError("序列化账户信息");
             i.printStackTrace();
