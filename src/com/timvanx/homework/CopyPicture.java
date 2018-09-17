@@ -3,6 +3,7 @@ package com.timvanx.homework;
 import java.io.*;
 
 /**
+ * @author TimVan
  * 复制图片到E盘
  */
 public class CopyPicture {
