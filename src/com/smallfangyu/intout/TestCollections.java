@@ -128,8 +128,11 @@ public class TestCollections {
 				ObjectInputStream in=new ObjectInputStream(fis);
 				ArrayList<Student> stus=(ArrayList<Student>) in.readObject();
 				in.close();
+
 				for(Student stu:stus) {
-				 System.out.println(stu);}
+				 System.out.println(stu);
+				}
+
 			} catch (Exception e) {
 				// TODO 自动生成的 catch 块
 				e.printStackTrace();

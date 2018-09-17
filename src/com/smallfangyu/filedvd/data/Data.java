@@ -18,6 +18,8 @@ public class Data {
 	dvds.add(dvd2);
 	dvds.add(dvd3);
 	dvds.add(dvd4);
+
+	
 	return dvds;
 	}
 }

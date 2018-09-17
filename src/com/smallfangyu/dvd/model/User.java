@@ -4,7 +4,10 @@ public class User{
 	private String username;
 	private String password;
 	
-	public User(){}
+	public User(){
+	    username="admin";
+	    password="123";
+    }
     public String getUsername() {
     	return username;
       }

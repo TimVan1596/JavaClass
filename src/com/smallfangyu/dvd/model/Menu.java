@@ -27,7 +27,7 @@ public class Menu {
 	String password = null;
 
 	// 创建账户密码对象
-	User user = new User();
+	User user=new User();
 
 	public void login() {
 		System.out.println("**************欢迎使用MiniDVD Mgr 1.0 管理系统**************");

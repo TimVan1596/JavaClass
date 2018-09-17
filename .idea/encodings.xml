@@ -9,5 +9,7 @@
     <file url="file://$PROJECT_DIR$/src/com/smallfangyu/dvd/model/Menu.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/smallfangyu/dvd/model/User.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/smallfangyu/dvd/test/MiniDVD.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/smallfangyu/intout/Student.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/smallfangyu/intout/TestCollections.java" charset="UTF-8" />
   </component>
 </project>
