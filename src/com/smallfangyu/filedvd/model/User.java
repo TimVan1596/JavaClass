@@ -2,8 +2,7 @@ package com.smallfangyu.filedvd.model;
 import java.io.Serializable;
 
 public class User implements Serializable{
-
-	private static final long serialVersionUID = 105972847548632828L;
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 	
@@ -19,17 +18,21 @@ public class User implements Serializable{
 
 
     public String getUsername() {
-    	return username;
+
+		return username;
       }
+
     public void setUsername(String username) {
-    	this.username=username;
+
+		this.username=username;
     }
     
     public String getPassword() {
     	return password;
       }
     public void setPassword(String password) {
-    	this.password=password;
+
+		this.password=password;
     }
 	
 }
