@@ -1,7 +1,5 @@
 package com.smallfangyu.filedvdzfl.model;
 
-
-
 public class DVD  {
    private int id;
    private String dvdname;

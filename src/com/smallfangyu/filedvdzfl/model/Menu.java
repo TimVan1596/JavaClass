@@ -1,14 +1,24 @@
 package com.smallfangyu.filedvdzfl.model;
 
 import com.smallfangyu.filedvdzfl.data.Data;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/**
+ * <p>包含常用的写入，读取操作</p>
+ * <ul>本字符流操作的步骤
+ *  <li>创造字符输入输出流</li>
+ *  <li>创造缓存式字符流</li>
+ *  <li>执行缓存式字符流的写入，读取操作</li>
+ *  <li>释放资源</li>
+ * </ul>
+ * @author FY
+ * @date 2018-9-17 21:06:35
+ * @since 3.0
+ */
 public class Menu {
 
-    static File file = new File("F:\\新建文件夹\\upzfl.txt");
+    static File file = new File("src/com/smallfangyu/filedvdzfl/upzfl.txt");
     static{
     //判断父类文件是否存在
         if (!file.getParentFile().exists()) {
@@ -16,9 +26,13 @@ public class Menu {
     }
 
     }
+
+    //创建User类集合
     ArrayList<User> users = new ArrayList<User>();
 
+    //创建DVD数据对象
     Data data = new Data();
+
     //引用Data里面的show方法
     ArrayList<DVD> dvds =data.show();
 
@@ -37,35 +51,33 @@ public class Menu {
     // 初始化输入的密码
     String password = null;
 
-//    public Menu() {
-//        //从文件中读取所有的账户-密码信息
-//        serializeLoadAccountToFile();
-//    }
 
-    //主界面
+    /**
+     * 主界面
+     */
     public void login() {
+
         System.out.println("**************欢迎使用MiniDVD Mgr 文件流版 管理系统**************");
         System.out.println("---------------------------------");
         System.out.println("         1.登陆");
         System.out.println("         2.注册");
         System.out.println("         3.找回密码");
         System.out.println("         4.退出");
-
         System.out.println("---------------------------------");
         System.out.println("请选择对应数字:");
         // 调用 当输入不在1-4范围或输入非法数字，系统会提示，并进行重新输入
         reinput();
     }
 
-    /*
-    用户登陆
+    /**
+     *用户登陆
      */
     public void userLogin() {
         do {
             System.out.println("请输入用户名:");
             Scanner num = new Scanner(System.in);
             account = num.nextLine();
-
+            //文件里读账号密码
             bufferedRead();
 
             int number=users.size();
@@ -104,15 +116,16 @@ public class Menu {
         while (loginCNT > 0);
 
     }
-    /*
-    找回密码
+
+    /**
+     *找回密码
      */
     public void findPassWord(){
         System.out.println("--------找回密码--------");
         System.out.println("请输入你的账号:");
         Scanner scanner=new Scanner(System.in);
         account=scanner.nextLine();
-        //serializeLoadAccountToFile();
+        //文件里读账号密码
         bufferedRead();
 
         int number=users.size();
@@ -140,7 +153,9 @@ public class Menu {
         login();
     }
 
-    //从文件读用户数据
+    /**
+     * 从文件读用户数据
+     */
     public void bufferedRead() {
 
         try {
@@ -164,7 +179,11 @@ public class Menu {
         }
 
     }
-    //添加用户数据写入文件
+
+    /**
+     * 添加用户数据写入文件
+     * @param us
+     */
     public void bufferedWrite(User us){
         try {
             if (file.exists()) {
@@ -185,7 +204,10 @@ public class Menu {
         }
 
     }
-    //注册功能
+
+    /**
+     * 注册功能
+     */
     public void register() {
 
         System.out.println("请输入新的用户名:");
@@ -226,7 +248,9 @@ public class Menu {
 
     }
 
-    // 当输入不在1-4范围或输入非法数字，系统会提示，并进行重新输入
+    /**当输入不在1-4范围或输入非法数字，系统会提示，并进行重新输入
+     *
+     */
     public void reinput() {
         // 判断值
         boolean isReinputEnd = true;
@@ -268,7 +292,9 @@ public class Menu {
 
     }
 
-    // 登录后界面
+    /** 登录后界面
+     *
+     */
     public void enter() {
         System.out.println("**************欢迎进入MiniDVD Mgr 1.0 管理系统**************");
         System.out.println("---------------------------------");
@@ -287,7 +313,10 @@ public class Menu {
 
     }
 
-    // 显示DVD界面
+    /** 显示DVD界面
+     *
+     *
+     */
     public void display() {
         System.out.println("MiniDVD Mgr 1.0 管理系统---->显示当前所有DVD信息");
         System.out.println("编号\t       名称\t\t状态");
@@ -299,7 +328,9 @@ public class Menu {
 
     }
 
-    // 按数字0返回
+    /** 按数字0返回
+     *
+     */
     public void back() {
         System.out.println("请输入数字0返回:");
         Scanner scanner = new Scanner(System.in);
@@ -317,7 +348,9 @@ public class Menu {
         }
     }
 
-    // 判断用户名密码次数还剩多少
+    /**判断用户名密码次数还剩多少
+     *
+     */
     public void judge() {
         loginCNT--;
         if (loginCNT > 0) {
@@ -328,7 +361,9 @@ public class Menu {
         }
     }
 
-    // 按编号查询
+    /**按编号查询
+     *
+     */
     public void noquery() {
         // 选择编号
         System.out.println("请输入要查询的DVD编号:");
@@ -373,7 +408,9 @@ public class Menu {
         } while (keep);
     }
 
-    // 按名称查询
+    /** 按名称查询
+     *
+     */
     public void dvdnamequery() {
 
         System.out.println("请输入要查询的DVD名称:");
@@ -410,7 +447,9 @@ public class Menu {
         } while (keep);
     }
 
-    // 查询DVD界面，实现查询功能
+    /**查询DVD界面，实现查询功能
+     *
+     */
     public void query() {
         System.out.println("MiniDVD Mgr 1.0 管理系统---->查询DVD信息");
         System.out.println("---------------------------------");
@@ -448,7 +487,9 @@ public class Menu {
         }
     }
 
-    // 借出界面，实现借出功能
+    /**借出界面，实现借出功能
+     *
+     */
     public void lend() {
         System.out.println("MiniDVD Mgr 1.0 管理系统---->借出DVD信息");
         System.out.println("请输入要借出的DVD的编号:");
@@ -492,7 +533,9 @@ public class Menu {
         } while (keep);
     }
 
-    // 归还界面
+    /**归还界面
+     *
+     */
     public void revert() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("请输入要归还的DVD的编号:");
@@ -557,7 +600,9 @@ public class Menu {
         } while (keep);
     }
 
-    // 添加DVD界面,实现添加功能
+    /** 添加DVD界面,实现添加功能
+     *
+     */
     public void add() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("请输入添加的DVD编号:");
@@ -606,7 +651,9 @@ public class Menu {
         } while (keep);
     }
 
-    // 删除DVD界面,实现删除功能
+    /**删除DVD界面,实现删除功能
+     *
+     */
     public void delete() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("请输入要删除的DVD编号:");
@@ -657,7 +704,9 @@ public class Menu {
         } while (keep);
     }
 
-    // 实现修改DVD功能
+    /**实现修改DVD功能
+     *
+     */
     public void update() {
         Scanner scanner = new Scanner(System.in);
         // 判断输入的DVD编号是否正确
@@ -722,7 +771,10 @@ public class Menu {
         } while (keep);
     }
 
-    // 当输入不在1-8范围或输入非法数字，系统会提示，并进行重新输入
+    /**当输入不在1-8范围或输入非法数字，系统会提示，并进行重新输入
+     *
+     * @param dvds
+     */
     public void reinputs(ArrayList<DVD> dvds) {
         // 判断输入的数是否合法
         boolean isReinputsEnd = true;

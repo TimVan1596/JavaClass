@@ -1,15 +1,12 @@
 package com.smallfangyu.filedvdzfl.model;
-import java.io.Serializable;
 
-public class User implements Serializable{
-	private static final long serialVersionUID = 1L;
+
+public class User {
+
 	private String username;
 	private String password;
 	
-	//public User(){
-		//username="user";//用户名赋值
-		//password="123";//密码赋值
-	//}
+
 	public  User(String username,String password) {
 		super();
 		this.username=username;
