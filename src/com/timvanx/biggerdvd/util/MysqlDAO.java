@@ -1,6 +1,8 @@
 package com.timvanx.biggerdvd.util;
 
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 
 /**
  * 封装MySQL数据库的工具类
@@ -18,10 +20,11 @@ import java.sql.*;
  */
 public class MysqlDAO {
 
-    private static String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     /**
-     * 设置url ，用户名， 密码
+     * 设置驱动、url、用户名、密码
+     * 通过db.properties配置
      */
+    private static String JDBC_DRIVER;
     static String DB_URL;
     static String USER;
     static String PASS;
@@ -29,16 +32,22 @@ public class MysqlDAO {
     /**
      * 初始化JDBC-MySQL连接(只做一次)
      * <ul>
-     * <li>注册连接</li>
-     * <li>初始化数据库连接配置（.properties）</li>
+     *   <li>注册连接</li>
+     *   <li>初始化数据库连接配置（.properties）</li>
      * </ul>
-     *
-     * @throws
+     * @throws ClassNotFoundException Class.forName发生异常
      */
     private static void init() throws ClassNotFoundException {
         // 注册 JDBC 驱动
         Class.forName(JDBC_DRIVER);
+        //初始化数据库连接配置
+        Properties properties = new Properties();
+        InputStream in = MysqlDAO.class.getClassLoader()
+                .getResourceAsStream("db.properties");
+        //获取name的值
+        String name = properties.getProperty("name");
 
+        JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
         DB_URL =
                 "jdbc:mysql://" +
                         "120.79.210.170:3306" +
@@ -70,7 +79,7 @@ public class MysqlDAO {
     }
 
     /**
-     * select MySQL方法
+     * select - MySQL方法
      *
      * @param tableName 表名
      */
