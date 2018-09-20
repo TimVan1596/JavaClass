@@ -1,5 +1,6 @@
 package com.timvanx.biggerdvd.util;
 
+import javax.sound.midi.SoundbankResource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -106,8 +107,7 @@ public class MysqlDAO {
      * @param tableField 字段
      * @param tableWhere 条件
      */
-    public static void select(String tableName, ArrayList<String> tableField
-            , ArrayList<String> tableWhere) {
+    public static void select(String tableName, ArrayList<String> tableField, String tableWhere) {
         Connection conn = null;
         Statement stmt = null;
 
@@ -116,26 +116,17 @@ public class MysqlDAO {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
 
-            String sql;
-            StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append("select ");
-            if (!tableField.isEmpty()) {
-                boolean isFirst = true;
-                for (String field : tableField) {
-                    if (!isFirst) {
-                        stringBuffer.append(",");
-                    }
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("select ");
+            stringBuilder.append(arrayListToString(tableField));
+            stringBuilder.append(" from ");
+            stringBuilder.append(tableName);
+            stringBuilder.append(" where ");
+            stringBuilder.append(tableWhere);
+            String sql = stringBuilder.toString();
 
-                }
-            }
+            System.out.println("---" + sql);
 
-            sql = "SELECT id,name,password " +
-                    " FROM " +
-                    tableName;
-
-            sql = "SELECT id,name,password " +
-                    " FROM " +
-                    tableName;
             ResultSet rs = stmt.executeQuery(sql);
 
             // 展开结果集数据库
@@ -168,10 +159,39 @@ public class MysqlDAO {
         }
     }
 
+    /**
+     * 将ArrayList<String>转换成String+"," 顿号格式
+     * 常用于SQL语句的字段
+     * 如将ArrayList转换成 "id,name,password" 格式
+     *
+     * @param arrayList 原始ArrayList，保存各字段
+     * @return String 返回结果
+     */
+    private static String arrayListToString(ArrayList<String> arrayList) {
+        StringBuilder stringBuffer = new StringBuilder();
+        if (!arrayList.isEmpty()) {
+            boolean isFirst = true;
+            for (String field : arrayList) {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    stringBuffer.append(",");
+                }
+                stringBuffer.append(field);
+
+            }
+        }
+        return stringBuffer.toString();
+    }
+
     public static void main(String[] args) {
         String tableName = "account";
         ArrayList<String> tableField = new ArrayList<>();
-        select(tableName, tableField, tableField);
+        tableField.add("id");
+        tableField.add("name");
+        tableField.add("password");
+        String tableWhere = "name = " + "'account'";
+        select(tableName, tableField, tableWhere);
     }
 
 
