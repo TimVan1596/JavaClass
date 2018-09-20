@@ -1,6 +1,11 @@
 package com.timvanx.biggerdvd.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * 封装MySQL数据库的工具类
@@ -17,35 +22,61 @@ import java.sql.*;
  * @since 4.0
  */
 public class MysqlDAO {
-
-    private static String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     /**
-     * 设置url ，用户名， 密码
+     设置驱动、url、用户名、密码
+     通过db.properties配置
      */
-    static String DB_URL;
-    static String USER;
-    static String PASS;
+    private static String DB_URL;
+    private static String USER;
+    private static String PASS;
+
+    static {
+        //初始化JDBC-MySQL连接(只做一次)
+        init();
+    }
 
     /**
      * 初始化JDBC-MySQL连接(只做一次)
      * <ul>
-     * <li>注册连接</li>
-     * <li>初始化数据库连接配置（.properties）</li>
+     *   <li>初始化数据库连接配置（.properties）</li>
+     *   <li>注册连接</li>
      * </ul>
-     *
-     * @throws
      */
-    private static void init() throws ClassNotFoundException {
-        // 注册 JDBC 驱动
-        Class.forName(JDBC_DRIVER);
+    private static void init() {
+        //初始化数据库连接配置
+        Properties properties = new Properties();
+        InputStream in = MysqlDAO.class.getClassLoader()
+                .getResourceAsStream("db.properties");
+        /**
+         * 设置驱动、url、用户名、密码
+         * 通过db.properties配置
+         */
 
-        DB_URL =
-                "jdbc:mysql://" +
-                        "120.79.210.170:3306" +
-                        "/biggerdvd" +
-                        "?serverTimezone=UTC";
-        USER = "homework";
-        PASS = "homework";
+
+        try {
+            properties.load(in);
+        } catch (IOException e) {
+            Constants.reportError("数据库配置文件");
+            e.printStackTrace();
+        }
+
+        /**
+         设置驱动、url、用户名、密码
+         通过db.properties配置
+         */
+        String JDBC_DRIVER = properties.getProperty("JDBC_DRIVER");
+        DB_URL = properties.getProperty("DB_URL");
+        USER = properties.getProperty("USER");
+        PASS = properties.getProperty("PASS");
+
+
+        // 注册 JDBC 驱动
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            Constants.reportError("JDBC驱动");
+            e.printStackTrace();
+        }
 
     }
 
@@ -70,22 +101,38 @@ public class MysqlDAO {
     }
 
     /**
-     * select MySQL方法
-     *
+     * select - MySQL方法
      * @param tableName 表名
+     * @param tableField 字段
+     * @param tableWhere 条件
      */
-    public static void select(String tableName) {
+    public static void select(String tableName, ArrayList<String> tableField
+            , ArrayList<String> tableWhere) {
         Connection conn = null;
         Statement stmt = null;
 
         try {
-            init();
-
-            // 打开链接
+            //连接数据库
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
 
             String sql;
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append("select ");
+            if (!tableField.isEmpty()) {
+                boolean isFirst = true;
+                for (String field : tableField) {
+                    if (!isFirst) {
+                        stringBuffer.append(",");
+                    }
+
+                }
+            }
+
+            sql = "SELECT id,name,password " +
+                    " FROM " +
+                    tableName;
+
             sql = "SELECT id,name,password " +
                     " FROM " +
                     tableName;
@@ -122,7 +169,9 @@ public class MysqlDAO {
     }
 
     public static void main(String[] args) {
-        select("account");
+        String tableName = "account";
+        ArrayList<String> tableField = new ArrayList<>();
+        select(tableName, tableField, tableField);
     }
 
 
