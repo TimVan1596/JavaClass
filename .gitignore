@@ -30,3 +30,5 @@ out/artifacts/Solution_jar/temp.html
 out/production/
 /.idea/
 java_direction_class.iml
+/src/com/timvanx/biggerdvd/util/db.properties
+src/com/timvanx/biggerdvd/util/db.properties
