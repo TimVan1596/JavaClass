@@ -1,6 +1,8 @@
 package com.antianbao.mysql920;
 
 import java.sql.*;
+import java.util.List;
+
 /**
  * @author 安天宝
  * JAVA一班
@@ -19,6 +21,7 @@ public class DBHelper {
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private Statement stmt = null;
+    private ResultSet rs = null;
 
     private void openConnection(){
         String DB_URL =
@@ -28,7 +31,6 @@ public class DBHelper {
                         "?serverTimezone=UTC";
         String USER = "root";
         String PASS = "";
-
         try{
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
         }catch (SQLException e){
@@ -54,6 +56,16 @@ public class DBHelper {
             e.printStackTrace();
         }
         return pstmt;
+    }
+
+    public ResultSet executeQuery(String sql) {
+        openConnection();
+        try {
+            stmt = conn.prepareStatement(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 
     public void close() {

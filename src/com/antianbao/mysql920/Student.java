@@ -12,6 +12,9 @@ public class Student {
     private float score;
     private String address;
 
+    public Student() {
+    }
+
     public Student(String name, int age, float score, String address) {
         this.name = name;
         this.age = age;
@@ -65,5 +68,16 @@ public class Student {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", score=" + score +
+                ", address='" + address + '\'' +
+                '}';
     }
 }
