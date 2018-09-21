@@ -28,7 +28,8 @@ public class DBHelper {
                 "jdbc:mysql://" +
                         "localhost:3306" +
                         "/test" +
-                        "?serverTimezone=UTC";
+                        "?useSSL=false&serverTimezone=UTC&characterEncoding=UTF8";
+
         String USER = "root";
         String PASS = "";
         try{
