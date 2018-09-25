@@ -35,6 +35,70 @@ public class JDBCUtil {
     }
 
     /**
+     * select - MySQL方法
+     *
+     * @param tableName  表名
+     * @param tableField 字段
+     * @param tableWhere 条件
+     */
+    public static List<List<String>> select
+    (String tableName, ArrayList<String> tableField
+            , String tableWhere) {
+        Connection conn = null;
+
+        List<List<String>> list = new ArrayList<>();
+
+        try {
+            //连接数据库
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //构建基于PreparedStatement的SQL语句
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(" select ");
+            stringBuilder.append(arrayListToPreparedStm(tableField));
+            stringBuilder.append(" from ");
+            stringBuilder.append(tableName);
+            if (tableWhere != null) {
+                stringBuilder.append(" where ");
+                stringBuilder.append(tableWhere);
+            }
+            String sql = stringBuilder.toString();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            //select 查询使用 executeQuery ，只会返回 ResultSet
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                //构建行组
+                ArrayList<String> row = new ArrayList<>();
+                for (String fieldName : tableField) {
+                    String filedData = rs.getString(fieldName);
+                    row.add(filedData);
+                }
+                list.add(row);
+            }
+
+            // 完成后关闭
+            rs.close();
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException se) {
+            // 处理 JDBC 错误
+            se.printStackTrace();
+        } catch (Exception e) {
+            // 处理 Class.forName 错误
+            e.printStackTrace();
+        } finally {
+            //释放资源
+            close(conn);
+        }
+
+        return list;
+    }
+
+
+
+    /**
      * 初始化JDBC-MySQL连接(只做一次)
      * <ul>
      * <li>初始化数据库连接配置（.properties）</li>
@@ -82,14 +146,8 @@ public class JDBCUtil {
     /**
      * 释放资源
      */
-    private static void close(Connection conn, Statement stmt) {
+    private static void close(Connection conn) {
         // 关闭资源
-        try {
-            if (stmt != null) {
-                stmt.close();
-            }
-        } catch (SQLException se2) {
-        }// 什么都不做
         try {
             if (conn != null) {
                 conn.close();
@@ -99,100 +157,29 @@ public class JDBCUtil {
         }
     }
 
-    /**
-     * select - MySQL方法
-     *
-     * @param tableName  表名
-     * @param tableField 字段
-     * @param tableWhere 条件
-     */
-    public static List<Map<Object, Object>> select
-    (String tableName, ArrayList<String> tableField
-            , String tableWhere) {
-        Connection conn = null;
-        Statement stmt = null;
-
-        List<Map<Object, Object>> list = new ArrayList<>();
-
-        try {
-            //连接数据库
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = conn.createStatement();
-
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("select ");
-            stringBuilder.append(arrayListToString(tableField));
-            stringBuilder.append(" from ");
-            stringBuilder.append(tableName);
-            if (tableWhere != null) {
-                stringBuilder.append(" where ");
-                stringBuilder.append(tableWhere);
-            }
-
-            String sql = stringBuilder.toString();
-
-            System.out.println("---" + sql);
-
-            ResultSet rs = stmt.executeQuery(sql);
-            // 获得结果集结构信息（元数据）
-            ResultSetMetaData md = rs.getMetaData();
-            // 获取select结果的元组行数
-            int columnCount = md.getColumnCount();
-            // ResultSet转List<Map>数据结构
-            // next用于移动到ResultSet的下一行，使下一行成为当前行
-            while (rs.next()) {
-                Map<Object, Object> map =
-                        new HashMap<>(columnCount);
-                for (int i = 1; i <= columnCount; i++) {
-                    // 遍历获取对当前行的每一列的键值对，put到map中
-                    // rs.getObject(i) 获得当前行某一列字段的值
-                    map.put(md.getColumnName(i).toLowerCase()
-                            , rs.getObject(i));
-                }
-                list.add(map);
-            }
-
-            // 完成后关闭
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException se) {
-            // 处理 JDBC 错误
-            se.printStackTrace();
-        } catch (Exception e) {
-            // 处理 Class.forName 错误
-            e.printStackTrace();
-        } finally {
-            //释放资源
-            close(conn, stmt);
-        }
-
-        return list;
-    }
 
     /**
-     * 将ArrayList<String>转换成String+"," 顿号格式
+     * 将ArrayList<String>转换成" ? ," 格式(PreparedStatement，SQL用)
      * 常用于SQL语句的字段
-     * 如将ArrayList转换成 "id,name,password" 格式
+     * 如将ArrayList转换成 "?,?,?" 格式
      *
      * @param arrayList 原始ArrayList，保存各字段
-     * @return String 返回结果
+     * @return StringBuilder 返回输出结果
      */
-    private static String arrayListToString(ArrayList<String> arrayList) {
-        StringBuilder stringBuffer = new StringBuilder();
+    private static StringBuilder arrayListToPreparedStm(ArrayList<String> arrayList) {
+        StringBuilder stringBuilder = new StringBuilder();
         if (!arrayList.isEmpty()) {
             boolean isFirst = true;
-            for (String field : arrayList) {
+            for (int i = 0; i < arrayList.size(); i++) {
                 if (isFirst) {
                     isFirst = false;
                 } else {
-                    stringBuffer.append(",");
+                    stringBuilder.append(" , ");
                 }
-                stringBuffer.append(field);
-
+                stringBuilder.append(arrayList.get(i));
             }
         }
-        return stringBuffer.toString();
+        return stringBuilder;
     }
 
 
@@ -204,13 +191,15 @@ public class JDBCUtil {
             add("password");
         }};
 
-        List<Map<Object, Object>> list =
+        String tableWhere = "name = 'admin'";
+
+        List<List<String>> list =
                 select(tableName, tableField, null);
-        for (Map<Object, Object> cache :list) {
-            for (Map.Entry<Object, Object> entry
-                    : cache.entrySet()) {
-                System.out.println(entry.getKey() + ":" + entry.getValue());
+        for (List<String> cache : list) {
+            for (String data : cache) {
+                System.out.print(data + "\t");
             }
+            System.out.println();
         }
 
 
