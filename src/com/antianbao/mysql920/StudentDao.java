@@ -13,7 +13,7 @@ import java.util.List;
  * 操作
  */
 public class StudentDao {
-    private DBHelper dbHelper = new DBHelper();
+    private JDBCUtil dbHelper = new JDBCUtil();
     public int addStu(Student stu){
         int rlt = 0;
         String sql = "insert into student(name,age,score,address) values(?,?,?,?)";
