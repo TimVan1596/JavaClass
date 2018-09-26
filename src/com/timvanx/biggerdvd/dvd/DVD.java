@@ -1,6 +1,7 @@
 package com.timvanx.biggerdvd.dvd;
 
 import com.timvanx.biggerdvd.util.Constants;
+import com.timvanx.biggerdvd.util.JDBCUtil;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ public class DVD implements Serializable {
         //编号从1000开始初始化
         DVD.setCnt(1000);
         //初始化DVD数组
-//        loadDVDInfosToFile();
         serializeLoadDVDInfosToFile();
     }
 
@@ -108,12 +108,12 @@ public class DVD implements Serializable {
             //检查文件是否存在，不存在则创建
             if (!file.exists()) {
                 //创建文件
-                file.createNewFile();
+                boolean ret = file.createNewFile();
             }
-
             FileOutputStream fileOut =
                     new FileOutputStream(DVD_SER_PATH);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
             out.writeObject(DVDArr);
             out.close();
             fileOut.close();
@@ -139,29 +139,11 @@ public class DVD implements Serializable {
     }
 
     /**
-     * 使用序列化从文件Constants.DVD_SER_PATH读入到DvdArr集合
+     * 使用数据库从配置文件Constants.DB_CONFIG_FILE读入到DvdArr集合
      */
     public static void serializeLoadDVDInfosToFile() {
 
-        //DVD信息序列化路径
-        File file = new File(DVD_SER_PATH);
-
-        try {
-            //检查文件是否存在
-            if (file.exists()) {
-                FileInputStream fileIn =
-                        new FileInputStream(file);
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-                DVDArr = (ArrayList<DVD>) in.readObject();
-                in.close();
-                fileIn.close();
-            }
-        } catch (IOException i) {
-            i.printStackTrace();
-        } catch (ClassNotFoundException c) {
-            c.printStackTrace();
-        }
-        return;
+        JDBCUtil.setConfigFile(Constants.DB_CONFIG_FILE);
 
 
     }
