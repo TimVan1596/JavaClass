@@ -35,15 +35,88 @@ public class JDBCUtil {
     }
 
     /**
-     * select - MySQL方法
+     * 更新数据
      *
+     * @param tableName  数据表
+     * @param updateData Map容器 field-value格式 数据数组
+     *                   p.s 特别注意value是字符串时加引号!!!
+     *                   如: updateData.put("password", "'123'");
+     * @param tableWhere 过滤条件
+     * @return mixed 受影响记录
+     */
+    public static int update(String tableName
+            , Map<String, String> updateData
+            , String tableWhere) {
+        Connection conn = null;
+        //返回值：返回受影响的记录条数(失败返回-1)
+        int affectRowCNT = -1;
+        try {
+            //连接数据库
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //构建基于PreparedStatement的SQL语句
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(" update ");
+            stringBuilder.append(tableName);
+            stringBuilder.append(" set ");
+            //填充字段名和值赋值
+            boolean isFirst = true;
+            for (Map.Entry<String, String> entry
+                    : updateData.entrySet()) {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    stringBuilder.append(" , ");
+                }
+                stringBuilder.append(entry.getKey());
+                stringBuilder.append("=");
+                stringBuilder.append(entry.getValue());
+            }
+
+            //where条件子句
+            if (tableWhere != null) {
+                stringBuilder.append(" where ");
+                stringBuilder.append(tableWhere);
+            }
+
+
+            String sql = stringBuilder.toString();
+            System.out.println("-" + sql + "-");
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            //非select使用 executeUpdate ，只会返回影响行数
+            affectRowCNT = preparedStatement.executeUpdate();
+
+
+            // 完成后关闭
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException se) {
+            // 处理 JDBC 错误
+            se.printStackTrace();
+        } catch (Exception e) {
+            // 处理 Class.forName 错误
+            e.printStackTrace();
+        } finally {
+            //释放资源
+            close(conn);
+        }
+
+        return affectRowCNT;
+    }
+
+
+    /**
+     * 查询数据
      * @param tableName  表名
      * @param tableField 字段
      * @param tableWhere 条件
+     * @param  tableOrder 排序
+     * @param  tableLimit 选取
      */
     public static List<List<String>> select
     (String tableName, ArrayList<String> tableField
-            , String tableWhere) {
+            , String tableWhere, String tableOrder, String tableLimit) {
         Connection conn = null;
 
         List<List<String>> list = new ArrayList<>();
@@ -58,9 +131,20 @@ public class JDBCUtil {
             stringBuilder.append(arrayListToPreparedStm(tableField));
             stringBuilder.append(" from ");
             stringBuilder.append(tableName);
+            //where条件子句
             if (tableWhere != null) {
                 stringBuilder.append(" where ");
                 stringBuilder.append(tableWhere);
+            }
+            //order条件子句
+            if (tableOrder != null) {
+                stringBuilder.append(" order by ");
+                stringBuilder.append(tableOrder);
+            }
+            //limit条件子句
+            if (tableLimit != null) {
+                stringBuilder.append(" limit ");
+                stringBuilder.append(tableLimit);
             }
             String sql = stringBuilder.toString();
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -96,7 +180,66 @@ public class JDBCUtil {
         return list;
     }
 
+    /**
+     * 插入数据
+     *
+     * @param tableName  数据表
+     * @param insertData Map容器 field-value格式 数据数组
+     *                   p.s 特别注意value是字符串时加引号!!!
+     *                   如: insertData.put("password", "'123'");
+     * @return int 返回受影响的记录条数(失败返回-1)
+     */
+    public static int insert(String tableName
+            , Map<String, String> insertData) {
+        Connection conn = null;
+        //返回值：返回受影响的记录条数(失败返回-1)
+        int affectRowCNT = -1;
 
+        try {
+            //连接数据库
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //构建基于PreparedStatement的SQL语句
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(" insert into ");
+            stringBuilder.append(tableName);
+            stringBuilder.append(" ( ");
+            //填充字段名
+            ArrayList<String> filedList =
+                    new ArrayList<>(insertData.keySet());
+            stringBuilder.append(
+                    arrayListToPreparedStm(filedList));
+            stringBuilder.append(" ) value ( ");
+            //填充数据值
+            ArrayList<String> valueList =
+                    new ArrayList<>(insertData.values());
+            stringBuilder.append(
+                    arrayListToPreparedStm(valueList));
+            stringBuilder.append(" ) ");
+
+            String sql = stringBuilder.toString();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            //非select使用 executeUpdate ，只会返回影响行数
+            affectRowCNT = preparedStatement.executeUpdate();
+
+
+            // 完成后关闭
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException se) {
+            // 处理 JDBC 错误
+            se.printStackTrace();
+        } catch (Exception e) {
+            // 处理 Class.forName 错误
+            e.printStackTrace();
+        } finally {
+            //释放资源
+            close(conn);
+        }
+
+        return affectRowCNT;
+    }
 
     /**
      * 初始化JDBC-MySQL连接(只做一次)
@@ -184,17 +327,45 @@ public class JDBCUtil {
 
 
     public static void main(String[] args) {
+        //设置数据表名
         String tableName = "account";
+
+
+        //插入数据
+        Map<String, String> insertData =
+                new HashMap<String, String>(3);
+        Calendar now = Calendar.getInstance();
+        insertData.put("name", "'User"
+                + now.get(Calendar.DAY_OF_MONTH)
+                + "-"
+                + now.get(Calendar.HOUR_OF_DAY)
+                + "-"
+                + now.get(Calendar.MINUTE)
+                + "-"
+                + now.get(Calendar.SECOND)
+                + "'");
+        insertData.put("password", "'123'");
+        int affectRowCNT = insert(tableName, insertData);
+
+        //更新数据
+        //设置where子句
+        String tableWhere = "name = 'admin'";
+        Map<String, String> updateData =
+                new HashMap<String, String>(3);
+        updateData.put("password", "'20180926'");
+        affectRowCNT = update(tableName,updateData,tableWhere);
+
+        //设置查询条件
         ArrayList<String> tableField = new ArrayList<String>() {{
             add("id");
             add("name");
             add("password");
         }};
-
-        String tableWhere = "name = 'admin'";
-
+        String tableOrder = " age desc ";
+        String tableLimit = " 0,5 ";
         List<List<String>> list =
-                select(tableName, tableField, null);
+                select(tableName, tableField, null,tableOrder,tableLimit);
+        //打印结果
         for (List<String> cache : list) {
             for (String data : cache) {
                 System.out.print(data + "\t");
