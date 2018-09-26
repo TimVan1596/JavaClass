@@ -4,8 +4,8 @@ import com.smallfangyu.jdbcdvd.data.Data;
 import com.smallfangyu.jdbcdvd.data.DbUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+
 
 /**
  * <p>包含常用的增删改查操作</p>
@@ -117,29 +117,43 @@ public class Menu {
         do {
             System.out.println("请输入密码:");
             password = num.nextLine();
-            String sql1 = "SELECT * FROM user WHERE username=? ";
-            Object[] params = {account};
-            ResultSet rs1 = db.executeQuery(sql1, params);
-            try {
-                while (rs1.next()) {
-                    if (!password.equals(rs1.getString("password"))) {
-                        System.out.println("密码错误");
-                    } else {
-                        jud = false;
-                    }
-                }
-                //关闭资源
-                rs1.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//            String sql1 = "SELECT * FROM user WHERE username=? ";
+//            Object[] params = {account};
+//            ResultSet rs1 = db.executeQuery(sql1, params);
+//            try {
+//                while (rs1.next()) {
+//                    if (!password.equals(rs1.getString("password"))) {
+//                        System.out.println("密码错误");
+//                    } else {
+//                        jud = false;
+//                    }
+//                }
+//                //关闭资源
+//                rs1.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+            //设置查询条件
+            ArrayList<String> tableSelect = new ArrayList<String>() {{
+                add("username");
+                add("password");
+            }};
+            String tableFrom="user";
+            String tableWhere = "username='"+account+"'";
+            List<List<String>> list =db.select(tableSelect, tableFrom,tableWhere,null,null,null);
+
+            if(!password.equals(list.get(0).get(1))){
+                System.out.println("密码错误");
+            } else {
+                       jud = false;
+                   }
 
         } while (jud);
         //关闭资源
         db.close();
-
         // 调用登录后界面
         enter();
+
 
     }
 
@@ -153,7 +167,7 @@ public class Menu {
         account = scanner.nextLine();
 
         //调用判断用户名是否存在
-        //reUser();
+        reUser();
 
         String sql1 = "SELECT password FROM user WHERE username=? ";
         Object[] params = {account};
@@ -163,6 +177,8 @@ public class Menu {
             while (rs.next()) {
                 System.out.println("你的账号密码为：" + rs.getString("password"));
             }
+            rs.close();
+            db.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -493,6 +509,7 @@ public class Menu {
                 int ret = db.executeUpdate(sql, params);
                 if (ret > 0) {
                     System.out.println("DVD已借出");
+                    db.close();
                 }
             }
         }
@@ -544,6 +561,7 @@ public class Menu {
                     int ret = db.executeUpdate(sql, params);
                     if (ret > 0) {
                         System.out.println("DVD已归还");
+                        db.close();
                     }
                     break;
                 } else {
@@ -596,6 +614,7 @@ public class Menu {
         int rlt = db.executeUpdate(sql, params);
         if (rlt > 0) {
             System.out.println("DVD添加成功");
+            db.close();
         }
         //调用 显示当前所有DVD信息
         display();
@@ -646,6 +665,7 @@ public class Menu {
         int rlt = db.executeUpdate(sql, params);
         if (rlt > 0) {
             System.out.println("删除成功");
+            db.close();
         }
         //调用 显示当前所有DVD信息
         display();
@@ -706,6 +726,7 @@ public class Menu {
                         int ret = db.executeUpdate(sql, params);
                         if (ret > 0) {
                             System.out.println("修改成功");
+                            db.close();
                         }
                         state = false;
                     } else {
