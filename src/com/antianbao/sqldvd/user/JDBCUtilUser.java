@@ -50,19 +50,6 @@ public class JDBCUtilUser {
     }
 
     /**
-     * 获得Statement
-     */
-    public Statement getStatment() {
-        openConnection();
-        try {
-            stmt = conn.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return stmt;
-    }
-
-    /**
      * 获得PreparedStatement
      */
     public PreparedStatement getPrepareStatement(String sql) {
@@ -111,24 +98,6 @@ public class JDBCUtilUser {
             pstmt.setString(1, stu.getName());
             pstmt.setString(2, stu.getPassword());
             pstmt.setString(3, stu.getPhone());
-            rlt = pstmt.executeUpdate();
-            close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return rlt;
-    }
-
-    /**
-     * 删除操作
-     */
-    public int deleteStu(String name) {
-        int rlt = 0;
-        try {
-            String sql = "DELETE FROM user where name = ?";
-            PreparedStatement pstmt = getPrepareStatement(sql);
-            pstmt.setObject(1, name);
             rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
