@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="biggerdvd@120.79.210.170" uuid="01259826-69cb-4a10-91fb-8ee3ff691a0c">
+    <data-source source="LOCAL" name="@localhost" uuid="9c7ca1c4-d29d-4085-bef4-d663ff75c137">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
-      <remarks>Java方向班DVD</remarks>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://120.79.210.170:3306/biggerdvd</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
