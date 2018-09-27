@@ -1,7 +1,5 @@
 package com.antianbao.sqldvd.dvd;
 
-import com.antianbao.sqldvd.dvd.Dvd;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +41,7 @@ public class JDBCUtilDvd {
         //账号
         String USER = "root";
         //密码
-        String PASS = "";
+        String PASS = "19980317";
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {

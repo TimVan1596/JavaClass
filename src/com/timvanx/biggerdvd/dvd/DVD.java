@@ -5,6 +5,9 @@ import com.timvanx.biggerdvd.util.JDBCUtil;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.timvanx.biggerdvd.util.Constants.DVD_SER_PATH;
 
@@ -42,7 +45,7 @@ public class DVD implements Serializable {
         //编号从1000开始初始化
         DVD.setCnt(1000);
         //初始化DVD数组
-        serializeLoadDVDInfosToFile();
+        loadDVDInfos();
     }
 
     private DVD(int id, String name, boolean status) {
@@ -98,68 +101,66 @@ public class DVD implements Serializable {
 
 
     /**
-     * 使用序列化将DVD信息存入文件Constants.DVD_SER_PATH
+     * 使用数据库增加DVD信息
      */
-    public static void serializeSaveDVDInfosToFile() {
-        //DVD信息序列化路径
-        File file = new File(DVD_SER_PATH);
+    public static void addDVDInfo(DVD newDVD) {
+        Map<String, Object> insertData =
+                new HashMap<String, Object>(1);
+        insertData.put("name", newDVD.getName());
+        insertData.put("status", newDVD.isStatus());
+        JDBCUtil.insert("dvd", insertData);
+    }
 
-        try {
-            //检查文件是否存在，不存在则创建
-            if (!file.exists()) {
-                //创建文件
-                boolean ret = file.createNewFile();
-            }
-            FileOutputStream fileOut =
-                    new FileOutputStream(DVD_SER_PATH);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
 
-            out.writeObject(DVDArr);
-            out.close();
-            fileOut.close();
-        } catch (IOException i) {
-            Constants.reportError("序列化DVD信息文件");
-            i.printStackTrace();
-        }
-
+    /**
+     * 使用数据库修改DVD信息
+     */
+    public static void updateDVDInfo(DVD newDVD) {
+        //在数据库中update DVD的名称和状态
+        Map<String, Object> updateData =
+                new HashMap<>(1);
+        updateData.put("name", newDVD.getName());
+        updateData.put("status", newDVD.isStatus());
+        String tableWhere = " id = " + newDVD.getId();
+        JDBCUtil.update("dvd", updateData
+                , tableWhere);
     }
 
     /**
-     * 将DVD信息存入文件Constants.DVD_INFO_FILENAME
+     * 使用数据库删除DVD信息（通过主键ID）
      */
-    public static void clearAndSaveDVDInfosToFile() {
-        //先清除Constants.DVD_INFO_FILENAME中所有DVD数据
-        Constants.clearInfoForFile(Constants.DVD_INFO_FILENAME);
-        //序列化保存到文件
-        serializeSaveDVDInfosToFile();
-
+    public static void deleteDVDInfo(int id) {
+        String tableWhere = " id = " + id;
+        JDBCUtil.delete("dvd", tableWhere);
     }
 
     /**
-     * 使用序列化从文件Constants.DVD_SER_PATH读入到DvdArr集合
+     * 使用数据库读入DVD信息到 DVDArr 集合
      */
-    public static void serializeLoadDVDInfosToFile() {
+    public static void loadDVDInfos() {
 
-        //DVD信息序列化路径
-        File file = new File(DVD_SER_PATH);
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("id");
+            add("name");
+            add("status");
+        }};
+        List<List<String>> dvdSQLs = JDBCUtil
+                .select("dvd",
+                        tableField, null,
+                        null, null);
 
-        try {
-            //检查文件是否存在
-            if (file.exists()) {
-                FileInputStream fileIn =
-                        new FileInputStream(file);
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-                DVDArr = (ArrayList<DVD>) in.readObject();
-                in.close();
-                fileIn.close();
+        for (List<String> dvdInfo : dvdSQLs) {
+            //将字符串转为3种数据
+            int id = Integer.valueOf(dvdInfo.get(0));
+            String name = dvdInfo.get(1);
+            boolean status = true;
+            if (dvdInfo.get(2).equals("0")) {
+                status = false;
             }
-        } catch (IOException i) {
-            i.printStackTrace();
-        } catch (ClassNotFoundException c) {
-            c.printStackTrace();
+            DVD dvd = new DVD(id, name, status);
+            DVDArr.add(dvd);
         }
-        return;
-
 
     }
 

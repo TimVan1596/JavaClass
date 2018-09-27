@@ -4,7 +4,6 @@ import com.timvanx.biggerdvd.util.Constants;
 
 import java.util.Scanner;
 
-import static com.timvanx.biggerdvd.dvd.DVD.clearAndSaveDVDInfosToFile;
 
 /**
  * 主菜单类(包含所有核心方法！)
@@ -211,6 +210,8 @@ public class Menu {
                     //是否未被借出
                     if (!dvd.isStatus()){
                         dvd.setStatus(true);
+                        //在数据中更改dvd信息
+                        DVD.updateDVDInfo(dvd);
                         System.out.println("恭喜！"+dvdName+"成功借出");
                         isCouldLoan = true;
                         break;
@@ -229,8 +230,7 @@ public class Menu {
                 //展示所有DVD信息
                 display();
             }
-            //更新所有DVD数据
-            clearAndSaveDVDInfosToFile();
+
             //继续下一步或返回上一层
             isProgramContinue = Constants.nextOrBack();
 
@@ -270,6 +270,8 @@ public class Menu {
                     //是否未被借出
                     if (dvd.isStatus()){
                         dvd.setStatus(false);
+                        //在数据中更改dvd信息
+                        DVD.updateDVDInfo(dvd);
                         System.out.println("恭喜！"+dvdName+"成功归还");
                         isCouldLoan = true;
                         break;
@@ -288,8 +290,6 @@ public class Menu {
                 //展示所有DVD信息
                 display();
             }
-            //更新所有DVD数据
-            clearAndSaveDVDInfosToFile();
             //继续下一步或返回上一层
             isProgramContinue = Constants.nextOrBack();
 
@@ -315,14 +315,15 @@ public class Menu {
             DVD newDvd = new DVD("《" + inputString + "》");
 
             DVD.getDVDArr().add(newDvd);
+            //数据中新增DVD信息
+            DVD.addDVDInfo(newDvd);
             Integer newId = newDvd.getId();
 
             System.out.println("添加成功！新添加的DVD的编号为"
                     + newId);
             //展示所有DVD信息
             display();
-            //更新所有DVD数据
-            clearAndSaveDVDInfosToFile();
+
             //继续下一步或返回上一层
             isProgramContinue = Constants.nextOrBack();
         }
@@ -337,8 +338,7 @@ public class Menu {
         //退出借出循环的标识
         boolean isProgramContinue = true;
         while (isProgramContinue) {
-            System.out.println("请输入要修改的DVD编号：");
-            int inputNum = Constants.scanfInt();
+
             System.out.println("请输入原DVD名称（无书名号）：");
             Scanner scanner = new Scanner(System.in);
             String inputScanString = scanner.nextLine();
@@ -355,12 +355,13 @@ public class Menu {
             for (int i = 0; i < DVD.getDVDArr().size(); i++) {
                 DVD dvd = (DVD) DVD.getDVDArr().get(i);
                 //是否存在
-                if (dvd.getId() == inputNum &&
-                        dvd.getName().equals(inputString)) {
+                if (dvd.getName().equals(inputString)) {
                     isExist = true;
                     //是否未被借出
                     if (!dvd.isStatus()) {
                         dvd.setName(newInputString);
+                        //在数据中更改dvd信息
+                        DVD.updateDVDInfo(dvd);
                         System.out.println("修改成功！新DVD名称为" + newInputString);
                         isCouldUpdate = true;
                         break;
@@ -379,8 +380,7 @@ public class Menu {
                 //展示所有DVD信息
                 display();
             }
-            //更新所有DVD数据
-            clearAndSaveDVDInfosToFile();
+
             //继续下一步或返回上一层
             isProgramContinue = Constants.nextOrBack();
 
@@ -416,10 +416,13 @@ public class Menu {
                 //是否存在
                 if (dvd.getId() == inputNum &&
                         dvd.getName().equals(inputString)) {
+                    int deleteDVDID = dvd.getId();
                     isExist = true;
                     //是否未被借出
                     if (!dvd.isStatus()) {
                         DVD.getDVDArr().remove(i);
+                        //使用数据库删除DVD信息（通过主键ID）
+                        DVD.deleteDVDInfo(deleteDVDID);
                         System.out.println(inputString + "删除成功");
                         isCouldUpdate = true;
                         break;
@@ -438,8 +441,6 @@ public class Menu {
                 //展示所有DVD信息
                 display();
             }
-            //更新所有DVD数据
-            clearAndSaveDVDInfosToFile();
             //继续下一步或返回上一层
             isProgramContinue = Constants.nextOrBack();
 
