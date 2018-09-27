@@ -78,8 +78,7 @@ public class Menu {
      * 判断用户名是否存在
      */
     public boolean reUser() {
-//        String sql = "SELECT * FROM user ";
-//        ResultSet rs = db.executeQuery(sql, null);
+
 
         ArrayList<String> tableSelect=new ArrayList<String>(){{
             add("username");
@@ -87,6 +86,7 @@ public class Menu {
         List<List<String>> list=db.select(tableSelect,"user",null,null,null);
 
         int length= list.size();
+        //判断用户名是否存在
         for(List<String> li:list){
             length--;
             if(account.equals(li.get(0))){
@@ -98,25 +98,9 @@ public class Menu {
             }
 
         }
-//        try {
-            //判断用户名是否存在
-//            while (rs.next()) {
-//                if (!account.equals(rs.getString("username"))) {
-//                    //遍历到rs的最后位置
-//                    if (rs.isLast()) {
-//                        System.out.println("用户名不存在");
-//                        userLogin();
-//                    }
-//                } else {
-//
-//                    break;
-//                }
-//            }
-            //关闭资源
-//            rs.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+
+
+
          return false;
     }
 
@@ -138,22 +122,7 @@ public class Menu {
         do {
             System.out.println("请输入密码:");
             password = num.nextLine();
-//            String sql1 = "SELECT * FROM user WHERE username=? ";
-//            Object[] params = {account};
-//            ResultSet rs1 = db.executeQuery(sql1, params);
-//            try {
-//                while (rs1.next()) {
-//                    if (!password.equals(rs1.getString("password"))) {
-//                        System.out.println("密码错误");
-//                    } else {
-//                        jud = false;
-//                    }
-//                }
-//                //关闭资源
-//                rs1.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
+
             //设置查询条件
             ArrayList<String> tableSelect = new ArrayList<String>() {{
                 add("username");
@@ -199,19 +168,7 @@ public class Menu {
         List<List<String>> list=db.select(tableSelect,"user",tableWhere,null,null);
         System.out.println("你的账号密码为：" + list.get(0));
 
-//        String sql1 = "SELECT password FROM user WHERE username=? ";
-//        Object[] params = {account};
-//        ResultSet rs = db.executeQuery(sql1, params);
-//
-//        try {
-//            while (rs.next()) {
-//                System.out.println("你的账号密码为：" + rs.getString("password"));
-//            }
-//            rs.close();
-//            db.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+
 
         System.out.println("返回主界面中，请稍等...");
         try {
@@ -248,28 +205,13 @@ public class Menu {
 
         }
 
-//        String sql = "SELECT username FROM user ";
-//       ResultSet rs = db.executeQuery(sql, null);
-//        try {
-//            while (rs.next()) {
-//                //判断用户名是否重复
-//                if ((rs.getString("username")).equals(user)) {
-//                    System.out.println("用户名重复，请重新输入");
-//                    register();
-//                }
-//            }
-//            rs.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+
 
         System.out.println("请输入密码:");
         String password = scanner.nextLine();
 
         //往数据库里插入数据
-//        String sql1 = "insert INTO user VALUES(?,?)";
-//        Object[] params = {user, password};
-//        int rlt = db.executeUpdate(sql1, params);
+
 
         Object[] insertValues = {"'"+user+"'", "'"+password+"'"};
         int res=db.insert("user",null,insertValues);

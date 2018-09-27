@@ -1,5 +1,7 @@
 package com.smallfangyu.jdbcdvd.data;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -149,6 +151,36 @@ public class DbUtil {
         }
 
         return list;
+    }
+
+    /**
+     * 封装UPDATE语句
+     * @param tableName
+     * @param updateSet
+     * @param updateWhere
+     * @return
+     */
+    public int update(String tableName,String updateSet,String updateWhere){
+        getConn();
+        int result=0;
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder.append(" UPDATE ");
+        stringBuilder.append(tableName);
+        stringBuilder.append(" SET ");
+        stringBuilder.append(updateSet);
+        stringBuilder.append(" WHERE ");
+        stringBuilder.append(updateWhere);
+
+        String sql=stringBuilder.toString();
+
+        try {
+            stmt=conn.prepareStatement(sql);
+            result=stmt.executeUpdate();
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
