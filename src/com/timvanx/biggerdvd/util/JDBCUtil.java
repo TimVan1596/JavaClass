@@ -35,8 +35,10 @@ public class JDBCUtil {
 
     /**
      * 设置数据库连接信息配置文件
+     *
      * @param configFile 配置文件名，默认为"db.properties"
-     * 配置文件放在 IntelliJ IDEA 2018 里,为根目录下res资源文件夹中         */
+     *                   配置文件放在 IntelliJ IDEA 2018 里,为根目录下res资源文件夹中
+     */
     public static void setConfigFile(String configFile) {
         CONFIG_FILE = configFile;
     }
@@ -49,12 +51,13 @@ public class JDBCUtil {
 
     /**
      * 查询数据
+     *
      * @param tableName  表名
      * @param tableField 字段
      * @param tableWhere 条件
-     * @param  tableOrder 排序
-     * @param  tableLimit 选取
-     * @return List<List<String>> 返回二维数组
+     * @param tableOrder 排序
+     * @param tableLimit 选取
+     * @return List<List       <       String>> 返回二维数组
      */
     public static List<List<String>> select
     (String tableName, ArrayList<String> tableField
@@ -124,6 +127,7 @@ public class JDBCUtil {
 
     /**
      * 更新数据
+     *
      * @param tableName  数据表
      * @param updateData Map容器 field-value格式 数据数组
      *                   p.s 特别注意value是字符串时加引号!!!
@@ -132,7 +136,7 @@ public class JDBCUtil {
      * @return int 返回受影响的记录条数(失败返回-1)
      */
     public static int update(String tableName
-            , Map<String, String> updateData
+            , Map<String, Object> updateData
             , String tableWhere) {
         Connection conn = null;
         //返回值：返回受影响的记录条数(失败返回-1)
@@ -148,7 +152,7 @@ public class JDBCUtil {
             stringBuilder.append(" set ");
             //填充字段名和值赋值
             boolean isFirst = true;
-            for (Map.Entry<String, String> entry
+            for (Map.Entry<String, Object> entry
                     : updateData.entrySet()) {
                 if (isFirst) {
                     isFirst = false;
@@ -157,7 +161,10 @@ public class JDBCUtil {
                 }
                 stringBuilder.append(entry.getKey());
                 stringBuilder.append("=");
-                stringBuilder.append(entry.getValue());
+                Object valObj = entry.getValue();
+                //拼接数据
+                stringBuilder.append(objectToString(valObj));
+
             }
 
             //where条件子句
@@ -193,10 +200,11 @@ public class JDBCUtil {
 
     /**
      * 插入数据
+     *
      * @param tableName  数据表
      * @param insertData Map容器 field-value格式 数据数组
-     *           p.s 特别注意value的类型根据String还是Number自动转换
-     *           如: insertData.put("password", "123");
+     *                   p.s 特别注意value的类型根据String还是Number自动转换
+     *                   如: insertData.put("password", "123");
      * @return int 返回受影响的记录条数(失败返回-1)
      */
     public static int insert(String tableName
@@ -228,13 +236,8 @@ public class JDBCUtil {
                 } else {
                     stringBuilder.append(" , ");
                 }
-                if (object instanceof String) {
-                    stringBuilder.append("'");
-                    stringBuilder.append(object);
-                    stringBuilder.append("'");
-                } else if (object instanceof Number) {
-                    stringBuilder.append(object);
-                }
+                //拼接数据
+                stringBuilder.append(objectToString(object));
 
             }
             stringBuilder.append(" ) ");
@@ -265,11 +268,12 @@ public class JDBCUtil {
 
     /**
      * 删除数据
-     * @param tableName 数据表
+     *
+     * @param tableName  数据表
      * @param tableWhere 过滤条件
      * @return int 返回受影响的记录条数(失败返回-1)
      */
-    public static int delete(String tableName,String tableWhere){
+    public static int delete(String tableName, String tableWhere) {
         Connection conn = null;
         //返回值：返回受影响的记录条数(失败返回-1)
         int affectRowCNT = -1;
@@ -318,13 +322,14 @@ public class JDBCUtil {
 
     /**
      * 聚合函数count
-     * @param tableName 数据表
+     *
+     * @param tableName  数据表
      * @param tableField 记录字段名(注意这里只能一个字段名)
      * @param tableWhere 过滤条件
      * @return int 计算符合条件的字段个数
      */
-    public static int count(String tableName,String tableField
-            ,String tableWhere){
+    public static int count(String tableName, String tableField
+            , String tableWhere) {
         Connection conn = null;
         //返回值：符合条件的字段个数
         int rowCount = 0;
@@ -351,8 +356,8 @@ public class JDBCUtil {
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             //select使用 executeUpdate ，只会返回影响行数
-            ResultSet rs  = preparedStatement.executeQuery();
-            while (rs.next()){
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
                 rowCount = rs.getInt(1);
             }
 
@@ -377,10 +382,11 @@ public class JDBCUtil {
     /**
      * TODO:该方法复杂度较高，只完美支持select查询，其他未测试
      * !!!警告   自定义方法   警告!!!
+     *
      * @param script 自定义操作脚本语句
      * @return array $jarr 返回值数组
      */
-    public static List<List<String>> sql(String script){
+    public static List<List<String>> sql(String script) {
         Connection conn = null;
 
         List<List<String>> list = new ArrayList<>();
@@ -512,6 +518,25 @@ public class JDBCUtil {
         return stringBuilder;
     }
 
+    /**
+     * 数据库中将Object对象插入数据库
+     * 如插入String类型的值 "hello" 自动转为 "'hello'"
+     * 插入数字 123 转为 "123"
+     *
+     * @param object
+     * @return 返回StringBuilder字符串
+     */
+    private static StringBuilder objectToString(Object object) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (object instanceof String) {
+            stringBuilder.append("'");
+            stringBuilder.append(object);
+            stringBuilder.append("'");
+        } else if (object instanceof Number) {
+            stringBuilder.append(object);
+        }
+        return stringBuilder;
+    }
 
     public static void main(String[] args) {
         //设置数据表名
@@ -540,8 +565,6 @@ public class JDBCUtil {
 //        affectRowCNT =
 //                count(tableName,"id",null);
 //        System.out.println("affectRowCNT = "+affectRowCNT);
-
-
 
 
         //设置查询条件
