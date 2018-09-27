@@ -193,11 +193,10 @@ public class JDBCUtil {
 
     /**
      * 插入数据
-     *
      * @param tableName  数据表
      * @param insertData Map容器 field-value格式 数据数组
-     *                   p.s 特别注意value是字符串时加引号!!!
-     *                   如: insertData.put("password", "'123'");
+     *           p.s 特别注意value的类型根据String还是Number自动转换
+     *           如: insertData.put("password", "123");
      * @return int 返回受影响的记录条数(失败返回-1)
      */
     public static int insert(String tableName
@@ -520,13 +519,13 @@ public class JDBCUtil {
 
 
         //插入数据
-        Map<String, Object> insertData =
-                new HashMap<String, Object>(3);
-        Calendar now = Calendar.getInstance();
-        insertData.put("name", "hello");
-        insertData.put("password", "123");
-        insertData.put("age", 66);
-        int affectRowCNT = insert(tableName, insertData);
+//        Map<String, Object> insertData =
+//                new HashMap<String, Object>(3);
+//        Calendar now = Calendar.getInstance();
+//        insertData.put("name", "hello");
+//        insertData.put("password", "123");
+//        insertData.put("age", 66);
+//        int affectRowCNT = insert(tableName, insertData);
 
 //        //更新数据
 //        //设置where子句
