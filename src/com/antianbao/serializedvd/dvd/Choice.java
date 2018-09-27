@@ -1,5 +1,6 @@
-package com.antianbao.filedvd.dvd;
+package com.antianbao.serializedvd.dvd;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,10 +21,8 @@ public class Choice {
     /**
      * 读取DVD信息 形成集合
      */
-    //List<Dvd> dvds = aaa.readDvd();
-
     public void choiceManager() {
-        System.out.println("********欢迎进入MiniDVD Mgr 3.0 管理系统********");
+        System.out.println("********欢迎进入MiniDVD Mgr 4.0 管理系统********");
         System.out.println("------------------------------------------");
         System.out.println("------------------1.显示DVD-----------------");
         System.out.println("------------------2.查看DVD-----------------");
@@ -74,7 +73,7 @@ public class Choice {
     /**
      * 判断是否继续y/n
      */
-   public void yesOrNo(int a) {
+   public void yesOrNo(int a){
         while (true) {
             System.out.println("-- 是否继续？ y/n --");
             Scanner s11 = new Scanner(System.in);
@@ -127,7 +126,7 @@ public class Choice {
     }
 
     private void displayDVD() {
-        System.out.println("MiniDVD Mgr 3.0 管理系统---->显示当前所有DVD信息");
+        System.out.println("MiniDVD Mgr 4.0 管理系统---->显示当前所有DVD信息");
         System.out.println("编号\t\t名称\t\t\t状态");
         List<Dvd> dvds = DvdDaoImpl.readDvd();
         for (Dvd dvd : dvds) {
@@ -147,8 +146,8 @@ public class Choice {
         }
     }
 
-    private void checkDVD() {
-        System.out.println("MiniDVD Mgr 3.0 管理系统---->查询DVD信息");
+    private void checkDVD(){
+        System.out.println("MiniDVD Mgr 4.0 管理系统---->查询DVD信息");
         System.out.println("----------------------------------");
         System.out.println("-------------1.按编号查询------------");
         System.out.println("-------------2.按名称查询------------");
@@ -216,7 +215,7 @@ public class Choice {
     }
 
     private void lendDVD() {
-        System.out.println("MiniDVD Mgr 3.0 管理系统---->借出DVD信息");
+        System.out.println("MiniDVD Mgr 4.0 管理系统---->借出DVD信息");
         System.out.println("请输入要借出的DVD编号：");
         Scanner s = new Scanner(System.in);
         int no = s.nextInt();
@@ -301,7 +300,7 @@ public class Choice {
         }
         //操作成功后
         if (isReturnSuccess) {
-            System.out.println("MiniDVD Mgr 3.0 管理系统---->显示当前所有DVD信息");
+            System.out.println("MiniDVD Mgr 4.0 管理系统---->显示当前所有DVD信息");
             System.out.println("编号\t\t名称\t\t\t状态");
             List<Dvd> dvds = DvdDaoImpl.readDvd();
             for (Dvd dvd : dvds) {
@@ -312,7 +311,7 @@ public class Choice {
         yesOrNo(4);
     }
 
-    private void addDVD() {
+    private void addDVD(){
         int no = 0;
         List<Dvd> dvds = DvdDaoImpl.readDvd();
         for (int i = 0; i < dvds.size(); i++) {
@@ -327,7 +326,7 @@ public class Choice {
         // 将添加的DVD添加到存放所有DVD的集合中
         Dvd dvd1 = new Dvd(no, name, "可以借");
         DvdDaoImpl.addDvd(dvd1);
-        System.out.println("MiniDVD Mgr 3.0 管理系统---->显示当前所有DVD信息");
+        System.out.println("MiniDVD Mgr 4.0 管理系统---->显示当前所有DVD信息");
         System.out.println("编号\t名称\t\t状态");
         List<Dvd> dvds1 = DvdDaoImpl.readDvd();
         for (Dvd dvd : dvds1) {
@@ -373,7 +372,7 @@ public class Choice {
         }
         //操作成功后
         if (isReturnSuccess) {
-            System.out.println("MiniDVD Mgr 3.0 管理系统---->显示当前所有DVD信息");
+            System.out.println("MiniDVD Mgr 4.0 管理系统---->显示当前所有DVD信息");
             System.out.println("编号\t名称\t\t状态");
             List<Dvd> dvds1 = DvdDaoImpl.readDvd();
             for (Dvd dvd : dvds1) {
@@ -417,7 +416,7 @@ public class Choice {
         }
         //操作成功后
         if (isReturnSuccess) {
-            System.out.println("MiniDVD Mgr 3.0 管理系统---->显示当前所有DVD信息");
+            System.out.println("MiniDVD Mgr 4.0 管理系统---->显示当前所有DVD信息");
             System.out.println("编号\t名称\t\t状态");
             List<Dvd> dvds1 = DvdDaoImpl.readDvd();
             for (Dvd dvd : dvds1) {
