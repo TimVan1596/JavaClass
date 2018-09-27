@@ -77,29 +77,47 @@ public class Menu {
     /**
      * 判断用户名是否存在
      */
-    public void reUser() {
-        String sql = "SELECT * FROM user ";
-        ResultSet rs = db.executeQuery(sql, null);
-        try {
-            //判断用户名是否存在
-            while (rs.next()) {
-                if (!account.equals(rs.getString("username"))) {
-                    //遍历到rs的最后位置
-                    if (rs.isLast()) {
-                        System.out.println("用户名不存在");
-                        userLogin();
-                    }
-                } else {
+    public boolean reUser() {
+//        String sql = "SELECT * FROM user ";
+//        ResultSet rs = db.executeQuery(sql, null);
 
-                    break;
-                }
+        ArrayList<String> tableSelect=new ArrayList<String>(){{
+            add("username");
+            }};
+        List<List<String>> list=db.select(tableSelect,"user",null,null,null);
+
+        int length= list.size();
+        for(List<String> li:list){
+            length--;
+            if(account.equals(li.get(0))){
+                break;
+            }else{
+                if(length<1){
+                System.out.println("用户名不存在");
+                       return true;  }
             }
-            //关闭资源
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
+        }
+//        try {
+            //判断用户名是否存在
+//            while (rs.next()) {
+//                if (!account.equals(rs.getString("username"))) {
+//                    //遍历到rs的最后位置
+//                    if (rs.isLast()) {
+//                        System.out.println("用户名不存在");
+//                        userLogin();
+//                    }
+//                } else {
+//
+//                    break;
+//                }
+//            }
+            //关闭资源
+//            rs.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+         return false;
     }
 
     /**
@@ -107,11 +125,14 @@ public class Menu {
      */
     public void userLogin() {
         Scanner num = new Scanner(System.in);
-        System.out.println("请输入用户名:");
-        account = num.nextLine();
+        boolean isexist=true;
+        do {
+            System.out.println("请输入用户名:");
+            account = num.nextLine();
 
-        //调用判断用户名是否存在
-        reUser();
+            //调用判断用户名是否存在
+            isexist=reUser();
+        }while(isexist);
 
         boolean jud = true;
         do {
@@ -162,26 +183,35 @@ public class Menu {
      */
     public void findPassWord() {
         System.out.println("--------找回密码--------");
-        System.out.println("请输入你的账号:");
-        Scanner scanner = new Scanner(System.in);
-        account = scanner.nextLine();
+        boolean isexist=true;
+        do {
+            System.out.println("请输入你的账号:");
+            Scanner scanner = new Scanner(System.in);
+            account = scanner.nextLine();
 
-        //调用判断用户名是否存在
-        reUser();
+            //调用判断用户名是否存在
+            isexist=reUser();
+        }while(isexist);
+        ArrayList<String> tableSelect=new ArrayList<String>(){{
+            add("password");
+        }};
+        String tableWhere="username=+'"+account+"'";
+        List<List<String>> list=db.select(tableSelect,"user",tableWhere,null,null);
+        System.out.println("你的账号密码为：" + list.get(0));
 
-        String sql1 = "SELECT password FROM user WHERE username=? ";
-        Object[] params = {account};
-        ResultSet rs = db.executeQuery(sql1, params);
-
-        try {
-            while (rs.next()) {
-                System.out.println("你的账号密码为：" + rs.getString("password"));
-            }
-            rs.close();
-            db.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        String sql1 = "SELECT password FROM user WHERE username=? ";
+//        Object[] params = {account};
+//        ResultSet rs = db.executeQuery(sql1, params);
+//
+//        try {
+//            while (rs.next()) {
+//                System.out.println("你的账号密码为：" + rs.getString("password"));
+//            }
+//            rs.close();
+//            db.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
         System.out.println("返回主界面中，请稍等...");
         try {

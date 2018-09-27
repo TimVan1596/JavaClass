@@ -25,8 +25,7 @@ public class DbUtil {
    public static void init(){
     //初始化数据库连接配置
        Properties properties=new Properties();
-       InputStream in=DbUtil.class.getClassLoader()
-               .getResourceAsStream("db.properties");
+       InputStream in=DbUtil.class.getClassLoader().getResourceAsStream("db.properties");
 
        //读取db.properties
        try {
@@ -143,7 +142,7 @@ public class DbUtil {
              }
              list.add(row);
          }
-
+         close();
         }catch(SQLException e){
             e.printStackTrace();
 
@@ -177,6 +176,7 @@ public class DbUtil {
         try {
             stmt=conn.prepareStatement(sql);
             result=stmt.executeUpdate();
+            close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -210,7 +210,7 @@ public class DbUtil {
      * @param objects
      * @return
      */
-    private static StringBuilder objectToPreparedStm(Object[] objects) {
+    private static  StringBuilder objectToPreparedStm(Object[] objects) {
         StringBuilder stringBuilder = new StringBuilder();
         if (objects!=null) {
             boolean isFirst = true;
