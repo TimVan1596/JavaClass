@@ -41,7 +41,7 @@ public class JDBCUtilUser {
         //账号
         String USER = "root";
         //密码
-        String PASS = "";
+        String PASS = "19980317";
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
@@ -120,6 +120,7 @@ public class JDBCUtilUser {
         }
         return rlt;
     }
+
     /**
      * 找回密码：手机号
      */
@@ -161,6 +162,38 @@ public class JDBCUtilUser {
     public List<User> queryStu() {
         List<User> list = new ArrayList<User>();
         String sql = "select *from User";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            User bd = null;
+            while (rs.next()) {
+                bd = new User();
+                bd.setName(rs.getString("name"));
+                bd.setPassword(rs.getString("password"));
+                bd.setPhone(rs.getString("phone"));
+                list.add(bd);
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * 将数据库中用户信息转为集合
+     * 万能版
+     * SELECT tbl_emp.empName,tbl_emp.empAge,tbl_dept.deptName
+     * FROM tbl_emp,tbl_dept
+     * WHERE tbl_emp.fk_deptId = tbl_dept.deptId
+     * ORDER BY tbl_emp.empAge ASC
+     */
+    public List<User> select(String name, String table, String where,String order) {
+        StringBuffer stringBuilder = new StringBuffer();
+        stringBuilder.append(" where ");
+
+        List<User> list = new ArrayList<User>();
+        String sql = "select * from User";
         PreparedStatement pstat = getPrepareStatement(sql);
         try {
             ResultSet rs = pstat.executeQuery();

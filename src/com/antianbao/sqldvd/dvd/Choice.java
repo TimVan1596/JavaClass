@@ -7,7 +7,7 @@ import java.util.Scanner;
  * @author 安天宝
  * JAVA一班
  * 9月16日
- *
+ * <p>
  * DisplayDVD 显示
  * CheckDVD 查看
  * LendDVD 借出
@@ -20,8 +20,6 @@ public class Choice {
     /**
      * 读取DVD信息 形成集合
      */
-    //List<Dvd> dvds = aaa.readDvd();
-
     public void choiceManager() {
         System.out.println("********欢迎进入MiniDVD Mgr 5.0 管理系统********");
         System.out.println("------------------------------------------");
@@ -71,10 +69,11 @@ public class Choice {
                 break;
         }
     }
+
     /**
      * 判断是否继续y/n
      */
-   public void yesOrNo(int a) {
+    public void yesOrNo(int a) {
         while (true) {
             System.out.println("-- 是否继续？ y/n --");
             Scanner s11 = new Scanner(System.in);
@@ -107,16 +106,17 @@ public class Choice {
                 case "n":
                     System.out.println("-----1.返回至菜单-----");
                     System.out.println("-----2.退出此程序-----");
-                    Scanner s2 = new Scanner(System.in);
-                    int choice = s2.nextInt();
-                    try{
-                        if ( choice == 1 ) {
+                    try {
+                        Scanner s2 = new Scanner(System.in);
+                        int choice = s2.nextInt();
+                        if (choice == 1) {
                             choiceManager();
-                        } else if(choice == 2){
+                        } else if (choice == 2) {
                             System.exit(-1);
                         }
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         System.out.println("请输入正确的选择！");
+                        yesOrNo(a);
                     }
                     break;
                 default:
@@ -125,6 +125,7 @@ public class Choice {
             }
         }
     }
+
     /**
      * 显示
      */
@@ -137,18 +138,21 @@ public class Choice {
             System.out.println(dvd);
         }
         System.out.println("请输入数字0返回：");
-        Scanner s2 = new Scanner(System.in);
-        int choice = s2.nextInt();
         try {
+            Scanner s2 = new Scanner(System.in);
+            int choice = s2.nextInt();
             if (choice == 0) {
                 choiceManager();
             } else {
                 System.out.println("输入数字错误，请重新输入！");
+                displayDVD();
             }
         } catch (Exception e) {
-            System.out.println("请输入正确的数字~");
+            System.out.println("请输入数字！");
+            displayDVD();
         }
     }
+
     /**
      * 查看
      */
@@ -163,7 +167,7 @@ public class Choice {
         Scanner s = new Scanner(System.in);
         String choice = s.nextLine();
         //判断选择的操作 1或2
-        switch (choice){
+        switch (choice) {
             case "1":
                 System.out.println("请输入要查询的DVD编号：");
                 int no = s.nextInt();
@@ -221,18 +225,19 @@ public class Choice {
                 break;
         }
     }
+
     /**
      * 借出
      */
     private void lendDVD() {
         System.out.println("MiniDVD Mgr 5.0 管理系统---->借出DVD信息");
         System.out.println("请输入要借出的DVD编号：");
-        Scanner s = new Scanner(System.in);
-        int no = s.nextInt();
         // 标记是否成功借到DVD（默认DVD已借出，本次借阅失败）
         boolean isLendSuccess = true;
         //异常判断
         try {
+            Scanner s = new Scanner(System.in);
+            int no = s.nextInt();
             JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
             List<Dvd> dvds = jdbcUtilDvd.queryStu();
             for (Dvd dvd : dvds) {
@@ -241,12 +246,12 @@ public class Choice {
                     isLendSuccess = false;
                     System.out.println("恭喜你！此DVD在系统中的状态为：可以借！");
                     // 将编号为no的DVD状态更改为“已借出”
-                    jdbcUtilDvd.updateState("已借出",dvd.getNo());
+                    jdbcUtilDvd.updateState("已借出", dvd.getNo());
                     break;
                 }
             }
         } catch (Exception e) {
-            System.out.print("请输入对应数字~");
+            System.out.println("请输入对应数字~");
             isLendSuccess = false;
         }
         //判断输入是否正确
@@ -263,6 +268,7 @@ public class Choice {
         }
         yesOrNo(3);
     }
+
     /**
      * 归还
      */
@@ -285,7 +291,7 @@ public class Choice {
                 if (no == dvd.getNo() && name.equals(dvd.getName()) && dvd.getState().equals("已借出")) {
                     System.out.println("恭喜你！归还成功~");
                     // 在存放所有DVD的集合中，将编号为no的DVD状态更改为“可以借”
-                    jdbcUtilDvd.updateState("可以借",dvd.getNo());
+                    jdbcUtilDvd.updateState("可以借", dvd.getNo());
                     isDVDSuccess = false;
                     break;
                 } else if (no == dvd.getNo() && name.equals(dvd.getName()) && dvd.getState().equals("可以借")) {
@@ -323,6 +329,7 @@ public class Choice {
         //判断是否继续
         yesOrNo(4);
     }
+
     /**
      * 添加
      */
@@ -333,106 +340,120 @@ public class Choice {
         String name = "《" + s1.nextLine() + "》";
         // 将添加的DVD添加到存放所有DVD的集合中
         Dvd dvd1 = new Dvd(name, "可以借");
-        jdbcUtilDvd.addDvd(dvd1);
-        System.out.println("MiniDVD Mgr 5.0 管理系统---->显示当前所有DVD信息");
-        System.out.println("编号\t名称\t\t状态");
-        List<Dvd> dvds1 = jdbcUtilDvd.queryStu();
-        for (Dvd dvd : dvds1) {
-            System.out.println(dvd);
+        int i = jdbcUtilDvd.addDvd(dvd1);
+        if (i > 0) {
+            System.out.println("MiniDVD Mgr 5.0 管理系统---->显示当前所有DVD信息");
+            System.out.println("编号\t名称\t\t状态");
+            List<Dvd> dvds1 = jdbcUtilDvd.queryStu();
+            for (Dvd dvd : dvds1) {
+                System.out.println(dvd);
+            }
+        } else {
+            System.out.println("此书已存在！");
         }
         //判断是否继续
         yesOrNo(5);
     }
+
     /**
      * 修改
      */
     private void modifyDVD() {
-        System.out.println("请输入要修改DVD的编号：");
-        Scanner s = new Scanner(System.in);
-        int no = s.nextInt();
-        System.out.println("请输入要修改DVD的名称（不用加书名号）：");
-        Scanner s1 = new Scanner(System.in);
-        String name = "《" + s1.nextLine() + "》";
-        boolean isReturnSuccess = true;
-        boolean isDVDSuccess = true;
-        //判断输入是否正确
-        JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
-        List<Dvd> dvds = jdbcUtilDvd.queryStu();
-        for (Dvd dvd : dvds) {
-            if (no == dvd.getNo() && name.equals(dvd.getName())) {
-                System.out.println("恭喜你！可以修改DVD信息~");
-                System.out.println("请输入新的DVD的名称：");
-                Scanner s11 = new Scanner(System.in);
-                String name1 = "《" + s11.nextLine() + "》";
-                jdbcUtilDvd.updateDvd(no,name1);
-                isDVDSuccess = false;
-                break;
-            } else if (no == dvd.getNo() || name.equals(dvd.getName())) {
-                System.out.println("DVD编号或名称错误~");
+        try {
+            System.out.println("请输入要修改DVD的编号：");
+            Scanner s = new Scanner(System.in);
+            int no = s.nextInt();
+            System.out.println("请输入要修改DVD的名称（不用加书名号）：");
+            Scanner s1 = new Scanner(System.in);
+            String name = "《" + s1.nextLine() + "》";
+            boolean isReturnSuccess = true;
+            boolean isDVDSuccess = true;
+            //判断输入是否正确
+            JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
+            List<Dvd> dvds = jdbcUtilDvd.queryStu();
+            for (Dvd dvd : dvds) {
+                if (no == dvd.getNo() && name.equals(dvd.getName())) {
+                    System.out.println("恭喜你！可以修改DVD信息~");
+                    System.out.println("请输入新的DVD的名称：");
+                    Scanner s11 = new Scanner(System.in);
+                    String name1 = "《" + s11.nextLine() + "》";
+                    jdbcUtilDvd.updateDvd(no, name1);
+                    isDVDSuccess = false;
+                    break;
+                } else if (no == dvd.getNo() || name.equals(dvd.getName())) {
+                    System.out.println("DVD编号或名称错误~");
+                    isReturnSuccess = false;
+                    isDVDSuccess = false;
+                    break;
+                }
+            }
+            //没找到输入的数据
+            if (isDVDSuccess) {
+                System.out.println("您输入的DVD不存在~");
                 isReturnSuccess = false;
-                isDVDSuccess = false;
-                break;
             }
-        }
-        //没找到输入的数据
-        if (isDVDSuccess) {
-            System.out.println("您输入的DVD不存在~");
-            isReturnSuccess = false;
-        }
-        //操作成功后
-        if (isReturnSuccess) {
-            System.out.println("MiniDVD Mgr 5.0 管理系统---->显示当前所有DVD信息");
-            System.out.println("编号\t名称\t\t状态");
-            List<Dvd> dvds1 = jdbcUtilDvd.queryStu();
-            for (Dvd dvd : dvds1) {
-                System.out.println(dvd);
+            //操作成功后
+            if (isReturnSuccess) {
+                System.out.println("MiniDVD Mgr 5.0 管理系统---->显示当前所有DVD信息");
+                System.out.println("编号\t名称\t\t状态");
+                List<Dvd> dvds1 = jdbcUtilDvd.queryStu();
+                for (Dvd dvd : dvds1) {
+                    System.out.println(dvd);
+                }
             }
+        } catch (Exception e) {
+            System.out.println("---输入的DVD编号有误，请重新输入！---");
         }
         //判断是否继续
         yesOrNo(6);
     }
+
     /**
      * 删除
      */
     private void deleteDVD() {
-        System.out.println("请输入要删除DVD的编号：");
-        Scanner s = new Scanner(System.in);
-        int no = s.nextInt();
-        System.out.println("请输入要删除DVD的名称（不用打书名号）：");
-        Scanner s1 = new Scanner(System.in);
-        String name = "《" + s1.nextLine() + "》";
-        boolean isReturnSuccess = true;
-        boolean isDVDSuccess = true;
-        //判断输入是否正确
-        JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
-        List<Dvd> dvds = jdbcUtilDvd.queryStu();
-        for (int i = 0; i < dvds.size(); i++) {
-            Dvd dvd = dvds.get(i);
-            if (no == dvd.getNo() && name.equals(dvd.getName())) {
-                System.out.println("恭喜你！删除成功~");
-                jdbcUtilDvd.deleteDvd(no);
-                isDVDSuccess = false;
-                break;
-            } else if (no == dvd.getNo() || name.equals(dvd.getName())) {
-                System.out.println("DVD编号或名称错误~");
+        try{
+            System.out.println("请输入要删除DVD的编号：");
+            Scanner s = new Scanner(System.in);
+            int no = s.nextInt();
+            System.out.println("请输入要删除DVD的名称（不用打书名号）：");
+            Scanner s1 = new Scanner(System.in);
+            String name = "《" + s1.nextLine() + "》";
+            boolean isReturnSuccess = true;
+            boolean isDVDSuccess = true;
+            //判断输入是否正确
+            JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
+            List<Dvd> dvds = jdbcUtilDvd.queryStu();
+            for (int i = 0; i < dvds.size(); i++) {
+                Dvd dvd = dvds.get(i);
+                if (no == dvd.getNo() && name.equals(dvd.getName())) {
+                    System.out.println("恭喜你！删除成功~");
+                    jdbcUtilDvd.deleteDvd(no);
+                    isDVDSuccess = false;
+                    break;
+                } else if (no == dvd.getNo() || name.equals(dvd.getName())) {
+                    System.out.println("DVD编号或名称错误~");
+                    isReturnSuccess = false;
+                    isDVDSuccess = false;
+                    break;
+                }
+            }
+            //没找到输入的数据
+            if (isDVDSuccess) {
+                System.out.println("您输入的DVD不存在~");
                 isReturnSuccess = false;
-                isDVDSuccess = false;
-                break;
             }
-        }
-        //没找到输入的数据
-        if (isDVDSuccess) {
-            System.out.println("您输入的DVD不存在~");
-            isReturnSuccess = false;
-        }
-        //操作成功后
-        if (isReturnSuccess) {
-            System.out.println("MiniDVD Mgr 5.0 管理系统---->显示当前所有DVD信息");
-            System.out.println("编号\t名称\t\t状态");
-            List<Dvd> dvds1 = jdbcUtilDvd.queryStu();
-            for (Dvd dvd : dvds1) {
-                System.out.println(dvd);
+            //操作成功后
+            if (isReturnSuccess) {
+                System.out.println("MiniDVD Mgr 5.0 管理系统---->显示当前所有DVD信息");
+                System.out.println("编号\t名称\t\t状态");
+                List<Dvd> dvds1 = jdbcUtilDvd.queryStu();
+                for (Dvd dvd : dvds1) {
+                    System.out.println(dvd);
+                }
             }
+        }catch (Exception e){
+            System.out.println("---输入的DVD编号有误，请重新输入！---");
         }
         //是否继续判断
         yesOrNo(7);
