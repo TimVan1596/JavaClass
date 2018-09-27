@@ -1,18 +1,23 @@
 package com.timvanx.biggerdvd.dvd;
 
 import com.timvanx.biggerdvd.util.Constants;
+import com.timvanx.biggerdvd.util.JDBCUtil;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 账户类
+ *
  * @author TimVan
  * @date 2018年9月5日09:33:27
- * */
+ */
 public class Account implements Serializable {
-    private  String usrName;
-    private  String usrPassword;
+    private String usrName;
+    private String usrPassword;
 
     /**
      * serialVersionUID = 版本一致性
@@ -28,27 +33,28 @@ public class Account implements Serializable {
         loginCNT = 0;
     }
 
-    private Account(String usrName,String usrPassword) {
+    private Account(String usrName, String usrPassword) {
         this.usrName = usrName;
         this.usrPassword = usrPassword;
     }
 
     public Account() {
         //从文件中读取所有的账户-密码信息
-        serializeLoadAccountToFile();
+        loadAccount();
     }
 
     /**
      * 登录
-     *@return boolean 是否登录成功
+     *
+     * @return boolean 是否登录成功
      */
     public static boolean login(String name, String password) {
         boolean isLogin = false;
 
         //判断账户和密码是否存在和正确
-        for (Account account:accountArrayList){
-            if (account.getUsrName().equals(name)){
-                if (account.getUsrPassword().equals(password)){
+        for (Account account : accountArrayList) {
+            if (account.getUsrName().equals(name)) {
+                if (account.getUsrPassword().equals(password)) {
                     System.out.println("登录成功！");
                     isLogin = true;
                 }
@@ -56,7 +62,7 @@ public class Account implements Serializable {
             }
         }
 
-        if (!isLogin){
+        if (!isLogin) {
             System.out.println("登录失败！请检查用户名或密码是否输入错误");
         }
 
@@ -65,6 +71,7 @@ public class Account implements Serializable {
 
     /**
      * 注册
+     *
      * @return boolean 是否注册成功
      */
     public static boolean register(String name, String password) {
@@ -72,10 +79,13 @@ public class Account implements Serializable {
         boolean isNameIsexist = isAccountExist(name);
 
         //若用户名不存在创建用户
-        if (!isNameIsexist){
-            accountArrayList.add(new Account(name,password));
-            //更新所有账户数据
-            clearAndSaveAccountToFile();
+        if (!isNameIsexist) {
+            accountArrayList.add(new Account(name, password));
+            Map<String, Object> insertData =
+                    new HashMap<String, Object>(1);
+            insertData.put("name", name);
+            insertData.put("password", password);
+            JDBCUtil.insert("account", insertData);
         }
 
         return !isNameIsexist;
@@ -107,45 +117,6 @@ public class Account implements Serializable {
 
 
     /**
-     * 将DVD信息存入文件Constants.ACCOUNT_SER_PATH
-     */
-    public static void clearAndSaveAccountToFile() {
-        //先清除Constants.ACCOUNT_SER_PATH文件
-        Constants.clearInfoForFile(Constants.ACCOUNT_SER_PATH);
-        //写入文件
-        serializeSaveAccountToFile();
-
-    }
-
-    /**
-     * 使用序列化将账户存入文件Constants.ACCOUNT_SER_PATH
-     */
-    public static void serializeSaveAccountToFile() {
-        //DVD信息序列化路径
-        File file = new File(Constants.ACCOUNT_SER_PATH);
-
-        try {
-            //检查文件是否存在，不存在则创建
-            if (!file.exists()) {
-                //创建
-                file.createNewFile();
-            }
-            FileOutputStream fileOut =
-                    new FileOutputStream(file);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-
-            out.writeObject(accountArrayList);
-            fileOut.close();
-            out.close();
-
-        } catch (IOException i) {
-            Constants.reportError("序列化账户信息");
-            i.printStackTrace();
-        }
-
-    }
-
-    /**
      * 通过用户名检查该账户是否存在
      */
     public static boolean isAccountExist(String name) {
@@ -161,31 +132,31 @@ public class Account implements Serializable {
     }
 
     /**
-     * 使用序列化从文件Constants.ACCOUNT_SER_PATH读入到accountArrayList集合
+     * 使用数据库从配置文件Constants.DB_CONFIG_FILE读入到accountArrayList集合
      */
-    public static void serializeLoadAccountToFile() {
+    public static void loadAccount() {
 
-        //DVD信息序列化路径
-        File file = new File(Constants.ACCOUNT_SER_PATH);
-
-        try {
-            //检查文件是否存在
-            if (file.exists()) {
-                FileInputStream fileIn =
-                        new FileInputStream(file);
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-                accountArrayList = (ArrayList<Account>) in.readObject();
-                in.close();
-                fileIn.close();
-            }
-
-        } catch (IOException i) {
-            i.printStackTrace();
-        } catch (ClassNotFoundException c) {
-            c.printStackTrace();
+        JDBCUtil.setConfigFile(Constants.DB_CONFIG_FILE);
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("name");
+            add("password");
+        }};
+        List<List<String>> accountSQLs = JDBCUtil.select("account",
+                tableField, null, null, null);
+        for (List<String> accountInfo : accountSQLs) {
+            Account account = new Account(
+                    accountInfo.get(0),
+                    accountInfo.get(1)
+            );
+            accountArrayList.add(account);
         }
-        return;
 
+
+        for (Account account : accountArrayList) {
+            System.out.println("name = " + account.getUsrName()
+                    + " psd = " + account.getUsrPassword());
+        }
 
     }
 
@@ -199,13 +170,16 @@ public class Account implements Serializable {
         if (isAccountExist(name)) {
 
             for (int i = 0; i < accountArrayList.size(); i++) {
-                Account account = (Account) accountArrayList.get(i);
+                Account account = accountArrayList.get(i);
                 if (account.getUsrName().equals(name)) {
                     //修改密码
                     account.setUsrPassword(password);
                     isAccountExist = true;
-                    //更新所有账户数据
-                    clearAndSaveAccountToFile();
+                    //在数据库中update密码
+                    Map<String, String> updateData =
+                            new HashMap<String, String>(3);
+                    updateData.put("password", "'20180926'");
+                    JDBCUtil.update("account", updateData, null);
                     break;
                 }
             }
