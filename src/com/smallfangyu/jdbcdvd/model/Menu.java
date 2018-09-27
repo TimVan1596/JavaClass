@@ -140,7 +140,7 @@ public class Menu {
             }};
             String tableFrom="user";
             String tableWhere = "username='"+account+"'";
-            List<List<String>> list =db.select(tableSelect, tableFrom,tableWhere,null,null,null);
+            List<List<String>> list =db.select(tableSelect, tableFrom,tableWhere,null,null);
 
             if(!password.equals(list.get(0).get(1))){
                 System.out.println("密码错误");
@@ -203,30 +203,47 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         String user = scanner.nextLine();
 
-        String sql = "SELECT username FROM user ";
-        ResultSet rs = db.executeQuery(sql, null);
 
-        try {
-            while (rs.next()) {
-                //判断用户名是否重复
-                if ((rs.getString("username")).equals(user)) {
-                    System.out.println("用户名重复，请重新输入");
-                    register();
-                }
+        ArrayList<String> tableSelect=new ArrayList<String>(){{
+            add("username");
+        }};
+        List<List<String>> list=db.select(tableSelect,"user",null,null,null);
+
+        //判断用户名是否重复
+        for(List<String> li:list){
+            if(user.equals(li.get(0))){
+                System.out.println("用户名重复，请重新输入");
+                register();
             }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
         }
+
+//        String sql = "SELECT username FROM user ";
+//       ResultSet rs = db.executeQuery(sql, null);
+//        try {
+//            while (rs.next()) {
+//                //判断用户名是否重复
+//                if ((rs.getString("username")).equals(user)) {
+//                    System.out.println("用户名重复，请重新输入");
+//                    register();
+//                }
+//            }
+//            rs.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
         System.out.println("请输入密码:");
         String password = scanner.nextLine();
 
         //往数据库里插入数据
-        String sql1 = "INSERT INTO user VALUES(?,?)";
-        Object[] params = {user, password};
-        int rlt = db.executeUpdate(sql1, params);
-        if (rlt > 0) {
+//        String sql1 = "insert INTO user VALUES(?,?)";
+//        Object[] params = {user, password};
+//        int rlt = db.executeUpdate(sql1, params);
+
+        Object[] insertValues = {"'"+user+"'", "'"+password+"'"};
+        int res=db.insert("user",null,insertValues);
+        if (res > 0) {
             System.out.println("注册成功");
         }
         db.close();
@@ -609,7 +626,7 @@ public class Menu {
         String state = "可以借";
 
         //往数据库里插入新的DVD
-        String sql = "INSERT INTO dvd(dvdname,state) VALUES(?,?)";
+        String sql = "insert INTO dvd(dvdname,state) VALUES(?,?)";
         Object[] params = {"《" + dvdname + "》", state};
         int rlt = db.executeUpdate(sql, params);
         if (rlt > 0) {

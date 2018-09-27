@@ -193,14 +193,15 @@ public class JDBCUtil {
 
     /**
      * 插入数据
+     *
      * @param tableName  数据表
      * @param insertData Map容器 field-value格式 数据数组
-     *           p.s 特别注意value的类型根据String还是Number自动转换
-     *           如: insertData.put("password", "123");
+     *                   p.s 特别注意value是字符串时加引号!!!
+     *                   如: insertData.put("password", "'123'");
      * @return int 返回受影响的记录条数(失败返回-1)
      */
     public static int insert(String tableName
-            , Map<String, Object> insertData) {
+            , Map<String, String> insertData) {
         Connection conn = null;
         //返回值：返回受影响的记录条数(失败返回-1)
         int affectRowCNT = -1;
@@ -220,23 +221,11 @@ public class JDBCUtil {
             stringBuilder.append(
                     arrayListToPreparedStm(filedList));
             stringBuilder.append(" ) value ( ");
-
-            boolean isFirst = true;
-            for (Object object : insertData.values()) {
-                if (isFirst) {
-                    isFirst = false;
-                } else {
-                    stringBuilder.append(" , ");
-                }
-                if (object instanceof String) {
-                    stringBuilder.append("'");
-                    stringBuilder.append(object);
-                    stringBuilder.append("'");
-                } else if (object instanceof Number) {
-                    stringBuilder.append(object);
-                }
-
-            }
+            //填充数据值
+            ArrayList<String> valueList =
+                    new ArrayList<>(insertData.values());
+            stringBuilder.append(
+                    arrayListToPreparedStm(valueList));
             stringBuilder.append(" ) ");
 
             String sql = stringBuilder.toString();
@@ -519,27 +508,34 @@ public class JDBCUtil {
 
 
         //插入数据
-//        Map<String, Object> insertData =
-//                new HashMap<String, Object>(3);
-//        Calendar now = Calendar.getInstance();
-//        insertData.put("name", "hello");
-//        insertData.put("password", "123");
-//        insertData.put("age", 66);
-//        int affectRowCNT = insert(tableName, insertData);
+        Map<String, String> insertData =
+                new HashMap<String, String>(3);
+        Calendar now = Calendar.getInstance();
+        insertData.put("name", "'User"
+                + now.get(Calendar.DAY_OF_MONTH)
+                + "-"
+                + now.get(Calendar.HOUR_OF_DAY)
+                + "-"
+                + now.get(Calendar.MINUTE)
+                + "-"
+                + now.get(Calendar.SECOND)
+                + "'");
+        insertData.put("password", "'123'");
+        int affectRowCNT = insert(tableName, insertData);
 
-//        //更新数据
-//        //设置where子句
-//        String tableWhere = "name = 'admin'";
-//        Map<String, String> updateData =
-//                new HashMap<String, String>(3);
-//        updateData.put("password", "'20180926'");
-//        affectRowCNT = update(tableName,updateData,tableWhere);
-//
-//        //删除数据
-//       // affectRowCNT = delete(tableName,tableWhere);
-//        affectRowCNT =
-//                count(tableName,"id",null);
-//        System.out.println("affectRowCNT = "+affectRowCNT);
+        //更新数据
+        //设置where子句
+        String tableWhere = "name = 'admin'";
+        Map<String, String> updateData =
+                new HashMap<String, String>(3);
+        updateData.put("password", "'20180926'");
+        affectRowCNT = update(tableName,updateData,tableWhere);
+
+        //删除数据
+       // affectRowCNT = delete(tableName,tableWhere);
+        affectRowCNT =
+                count(tableName,"id",null);
+        System.out.println("affectRowCNT = "+affectRowCNT);
 
 
 

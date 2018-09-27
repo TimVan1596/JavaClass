@@ -109,22 +109,20 @@ public class DbUtil {
     /**
      * 封装SELECT语句
      */
-    public  List<List<String>> select(ArrayList<String> tableSelect,String tableFrom,String tableWhere,String tableGroup,String tableOrder,String tableLimit){
-         getConn();
+    public  List<List<String>> select(ArrayList<String> tableSelect,String tableFrom,String tableWhere,String tableOrder,String tableLimit){
+
+        getConn();
+
         List<List<String>> list=new ArrayList<>();
 
-        StringBuilder stringBuilder=new StringBuilder();
-        stringBuilder.append(" SELECT ");
+       StringBuilder stringBuilder=new StringBuilder();
+       stringBuilder.append(" SELECT ");
         stringBuilder.append(arrayListToPreparedStm(tableSelect));
         stringBuilder.append(" FROM ");
         stringBuilder.append(tableFrom);
         if(tableWhere!=null){
             stringBuilder.append(" WHERE ");
             stringBuilder.append(tableWhere);
-        }
-        if(tableGroup!=null){
-            stringBuilder.append(" GROUP BY ");
-            stringBuilder.append(tableGroup);
         }
         if(tableOrder!=null){
             stringBuilder.append(" ORDER BY ");
@@ -134,33 +132,60 @@ public class DbUtil {
             stringBuilder.append(" LIMIT ");
             stringBuilder.append(tableLimit);
         }
-
         String sql=stringBuilder.toString();
-        try {
-            stmt=conn.prepareStatement(sql);
-            rs=stmt.executeQuery();
+        try{
+         stmt = conn.prepareStatement(sql) ;
+         rs=stmt.executeQuery();
+         while(rs.next()){
+             ArrayList<String> row = new ArrayList<>();
+             for(String selectData:tableSelect) {
+                 row.add(rs.getString(selectData));
+             }
+             list.add(row);
+         }
 
-            while(rs.next()){
-                ArrayList<String> row=new ArrayList<>();
-                for(String selectData:tableSelect){
-                   row.add(rs.getString(selectData));
-                }
-                list.add(row);
-            }
-            //关闭资源
-            close();
-        } catch (SQLException e) {
+        }catch(SQLException e){
             e.printStackTrace();
+
         }
 
         return list;
     }
 
     /**
-     * 将ArrayList<String>转换成" ? ," 格式(PreparedStatement，SQL用)
-     * 常用于SQL语句的字段
-     * 如将ArrayList转换成 "?,?,?" 格式
-     *
+     * 封装插入语句INSERT
+     * @param insertInto
+     * @param insertValues
+     * @return
+     */
+    public int insert(String tableName, String insertInto, Object[] insertValues){
+        getConn();
+        int result=0;
+
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder.append(" INSERT ");
+        stringBuilder.append(" INTO ");
+        stringBuilder.append(tableName);
+        if(insertInto!=null){
+            stringBuilder.append("("+insertInto+")");
+        }
+        stringBuilder.append(" VALUES");
+        stringBuilder.append("("+objectToPreparedStm(insertValues)+")");
+
+        String sql=stringBuilder.toString();
+
+        try {
+            stmt=conn.prepareStatement(sql);
+            result=stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    /**
+     * 将ArrayList转换成 StringBuilder 格式
      * @param arrayList 原始ArrayList，保存各字段
      * @return StringBuilder 返回输出结果
      */
@@ -175,6 +200,27 @@ public class DbUtil {
                     stringBuilder.append(" , ");
                 }
                 stringBuilder.append(arrayList.get(i));
+            }
+        }
+        return stringBuilder;
+    }
+
+    /**
+     * 将Object转换为StringBuilder形式
+     * @param objects
+     * @return
+     */
+    private static StringBuilder objectToPreparedStm(Object[] objects) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (objects!=null) {
+            boolean isFirst = true;
+            for (int i = 0; i < objects.length; i++) {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    stringBuilder.append(" , ");
+                }
+                stringBuilder.append(objects[i]);
             }
         }
         return stringBuilder;

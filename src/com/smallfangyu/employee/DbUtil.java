@@ -7,7 +7,7 @@ public class DbUtil {
      *
      */
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/dvdsytem?serverTimezone=UTC";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/dvdsytem?useSSL=false&serverTimezone=UTC&characterEncoding=UTF8";
 
     /**数据库的用户名与密码，需要根据自己的设置
      *
@@ -39,9 +39,9 @@ public class DbUtil {
              pstat.executeUpdate();
              pstat.close();
              //删
-            String sql2="DELETE FROM dvd WHERE no=1008";
+            String sql2="DELETE FROM dvd WHERE no=1015";
             PreparedStatement pstat1 = conn.prepareStatement(sql2);
-            pstat1.executeUpdate();
+            pstat1.executeUpdate(sql2);
             pstat1.close();
             //改
             String sql3="UPDATE dvd SET name='nb666' WHERE no=1005";
@@ -82,7 +82,7 @@ public class DbUtil {
             }catch(SQLException se2){
             }// 什么都不做
             try{
-                if(conn!=null) conn.close();
+                if(conn!=null) {conn.close();}
             }catch(SQLException se){
                 se.printStackTrace();
             }
