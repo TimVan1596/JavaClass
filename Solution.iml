@@ -12,7 +12,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/mysql-connector-java-5.1.39-bin.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/mysql-connector-java-8.0.12.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

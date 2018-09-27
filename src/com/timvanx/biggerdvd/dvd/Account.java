@@ -115,7 +115,6 @@ public class Account implements Serializable {
         this.usrPassword = usrPassword;
     }
 
-
     /**
      * 通过用户名检查该账户是否存在
      */
@@ -152,12 +151,6 @@ public class Account implements Serializable {
             accountArrayList.add(account);
         }
 
-
-        for (Account account : accountArrayList) {
-            System.out.println("name = " + account.getUsrName()
-                    + " psd = " + account.getUsrPassword());
-        }
-
     }
 
     /**
@@ -176,10 +169,12 @@ public class Account implements Serializable {
                     account.setUsrPassword(password);
                     isAccountExist = true;
                     //在数据库中update密码
-                    Map<String, String> updateData =
-                            new HashMap<String, String>(3);
-                    updateData.put("password", "'20180926'");
-                    JDBCUtil.update("account", updateData, null);
+                    Map<String, Object> updateData =
+                            new HashMap<>(1);
+                    updateData.put("password", password);
+                    String tableWhere = "name = " + " '" + name + "' ";
+                    JDBCUtil.update("account", updateData
+                            , tableWhere);
                     break;
                 }
             }
