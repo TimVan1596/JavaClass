@@ -248,10 +248,10 @@ public class Menu {
         while (isProgramContinue){
             System.out.println("请输入要归还的DVD编号：");
             int inputNum = Constants.scanfInt();
-            System.out.println("请输入要归还的DVD精确名称（无书名号）：");
+            System.out.println("请输入要归还的DVD精确名称");
             Scanner scanner = new Scanner(System.in);
             String inputScanString = scanner.nextLine();
-            String inputString = "《" + inputScanString + "》";
+            String inputString = inputScanString;
 
             //是否找到的标识符
             boolean isExist = false;
@@ -312,7 +312,7 @@ public class Menu {
             System.out.println("请输入要添加的DVD名称（无书名号）：");
             Scanner scanner = new Scanner(System.in);
             String inputString = scanner.nextLine();
-            DVD newDvd = new DVD("《" + inputString + "》");
+            DVD newDvd = new DVD(inputString);
 
             DVD.getDVDArr().add(newDvd);
             //数据中新增DVD信息
@@ -339,13 +339,13 @@ public class Menu {
         boolean isProgramContinue = true;
         while (isProgramContinue) {
 
-            System.out.println("请输入原DVD名称（无书名号）：");
+            System.out.println("请输入原DVD名称：");
             Scanner scanner = new Scanner(System.in);
             String inputScanString = scanner.nextLine();
             String inputString = "《" + inputScanString + "》";
-            System.out.println("请输入新DVD名称（无书名号）：");
+            System.out.println("请输入新DVD名称：");
             String newInputScanString = scanner.nextLine();
-            String newInputString = "《" + newInputScanString + "》";
+            String newInputString = newInputScanString;
 
             //是否找到的标识符
             boolean isExist = false;
@@ -403,7 +403,8 @@ public class Menu {
             System.out.println("请输入要删除的DVD名称（无书名号）：");
             Scanner scanner = new Scanner(System.in);
             String inputScanString = scanner.nextLine();
-            String inputString = "《" + inputScanString + "》";
+            String inputString = inputScanString;
+
 
 
             //是否找到的标识符
@@ -416,13 +417,13 @@ public class Menu {
                 //是否存在
                 if (dvd.getId() == inputNum &&
                         dvd.getName().equals(inputString)) {
-                    int deleteDVDID = dvd.getId();
+
                     isExist = true;
                     //是否未被借出
                     if (!dvd.isStatus()) {
                         DVD.getDVDArr().remove(i);
                         //使用数据库删除DVD信息（通过主键ID）
-                        DVD.deleteDVDInfo(deleteDVDID);
+                        DVD.deleteDVDInfo(inputNum);
                         System.out.println(inputString + "删除成功");
                         isCouldUpdate = true;
                         break;

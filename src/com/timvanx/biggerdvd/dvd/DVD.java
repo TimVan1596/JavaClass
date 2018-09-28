@@ -104,10 +104,16 @@ public class DVD implements Serializable {
      * 使用数据库增加DVD信息
      */
     public static void addDVDInfo(DVD newDVD) {
+        //boolean型的newDVD.isStatus()转数字0、1
+        int newDVDStatus = 0;
+        if (newDVD.isStatus()) {
+            newDVDStatus = 1;
+        }
+
         Map<String, Object> insertData =
                 new HashMap<String, Object>(1);
         insertData.put("name", newDVD.getName());
-        insertData.put("status", newDVD.isStatus());
+        insertData.put("status", newDVDStatus);
         JDBCUtil.insert("dvd", insertData);
     }
 
@@ -116,11 +122,17 @@ public class DVD implements Serializable {
      * 使用数据库修改DVD信息
      */
     public static void updateDVDInfo(DVD newDVD) {
+        //boolean型的newDVD.isStatus()转数字0、1
+        int newDVDStatus = 0;
+        if (newDVD.isStatus()) {
+            newDVDStatus = 1;
+        }
+
         //在数据库中update DVD的名称和状态
         Map<String, Object> updateData =
                 new HashMap<>(1);
         updateData.put("name", newDVD.getName());
-        updateData.put("status", newDVD.isStatus());
+        updateData.put("status", newDVDStatus);
         String tableWhere = " id = " + newDVD.getId();
         JDBCUtil.update("dvd", updateData
                 , tableWhere);

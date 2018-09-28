@@ -8,17 +8,13 @@ import java.io.Serializable;
 
 class Person {}
 
+
 public class Test implements Serializable {
     private Person p = new Person();
     public static void main(String[] args) {
-        Test t = new Test();
-        try {
-            FileOutputStream fos = new FileOutputStream("person.dat");
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(t);
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        //Java中数组的静态初始化
+        int arr[] = {23, 43, 56, 78};
+
     }
 }

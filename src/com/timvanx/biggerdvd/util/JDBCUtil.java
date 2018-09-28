@@ -229,6 +229,7 @@ public class JDBCUtil {
                     arrayListToPreparedStm(filedList));
             stringBuilder.append(" ) value ( ");
 
+            //将value中内容拼接
             boolean isFirst = true;
             for (Object object : insertData.values()) {
                 if (isFirst) {
