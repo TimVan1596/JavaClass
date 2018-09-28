@@ -1,8 +1,8 @@
 package com.smallfangyu.jdbcdvd.data;
 
 import com.smallfangyu.jdbcdvd.model.DVD;
-import java.sql.*;
-import java.util.ArrayList;
+
+import java.util.*;
 
 public class Data {
 
@@ -15,15 +15,19 @@ public class Data {
 	 * @return
 	 */
 	public ArrayList<DVD> dvdList() {
-		String sql = "SELECT * FROM dvd";
-		ResultSet rs = db.executeQuery(sql, null);
-		try {
-			while (rs.next()) {
-				dvds.add(new DVD(rs.getInt("dvdno"), rs.getString("dvdname"), rs.getString("state")));
+		ArrayList<String> tableSelect=new ArrayList<String>(){
+			{
+				add("dvdno");
+				add("dvdname");
+				add("state");
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		};
+		List<List<String>> list=db.select(tableSelect,"dvd",null,null,null);
+
+		for(List<String> li:list) {
+            dvds.add(new DVD(Integer.parseInt(li.get(0)), li.get(1), li.get(2)));
+        }
+
 		return dvds;
 	}
 

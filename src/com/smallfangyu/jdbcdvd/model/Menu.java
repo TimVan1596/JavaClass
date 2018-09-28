@@ -24,7 +24,7 @@ public class Menu {
 
     Data data = new Data();
 
-    ArrayList<DVD> dvds;
+    ArrayList<DVD> dvds=new ArrayList<DVD>();
 
     DbUtil db = new DbUtil();
 
@@ -205,16 +205,12 @@ public class Menu {
 
         }
 
-
-
         System.out.println("请输入密码:");
         String password = scanner.nextLine();
 
         //往数据库里插入数据
 
-
-        Object[] insertValues = {"'"+user+"'", "'"+password+"'"};
-        int res=db.insert("user",null,insertValues);
+        int res=db.insert("user",null,"'"+user+"'"+","+"'"+password+"'");
         if (res > 0) {
             System.out.println("注册成功");
         }
@@ -309,12 +305,14 @@ public class Menu {
         System.out.println("编号\t       名称\t       状态");
         System.out.println("---------------------------------");
         //清空集合里的数据
-        dvds.clear();
+       if(!dvds.isEmpty()){
+           dvds.clear();
+       }
         dvds = data.dvdList();
         for (DVD dvd : dvds) {
             dvd.show();
         }
-
+        dvds.clear();
         System.out.println("---------------------------------");
 
     }
@@ -493,15 +491,14 @@ public class Menu {
 
                 System.out.println("恭喜您！此DVD在系统中的状态为：可以借！");
 
-                String sql = "UPDATE dvd SET state=? WHERE dvdno=?";
-                Object[] params = {"已借出", no};
-                int ret = db.executeUpdate(sql, params);
+            int ret=db.update("dvd","state='已借出'","dvdno="+no);
                 if (ret > 0) {
                     System.out.println("DVD已借出");
                     db.close();
                 }
             }
         }
+        dvds.clear();
         if (!queryhave) {
             System.out.println("对不起!操作不成功，可能因为不存在此编号或此DVD已借出!");
         }
@@ -545,9 +542,8 @@ public class Menu {
             if (no == dvd.getId()) {
                 if (dvd.getState().equals("已借出")) {
 
-                    String sql = "UPDATE dvd SET state=? WHERE dvdno=?";
-                    Object[] params = {"可以借", no};
-                    int ret = db.executeUpdate(sql, params);
+
+                    int ret=db.update("dvd","state='可以借'","dvdno="+no);
                     if (ret > 0) {
                         System.out.println("DVD已归还");
                         db.close();
@@ -568,6 +564,7 @@ public class Menu {
 
             }
         }
+        dvds.clear();
         // 展示归还后的DVD界面
         display();
 
@@ -598,9 +595,8 @@ public class Menu {
         String state = "可以借";
 
         //往数据库里插入新的DVD
-        String sql = "insert INTO dvd(dvdname,state) VALUES(?,?)";
-        Object[] params = {"《" + dvdname + "》", state};
-        int rlt = db.executeUpdate(sql, params);
+
+        int rlt=db.insert("dvd","dvdname"+","+"state","'《" + dvdname + "》'"+","+ "'"+state+"'");
         if (rlt > 0) {
             System.out.println("DVD添加成功");
             db.close();
@@ -649,9 +645,10 @@ public class Menu {
             }
         }
 
-        String sql = "DELETE FROM dvd WHERE dvdno=? ";
-        Object[] params = {no};
-        int rlt = db.executeUpdate(sql, params);
+//        String sql = "DELETE FROM dvd WHERE dvdno=? ";
+//        Object[] params = {no};
+//        int rlt = db.executeUpdate(sql, params);
+        int rlt=db.delete("dvd","dvdno="+no);
         if (rlt > 0) {
             System.out.println("删除成功");
             db.close();
@@ -710,9 +707,8 @@ public class Menu {
 
                     if ((dvdstate.equals("可以借")) || (dvdstate.equals("已借出"))) {
 
-                        String sql = "UPDATE dvd SET dvdname=?,state=? WHERE dvdno=?";
-                        Object[] params = {"《" + dvdname + "》", dvdstate, no};
-                        int ret = db.executeUpdate(sql, params);
+
+   int ret=db.update("dvd","dvdname="+"'《" + dvdname + "》'"+","+"state="+"'"+dvdstate+"'","dvdno="+no);
                         if (ret > 0) {
                             System.out.println("修改成功");
                             db.close();

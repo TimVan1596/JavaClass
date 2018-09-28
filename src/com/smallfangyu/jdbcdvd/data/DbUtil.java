@@ -71,43 +71,8 @@ public class DbUtil {
           return conn;
      }
 
-    /**
-     *更新数据库
-     * @return
-     */
-    public int executeUpdate(String sql,Object[] params){
-            int rlt=-1;
-            getConn();
-            try {
-                stmt = conn.prepareStatement(sql);
-                putParams(params,stmt);
-                rlt=stmt.executeUpdate();
 
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-            return rlt;
-    }
-
-    /**
-     * 查询数据库
-     * @param sql
-     * @param params
-     * @return
-     */
-    public ResultSet executeQuery(String sql,Object[] params){
-        getConn();
-        try {
-            stmt=conn.prepareStatement(sql);
-            putParams(params,stmt);
-            rs=stmt.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return rs;
-    }
-
-    /**
+     /**
      * 封装SELECT语句
      */
     public  List<List<String>> select(ArrayList<String> tableSelect,String tableFrom,String tableWhere,String tableOrder,String tableLimit){
@@ -172,7 +137,7 @@ public class DbUtil {
         stringBuilder.append(updateWhere);
 
         String sql=stringBuilder.toString();
-
+System.out.println(sql);
         try {
             stmt=conn.prepareStatement(sql);
             result=stmt.executeUpdate();
@@ -189,7 +154,7 @@ public class DbUtil {
      * @param insertValues
      * @return
      */
-    public int insert(String tableName, String insertInto, Object[] insertValues){
+    public int insert(String tableName, String insertInto, String insertValues){
         getConn();
         int result=0;
 
@@ -201,7 +166,7 @@ public class DbUtil {
             stringBuilder.append("("+insertInto+")");
         }
         stringBuilder.append(" VALUES");
-        stringBuilder.append("("+objectToPreparedStm(insertValues)+")");
+        stringBuilder.append("("+insertValues+")");
 
         String sql=stringBuilder.toString();
 
@@ -214,6 +179,33 @@ public class DbUtil {
         }
         return result;
     }
+
+    /**
+     * 封装DELETE语句
+     * @param tableName
+     * @param deleteWhere
+     * @return
+     */
+     public int delete(String tableName,String deleteWhere){
+        int res=0;
+        getConn();
+        StringBuilder stringBuilder=new StringBuilder();
+        stringBuilder.append(" DELETE FROM ");
+        stringBuilder.append(tableName);
+        stringBuilder.append(" WHERE ");
+        stringBuilder.append(deleteWhere);
+
+        String sql=stringBuilder.toString();
+         try{
+             stmt = conn.prepareStatement(sql);
+             res=stmt.executeUpdate();
+             close();
+         }catch(SQLException e){
+             e.printStackTrace();
+         }
+
+        return res;
+      }
 
 
     /**
@@ -237,26 +229,7 @@ public class DbUtil {
         return stringBuilder;
     }
 
-    /**
-     * 将Object转换为StringBuilder形式
-     * @param objects
-     * @return
-     */
-    private static  StringBuilder objectToPreparedStm(Object[] objects) {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (objects!=null) {
-            boolean isFirst = true;
-            for (int i = 0; i < objects.length; i++) {
-                if (isFirst) {
-                    isFirst = false;
-                } else {
-                    stringBuilder.append(" , ");
-                }
-                stringBuilder.append(objects[i]);
-            }
-        }
-        return stringBuilder;
-    }
+
 
      /**
      * 关闭资源
@@ -279,12 +252,4 @@ public class DbUtil {
     }
 
 
-    public void putParams(Object[] params,PreparedStatement stmt) throws SQLException{
-             if(params!=null){
-                 for(int i=1;i<=params.length;i++){
-                     stmt.setObject(i,params[i-1]);
-                 }
-             }
-
-    }
 }
