@@ -1,25 +1,28 @@
 package com.antianbao.text;
 
+import java.util.Scanner;
+
 public class Solution {
-    public static void main(String[] args){
-        String str = "We Are Happy";
-        StringBuffer s = new StringBuffer(str);
-        Solution cs = new Solution();
-        String string = cs.replaceSpace(s);
-        System.out.println(string);
-    }
-    /**
-     * StringBuffer类中的方法主要偏重于对于字符串的变化，
-     * 例如追加、插入和删除等，这个也是StringBuffer和String类的主要区别。
-     * */
-    public String replaceSpace(StringBuffer str){
-        //indexOf() 如果要检索的字符串值没有出现，则该方法返回 -1
-        int index = str.indexOf(" ");
-        while(index != -1){
-            str.replace(index,index+1,"%20");
-            index = str.indexOf(" ",index);
+    public static void main(String[] args) {
+        try {
+            System.out.println("请输入一个整数(n<=39)：");
+            Scanner s = new Scanner(System.in);
+            int n = s.nextInt();
+            Solution solution = new Solution();
+            System.out.println("斐波那契数列的第" + n + "项：");
+            System.out.println(solution.Fibonacci(n));
+        } catch (Exception e) {
+            System.out.println("请输入数字！");
         }
-        String string = new String(str);
-        return string;
+    }
+
+    public int Fibonacci(int n) {
+        int[] num = new int[100];
+        num[0] = 0;
+        num[1] = 1;
+        for (int i = 2; i < 100; i++) {
+            num[i] = num[i - 1] + num[i - 2];
+        }
+        return num[n];
     }
 }
