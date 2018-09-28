@@ -1,4 +1,4 @@
-package com.zhangmin.com.aiit.datafengzhuang;
+package com.zhangmin.com.aiit.preparedstatement;
 
 import java.sql.*;
 
