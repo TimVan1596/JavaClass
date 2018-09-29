@@ -23,7 +23,7 @@ public class StudentDao {
             //执行处理
             int iRet = pre.executeUpdate();
             if(iRet>=0){
-                System.out.println("执行成功");
+                System.out.println("添加成功");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,9 +33,38 @@ public class StudentDao {
 
     }
     //删
+   public void deleteStu(Student stu){
+        String sql ="DELETE FROM tb_student WHERE stuID = "+stu.stuID;
+        PreparedStatement pre = dbHelper.getPre(sql);
+       int iRet = 0;
+       try {
+           iRet = pre.executeUpdate();
+           if(iRet >=0){
+               System.out.println("删除成功！");
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }finally {
+           dbHelper.closeRescore();
+       }
 
+   }
     //改
+    public void modlifyStu(Student stu){
+        String sql ="UPDATE tb_student SET stuScore = stuScore+1 WHERE stuID="+stu.stuID;
+        PreparedStatement pre = dbHelper.getPre(sql);
+        try {
+            int iRet = pre.executeUpdate();
+            if (iRet >= 0) {
+                System.out.println("修改成功！");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbHelper.closeRescore();
+        }
 
+    }
     //查
     public List<Student> queryAllStudent(){
         List<Student> stuList= new ArrayList<Student>();

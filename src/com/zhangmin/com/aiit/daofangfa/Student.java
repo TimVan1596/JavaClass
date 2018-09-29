@@ -49,6 +49,9 @@ public class Student {
         this.stuAddress = stuAddress;
         this.stuScore = stuScore;
     }
+    public Student(int stuID) {
+        this.stuID = stuID;
+    }
     @Override
     public String toString() {
         return stuID+"\t"+stuName+"\t"+stuAddress+"\t"+stuScore;
