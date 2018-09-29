@@ -1,20 +1,23 @@
 package com.timvanx;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+public class Test {
+    public Test() {
+    }
 
-class Person {}
+    static void print(ArrayList al) {
 
+    }
 
-public class Test implements Serializable {
-    private Person p = new Person();
     public static void main(String[] args) {
-
-        //Java中数组的静态初始化
-        int arr[] = {23, 43, 56, 78};
-
+        List plist = new ArrayList();
+        plist.add("A");
+        plist.add("B");
+        for (int i = 0; i < plist.size(); i++) {
+            String str = plist.get(i).toString();
+            System.out.println(str);
+        }
     }
 }
