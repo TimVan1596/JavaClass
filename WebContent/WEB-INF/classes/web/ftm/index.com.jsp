@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: r
+  User: TimVan
   Date: 2018/10/8
   Time: 8:09
   To change this template use File | Settings | File Templates.
@@ -12,50 +12,69 @@
 
 <%@ page import="com.timvanx.biggerdvd.util.Constants" %>
 <%!
-    private int initVar = 0;
-    private int serviceVar = 0;
-    private int destroyVar = 0;
-
+    //初始化常量信息
     String VERSION = Constants.VERSION;
 
-
-    @Override
-    public void jspInit() {
-        initVar++;
-        System.out.println("jspInit(): JSP被初始化了" + initVar + "次");
-    }
-
-    @Override
-    public void jspDestroy() {
-        destroyVar++;
-        System.out.println("jspDestroy(): JSP被销毁了" + destroyVar + "次");
-    }
-%>
-
-<%
-    serviceVar++;
-    System.out.println("_jspService(): JSP共响应了" + serviceVar + "次请求");
-
-    String content1 = "初始化次数 : " + initVar;
-    String content2 = "响应客户请求次数 : " + serviceVar;
-    String content3 = "销毁次数 : " + destroyVar;
 %>
 
 <html>
 <head>
     <title>BiggerDVD <%=VERSION%>
     </title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
 </head>
 <body>
 <h1>********** 欢迎来到BiggerDVD 管理系统 **************</h1>
 <h3>**版本号 <%=VERSION %>
 </h3>
-<p><%=content1 %>
-</p>
-<p><%=content2 %>
-</p>
-<p><%=content3 %>
-</p>
+
+<form action="html/menu.jsp" method="post">
+    <p>
+        账号：<input name="name" type="text" title="name" value="" leipiplugins="text" orghide="0" orgalign="left"
+                  orgwidth="150" orgtype="text" style="text-align: left; width: 150px;"/>
+    </p>
+    <p>
+        密码：<input name="password" type="password" title="password" value="" leipiplugins="text" orghide="0"
+                  orgalign="left" orgwidth="150" orgtype="text" style="text-align: left; width: 150px;"/>
+    </p>
+
+    <div>
+        <a style="margin-right: 50px;
+    text-decoration-line: underline;
+    color: blue;">找回密码</a>
+        <a style="text-decoration-line: underline;
+    color: blue;">注册账号</a>
+    </div>
+
+    <p>
+        <br/>
+        <input type="button" value="登录" onsubmit="checkAccount()">
+    </p>
+
+    <h3 id="show1" style="color: red">
+
+    </h3>
+</form>
+
+<script>
+    //验证登录
+    function checkAccount() {
+        $.post('html', {
+            id: 13
+        }, function (ret) {
+            if (ret === "true") {
+
+                $("#show1").html("===ok===" + "<br/>" + "name="
+                    + $("[name=name]").val() + "<br/>" + "pwd="
+                    + $("[name=password]").val());
+            } else if (data === "false") {
+                $("#show1").html("==信息不符合==");
+            }
+        });
+    }
+</script>
 
 </body>
 </html>
