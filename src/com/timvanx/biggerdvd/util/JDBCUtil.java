@@ -57,7 +57,7 @@ public class JDBCUtil {
      * @param tableWhere 条件
      * @param tableOrder 排序
      * @param tableLimit 选取
-     * @return List<List       <       String>> 返回二维数组
+     * @return List<List < String>> 返回二维数组
      */
     public static List<List<String>> select
     (String tableName, ArrayList<String> tableField

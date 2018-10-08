@@ -19,11 +19,7 @@ public class Constants {
      * ACCOUNT_PATH = 账户密码序列化路径
      * DB_CONFIG_FILE = BiggerDVD的数据库配置文件
      */
-    public static final String VERSION = "v0.4(数据库版)";
-    public static final String DVD_INFO_FILENAME = "dvdInfo.txt";
-    public static final String ACCOUNT_FILENAME = "account.txt";
-    public static final String DVD_SER_PATH = "dvdInfo.ser";
-    public static final String ACCOUNT_SER_PATH = "account.ser";
+    public static final String VERSION = "v5(网页版)";
     public static final String DB_CONFIG_FILE
             = "BigerDvdDb.properties";
 
