@@ -11,17 +11,17 @@
     <title>BiggerDVD </title>
 </head>
 <body>
-    <h1>********** BiggerDVD 管理系统 **************</h1>
+<h1>********** BiggerDVD 管理系统 **************</h1>
 
-    <div>
-        <p>输入的账号为:
-            <%= request.getParameter("name")%>
-        </p>
+<div>
+    <p>输入的账号为:
+        <%= request.getParameter("name")%>
+    </p>
 
-        <p>输入的密码为:
-            <%= request.getParameter("password")%>
-        </p>
-    </div>
+    <p>输入的密码为:
+        <%= request.getParameter("password")%>
+    </p>
+</div>
 
 </body>
 </html>
