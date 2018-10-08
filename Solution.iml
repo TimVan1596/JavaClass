@@ -43,7 +43,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="mylib" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -54,26 +53,15 @@
         <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://C:/apache-tomcat-9.0.12/lib" />
+          <root url="file://$MODULE_DIR$/../apache-tomcat-9.0.12/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://C:/apache-tomcat-9.0.12/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../apache-tomcat-9.0.12/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/WebContent/WEB-INF/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/WebContent/WEB-INF/lib" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>
