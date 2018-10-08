@@ -31,6 +31,8 @@ public class Account implements Serializable {
     static {
         accountArrayList = new ArrayList<>();
         loginCNT = 0;
+        //从文件中读取所有的账户-密码信息
+        loadAccount();
     }
 
     private Account(String usrName, String usrPassword) {
@@ -39,8 +41,7 @@ public class Account implements Serializable {
     }
 
     public Account() {
-        //从文件中读取所有的账户-密码信息
-        loadAccount();
+
     }
 
     /**
@@ -55,16 +56,12 @@ public class Account implements Serializable {
         for (Account account : accountArrayList) {
             if (account.getUsrName().equals(name)) {
                 if (account.getUsrPassword().equals(password)) {
-                    System.out.println("登录成功！");
                     isLogin = true;
                 }
                 break;
             }
         }
 
-        if (!isLogin) {
-            System.out.println("登录失败！请检查用户名或密码是否输入错误");
-        }
 
         return isLogin;
     }

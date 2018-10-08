@@ -8,20 +8,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>BiggerDVD </title>
+    <title>菜单</title>
 </head>
 <body>
-<h1>********** BiggerDVD 管理系统 **************</h1>
 
-<div>
-    <p>输入的账号为:
-        <%= request.getParameter("name")%>
-    </p>
+<%@ page import="com.timvanx.biggerdvd.util.Constants" %>
+<%
+    //初始化常量信息
+    String VERSION = Constants.VERSION;
+    String userName = "用户";
 
-    <p>输入的密码为:
-        <%= request.getParameter("password")%>
-    </p>
-</div>
+%>
+
+
+<h1>********** <%=userName%>你好！欢迎进入系统菜单 **************</h1>
+
+<section>
+    <button>显示DVD</button>
+    <button>查看DVD</button>
+    <button>借出DVD</button>
+    <button>归还DVD</button>
+</section>
+
+<section style="margin-top: 2%">
+    <button>添加DVD</button>
+    <button>修改DVD</button>
+    <button>删除DVD</button>
+</section>
+
+<section style="margin-top: 2%">
+    <button>注销</button>
+</section>
 
 </body>
 </html>

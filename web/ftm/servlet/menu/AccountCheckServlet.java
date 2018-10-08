@@ -1,5 +1,7 @@
 package web.ftm.servlet.menu;
 
+import com.timvanx.biggerdvd.dvd.Account;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,26 +28,17 @@ public class AccountCheckServlet extends HttpServlet {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        String name = request.getParameter("name");
-        String pwd = request.getParameter("password");
-        System.out.println("name=" + name + " pwd=" + pwd);
-        if (name.equals("admin") && pwd.equals("123456")) {
-            try {
-                out.write("true");
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                out.close();
-            }
+        String userName = request.getParameter("name");
+        String userPassword = request.getParameter("password");
+        System.out.println("name=" + userName + "   pwd=" + userPassword);
+
+        //判断输入账户是否存在
+        if (Account.login(userName, userPassword)) {
+            out.write("true");
         } else {
-            try {
-                out.write("false");
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                out.close();
-            }
+            out.write("false");
         }
+
     }
 
 }
