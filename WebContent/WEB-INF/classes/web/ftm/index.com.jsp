@@ -30,7 +30,7 @@
 <h3>**版本号 <%=VERSION %>
 </h3>
 
-<form action="html/menu.jsp" method="post">
+<form>
     <p>
         账号：<input name="name" type="text" title="name" value="" leipiplugins="text" orghide="0" orgalign="left"
                   orgwidth="150" orgtype="text" style="text-align: left; width: 150px;"/>
@@ -50,7 +50,7 @@
 
     <p>
         <br/>
-        <input type="button" value="登录" onsubmit="checkAccount()">
+        <input type="button" value="登录" onclick="checkAccount()">
     </p>
 
     <h3 id="show1" style="color: red">
@@ -61,14 +61,19 @@
 <script>
     //验证登录
     function checkAccount() {
-        $.post('html', {
-            id: 13
+
+        var name = $("[name=name]").val();
+        var password = $("[name=password]").val();
+
+        $.post('servlet/menu/AccountCheckServlet.java', {
+            name: name,
+            password: password,
         }, function (ret) {
             if (ret === "true") {
 
                 $("#show1").html("===ok===" + "<br/>" + "name="
-                    + $("[name=name]").val() + "<br/>" + "pwd="
-                    + $("[name=password]").val());
+                    + name + "<br/>" + "pwd="
+                    + password);
             } else if (data === "false") {
                 $("#show1").html("==信息不符合==");
             }
