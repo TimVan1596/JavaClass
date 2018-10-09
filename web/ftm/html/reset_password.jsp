@@ -15,7 +15,7 @@
     </script>
 </head>
 <body>
-<h1>注册账号</h1>
+<h1>修改密码</h1>
 
 <form>
     <p>
@@ -23,14 +23,14 @@
                     orgwidth="150" orgtype="text" style="text-align: left; width: 150px;"/>
     </p>
     <p>
-        输入密码：<input name="password" type="password" title="password" value="" leipiplugins="text" orghide="0"
-                    orgalign="left" orgwidth="150" orgtype="text" style="text-align: left; width: 150px;"/>
+        输入新密码：<input name="password" type="password" title="password" value="" leipiplugins="text" orghide="0"
+                     orgalign="left" orgwidth="150" orgtype="text" style="text-align: left; width: 150px;"/>
     </p>
     <p>
-        重复密码：<input name="re-password" type="password"
-                    title="re-password" value=""
-                    leipiplugins="text" orghide="0"
-                    orgalign="left" orgwidth="150" orgtype="text" style="text-align: left; width: 150px;"/>
+        重复新密码：<input name="re-password" type="password"
+                     title="re-password" value=""
+                     leipiplugins="text" orghide="0"
+                     orgalign="left" orgwidth="150" orgtype="text" style="text-align: left; width: 150px;"/>
     </p>
 
     <p>
@@ -55,7 +55,7 @@
         }
         else {
             //通过ajax检查是否正常登录
-            $.post('../registerAccount.do', {
+            $.post('../resetPassword.do', {
                 name: name,
                 password: password
             }, function (ret) {
@@ -63,12 +63,12 @@
                 ret = eval("(" + ret + ")");
 
                 if (ret['error'] === 0) {
-                    alert("注册成功！");
+                    alert("密码修改成功！");
                     window.location.href = '../biggerdvd.jsp';
 
                 } else if (ret['error'] === 1) {
                     var errorInfo = ret['errorInfo'];
-                    alert("注册失败！"+errorInfo);
+                    alert("修改失败！" + errorInfo);
                     location.reload();
                 }
 

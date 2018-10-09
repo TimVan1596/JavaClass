@@ -11,6 +11,7 @@
 
 
 <%@ page import="com.timvanx.biggerdvd.util.Constants" %>
+
 <%!
     //初始化常量信息
     String VERSION = Constants.VERSION;
@@ -45,7 +46,7 @@
     <div>
         <a style="margin-right: 50px;
     text-decoration-line: underline;
-    color: blue;" href="html/register.jsp">找回密码</a>
+    color: blue;" href="html/reset_password.jsp">找回密码</a>
         <a style="text-decoration-line: underline;
     color: blue;" href="html/register.jsp">注册账号</a>
     </div>
@@ -78,13 +79,16 @@
                 name: name,
                 password: password
             }, function (ret) {
+                //解析ret
+                ret = eval("(" + ret + ")");
 
-                if (ret === "true") {
+                if (ret['error'] === 0) {
                     alert("登录成功！");
                     window.location.href = 'html/menu.jsp';
 
-                } else if (ret === "false") {
-                    alert("登录失败！请检查用户名或密码是否输入错误");
+                } else if (ret['error'] === 1) {
+                    var errorInfo = ret['errorInfo'];
+                    alert("登录失败！" + errorInfo);
                     location.reload();
                 }
 

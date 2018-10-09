@@ -35,3 +35,5 @@ out/test/
 Solution.iml
 /.idea/dataSources/
 /.idea/inspectionProfiles/
+/WebContent/WEB-INF/classes/
+/.idea/

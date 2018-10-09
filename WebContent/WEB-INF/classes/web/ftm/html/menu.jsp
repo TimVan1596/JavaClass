@@ -16,10 +16,9 @@
 <%
     //初始化常量信息
     String VERSION = Constants.VERSION;
-    String  userName = "用户";
+    String userName = "用户";
 
 %>
-
 
 
 <h1>********** <%=userName%>你好！欢迎进入系统菜单 **************</h1>
