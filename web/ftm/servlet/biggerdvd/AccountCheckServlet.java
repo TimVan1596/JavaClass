@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -40,6 +41,9 @@ public class AccountCheckServlet extends HttpServlet {
         //判断输入账户是否存在
         if (Account.login(userName, userPassword)) {
             ret.put("error", 0);
+            HttpSession session = request.getSession();
+            session.setAttribute("userName", userName);
+
         } else {
             ret.put("error", 1);
             ret.put("errorInfo", "请检查用户名或密码是否输入错误");

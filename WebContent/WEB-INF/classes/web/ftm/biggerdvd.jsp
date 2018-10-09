@@ -84,11 +84,13 @@
 
                 if (ret['error'] === 0) {
                     alert("登录成功！");
+
+
                     window.location.href = 'html/menu.jsp';
 
                 } else if (ret['error'] === 1) {
                     var errorInfo = ret['errorInfo'];
-                    alert("登录失败！"+errorInfo);
+                    alert("登录失败！" + errorInfo);
                     location.reload();
                 }
 

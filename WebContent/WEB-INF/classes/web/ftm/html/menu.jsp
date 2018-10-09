@@ -16,7 +16,17 @@
 <%
     //初始化常量信息
     String VERSION = Constants.VERSION;
-    String userName = "用户";
+    String userName = "非法用户";
+
+    if(session.getAttribute("userName") != null){
+        userName =(String)  session.getAttribute("userName");
+    }
+    else {
+        response.sendRedirect("../biggerdvd.jsp");
+        return;
+    }
+
+
 
 %>
 
