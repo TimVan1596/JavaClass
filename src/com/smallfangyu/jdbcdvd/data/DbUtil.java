@@ -1,6 +1,6 @@
 package com.smallfangyu.jdbcdvd.data;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
+//import com.mysql.cj.x.protobuf.MysqlxCrud;
 
 import java.io.IOException;
 import java.io.InputStream;
