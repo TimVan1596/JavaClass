@@ -18,10 +18,10 @@
     String VERSION = Constants.VERSION;
     String userName = "非法用户";
 
-    if(session.getAttribute("userName") != null){
-        userName =(String)  session.getAttribute("userName");
-    }
-    else {
+    if (session.getAttribute("userName") != null) {
+        userName = (String) session.getAttribute("userName");
+    } else {
+
         response.sendRedirect("../biggerdvd.jsp");
         return;
     }
@@ -31,7 +31,7 @@
 %>
 
 
-<h1>********** <%=userName%>你好！欢迎进入系统菜单 **************</h1>
+<h1>********** <%=userName%>，你好！欢迎进入系统菜单 **************</h1>
 
 <section>
     <button>显示DVD</button>
