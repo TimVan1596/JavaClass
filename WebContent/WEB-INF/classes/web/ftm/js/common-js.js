@@ -7,8 +7,8 @@
 /**
  * 判断输入字符串是否为空或者全部都是空格
  **/
-function isNull( str ){
-    if ( str == "" ) return true;
+function isNull(str) {
+    if (str == "") return true;
     var regu = "^[ ]+$";
     var re = new RegExp(regu);
     return re.test(str);

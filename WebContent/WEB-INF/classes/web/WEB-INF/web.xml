@@ -7,7 +7,7 @@
     <!--范天明的servlet配置  开始-->
     <servlet>
         <servlet-name>AccountCheckServlet</servlet-name>
-        <servlet-class>web.ftm.servlet.menu.AccountCheckServlet</servlet-class>
+        <servlet-class>web.ftm.servlet.biggerdvd.AccountCheckServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AccountCheckServlet</servlet-name>
