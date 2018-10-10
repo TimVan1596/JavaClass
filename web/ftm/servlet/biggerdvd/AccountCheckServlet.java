@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.timvanx.biggerdvd.dvd.Account;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,8 @@ import java.util.Map;
  *
  * @author TimVan
  */
+@WebServlet(name = "AccountCheckServlet",
+        urlPatterns = {"/ftm/AccountCheckServlet.do"}, loadOnStartup = 1)
 public class AccountCheckServlet extends HttpServlet {
 
     @Override

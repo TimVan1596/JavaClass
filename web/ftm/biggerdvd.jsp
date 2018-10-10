@@ -75,7 +75,7 @@
         }
         else {
             //通过ajax检查是否正常登录
-            $.post('AccountCheck.do', {
+            $.post('AccountCheckServlet.do', {
                 name: name,
                 password: password
             }, function (ret) {
