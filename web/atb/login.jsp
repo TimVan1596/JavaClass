@@ -11,18 +11,23 @@
     <title>DVD管理系统</title>
 </head>
 <body>
-<h3>********欢迎进入MiniDVD Mgr 6.0 管理系统********</h3>
+<h3>******欢迎进入MiniDVD Mgr 6.0 管理系统******</h3>
 
 <form action="login.do" method="get">
-    账号：<input type="text" name="username" />
-    <br>
-    密码：<input type="password" name="userpassword" />
-    <br>
+    <p>
+        账号：<input type="text" name="username" style="text-align: left; width: 150px;"/>
+    </p>
+    <p>
+        密码：<input type="password" name="userpassword" style="text-align: left; width: 150px;"/>
+    </p>
     <div>
-        <a style="margin-right: 50px;text-decoration-line: underline;color: blue;" href="retrieve.jsp">找回密码</a>
+        <a style="margin-right: 70px;text-decoration-line: underline;color: blue;" href="retrieve.jsp">找回密码</a>
         <a style="text-decoration-line: underline;color: blue;" href="register.jsp">注册账号</a>
     </div>
-    <input type="submit" value="登陆">
+    <p>
+        <input type="submit" value="登陆" style="text-align: left;">
+    </p>
+
 </form>
 </body>
 </html>
