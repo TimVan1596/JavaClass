@@ -13,7 +13,7 @@
 <body>
 <h3>------欢迎来到注册界面------</h3>
 
-<form action="Register.do" method="get">
+<form>
     <p>
         用户账号：<input name="name" type="text" title="name" style="text-align: left; width: 150px;"/>
     </p>
@@ -27,34 +27,11 @@
         绑定手机：<input name="phone" type="phone" title="phone" style="text-align: left; width: 150px;"/>
     </p>
     <p>
-        <input type="submit" value="提交">
+        <input type="submit" value="提交" onclick="Register()">
     </p>
+    <script type="text/javascript">
+        alert('<%=request.getAttribute("MSG")%>');
+    </script>
 </form>
-<script>
-    //验证登录
-    function checkAccount() {
-        var name = $("[name=name]").val();
-        var password = $("[name=password]").val();
-        //非空判断
-        if (isNull(name) || isNull(password)) {
-            alert("用户名或密码不能为空！");
-        }
-        else {
-            //通过ajax检查是否正常登录
-            $.post('AccountCheck.do', {
-                name: name,
-                password: password
-            }, function (ret) {
-                if (ret === "true") {
-                    alert("登录成功！");
-                    window.location.href = 'html/menu.jsp';
-                } else if (ret === "false") {
-                    alert("登录失败！请检查用户名或密码是否输入错误");
-                    location.reload();
-                }
-            });
-        }
-    }
-</script>
 </body>
 </html>

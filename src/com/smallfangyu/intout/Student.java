@@ -56,7 +56,7 @@ public class Student implements Serializable{
 		return "[学号：" + this.stuId + ", 姓名:" + this.stuName +",年龄"+this.stuAge+ "]";
 	}
 //	@Override
-//	public int compareTo(Student arg) {
+//	public int compareTo(BookType arg) {
 		// TODO 自动生成的方法存根
 		//年龄排序
 		//return this.stuAge-arg.stuAge;

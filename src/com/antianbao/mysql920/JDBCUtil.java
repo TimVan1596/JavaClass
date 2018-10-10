@@ -1,13 +1,9 @@
 package com.antianbao.mysql920;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * @author 安天宝
- * JAVA一班
- * 9月20日
- * 链接数据库
- */
 public class JDBCUtil {
     //加载驱动
     static {
@@ -34,30 +30,17 @@ public class JDBCUtil {
         //位置
         String DB_URL = "jdbc:mysql://" +
                 "localhost:3306" +
-                "/test" +
+                "/book" +
                 "?useSSL=false&serverTimezone=UTC&characterEncoding=UTF8";
         //账号
         String USER = "root";
         //密码
-        String PASS = "";
+        String PASS = "19980317";
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 获得Statement
-     */
-    public Statement getStatment() {
-        openConnection();
-        try {
-            stmt = conn.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return stmt;
     }
 
     /**
@@ -92,4 +75,31 @@ public class JDBCUtil {
         }
     }
 
+    /**
+     * 将数据库中用户信息转为集合
+     */
+    public List<BookInfo> queryStu() {
+        List<BookInfo> list = new ArrayList<BookInfo>();
+        String sql = "select bookinfo.bookID,bookinfo.BookTitle,bookinfo.typeId,bookinfo.price,booktype.typename \n" +
+                "from bookinfo,booktype \n" +
+                "where bookinfo.typeId = bookType.typeID";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            BookInfo bd = null;
+            while (rs.next()) {
+                bd = new BookInfo();
+                bd.setBookID(rs.getInt("bookID"));
+                bd.setBookTitle(rs.getString("BookTitle"));
+                bd.setTypeId(rs.getInt("typeId"));
+                bd.setPrice(rs.getDouble("price"));
+                bd.setTypeName(rs.getString("booktype.typename"));
+                list.add(bd);
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

@@ -93,8 +93,8 @@ public class TestCollections {
 		}
 	}while(jud);
 
-			//Student student2=new Student(2, "韩梅梅",21);
-			//Student student3=new Student(3, "吉姆",23);
+			//BookType student2=new BookType(2, "韩梅梅",21);
+			//BookType student3=new BookType(3, "吉姆",23);
 			
 			//创建文件路径
 			File file=new File("F:\\新建文件夹\\test.txt");
@@ -106,7 +106,7 @@ public class TestCollections {
 			FileOutputStream fos=new FileOutputStream(file);
 			
 			try {
-				//ArrayList<Student> students=new ArrayList<Student>();
+				//ArrayList<BookType> students=new ArrayList<BookType>();
 				//students.add(student1);
 				//students.add(student2);
 				//students.add(student3);
@@ -140,7 +140,7 @@ public class TestCollections {
 	        
 			
 //			 Collections.sort(students);
-//			for (Student student : students) {
+//			for (BookType student : students) {
 //				System.out.println(student);
 //			}
 		  
