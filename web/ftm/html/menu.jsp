@@ -32,7 +32,7 @@
 <h1>********** <%=userName%>，你好！欢迎进入系统菜单 **************</h1>
 
 <section>
-    <button>显示DVD</button>
+    <button onclick="window.location.href='menu/display.html'">显示DVD</button>
     <button>查看DVD</button>
     <button>借出DVD</button>
     <button>归还DVD</button>
@@ -52,6 +52,9 @@
     function logout() {
         window.location.href = '../LogOutServlet.do';
     }
+
+
+
 </script>
 
 </body>

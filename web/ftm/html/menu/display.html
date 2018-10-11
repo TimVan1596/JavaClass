@@ -10,6 +10,20 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- DVD信息（列表填充模板 template）-->
+    <script type="text/html" id="DVD_TEMPLATE">
+        <tr class="dvd-tr-line">
+            <td class="dvd-id"></td>
+            <td class="dvd-name"></td>
+            <td class="dvd-status"></td>
+            <td>
+                <button>修改</button>
+                <button>删除</button>
+            </td>
+        </tr>
+    </script>
+
 </head>
 <body>
 
@@ -19,7 +33,7 @@
 <div style="margin-bottom: 1%;">
     <button>新增</button>
 </div>
-<table border="1">
+<table border="1" id="DVDsTable">
     <tr>
         <th>编号</th>
         <th width="200">名称</th>
@@ -40,14 +54,32 @@
 <script>
     //初始化页面
     $(function () {
-        //通过ajax检查是否正常登录
+        //通过ajax获取每一行
         $.post('GetAllDVDs.do', {}, function (ret) {
             //解析ret
             ret = eval("(" + ret + ")");
 
             if (ret['error'] === 0) {
                 var dvdArr = ret['dvdArr'];
-                alert(dvdArr);
+                for (var i = 0; i < dvdArr.length; i++) {
+                    //获取到DVD的信息
+                    var DVD = dvdArr[i];
+                    var id = DVD['id'];
+                    var name = DVD['name'];
+                    var status = DVD['status'];
+
+                    //创造DVD节点(tr)
+                    var $tr = $("#DVD_TEMPLATE").html();
+                    $("#DVDsTable").append($tr);
+
+                    var line = $('.dvd-tr-line:last');
+
+                    $('.dvd-tr-line:last').children(".dvd-id").val(id);
+                    $('.dvd-tr-line:last').children(".dvd-name").val(name);
+                    $('.dvd-tr-line:last').children(".dvd-status").val(status);
+
+                }
+
                 console.log(dvdArr);
             }
         });
