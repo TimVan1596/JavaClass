@@ -12,8 +12,10 @@
 </head>
 <body>
 
+<%@ page import="com.timvanx.biggerdvd.util.Constants" %>
 <%
     //初始化常量信息
+    String VERSION = Constants.VERSION;
     String userName = "非法用户";
 
     if (session.getAttribute("userName") != null) {
@@ -23,7 +25,6 @@
         response.sendRedirect("../biggerdvd.jsp");
         return;
     }
-
 
 
 %>
