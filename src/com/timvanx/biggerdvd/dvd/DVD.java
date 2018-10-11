@@ -1,6 +1,5 @@
 package com.timvanx.biggerdvd.dvd;
 
-import com.timvanx.biggerdvd.util.Constants;
 import com.timvanx.biggerdvd.util.JDBCUtil;
 
 import java.io.*;
@@ -98,7 +97,6 @@ public class DVD implements Serializable {
         this.status = status;
     }
 
-
     /**
      * 使用数据库增加DVD信息
      */
@@ -174,6 +172,7 @@ public class DVD implements Serializable {
         }
 
     }
+
 
     @Override
     public String toString() {

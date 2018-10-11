@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>显示DVD - BiggerDVD</title>
+    <style>
+        td {
+            text-align:center;
+            white-space: nowrap;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+<h1>********** 显示当前所有DVD信息 **************</h1>
+
+<div style="margin-bottom: 1%;">
+    <button>新增</button>
+</div>
+<table border="1">
+    <tr>
+        <th>编号</th>
+        <th width="200">名称</th>
+        <th>状态</th>
+        <th width="120">操作</th>
+    </tr>
+    <tr>
+        <td>1000</td>
+        <td>士兵突击</td>
+        <td>已借出</td>
+        <td>
+            <button>修改</button>
+            <button>删除</button>
+        </td>
+    </tr>
+</table>
+
+<script>
+    //初始化页面
+    $(function () {
+        //通过ajax检查是否正常登录
+        $.post('GetAllDVDs.do', {
+
+        }, function (ret) {
+            //解析ret
+            ret = eval("(" + ret + ")");
+
+            if (ret['error'] === 0) {
+                var dvdArr = ret['dvdArr'];
+                alert(dvdArr);
+                console.log(dvdArr);
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

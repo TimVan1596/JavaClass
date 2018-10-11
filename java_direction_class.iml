@@ -41,26 +41,52 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="jquery" level="application" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/lib" />
+          <root url="file://C:/apache-tomcat-9.0.12/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+        <jarDirectory url="file://C:/apache-tomcat-9.0.12/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://C:/Program Files/apache-tomcat-9.0.10-windows-x64/apache-tomcat-9.0.10/lib" />
+          <root url="jar://$MODULE_DIR$/lib/fastjson-1.2.51.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://C:/Program Files/apache-tomcat-9.0.10-windows-x64/apache-tomcat-9.0.10/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jstl.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/mysql-connector-java-8.0.12.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/standard.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
