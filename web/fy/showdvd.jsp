@@ -18,17 +18,34 @@
 <body>
 <div style="text-align:center">
 <h3>DVD列表</h3>
-<table style="text-align:center;margin: 0 auto " border="1" width="500">
+<table id="tb" style="text-align:center;margin: 0 auto " border="1" width="500">
     <tr><th>DVD编号</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th></tr>
     <% DbUtil db = new DbUtil();
         String sql = "SELECT * FROM dvd ";
         ResultSet rs = db.executeQuery(sql, null);
+//        try {
+//        while(rs.next()){
+//            out.print("<tr><td>"+rs.getString("dvdno")+"</td><td>"+rs.getString("dvdname")+"</td><td>"+rs.getString("state")+"</td><td> <button  onclick=remove()>删除</button> </td></tr>");
+//            }
+//        } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+        int i=0;
         try {
         while(rs.next()){
-            out.print("<tr><td>"+rs.getString("dvdno")+"</td><td>"+rs.getString("dvdname")+"</td><td>"+rs.getString("state")+"</td><td> <input type=button value=删除 /> </td></tr>");
-            }} catch (SQLException e) {
+            i++;
+    %>
+    <tr>
+        <td><%=rs.getString("dvdno") %></td>
+        <%--<td><%=rs.getString("dvdno")%></td>--%>
+        <td><%=rs.getString("dvdname")%></td>
+        <td><%=rs.getString("state")%></td>
+        <td><input type="button"  value="删除" onclick='window.location.href="deleteDVD.jsp?no=<%=rs.getString("dvdno") %>"'></td>
+    </tr>
+    <% }
+    } catch (SQLException e) {
                 e.printStackTrace();
-            }%>
+           }%>
 </table>
 </div>
 <div style="width: 500px;margin: 0 auto">
