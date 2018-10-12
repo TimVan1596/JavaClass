@@ -30,6 +30,7 @@ public class DVD implements Serializable {
     private boolean status;
 
     public static ArrayList<DVD> getDVDArr() {
+        loadDVDInfos();
         return DVDArr;
     }
 
@@ -173,9 +174,57 @@ public class DVD implements Serializable {
 
     }
 
+    /**
+     * (带返回值)使用数据库读入DVD信息到 DVDArr 集合
+     * @return 返回DVD集合
+     */
+    public static ArrayList<DVD> loadDVDInfosByArray() {
+
+        ArrayList<DVD> dvds = new ArrayList<>();
+
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("id");
+            add("name");
+            add("status");
+        }};
+        List<List<String>> dvdSQLs = JDBCUtil
+                .select("dvd",
+                        tableField, null,
+                        null, null);
+
+        for (List<String> dvdInfo : dvdSQLs) {
+            //将字符串转为3种数据
+            int id = Integer.valueOf(dvdInfo.get(0));
+            String name = dvdInfo.get(1);
+            boolean status = true;
+            if (dvdInfo.get(2).equals("0")) {
+                status = false;
+            }
+            DVD dvd = new DVD(id, name, status);
+            dvds.add(dvd);
+        }
+
+        return dvds;
+    }
+
 
     @Override
     public String toString() {
         return id + "\t" + name + "\t\t" + (status ? "已借出" : "未借出");
+    }
+
+    /**
+     * DVD信息转 HashMap (便于JSON格式转码)
+     */
+    public HashMap<String,String> toHashMap (DVD dvd){
+
+        HashMap<String, String> dvdMap
+                = new HashMap<>();
+        dvdMap.put("id",String.valueOf( dvd.getId()));
+        dvdMap.put("name",dvd.getName());
+        dvdMap.put("status",
+                dvd.isStatus()?"已借出":"未借出");
+        return dvdMap;
     }
 }

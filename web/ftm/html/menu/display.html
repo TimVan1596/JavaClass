@@ -86,7 +86,7 @@
     function addDVD() {
         var name = prompt("请输入要添加的DVD名称？");
 
-        $.post('../AddDVD.do', {
+        $.post('AddDVD.do', {
             name: name
         }, function (ret) {
             //解析ret
@@ -94,9 +94,11 @@
 
             if (ret['error'] === 0) {
 
+                window.location.reload();
             }
             else {
-
+                var errorInfo = ret['errorInfo'];
+                alert("添加失败！" + errorInfo);
             }
         });
 
