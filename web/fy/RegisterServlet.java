@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "registerServlet",urlPatterns = {"/fy/toRegister"})
-public class registerServlet extends HttpServlet {
+@WebServlet(name = "RegisterServlet",urlPatterns = {"/fy/toRegister"})
+public class RegisterServlet extends HttpServlet {
     DbUtil db = new DbUtil();
 
     /**

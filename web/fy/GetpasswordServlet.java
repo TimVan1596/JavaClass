@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "getpasswordServlet",urlPatterns = {"/fy/toGetPassWord"})
-public class getpasswordServlet extends HttpServlet {
+@WebServlet(name = "GetpasswordServlet",urlPatterns = {"/fy/toGetPassWord"})
+public class GetpasswordServlet extends HttpServlet {
     DbUtil db = new DbUtil();
-    registerServlet reg=new registerServlet();
+    RegisterServlet reg=new RegisterServlet();
 
     public String returnPass(String userName){
         String sql="SELECT * FROM user WHERE username=?";

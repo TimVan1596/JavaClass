@@ -4,11 +4,11 @@ package web.fy;
 import javax.servlet.annotation.WebServlet;
 import java.sql.*;
 import java.io.IOException;
+import javax.servlet.http.HttpSession;
 
 
-
-@WebServlet(name = "loginServlet",urlPatterns = {"/fy/login.do"})
-public class loginServlet extends javax.servlet.http.HttpServlet {
+@WebServlet(name = "LoginServlet",urlPatterns = {"/fy/login.do"})
+public class LoginServlet extends javax.servlet.http.HttpServlet {
     DbUtil db = new DbUtil();
 
     public boolean check(String userName,String passWord){
@@ -46,6 +46,10 @@ public class loginServlet extends javax.servlet.http.HttpServlet {
         String userName=request.getParameter("username");
         String passWord=request.getParameter("password");
         if(check(userName,passWord)){
+            //创建session对象
+            HttpSession session = request.getSession();
+            //把用户数据保存在session域对象中
+            session.setAttribute("loginName", userName);
             response.sendRedirect("selectlist.jsp");
         }else{
             response.setContentType("text/html;charset=UTF-8");
