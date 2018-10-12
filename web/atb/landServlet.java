@@ -20,18 +20,18 @@ public class landServlet extends HttpServlet {
         if(userName.equals("") || userPassword.equals("")){
             //跳转到新的界面
             request.setAttribute("MSG", "账号密码不能为空！");
-            request.getRequestDispatcher("/atb/login.jsp").forward(request, response);
+            request.getRequestDispatcher("./login.jsp").forward(request, response);
         }else{
             JDBCUtilUser jdbcUtil = new JDBCUtilUser();
             int jd = jdbcUtil.isReally(userName, userPassword);
             if(jd > 0){
                 //跳转到新的界面
                 request.setAttribute("MSG", "登陆成功！");
-                request.getRequestDispatcher("/atb/jsp/choice.jsp").forward(request, response);
+                request.getRequestDispatcher("./choice.jsp").forward(request, response);
             }else{
                 //输出登陆失败
                 request.setAttribute("MSG", "账号或密码错误！");
-                request.getRequestDispatcher("/atb/login.jsp").forward(request, response);
+                request.getRequestDispatcher("./login.jsp").forward(request, response);
             }
         }
     }
