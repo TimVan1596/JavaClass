@@ -15,10 +15,10 @@
 
 <form action="login.do" method="post">
     <p>
-        账号：<input type="text" name="username" style="text-align: left; width: 150px;"/>
+        账号：<input type="text" name="username" title="username" style="text-align: left; width: 150px;"/>
     </p>
     <p>
-        密码：<input type="password" name="userpassword" style="text-align: left; width: 150px;"/>
+        密码：<input type="password" title="userpassword" name="userpassword" style="text-align: left; width: 150px;"/>
     </p>
     <div>
         <a style="margin-right: 70px;text-decoration-line: underline;color: blue;" href="jsp/gaimi/retrieve.jsp">找回密码</a>
