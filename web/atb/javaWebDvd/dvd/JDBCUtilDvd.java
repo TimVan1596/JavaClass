@@ -1,4 +1,4 @@
-package web.atb.user;
+package web.atb.javaWebDvd.dvd;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
  * 9月20日
  * 链接数据库
  */
-public class JDBCUtilUser {
+public class JDBCUtilDvd {
     //加载驱动
     static {
         try {
@@ -50,17 +50,31 @@ public class JDBCUtilUser {
     }
 
     /**
+     * 获得Statement
+     */
+    public Statement getStatment() {
+        openConnection();
+        try {
+            stmt = conn.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return stmt;
+    }
+
+    /**
      * 获得PreparedStatement
      */
     public PreparedStatement getPrepareStatement(String sql) {
         openConnection();
         try {
             pstmt = conn.prepareStatement(sql);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return pstmt;
     }
+
     /**
      * 释放资源
      */
@@ -81,22 +95,21 @@ public class JDBCUtilUser {
     }
 
     /**
-     * 用户注册
+     * 添加图书
      */
-    public int addStu(User stu) {
+    public int addDvd(Dvd dvd) {
         int rlt = 0;
-        List<User> list = queryStu();
-        for (User ls : list) {
-            if (ls.getName().equals(stu.getName())) {
+        List<Dvd> list = queryStu();
+        for (Dvd ls : list) {
+            if (ls.getName().equals(dvd.getName())) {
                 return rlt;
             }
         }
-        String sql = "insert into User(name,password,phone) values(?,?,?)";
+        String sql = "insert into dvd(name,state) values(?,?)";
         PreparedStatement pstmt = getPrepareStatement(sql);
         try {
-            pstmt.setString(1, stu.getName());
-            pstmt.setString(2, stu.getPassword());
-            pstmt.setString(3, stu.getPhone());
+            pstmt.setString(1, dvd.getName());
+            pstmt.setString(2, dvd.getState());
             rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
@@ -107,40 +120,32 @@ public class JDBCUtilUser {
     }
 
     /**
-     * 判断输入账号密码是否正确
+     * 删除操作
      */
-    public int isReally(String name, String password) {
-        int rlt = 0;
-        List<User> list = queryStu();
-        for (User ls : list) {
-            if (ls.getName().equals(name) && ls.getPassword().equals(password)) {
-                return 1;
-            }
-        }
-        return rlt;
-    }
-    /**
-     * 找回密码：手机号
-     */
-    public int isPhone(String name, String phone) {
-        int rlt = 0;
-        List<User> list = queryStu();
-        for (User ls : list) {
-            if (ls.getName().equals(name) && ls.getPhone().equals(phone)) {
-                return 1;
-            }
-        }
-        return rlt;
-    }
-    /**
-     * 修改密码
-     */
-    public int updateStu(String name, String password) {
+    public int deleteDvd(int no) {
         int rlt = 0;
         try {
-            String sql = "update user SET password = ? where name = ?";
+            String sql = "DELETE FROM dvd where no = ?";
+            PreparedStatement pstmt = getPrepareStatement(sql);
+            pstmt.setObject(1, no);
+            rlt = pstmt.executeUpdate();
+            close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return rlt;
+    }
+
+    /**
+     * 修改状态
+     */
+    public int updateState(String state,int no) {
+        int rlt = 0;
+        try {
+            String sql = "update dvd SET state = ? where no = ?";
             PreparedStatement pstat = getPrepareStatement(sql);
-            Object[] params = {password, name};
+            Object[] params = {state, no};
             for (int i = 1; i <= params.length; i++) {
                 pstat.setObject(i, params[i - 1]);
             }
@@ -152,21 +157,43 @@ public class JDBCUtilUser {
         }
         return rlt;
     }
+
+    /**
+     * 修改图书
+     */
+    public int updateDvd(int no, String name, String state) {
+        int rlt = 0;
+        try {
+            String sql = "update dvd SET name = ?,state = ? where no = ?";
+            PreparedStatement pstat = getPrepareStatement(sql);
+            Object[] params = {name,state,no};
+            for (int i = 1; i <= params.length; i++) {
+                pstat.setObject(i, params[i - 1]);
+            }
+            rlt = pstat.executeUpdate();
+            close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return rlt;
+    }
+
     /**
      * 将数据库中用户信息转为集合
      */
-    public List<User> queryStu() {
-        List<User> list = new ArrayList<User>();
-        String sql = "select *from User";
+    public List<Dvd> queryStu() {
+        List<Dvd> list = new ArrayList<Dvd>();
+        String sql = "select *from dvd";
         PreparedStatement pstat = getPrepareStatement(sql);
         try {
             ResultSet rs = pstat.executeQuery();
-            User bd = null;
+            Dvd bd = null;
             while (rs.next()) {
-                bd = new User();
+                bd = new Dvd();
+                bd.setNo(rs.getInt("no"));
                 bd.setName(rs.getString("name"));
-                bd.setPassword(rs.getString("password"));
-                bd.setPhone(rs.getString("phone"));
+                bd.setState(rs.getString("state"));
                 list.add(bd);
             }
             close();
@@ -176,4 +203,29 @@ public class JDBCUtilUser {
         return list;
     }
 
+    /**
+     * 查找DVD
+     */
+    public List<Dvd> search(String search){
+        List<Dvd> list = new ArrayList<>();
+        String sql = "SELECT *FROM dvd WHERE no like '%"+search+"%' or name like '%"+search+"%' or state like '%"+search+"%'";
+        System.out.println(search);
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            Dvd bd;
+            while (rs.next()) {
+                bd = new Dvd();
+                bd.setNo(rs.getInt("no"));
+                bd.setName(rs.getString("name"));
+                bd.setState(rs.getString("state"));
+                list.add(bd);
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(list);
+        return list;
+    }
 }

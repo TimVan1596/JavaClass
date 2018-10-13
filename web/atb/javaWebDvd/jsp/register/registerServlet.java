@@ -1,7 +1,7 @@
-package web.atb.jsp.zhuce;
+package web.atb.javaWebDvd.jsp.register;
 
-import web.atb.user.JDBCUtilUser;
-import web.atb.user.User;
+import web.atb.javaWebDvd.user.JDBCUtilUser;
+import web.atb.javaWebDvd.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "registerServlet",urlPatterns = {"/atb/jsp/zhuce/Register.do"})
+@WebServlet(name = "registerServlet",urlPatterns = {"/atb/javaWebDvd/Register.do"})
 public class registerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码
@@ -24,7 +24,7 @@ public class registerServlet extends HttpServlet {
         if(name.equals("") || phone.equals("") || password.equals("") || cpassword.equals("")){
             //跳回注册界面
             request.setAttribute("MSG", "每项必填！");
-            request.getRequestDispatcher("/atb/jsp/zhuce/register.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/register/register.jsp").forward(request, response);
         }//判断两次密码是否相同
         else if(password.equals(cpassword)){
             JDBCUtilUser jdbcUtil = new JDBCUtilUser();
@@ -33,16 +33,16 @@ public class registerServlet extends HttpServlet {
             if(jd > 0){
                 //跳转到登陆界面
                 request.setAttribute("MSG", "注册成功！");
-                request.getRequestDispatcher("/atb/login.jsp").forward(request, response);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }else{
                 //输出已账号存在,跳回注册界面
                 request.setAttribute("MSG", "账号已存在！");
-                request.getRequestDispatcher("/atb/jsp/zhuce/register.jsp").forward(request, response);
+                request.getRequestDispatcher("jsp/register/register.jsp").forward(request, response);
             }
         }else {
             //输出两次密码不一致,跳回注册界面
             request.setAttribute("MSG", "两次密码不一致！");
-            request.getRequestDispatcher("/atb/jsp/zhuce/register.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/register/register.jsp").forward(request, response);
         }
     }
 
