@@ -36,7 +36,7 @@
 <div style="margin-bottom: 1%;">
     <button onclick="addDVD()">添加</button>
     <button onclick="editDVD()">编辑</button>
-    <button onclick="addDVD()">删除</button>
+    <button onclick="deleteDVD()">删除</button>
 </div>
 <table border="1" id="DVDsTable">
     <tr>
@@ -129,14 +129,13 @@
     //编辑DVD信息
     function editDVD() {
         var dvdID = $('input[name="dvd-radio"]:checked').val();
-        alert("id = " + dvdID);
-
         var name = prompt("请输入DVD的新名称");
 
         //判断用户是否输入内容
         if (name) {
-            $.post('AddDVD.do', {
-                name: name
+            $.post('EditDVD.do', {
+                name: name,
+                id:dvdID
             }, function (ret) {
                 //解析ret
                 ret = eval("(" + ret + ")");
@@ -151,8 +150,33 @@
             });
 
         }
+    }
 
+    //删除DVD信息
+    function deleteDVD(){
+        var dvdID = $('input[name="dvd-radio"]:checked').val();
 
+        var deleteConfirm =confirm("是否确认删除DVD信息");
+        if ( deleteConfirm === true){
+            $.post('DeleteDVD.do', { id:dvdID}, function (ret) {
+                //解析ret
+                ret = eval("(" + ret + ")");
+
+                if (ret['error'] === 0) {
+                    window.location.reload();
+                }
+                else {
+                    var errorInfo = ret['errorInfo'];
+                    alert("删除失败！" + errorInfo);
+                }
+            });
+        }
+
+    }
+
+    //借入/还回DVD操作
+    function loanOrReturnDVD(){
+        alert();
     }
 </script>
 
