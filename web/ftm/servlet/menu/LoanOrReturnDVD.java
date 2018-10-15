@@ -14,12 +14,13 @@ import java.util.Map;
 
 
 /**
- * 添加DVD信息
+ * 编辑的DVD的信息
  * @author TimVan
  */
-@WebServlet(name = "AddDVD",
-        urlPatterns = {"/ftm/html/menu/AddDVD.do"}, loadOnStartup = 1)
-public class AddDVD extends HttpServlet {
+@WebServlet(name = "LoanOrReturnDVD",
+        urlPatterns = {"/ftm/html/menu/LoanOrReturnDVD.do"},
+        loadOnStartup = 1)
+public class LoanOrReturnDVD extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,17 +35,19 @@ public class AddDVD extends HttpServlet {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        String dvdName =  request.getParameter("name");
-        DVD newDvd = new DVD(dvdName);
-        //数据中新增DVD信息
-        DVD.addDVDInfo(newDvd);
+        String dvdID =  request.getParameter("id");
+        int id = Integer.parseInt(dvdID);
 
         Map<String, Object> ret = new HashMap<>(1);
-        if (true) {
+        //借出和归还DVD操作
+        // 0 = 未找到  , 1 = 删除成功
+
+        if (DVD.loanOrReturnDVDForWeb(id) == 1) {
             ret.put("error", 0);
-        } else {
+        }
+        else {
             ret.put("error", 1);
-            ret.put("errorInfo", "添加DVD信息出错");
+            ret.put("errorInfo", "请联系管理员");
         }
 
         //使用 Alibaba fastJson 序列化 ret

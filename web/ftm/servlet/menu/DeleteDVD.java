@@ -14,12 +14,12 @@ import java.util.Map;
 
 
 /**
- * 添加DVD信息
+ * 编辑的DVD的信息
  * @author TimVan
  */
-@WebServlet(name = "AddDVD",
-        urlPatterns = {"/ftm/html/menu/AddDVD.do"}, loadOnStartup = 1)
-public class AddDVD extends HttpServlet {
+@WebServlet(name = "DeleteDVD",
+        urlPatterns = {"/ftm/html/menu/DeleteDVD.do"}, loadOnStartup = 1)
+public class DeleteDVD extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,17 +34,27 @@ public class AddDVD extends HttpServlet {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        String dvdName =  request.getParameter("name");
-        DVD newDvd = new DVD(dvdName);
-        //数据中新增DVD信息
-        DVD.addDVDInfo(newDvd);
+        String dvdID =  request.getParameter("id");
+        int id = Integer.parseInt(dvdID);
 
         Map<String, Object> ret = new HashMap<>(1);
-        if (true) {
+        //删除DVD操作
+        //-1 = 找到，但未归还 , 0 = 未找到  , 1 = 删除成功
+        int retStatus = DVD.deleteDVDForWeb(id);
+        if (retStatus == 1) {
             ret.put("error", 0);
-        } else {
+        }
+        else if(retStatus == -1){
             ret.put("error", 1);
-            ret.put("errorInfo", "添加DVD信息出错");
+            ret.put("errorInfo", "此DVD还未归还！");
+        }
+        else if(retStatus == 0){
+            ret.put("error", 2);
+            ret.put("errorInfo", "未找到DVD！");
+        }
+        else {
+            ret.put("error", 3);
+            ret.put("errorInfo", "编辑DVD信息出错");
         }
 
         //使用 Alibaba fastJson 序列化 ret

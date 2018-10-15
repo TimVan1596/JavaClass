@@ -6,17 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% if(session.getAttribute("loginName")==null){
+    response.sendRedirect("login.jsp");
+}%>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
 <div style="text-align:center">
-<a href="showdvd.jsp">1.显示DVD</a><br>
-<a href="">2.添加DVD</a><br>
-<a href="">3.删除DVD</a><br>
-<a href="">4.修改DVD</a><br>
-<a href="">5.查找DVD</a>
+    <h2>MiniDVD 网页版</h2>
+    <h3>欢迎您，<%=session.getAttribute("loginName")%></h3>
+<a href="showdvd.jsp">显示DVD</a><br><br>
+<a href="/fy/toCancelling">退出登陆</a>
 </div>
 </body>
 </html>
