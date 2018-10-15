@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "retrieveServlet",urlPatterns = {"/atb/javaWebDvd/Retrieve.do"})
+@WebServlet(name = "retrieveServlet",urlPatterns = {"/Retrieve.do"})
 public class retrieveServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码
@@ -20,7 +20,7 @@ public class retrieveServlet extends HttpServlet {
         if(name.equals("") || phone.equals("")){
             //跳转到登陆界面
             request.setAttribute("MSG", "请填写信息");
-            request.getRequestDispatcher("jsp/retrieve/retrieve.jsp").forward(request, response);
+            request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieve.jsp").forward(request, response);
         }else{
             JDBCUtilUser jdbcUtil = new JDBCUtilUser();
             int jd = jdbcUtil.isPhone(name, phone);
@@ -28,11 +28,11 @@ public class retrieveServlet extends HttpServlet {
                 //跳转到新的界面
                 request.setAttribute("MSG", "验证成功！");
                 request.setAttribute("name", name);
-                request.getRequestDispatcher("jsp/retrieve/retrieveAction.jsp").forward(request, response);
+                request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieveAction.jsp").forward(request, response);
             }else{
                 //输出登陆失败
                 request.setAttribute("MSG", "账号或手机号错误！");
-                request.getRequestDispatcher("jsp/retrieve/retrieve.jsp").forward(request, response);
+                request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieve.jsp").forward(request, response);
             }
         }
     }
@@ -50,7 +50,7 @@ public class retrieveServlet extends HttpServlet {
             //跳回注册界面
             request.setAttribute("MSG", "每项必填！");
             request.setAttribute("name", name);
-            request.getRequestDispatcher("jsp/retrieve/retrieveAction.jsp").forward(request, response);
+            request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieveAction.jsp").forward(request, response);
         }//判断两次密码是否相同
         else if(password.equals(cpassword)){
             JDBCUtilUser jdbcUtil = new JDBCUtilUser();
@@ -58,18 +58,18 @@ public class retrieveServlet extends HttpServlet {
             if(jd > 0){
                 //跳转到登陆界面
                 request.setAttribute("MSG", "修改成功！");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("./atb/javaWebDvd/login.jsp").forward(request, response);
             }else{
                 //输出已账号存在,跳回注册界面
                 request.setAttribute("MSG", "修改失败！");
                 request.setAttribute("name", name);
-                request.getRequestDispatcher("jsp/retrieve/retrieveAction.jsp").forward(request, response);
+                request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieveAction.jsp").forward(request, response);
             }
         }else {
             //输出两次密码不一致,跳回注册界面
             request.setAttribute("MSG", "两次密码不一致！");
             request.setAttribute("name", name);
-            request.getRequestDispatcher("jsp/retrieve/retrieveAction.jsp").forward(request, response);
+            request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieveAction.jsp").forward(request, response);
         }
     }
 }

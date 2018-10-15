@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 @WebServlet(name = "deleteServlet",urlPatterns = {"/delete.do"})
 public class deleteServlet extends HttpServlet {
@@ -17,9 +18,14 @@ public class deleteServlet extends HttpServlet {
         //获取输入信息
         String[] check = request.getParameterValues("check");
         int jd = 0;
-        for(String c : check){
-            JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
-            jd = jdbcUtilDvd.deleteDvd(Integer.parseInt(c));
+        if(check == null){
+            request.setAttribute("MSG", "请选择要删除的图书！");
+            request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
+        }else{
+            for(String c : check){
+                JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
+                jd = jdbcUtilDvd.deleteDvd(Integer.parseInt(c));
+            }
         }
         //删除成功跳转显示界面
         if(jd > 0){

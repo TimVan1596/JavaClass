@@ -13,6 +13,7 @@
     <title>显示DVD</title>
 </head>
 <body>
+<h1 align='center'>----欢迎进入DVD Mgr 6.0 管理系统----</h1>
 <div align='center'>
     <form action='./atb/javaWebDvd/search.jsp' method='post'>
         搜关键字：<input type='text' title="序号书名状态" name='search' />
@@ -28,7 +29,6 @@
             <th>状态</th>
             <th>操作</th>
             <th>操作</th>
-            <th>操作</th>
         </tr>
         <%
             //遍历结果集
@@ -38,22 +38,27 @@
         %>
         <tr>
             <!-- 输出结果集 -->
-            <td><input type='checkbox' name='check' title='choice' value='<%= dvd.getNo() %>'/></td>
-            <td><%= dvd.getNo() %></td>
-            <td><%= dvd.getName() %></td>
-            <td><%= dvd.getState() %></td>
-            <td><a href = '../../lend.do?no=<%= dvd.getNo() %>'>借出</a></td>
-            <td><a href = '../../return.do?no=<%= dvd.getNo() %>'>归还</a></td>
-            <td><a href = './atb/javaWebDvd/jsp/choice/modify.jsp?no=<%= dvd.getNo() %>'>修改</a></td>
+            <td align="center"><input type='checkbox' name='check' title='choice' value='<%= dvd.getNo() %>'/></td>
+            <td align="center"><%= dvd.getNo() %></td>
+            <td align="center"><%= dvd.getName() %></td>
+            <% if(dvd.getState().equals("已借出")){ %>
+            <td align="center" style="background-color: red"><%= dvd.getState() %></td>
+            <td align="center" ><a href = '../../lend.do?no=<%= dvd.getNo() %>'>归还</a></td>
+            <% }else{ %>
+            <td align="center" style="background-color: green"><%= dvd.getState() %></td>
+            <td align="center"><a href = '../../lend.do?no=<%= dvd.getNo() %>'>借出</a></td>
+            <% } %>
+            <td align="center"><a href = './atb/javaWebDvd/jsp/choice/modify.jsp?no=<%= dvd.getNo() %>'>编辑</a></td>
         </tr>
         <%
             }
         %>
         <tr>
-            <td colspan = '2'><input type="submit" value="删除" style="text-align: left;"></td>
-            <td colspan = '2'><a href = './atb/javaWebDvd/jsp/choice/add.jsp'>添加</a></td>
-            <td colspan = '2'><a href="./atb/javaWebDvd/login.jsp">退出</a></td>
-            <td colspan = '1'><a href="../../login.do">显示所有</a></td>
+            <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
+            <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/jsp/choice/add.jsp">添加</a></td>
+            <td colspan = '1' align="center"><a href = "../../login.do">显示所有</a></td>
+            <td colspan = '2' align="center"><a href = "./atb/javaWebDvd/jsp/choice/data.jsp">数据显示</a></td>
+            <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/login.jsp">退出</a></td>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){
@@ -62,5 +67,6 @@
         </script>
     </table>
 </form>
+
 </body>
 </html>

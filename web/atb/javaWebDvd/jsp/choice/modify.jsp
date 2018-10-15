@@ -13,48 +13,61 @@
     <title>修改信息</title>
 </head>
 <body>
-<h3>------修改信息------</h3>
+<div align='center'>
+    <h3>----修改信息----</h3>
+</div>
 <form action="../../../../modify.do" method="post">
-    <%
-        //遍历结果集
-        JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
-        List<Dvd> dvds = jdbcUtilDvd.queryStu();
-        for (Dvd dvd : dvds) {
-            if(Integer.parseInt(request.getParameter("no")) == dvd.getNo()){
-    %>
-    <p>
-        序号：<input name="no" type="text" value="<%= Integer.parseInt(request.getParameter("no")) %>" readonly style = "color:gray" style="text-align: left; width: 150px;"/>
-    </p>
-    <p>
-        书名：<input name="name" type="text" value="<%= dvd.getName() %>" style="text-align: left; width: 150px;"/>
-    </p>
-    <p>
+    <table border="1" width="300" align="center">
         <%
-            if(dvd.getState().equals("可以借")){
+            //遍历结果集
+            JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
+            List<Dvd> dvds = jdbcUtilDvd.queryStu();
+            for (Dvd dvd : dvds) {
+                if(Integer.parseInt(request.getParameter("no")) == dvd.getNo()){
         %>
-        状态：<input type="radio" value="可以借" name="state" checked>可以借
-        <input type="radio" value="已借出" name="state">已借出
+        <tr>
+            <th width=150px>序号：</th>
+            <th><input name="no" type="text" title="" value="<%= Integer.parseInt(request.getParameter("no")) %>" readonly style = "color:gray; width: 150px;"/></th>
+        </tr>
+        <tr>
+            <th width=150px>书名：</th>
+            <th><input name="name" type="text" title="" value="<%= dvd.getName() %>" style="text-align: left; width: 150px;"/></th>
+        </tr>
+        <tr>
+            <%
+                if(dvd.getState().equals("可以借")){
+            %>
+            <th width=150px>状态：</th>
+            <th>
+                <input type="radio" value="可以借" title="" name="state" checked>可以借
+                <input type="radio" value="已借出" title="" name="state">已借出
+            </th>
+            <%
+            }else{
+            %>
+            <th width=150px>状态：</th>
+            <th>
+                <input type="radio" value="可以借" title="" name="state">可以借
+                <input type="radio" value="已借出" title="" name="state" checked>已借出
+            </th>
+            <%
+                }
+            %>
+        </tr>
         <%
-        }else{
-        %>
-        状态：<input type="radio" value="可以借" name="state">可以借
-        <input type="radio" value="已借出" name="state" checked>已借出
-        <%
+                }
             }
         %>
-    </p>
-    <%
+        <tr>
+            <th colspan = '1'><a href = '../../../../login.do'>返回</a></th>
+            <th colspan = '1'><input type="submit" value="提交" ></th>
+        </tr>
+        <script type="text/javascript">
+            if(<%= request.getAttribute("MSG")!=null %>){
+                alert('<%=request.getAttribute("MSG") %>');
             }
-        }
-    %>
-    <p>
-        <input type="submit" value="提交" style="text-align: left;">
-    </p>
-    <script type="text/javascript">
-        if(<%= request.getAttribute("MSG")!=null %>){
-            alert('<%=request.getAttribute("MSG") %>');
-        }
-    </script>
+        </script>
+    </table>
 </form>
 </body>
 </html>
