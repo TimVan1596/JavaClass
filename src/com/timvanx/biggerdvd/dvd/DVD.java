@@ -115,7 +115,6 @@ public class DVD implements Serializable {
         JDBCUtil.insert("dvd", insertData);
     }
 
-
     /**
      * 使用数据库修改DVD信息
      */
@@ -175,6 +174,59 @@ public class DVD implements Serializable {
 
         return retStatus;
     }
+
+    /**
+     * 使用数据库借出和归还DVD信息（通过主键ID）
+     * Web项目专用接口
+     * @return   0 = 未找到  , 1 = 删除成功
+     */
+    public static int loanOrReturnDVDForWeb(int id){
+        //返回的状态的识别码
+        int retStatus = 0;
+        loadDVDInfos();
+
+        for (int i = 0; i < DVD.getDVDArr().size(); i++) {
+            int dvdId = DVD.getDVDArr().get(i).getId();
+            //是否存在
+            if (dvdId == id) {
+                DVD dvd = DVD.getDVDArr().get(i);
+                dvd.setStatus(
+                        !dvd.isStatus()
+                );
+                //在数据中更改dvd信息
+                DVD.updateDVDInfo(dvd);
+                retStatus = 1;
+                break;
+            }
+        }
+
+        return retStatus;
+    }
+
+    /**
+     * 统计DVD的数量
+     * @return 返回数量
+     */
+    public static int countDVDs(){
+        int cnt = 0;
+        cnt  = JDBCUtil.count("dvd",
+                "id",null);
+
+        return cnt;
+    }
+
+    /**
+     * 统计DVD已借出的数量
+     * @return 返回数量
+     */
+    public static int countLoanedDVDs(){
+        int cnt = 0;
+        String tableWhere = "status = 1";
+        cnt  = JDBCUtil.count("dvd",
+                "id",tableWhere);
+        return cnt;
+    }
+
 
 
     /**

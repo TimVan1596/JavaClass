@@ -17,9 +17,10 @@ import java.util.Map;
  * 编辑的DVD的信息
  * @author TimVan
  */
-@WebServlet(name = "DeleteDVD",
-        urlPatterns = {"/ftm/html/menu/DeleteDVD.do"}, loadOnStartup = 1)
-public class DeleteDVD extends HttpServlet {
+@WebServlet(name = "LoanOrReturnDVD",
+        urlPatterns = {"/ftm/html/menu/LoanOrReturnDVD.do"},
+        loadOnStartup = 1)
+public class LoanOrReturnDVD extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,23 +39,15 @@ public class DeleteDVD extends HttpServlet {
         int id = Integer.parseInt(dvdID);
 
         Map<String, Object> ret = new HashMap<>(1);
-        //删除DVD操作
-        //-1 = 找到，但未归还 , 0 = 未找到  , 1 = 删除成功
-        int retStatus = DVD.deleteDVDForWeb(id);
-        if (retStatus == 1) {
+        //借出和归还DVD操作
+        // 0 = 未找到  , 1 = 删除成功
+
+        if (DVD.loanOrReturnDVDForWeb(id) == 1) {
             ret.put("error", 0);
         }
-        else if(retStatus == -1){
-            ret.put("error", 1);
-            ret.put("errorInfo", "此DVD还未归还！");
-        }
-        else if(retStatus == 0){
-            ret.put("error", 2);
-            ret.put("errorInfo", "未找到DVD！");
-        }
         else {
-            ret.put("error", 3);
-            ret.put("errorInfo", "编辑DVD信息出错");
+            ret.put("error", 1);
+            ret.put("errorInfo", "请联系管理员");
         }
 
         //使用 Alibaba fastJson 序列化 ret
