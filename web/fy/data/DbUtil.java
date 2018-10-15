@@ -1,4 +1,4 @@
-package web.fy;
+package web.fy.data;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +42,7 @@ public class DbUtil {
        //注册JDBC驱动
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

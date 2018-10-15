@@ -1,5 +1,7 @@
-package web.fy;
+package web.fy.servlet;
 
+
+import web.fy.data.DbUtil;
 
 import javax.servlet.annotation.WebServlet;
 import java.sql.*;
@@ -7,7 +9,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpSession;
 
 
-@WebServlet(name = "LoginServlet",urlPatterns = {"/fy/login.do"})
+@WebServlet(name = "LoginServlet",urlPatterns = {"/fy/servlet/login.do"})
 public class LoginServlet extends javax.servlet.http.HttpServlet {
     DbUtil db = new DbUtil();
 
@@ -50,12 +52,12 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
             HttpSession session = request.getSession();
             //把用户数据保存在session域对象中
             session.setAttribute("loginName", userName);
-            response.sendRedirect("selectlist.jsp");
+            response.sendRedirect("/fy/jsp/selectlist.jsp");
         }else{
             response.setContentType("text/html;charset=UTF-8");
             //response.getWriter().write("账号或密码错误");
 
-            response.getWriter().write("<script language='javascript'>alert('账号或密码错误');location.href='login.jsp';</script>");
+            response.getWriter().write("<script language='javascript'>alert('账号或密码错误');location.href='/fy/jsp/login.jsp';</script>");
 
         }
 

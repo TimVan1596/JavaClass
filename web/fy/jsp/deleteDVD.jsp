@@ -1,5 +1,5 @@
 <%@ page import="com.sun.java.swing.plaf.windows.resources.windows" %>
-<%@ page import="web.fy.DbUtil" %><%--
+<%@ page import="web.fy.data.DbUtil" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/10/12 0012
@@ -21,7 +21,7 @@
     int res=db.executeUpdate(sql,params);
     if(res>0){
         response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().write("<script language='javascript'>alert('DVD删除成功');location.href='showdvd.jsp';</script>");
+        response.getWriter().write("<script language='javascript'>alert('DVD删除成功');location.href='/fy/servlet/toShowDvd';</script>");
     }
 %>
 

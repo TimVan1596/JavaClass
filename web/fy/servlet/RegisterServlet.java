@@ -1,4 +1,6 @@
-package web.fy;
+package web.fy.servlet;
+
+import web.fy.data.DbUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +11,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "RegisterServlet",urlPatterns = {"/fy/toRegister"})
+@WebServlet(name = "RegisterServlet",urlPatterns = {"/fy/servlet/toRegister"})
 public class RegisterServlet extends HttpServlet {
     DbUtil db = new DbUtil();
 
@@ -64,12 +66,12 @@ public class RegisterServlet extends HttpServlet {
           int res=register(userName,passWord);
            if(res>0){
                response.setContentType("text/html;charset=UTF-8");
-               response.getWriter().write("<script language='javascript'>alert('账号注册成功');location.href='login.jsp';</script>");
+               response.getWriter().write("<script language='javascript'>alert('账号注册成功');location.href='/fy/jsp/login.jsp';</script>");
            }
     }else{
         response.setContentType("text/html;charset=UTF-8");
 
-        response.getWriter().write("<script language='javascript'>alert('账号已被注册');location.href='register.jsp';</script>");
+        response.getWriter().write("<script language='javascript'>alert('账号已被注册');location.href='/fy/jsp/register.jsp';</script>");
 
     }
     }

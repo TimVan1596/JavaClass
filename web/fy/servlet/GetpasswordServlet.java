@@ -1,4 +1,6 @@
-package web.fy;
+package web.fy.servlet;
+
+import web.fy.data.DbUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +11,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "GetpasswordServlet",urlPatterns = {"/fy/toGetPassWord"})
+@WebServlet(name = "GetpasswordServlet",urlPatterns = {"/fy/servlet/toGetPassWord"})
 public class GetpasswordServlet extends HttpServlet {
     DbUtil db = new DbUtil();
     RegisterServlet reg=new RegisterServlet();
@@ -37,11 +39,11 @@ public class GetpasswordServlet extends HttpServlet {
             String res=returnPass(userName);
 
                 response.setContentType("text/html;charset=UTF-8");
-                response.getWriter().write("<script language='javascript'>alert('你账号的密码为"+res+"');location.href='login.jsp';</script>");
+                response.getWriter().write("<script language='javascript'>alert('你账号的密码为"+res+"');location.href='/fy/jsp/login.jsp';</script>");
 
         }else{
             response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().write("<script language='javascript'>alert('账号不存在');location.href='getpassword.jsp';</script>");
+            response.getWriter().write("<script language='javascript'>alert('账号不存在');location.href='/fy/jsp/getpassword.jsp';</script>");
         }
 
 

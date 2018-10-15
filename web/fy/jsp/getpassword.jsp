@@ -14,7 +14,7 @@
 
 <div style="text-align: center">
     <h4>找回密码</h4>
-<form action="toGetPassWord" method="get" onsubmit="return returnPassword()">
+<form action="/fy/servlet/toGetPassWord" method="get" onsubmit="return returnPassword()">
     请输入账号：<input type=" text" name="username" id="returnName"/><br>
     <input type="submit" value="提交"/>
 </form>

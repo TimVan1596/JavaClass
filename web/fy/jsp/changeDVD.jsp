@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/fy/toChangeDvd" method="get">
+<form action="/fy/servlet/toChangeDvd" method="get">
     <br>
     请输入要修改的DVD编号<input type=" text" name="dvdid" id="dvdId"/><br>
     请输入修改后的DVD名称<input type=" text" name="dvdname" id="dvdName"/><br>

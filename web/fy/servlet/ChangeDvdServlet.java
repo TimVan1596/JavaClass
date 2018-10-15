@@ -1,4 +1,6 @@
-package web.fy;
+package web.fy.servlet;
+
+import web.fy.data.DbUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ChangeDvdServlet",urlPatterns = {"/fy/toChangeDvd"})
+@WebServlet(name = "ChangeDvdServlet",urlPatterns = {"/fy/servlet/toChangeDvd"})
 public class ChangeDvdServlet extends HttpServlet {
  DbUtil db=new DbUtil();
     public int change(int dvdId,String dvdName,String dvdState){
@@ -25,7 +27,8 @@ public class ChangeDvdServlet extends HttpServlet {
 
         if(change(dvdId,dvdName,dvdState)>0){
             response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().write("<script language='javascript'>alert('DVD修改成功');window.parent.location.reload();</script>");
+            response.getWriter().write("<script language='javascript'>alert('DVD修改成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
+
         }
 
     }

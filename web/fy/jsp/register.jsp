@@ -20,7 +20,7 @@
 <div id="register">
 <h2>MiniDVD 网页版</h2>
 <h4>用户注册</h4>
-<form action="toRegister" method="get" onsubmit=" return checkRegister()">
+<form action="/fy/servlet/toRegister" method="get" onsubmit=" return checkRegister()">
 <p>账号：<input style="margin-left:30px " type=" text" name="username" id="regId"/><br></p>
 <p>密码：<input style="margin-left:30px "type="password" name="password" id="regPass"/><br></p>
 <p>重复密码：<input type="password" name="passsword" id="regPasss"/><br></p>

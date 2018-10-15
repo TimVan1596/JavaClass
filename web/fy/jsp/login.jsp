@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-<form action="login.do" method="get" onsubmit="return checkLogin()">
+<form action="/fy/servlet/login.do" method="get" onsubmit="return checkLogin()">
     <div id="login">
     <h2>MiniDVD 网页版</h2>
     <h4>用户登录</h4>
