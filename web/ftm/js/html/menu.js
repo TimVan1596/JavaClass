@@ -175,3 +175,8 @@ function loanOrReturnDVD(obj){
 function getStatistics() {
     window.location.href = 'menu/statistics.html';
 }
+
+//进入菜单（JSP/JSTL版）
+function displayJSTL() {
+    window.location.href = 'menu/GetAllDVDs4JSTL';
+}
