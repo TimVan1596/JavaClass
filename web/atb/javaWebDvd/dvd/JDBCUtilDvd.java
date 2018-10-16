@@ -109,7 +109,7 @@ public class JDBCUtilDvd {
         PreparedStatement pstmt = getPrepareStatement(sql);
         try {
             pstmt.setString(1, dvd.getName());
-            pstmt.setString(2, dvd.getState());
+            pstmt.setInt(2, dvd.getState());
             rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
@@ -140,12 +140,12 @@ public class JDBCUtilDvd {
     /**
      * 修改状态
      */
-    public int updateState(String state,int no) {
+    public int updateState(int borrow,int no) {
         int rlt = 0;
         try {
-            String sql = "update dvd SET state = ? where no = ?";
+            String sql = "update dvd SET borrow = ? where no = ?";
             PreparedStatement pstat = getPrepareStatement(sql);
-            Object[] params = {state, no};
+            Object[] params = {borrow, no};
             for (int i = 1; i <= params.length; i++) {
                 pstat.setObject(i, params[i - 1]);
             }
@@ -161,12 +161,12 @@ public class JDBCUtilDvd {
     /**
      * 修改图书
      */
-    public int updateDvd(int no, String name, String state) {
+    public int updateDvd(int no, String name, int state,int borrow) {
         int rlt = 0;
         try {
-            String sql = "update dvd SET name = ?,state = ? where no = ?";
+            String sql = "update dvd SET name = ?,state = ? borrow = ? where no = ?";
             PreparedStatement pstat = getPrepareStatement(sql);
-            Object[] params = {name,state,no};
+            Object[] params = {name,state,borrow,no};
             for (int i = 1; i <= params.length; i++) {
                 pstat.setObject(i, params[i - 1]);
             }
@@ -193,7 +193,8 @@ public class JDBCUtilDvd {
                 bd = new Dvd();
                 bd.setNo(rs.getInt("no"));
                 bd.setName(rs.getString("name"));
-                bd.setState(rs.getString("state"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
                 list.add(bd);
             }
             close();
@@ -218,7 +219,8 @@ public class JDBCUtilDvd {
                 bd = new Dvd();
                 bd.setNo(rs.getInt("no"));
                 bd.setName(rs.getString("name"));
-                bd.setState(rs.getString("state"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
                 list.add(bd);
             }
             close();
