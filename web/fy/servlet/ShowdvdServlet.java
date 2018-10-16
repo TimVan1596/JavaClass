@@ -41,7 +41,7 @@ public class ShowdvdServlet extends HttpServlet {
 }
    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      dvdList();
+       dvdList();
        request.setCharacterEncoding("UTF-8");
        //创建session对象
        HttpSession session = request.getSession();

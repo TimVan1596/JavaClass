@@ -18,14 +18,15 @@
     <title>显示DVD</title>
     <script type="text/javascript" src="/fy/js/echarts.simple.min.js"> </script>
 </head>
-<body onload="loadData()">
+<body>
 <div style="text-align:center">
     <h3>DVD列表</h3>
     <table id="tb" style="text-align:center;margin: 0 auto " border="1" width="500">
         <tr><th>DVD编号</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th></tr>
-        <!-- 这里使用标签遍历输出 集合数据 -->
-        <% int i=0;
+        <!-- i,j分别为可以借和已借出的初始值>
+        <%  int i=0;
             int j=0;%>
+        <!-- 这里使用标签遍历输出 集合数据 -->
         <c:forEach items="${listDVD }" var="dvd" >
             <tr>
                 <td>${dvd.id }</td>
@@ -38,17 +39,18 @@
 
     </table>
 </div>
-<div style="width: 500px;margin: 0 auto">
+<div style="width: 800px;margin: 0 auto">
     <div style="width:100px;float:left">
         <br>
         <a href="addDVD.jsp" target="mainFrame" >添加DVD</a><br>
         <a href="changeDVD.jsp" target="mainFrame" >修改DVD</a><br>
+        <a href="selectDVD.jsp" target="mainFrame" >查询DVD</a><br>
     </div>
-    <iframe style="width:350px;height:300px;margin-left:30px"   name="mainFrame" frameborder="0"></iframe>
+    <iframe style="width:550px;height:200px;margin-left:30px"   name="mainFrame" frameborder="0"></iframe>
 </div>
+<h3 style="margin-left: 240px">DVD状态柱形图</h3>
+<div id="main" style="width: 400px;height:350px;margin-left: 190px;">
 
-<div id="main" style="width: 700px;height:400px;">
-    <
 </div>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
@@ -69,7 +71,15 @@
         series: [{
             name: '数量',
             type: 'bar',
-            data: [<%=i%>,<%=j%>]
+            data: [<%=i%>,<%=j%>],
+            itemStyle:{
+                normal:{
+                    color: function (params){
+                        var colorList = ['green','red'];
+                        return colorList[params.dataIndex];
+                    }
+                }
+            }
         }]
     };
     // 使用刚指定的配置项和数据显示图表
