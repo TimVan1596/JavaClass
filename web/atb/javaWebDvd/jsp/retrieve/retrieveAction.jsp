@@ -29,7 +29,7 @@
             <th><input name="cpassword" type="password" title="" style="width: 150px;"/></th>
         </tr>
         <tr>
-            <th colspan = '1'><a href = '../../login.jsp'>返回</a></th>
+            <th colspan = '1'></th>
             <th colspan = '1'><input type="submit" value="提交" ></th>
         </tr>
         <script type="text/javascript">

@@ -60,7 +60,7 @@
     <button onclick="editDVD()">编辑</button>
     <button onclick="deleteDVD()">删除</button>
     <button onclick="getStatistics()">信息统计</button>
-    <button onclick="displayJSTL()">菜单（JSP/JSTL版）</button>
+    <button onclick="displa()">菜单（JSP/JSTL版）</button>
 
 </section>
 

@@ -25,8 +25,8 @@
             <th><input type="password" name="userpassword" title="userpassword" style="text-align: center; width: 150px;"/></th>
         </tr>
         <tr>
-            <th><a style="text-decoration-line: underline;color: blue;width: 150px;" href="./jsp/retrieve/retrieve.jsp">找回密码</a></th>
-            <th><a style="text-decoration-line: underline;color: blue;width: 150px;" href="./jsp/register/register.jsp">注册账号</a></th>
+            <th><a style="text-decoration-line: underline;color: blue;width: 150px;" href="./atb/javaWebDvd/jsp/retrieve/retrieve.jsp">找回密码</a></th>
+            <th><a style="text-decoration-line: underline;color: blue;width: 150px;" href="./atb/javaWebDvd/jsp/register/register.jsp">注册账号</a></th>
         </tr>
         <tr>
             <th colspan = '2'><input type="submit" value="登陆" style="text-align: center;width: 50px;"></th>
