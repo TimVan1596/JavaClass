@@ -30,7 +30,7 @@ public class landServlet extends HttpServlet {
                 request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
             }else{
                 //输出登陆失败
-                request.setAttribute("MSG", "账号或密码错误！");
+                request.setAttribute("MSG", "账号密码错误或用户不存在！");
                 request.getRequestDispatcher("./atb/javaWebDvd/login.jsp").forward(request, response);
             }
         }

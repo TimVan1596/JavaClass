@@ -43,10 +43,10 @@
             <td align="center"><%= dvd.getName() %></td>
             <% if(dvd.getState().equals("已借出")){ %>
             <td align="center" style="background-color: red"><%= dvd.getState() %></td>
-            <td align="center" ><a href = '../../lend.do?no=<%= dvd.getNo() %>'>归还</a></td>
+            <td align="center" ><a href = './lend.do?no=<%= dvd.getNo() %>'>归还</a></td>
             <% }else{ %>
             <td align="center" style="background-color: green"><%= dvd.getState() %></td>
-            <td align="center"><a href = '../../lend.do?no=<%= dvd.getNo() %>'>借出</a></td>
+            <td align="center"><a href = './lend.do?no=<%= dvd.getNo() %>'>借出</a></td>
             <% } %>
             <td align="center"><a href = './atb/javaWebDvd/jsp/choice/modify.jsp?no=<%= dvd.getNo() %>'>编辑</a></td>
         </tr>
@@ -56,7 +56,7 @@
         <tr>
             <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
             <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/jsp/choice/add.jsp">添加</a></td>
-            <td colspan = '1' align="center"><a href = "../../login.do">显示所有</a></td>
+            <td colspan = '1' align="center"><a href = "./login.do">显示所有</a></td>
             <td colspan = '2' align="center"><a href = "./atb/javaWebDvd/jsp/choice/data.jsp">数据显示</a></td>
             <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/login.jsp">退出</a></td>
         </tr>

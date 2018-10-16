@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>菜单</title>
+    <title>菜单 - biggerDVD</title>
     <style>
         td {
             text-align: center;
@@ -60,6 +60,7 @@
     <button onclick="editDVD()">编辑</button>
     <button onclick="deleteDVD()">删除</button>
     <button onclick="getStatistics()">信息统计</button>
+    <button onclick="displa()">菜单（JSP/JSTL版）</button>
 
 </section>
 
