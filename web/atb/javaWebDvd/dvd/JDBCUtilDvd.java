@@ -35,13 +35,13 @@ public class JDBCUtilDvd {
     private void openConnection() {
         //位置
         String DB_URL = "jdbc:mysql://" +
-                "localhost:3306" +
-                "/sqldvd" +
+                "120.79.210.170" +
+                "/atb" +
                 "?useSSL=false&serverTimezone=UTC&characterEncoding=UTF8";
         //账号
-        String USER = "root";
+        String USER = "316202070101";
         //密码
-        String PASS = "19980317";
+        String PASS = "070101";
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
