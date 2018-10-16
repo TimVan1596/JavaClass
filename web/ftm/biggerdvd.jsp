@@ -1,9 +1,8 @@
 <%--
-  Created by IntelliJ IDEA.
+  入口页面
   User: TimVan
   Date: 2018/10/8
   Time: 8:09
-  To change this template use File | Settings | File Templates.
 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
