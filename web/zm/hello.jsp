@@ -15,7 +15,7 @@
     String tgName = "font";
     String color = "red";
 %>
-<a href="http://www.baidu.com"><font color="#a52a2a">百度吧</font></a>
+<a href="http://www.baidu.com"><font color="#a52a2a">你有啥问题都可以点</font></a>
 <br>
 <jsp:element name="a">
 <jsp:attribute name="href">http://www.baidu.com</jsp:attribute>
@@ -23,7 +23,7 @@
         <jsp:element name="<%=tgName%>">
             <jsp:attribute name="color"><%=color%></jsp:attribute>
             <jsp:body>
-                百度吧
+                这是真的！
             </jsp:body>
         </jsp:element>
     </jsp:body>
