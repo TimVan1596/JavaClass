@@ -31,7 +31,7 @@
 <h1>********** 显示当前所有DVD信息 **************</h1>
 
 <div style="margin-bottom: 1%;">
-    <button>新增</button>
+    <button onclick="addDVD()">添加</button>
 </div>
 <table border="1" id="DVDsTable">
     <tr>
@@ -40,22 +40,19 @@
         <th>状态</th>
         <th width="120">操作</th>
     </tr>
-    <tr>
-        <td>1000</td>
-        <td>士兵突击</td>
-        <td>已借出</td>
-        <td>
-            <button>修改</button>
-            <button>删除</button>
-        </td>
-    </tr>
+    <!--填充模板区-->
 </table>
 
 <script>
     //初始化页面
     $(function () {
+
+        var ALL_STATUS  = -1;
+
         //通过ajax获取每一行
-        $.post('GetAllDVDs.do', {}, function (ret) {
+        $.post('GetAllDVDs.do', {
+            status: ALL_STATUS
+        }, function (ret) {
             //解析ret
             ret = eval("(" + ret + ")");
 
@@ -72,18 +69,38 @@
                     var $tr = $("#DVD_TEMPLATE").html();
                     $("#DVDsTable").append($tr);
 
-                    var line = $('.dvd-tr-line:last');
 
-                    $('.dvd-tr-line:last').children(".dvd-id").val(id);
-                    $('.dvd-tr-line:last').children(".dvd-name").val(name);
-                    $('.dvd-tr-line:last').children(".dvd-status").val(status);
+                    $('.dvd-id:last').text(id);
+                    $('.dvd-name:last').text(name);
+                    $('.dvd-status:last').text(
+                        status === 'true'? '已借出':'未借出'
+                    );
+
 
                 }
 
-                console.log(dvdArr);
             }
         });
     });
+    
+    function addDVD() {
+        var name = prompt("请输入要添加的DVD名称？");
+
+        $.post('../AddDVD.do', {
+            name: name
+        }, function (ret) {
+            //解析ret
+            ret = eval("(" + ret + ")");
+
+            if (ret['error'] === 0) {
+
+            }
+            else {
+
+            }
+        });
+
+    }
 </script>
 
 

@@ -35,7 +35,7 @@ public class GetAllDVDs extends HttpServlet {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        ArrayList<DVD> dvdArr = DVD.getDVDArr();
+        ArrayList<DVD> dvdArr = DVD.loadDVDInfosByArray();
 
         Map<String, Object> ret = new HashMap<>(1);
         if (true) {

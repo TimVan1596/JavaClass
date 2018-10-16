@@ -30,6 +30,7 @@ public class DVD implements Serializable {
     private boolean status;
 
     public static ArrayList<DVD> getDVDArr() {
+        loadDVDInfos();
         return DVDArr;
     }
 
@@ -114,7 +115,6 @@ public class DVD implements Serializable {
         JDBCUtil.insert("dvd", insertData);
     }
 
-
     /**
      * 使用数据库修改DVD信息
      */
@@ -144,9 +144,122 @@ public class DVD implements Serializable {
     }
 
     /**
+     * 使用数据库删除DVD信息（通过主键ID）
+     * Web项目专用接口
+     * @return  -1 = 找到，但未归还 , 0 = 未找到  , 1 = 删除成功
+     */
+    public static int deleteDVDForWeb(int id) {
+
+        //返回的状态的识别码
+        int retStatus = 0;
+        loadDVDInfos();
+
+        for (int i = 0; i < DVD.getDVDArr().size(); i++) {
+            int dvdId = DVD.getDVDArr().get(i).getId();
+            //是否存在
+            if (dvdId == id) {
+                DVD dvd = DVD.getDVDArr().get(i);
+                retStatus = -1;
+                //是否未被借出,未归还
+                if (!dvd.isStatus()) {
+                    DVD.getDVDArr().remove(i);
+                    //使用数据库删除DVD信息（通过主键ID）
+                    DVD.deleteDVDInfo(id);
+                    System.out.println(id + "删除成功");
+                    retStatus = 1;
+                    break;
+                }
+            }
+        }
+
+        return retStatus;
+    }
+
+    /**
+     * 使用数据库借出和归还DVD信息（通过主键ID）
+     * Web项目专用接口
+     * @return   0 = 未找到  , 1 = 删除成功
+     */
+    public static int loanOrReturnDVDForWeb(int id){
+        //返回的状态的识别码
+        int retStatus = 0;
+        loadDVDInfos();
+
+        for (int i = 0; i < DVD.getDVDArr().size(); i++) {
+            int dvdId = DVD.getDVDArr().get(i).getId();
+            //是否存在
+            if (dvdId == id) {
+                DVD dvd = DVD.getDVDArr().get(i);
+                dvd.setStatus(
+                        !dvd.isStatus()
+                );
+                //在数据中更改dvd信息
+                DVD.updateDVDInfo(dvd);
+                retStatus = 1;
+                break;
+            }
+        }
+
+        return retStatus;
+    }
+
+    /**
+     * 统计DVD的数量
+     * @return 返回数量
+     */
+    public static int countDVDs(){
+        int cnt = 0;
+        cnt  = JDBCUtil.count("dvd",
+                "id",null);
+
+        return cnt;
+    }
+
+    /**
+     * 统计DVD已借出的数量
+     * @return 返回数量
+     */
+    public static int countLoanedDVDs(){
+        int cnt = 0;
+        String tableWhere = "status = 1";
+        cnt  = JDBCUtil.count("dvd",
+                "id",tableWhere);
+        return cnt;
+    }
+
+
+
+    /**
+     * 使用数据库编辑DVD信息（通过主键ID）
+     * @return boolean isExist  是否找到的标识符
+     */
+    public static boolean editDVDInfo(int id, String newName){
+
+        //是否找到的标识符
+        boolean isExist = false;
+        loadDVDInfos();
+
+        for (int i = 0; i < DVD.getDVDArr().size(); i++) {
+            int dvdId = DVD.getDVDArr().get(i).getId();
+            //是否存在
+            if (dvdId == id){
+                DVD dvd = (DVD) DVD.getDVDArr().get(i);
+                dvd.setName(newName);
+                //在数据中更改dvd信息
+                DVD.updateDVDInfo(dvd);
+                System.out.println("修改成功！新DVD名称为" + newName);
+                isExist = true;
+                break;
+            }
+        }
+
+        return isExist;
+    }
+
+    /**
      * 使用数据库读入DVD信息到 DVDArr 集合
      */
-    public static void loadDVDInfos() {
+    private static void loadDVDInfos() {
 
         //设置查询条件
         ArrayList<String> tableField = new ArrayList<String>() {{
@@ -173,9 +286,57 @@ public class DVD implements Serializable {
 
     }
 
+    /**
+     * (带返回值)使用数据库读入DVD信息到 DVDArr 集合
+     * @return 返回DVD集合
+     */
+    public static ArrayList<DVD> loadDVDInfosByArray() {
+
+        ArrayList<DVD> dvds = new ArrayList<>();
+
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("id");
+            add("name");
+            add("status");
+        }};
+        List<List<String>> dvdSQLs = JDBCUtil
+                .select("dvd",
+                        tableField, null,
+                        null, null);
+
+        for (List<String> dvdInfo : dvdSQLs) {
+            //将字符串转为3种数据
+            int id = Integer.valueOf(dvdInfo.get(0));
+            String name = dvdInfo.get(1);
+            boolean status = true;
+            if (dvdInfo.get(2).equals("0")) {
+                status = false;
+            }
+            DVD dvd = new DVD(id, name, status);
+            dvds.add(dvd);
+        }
+
+        return dvds;
+    }
+
 
     @Override
     public String toString() {
         return id + "\t" + name + "\t\t" + (status ? "已借出" : "未借出");
+    }
+
+    /**
+     * DVD信息转 HashMap (便于JSON格式转码)
+     */
+    public HashMap<String,String> toHashMap (DVD dvd){
+
+        HashMap<String, String> dvdMap
+                = new HashMap<>();
+        dvdMap.put("id",String.valueOf( dvd.getId()));
+        dvdMap.put("name",dvd.getName());
+        dvdMap.put("status",
+                dvd.isStatus()?"已借出":"未借出");
+        return dvdMap;
     }
 }

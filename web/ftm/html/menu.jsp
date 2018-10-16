@@ -8,8 +8,34 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>菜单</title>
+    <title>菜单 - biggerDVD</title>
+    <style>
+        td {
+            text-align: center;
+            white-space: nowrap;
+        }
+    </style>
+
+    <!-- DVD信息（列表填充模板 template）-->
+    <script type="text/html" id="DVD_TEMPLATE">
+        <tr class="dvd-tr-line">
+            <td class="dvd-radio">
+                <input class="dvd-radio-input" name="dvd-radio"
+                       type="radio" value=""/>
+            </td>
+            <td class="dvd-id"></td>
+            <td class="dvd-name"></td>
+            <td class="dvd-status"></td>
+            <td>
+                <button class="dvd-btn-land"
+                        onclick="loanOrReturnDVD(this)"></button>
+            </td>
+        </tr>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
+
+
 <body>
 
 <%
@@ -28,22 +54,33 @@
 
 <h1>********** <%=userName%>，你好！欢迎进入系统菜单 **************</h1>
 
-<section>
-    <button onclick="window.location.href='menu/display.html'">查看全部</button>
-    <button>已借出DVD</button>
-    <button>添加新的DVD</button>
+<section style="margin-bottom: 1%;">
+
+    <button onclick="addDVD()">添加</button>
+    <button onclick="editDVD()">编辑</button>
+    <button onclick="deleteDVD()">删除</button>
+    <button onclick="getStatistics()">信息统计</button>
+    <button onclick="displa()">菜单（JSP/JSTL版）</button>
+
 </section>
+
+<table border="1" id="DVDsTable">
+    <tr>
+        <th></th>
+        <th>编号</th>
+        <th width="200">名称</th>
+        <th width="100">状态</th>
+        <th width="100">操作</th>
+    </tr>
+    <!--填充模板区-->
+</table>
 
 
 <section style="margin-top: 2%">
     <button onclick="logout()">注销</button>
 </section>
 
-<script>
-    function logout() {
-        window.location.href = '../LogOutServlet.do';
-    }
-</script>
+<script src="../js/html/menu.js"></script>
 
 </body>
 </html>

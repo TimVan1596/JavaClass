@@ -9,15 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 /**
- * 获取所有的DVD信息
- * 返回json
- *
+ * 添加DVD信息
  * @author TimVan
  */
 @WebServlet(name = "AddDVD",
@@ -32,8 +29,15 @@ public class AddDVD extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
+
+        String dvdName =  request.getParameter("name");
+        DVD newDvd = new DVD(dvdName);
+        //数据中新增DVD信息
+        DVD.addDVDInfo(newDvd);
 
         Map<String, Object> ret = new HashMap<>(1);
         if (true) {
