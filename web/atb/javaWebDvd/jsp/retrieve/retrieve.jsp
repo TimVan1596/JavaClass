@@ -25,7 +25,7 @@
             <th><input name="phone" type="text" title="" style="width: 150px;"/></th>
         </tr>
         <tr>
-            <th colspan = '1'><a href = '../../login.do'>返回</a></th>
+            <th colspan = '1'><a href = '../../../javaWebDvdLogin.jsp'>返回</a></th>
             <th colspan = '1'><input type="submit" value="提交" ></th>
         </tr>
         <script type="text/javascript">
