@@ -29,7 +29,7 @@ public class DVD implements Serializable {
     private int id;
     private String name;
     private boolean status;
-    private boolean preview;
+    private String preview;
 
     public static ArrayList<DVD> getDVDArr() {
         loadDVDInfos();
@@ -274,7 +274,6 @@ public class DVD implements Serializable {
             add("id");
             add("name");
             add("status");
-            add("preview");
         }};
         List<List<String>> dvdSQLs = JDBCUtil
                 .select("dvd",
@@ -308,6 +307,7 @@ public class DVD implements Serializable {
             add("id");
             add("name");
             add("status");
+            add("preview");
         }};
         List<List<String>> dvdSQLs = JDBCUtil
                 .select("dvd",
@@ -322,7 +322,9 @@ public class DVD implements Serializable {
             if (dvdInfo.get(2).equals("0")) {
                 status = false;
             }
-            DVD dvd = new DVD(id, name, status);
+            String preview = dvdInfo.get(3);
+
+            DVD dvd = new DVD(id, name, status,preview);
             dvds.add(dvd);
         }
 

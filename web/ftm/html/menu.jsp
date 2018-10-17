@@ -14,6 +14,16 @@
             text-align: center;
             white-space: nowrap;
         }
+
+        .dvd-preview {
+            width: 100px;
+            height: 100px;
+        }
+
+        .dvd-name{
+            font-weight: bold;
+        }
+
     </style>
 
     <!-- DVD信息（列表填充模板 template）-->
@@ -25,7 +35,10 @@
             </td>
             <td class="dvd-id"></td>
             <td class="dvd-name"></td>
-            <td class="dvd-preview"></td>
+            <td >
+                <img class="dvd-preview"
+                     src="https://cloud.timvanx.com/timg.jpg">
+            </td>
             <td class="dvd-status"></td>
             <td>
                 <button class="dvd-btn-land"

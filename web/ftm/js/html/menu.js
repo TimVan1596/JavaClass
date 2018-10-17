@@ -32,6 +32,7 @@ layui.use('layer', function(){
                     var id = DVD['id'];
                     var name = DVD['name'];
                     var status = DVD['status'];
+                    var preview = DVD['preview'];
 
                     //创造DVD节点(tr)
                     var $tr = $("#DVD_TEMPLATE").html();
@@ -52,6 +53,8 @@ layui.use('layer', function(){
 
                     $dvdRadio.attr("value", id);
 
+                    //预览图加载
+                    $('.dvd-preview:last').attr("src", preview);
                     $('.dvd-name:last').text(name);
                     $('.dvd-status:last').text(
                         status ? '已借出' : '未借出'
@@ -65,11 +68,8 @@ layui.use('layer', function(){
                     if (!status){
                         $('.dvd-tr-line:last').css("background-color"
                             ,"#7ef38296");
-
                     }
                     $dvdBtnLand.attr("value", id);
-
-
                 }
 
             }
