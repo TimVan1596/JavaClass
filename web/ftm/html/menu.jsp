@@ -25,6 +25,7 @@
             </td>
             <td class="dvd-id"></td>
             <td class="dvd-name"></td>
+            <td class="dvd-preview"></td>
             <td class="dvd-status"></td>
             <td>
                 <button class="dvd-btn-land"

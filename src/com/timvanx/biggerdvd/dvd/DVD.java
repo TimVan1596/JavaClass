@@ -22,12 +22,14 @@ public class DVD implements Serializable {
      * status = 借出状态，未借出为false，反之亦然
      * name = DVD名称
      * id = （主键自增）DVD编号
+     * preview = 预览图URL
      */
     private static final long serialVersionUID = 1L;
     private static int cnt = 1000;
     private int id;
     private String name;
     private boolean status;
+    private boolean preview;
 
     public static ArrayList<DVD> getDVDArr() {
         loadDVDInfos();
@@ -48,11 +50,18 @@ public class DVD implements Serializable {
     }
 
     private DVD(int id, String name, boolean status) {
+        //默认URL
+        this(id,name,status, "https://cloud.timvanx.com/timg.jpg");
+    }
+
+    private DVD(int id, String name
+            , boolean status , String preview) {
         this.id = id;
         this.name = name;
         this.status = status;
         //读取时读入主键
         cnt = id;
+        preview = preview;
     }
 
     public DVD() {
@@ -228,7 +237,6 @@ public class DVD implements Serializable {
     }
 
 
-
     /**
      * 使用数据库编辑DVD信息（通过主键ID）
      * @return boolean isExist  是否找到的标识符
@@ -266,6 +274,7 @@ public class DVD implements Serializable {
             add("id");
             add("name");
             add("status");
+            add("preview");
         }};
         List<List<String>> dvdSQLs = JDBCUtil
                 .select("dvd",
