@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>事件的触发</title>
+    <script type="text/javascript">
+        function on_Click() {
+            alert("你点击了按钮，通过onclick方法触发了click事件");
+        }
+
+        function on_Dblclick() {
+            alert("你双击了按钮，通过ondblclick方法触发了dblclick事件");
+        }
+
+        function on_Mousedown() {
+            alert("你按下了按钮，通过onmousedown方法触发了mousedown事件");
+        }
+
+        function on_Mouseup() {
+            alert("你按下鼠标并松开了，通过onmouseup方法触发了mouseup事件");
+        }
+
+        function on_Mouseover() {
+            alert("鼠标移动到了按钮，通过onmouseover方法触发了mouseover事件");
+        }
+
+        function on_Mouseout() {
+            alert("鼠标移出了按钮，通过onmouseout方法触发了mouseout事件");
+        }
+
+        function on_Keypress() {
+            alert("你按下按键了，通过onkeypress方法触发了keypress事件");
+        }
+    </script>
+</head>
+<body onkeypress="on_Keypress();">
+<input type="button"value="单击鼠标触发事件"onclick="on_Click();"/>
+<br />
+<br />
+<input type="button"value="双击鼠标触发事件"ondblclick="on_Dblclick();"/>
+<br />
+<br />
+<input type="button"value="按下鼠标触发事件"onmousedown="on_Mousedown();"/>
+<br />
+<br />
+<input type="button"value="按下鼠标松开时触发事件"onmouseup="on_Mouseup();"/>
+<br />
+<br />
+<input type="button"
+       value="移动鼠标到按钮触发事件"onmouseover="on_Mouseover();"/>
+<br />
+<br />
+<input type="button"value="移开鼠标触发事件"onmouseout="on_Mouseout();"/>
+<br />
+<br />
+<input type="button"value="按下键盘按键触发事件"/>
+</body>
+</html>
