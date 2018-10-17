@@ -27,7 +27,7 @@
             <th>选择</th>
             <th>序号</th>
             <th>书名</th>
-            <th>状态</th>
+            <th>库存</th>
             <th>操作</th>
             <th>操作</th>
             <th>操作</th>
@@ -50,10 +50,31 @@
             <td align="center"><input type='checkbox' name='check' title='choice' value='<%= dvd.getNo() %>'/></td>
             <td align="center"><%= dvd.getNo() %></td>
             <td align="center"><%= dvd.getName() %></td>
-            <td align="center"><%= dvd.getState()-dvd.getBorrow() %></td>
+            <%--<td align="center"><%= dvd.getState()-dvd.getBorrow() %></td>--%>
+            <%
+                if(dvd.getState()-dvd.getBorrow() == 0){
+            %>
+            <td style="background-color: red" align="center">
+                <%= dvd.getState()-dvd.getBorrow() %>
+            </td>
+            <%
+            }else if(dvd.getBorrow() == 0){
+            %>
+            <td style="background-color: green" align="center">
+                <%= dvd.getState()-dvd.getBorrow() %>
+            </td>
+            <%
+            }else{
+            %>
+            <td align="center">
+                <%= dvd.getState()-dvd.getBorrow() %>
+            </td>
+            <%
+            }
+            %>
             <td align="center"><a href = '../../lend.do?no=<%= dvd.getNo() %>'>借出</a></td>
             <td align="center"><a href = '../../return.do?no=<%= dvd.getNo() %>'>归还</a></td>
-            <td align="center"><a href = './atb/javaWebDvd/jsp/choice/modify.jsp?no=<%= dvd.getNo() %>'>编辑</a></td>
+            <td align="center"><a href = './jsp/choice/modify.jsp?no=<%= dvd.getNo() %>'>编辑</a></td>
         </tr>
         <%
             }
@@ -61,7 +82,7 @@
         <tr>
             <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
             <td colspan = '1' align="center"><a href = "./jsp/choice/add.jsp">添加</a></td>
-            <td colspan = '1' align="center"><a href = "../../login.do">显示所有</a></td>
+            <td colspan = '1' align="center"><a href = "../../login.do">主页</a></td>
             <td colspan = '1' align="center"></td>
             <td colspan = '2' align="center"><a href = "./jsp/choice/data.jsp">数据显示</a></td>
             <td colspan = '1' align="center"><a href = "./login.jsp">退出</a></td>

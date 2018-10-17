@@ -19,7 +19,6 @@ public class addServlet extends HttpServlet {
         try {
             String name = request.getParameter("name");
             int state = Integer.parseInt(request.getParameter("state"));
-            System.out.println(state);
             JDBCUtilDvd jdbcUtil = new JDBCUtilDvd();
             Dvd dvd1 = new Dvd(name, state);
             int jd = jdbcUtil.addDvd(dvd1);
@@ -40,6 +39,8 @@ public class addServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        int page = Integer.parseInt(request.getParameter("page"));
+        request.setAttribute("page", page);
+        request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
     }
 }

@@ -25,6 +25,9 @@
     List<Dvd> dvds = jdbcUtilDvd.queryStu();
     %>
     var option = {
+        title: {
+            text: '图书借阅统计'
+        },
         tooltip : {
             trigger: 'axis',
             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
