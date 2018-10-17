@@ -167,8 +167,8 @@ public class DVD implements Serializable {
                     DVD.deleteDVDInfo(id);
                     System.out.println(id + "删除成功");
                     retStatus = 1;
-                    break;
                 }
+                break;
             }
         }
 

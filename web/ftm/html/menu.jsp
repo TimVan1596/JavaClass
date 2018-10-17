@@ -32,7 +32,10 @@
             </td>
         </tr>
     </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../../common/util/layui/layui.js"></script>
+    <script src="../js/html/menu.js"></script>
 </head>
 
 
@@ -60,7 +63,6 @@
     <button onclick="editDVD()">编辑</button>
     <button onclick="deleteDVD()">删除</button>
     <button onclick="getStatistics()">信息统计</button>
-    <button onclick="displa()">菜单（JSP/JSTL版）</button>
 
 </section>
 
@@ -80,7 +82,6 @@
     <button onclick="logout()">注销</button>
 </section>
 
-<script src="../js/html/menu.js"></script>
 
 </body>
 </html>
