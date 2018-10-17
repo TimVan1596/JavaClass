@@ -61,19 +61,9 @@ public class DVD implements Serializable {
         this.status = status;
         //读取时读入主键
         cnt = id;
-        preview = preview;
+        this.preview = preview;
     }
 
-    public DVD() {
-    }
-
-    public DVD(String name) {
-        //随着构造函数自增(ID赋值)
-        this.id = ++cnt;
-        this.name = name;
-        //默认为未借出
-        this.status = false;
-    }
 
     public static int getCnt() {
         return cnt;
@@ -85,10 +75,6 @@ public class DVD implements Serializable {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -110,17 +96,11 @@ public class DVD implements Serializable {
     /**
      * 使用数据库增加DVD信息
      */
-    public static void addDVDInfo(DVD newDVD) {
-        //boolean型的newDVD.isStatus()转数字0、1
-        int newDVDStatus = 0;
-        if (newDVD.isStatus()) {
-            newDVDStatus = 1;
-        }
+    public static void addDVDInfo(String name) {
 
         Map<String, Object> insertData =
                 new HashMap<String, Object>(1);
-        insertData.put("name", newDVD.getName());
-        insertData.put("status", newDVDStatus);
+        insertData.put("name", name);
         JDBCUtil.insert("dvd", insertData);
     }
 
@@ -269,16 +249,8 @@ public class DVD implements Serializable {
      */
     private static void loadDVDInfos() {
 
-        //设置查询条件
-        ArrayList<String> tableField = new ArrayList<String>() {{
-            add("id");
-            add("name");
-            add("status");
-        }};
-        List<List<String>> dvdSQLs = JDBCUtil
-                .select("dvd",
-                        tableField, null,
-                        null, null);
+
+        List<List<String>> dvdSQLs = getDVDInfosFromJDBC();
 
         for (List<String> dvdInfo : dvdSQLs) {
             //将字符串转为3种数据
@@ -288,7 +260,10 @@ public class DVD implements Serializable {
             if (dvdInfo.get(2).equals("0")) {
                 status = false;
             }
-            DVD dvd = new DVD(id, name, status);
+            //String preview = dvdInfo.get(3);
+            String preview = "fucku";
+
+            DVD dvd = new DVD(id, name, status,preview);
             DVDArr.add(dvd);
         }
 
@@ -302,17 +277,7 @@ public class DVD implements Serializable {
 
         ArrayList<DVD> dvds = new ArrayList<>();
 
-        //设置查询条件
-        ArrayList<String> tableField = new ArrayList<String>() {{
-            add("id");
-            add("name");
-            add("status");
-            add("preview");
-        }};
-        List<List<String>> dvdSQLs = JDBCUtil
-                .select("dvd",
-                        tableField, null,
-                        null, null);
+        List<List<String>> dvdSQLs = getDVDInfosFromJDBC();
 
         for (List<String> dvdInfo : dvdSQLs) {
             //将字符串转为3种数据
@@ -331,10 +296,25 @@ public class DVD implements Serializable {
         return dvds;
     }
 
+    /**
+     * 从数据库读入DVD信息到 DVDArr 集合
+     * 作为 loadDVDInfos() 和 loadDVDInfosByArray()的组件
+     * @return 返回DVD集合(二重)
+     */
+    private static List<List<String>> getDVDInfosFromJDBC(){
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("id");
+            add("name");
+            add("status");
+            add("preview");
+        }};
+        List<List<String>> dvdSQLs = JDBCUtil
+                .select("dvd",
+                        tableField, null,
+                        null, null);
 
-    @Override
-    public String toString() {
-        return id + "\t" + name + "\t\t" + (status ? "已借出" : "未借出");
+        return dvdSQLs;
     }
 
     /**
@@ -349,5 +329,22 @@ public class DVD implements Serializable {
         dvdMap.put("status",
                 dvd.isStatus()?"已借出":"未借出");
         return dvdMap;
+    }
+
+    @Override
+    public String toString() {
+        return "DVD{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", preview='" + preview + '\'' +
+                '}';
+    }
+
+    public static void main(String[] args) {
+        ArrayList<DVD> dvdArr = DVD.loadDVDInfosByArray();
+        for (DVD dvd : dvdArr) {
+            System.out.println(dvd.toString());
+        }
     }
 }

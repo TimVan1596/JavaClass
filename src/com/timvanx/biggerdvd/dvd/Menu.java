@@ -4,7 +4,6 @@ import com.timvanx.biggerdvd.util.Constants;
 
 import java.util.Scanner;
 
-
 /**
  * 主菜单类(包含所有核心方法！)
  * @author TimVan
@@ -16,7 +15,6 @@ public class Menu {
 
     static {
         //初始化DVD集合DVDArr
-        DVD dvd = new DVD();
     }
 
     /**
@@ -312,15 +310,10 @@ public class Menu {
             System.out.println("请输入要添加的DVD名称（无书名号）：");
             Scanner scanner = new Scanner(System.in);
             String inputString = scanner.nextLine();
-            DVD newDvd = new DVD(inputString);
 
-            DVD.getDVDArr().add(newDvd);
             //数据中新增DVD信息
-            DVD.addDVDInfo(newDvd);
-            Integer newId = newDvd.getId();
+            DVD.addDVDInfo(inputString);
 
-            System.out.println("添加成功！新添加的DVD的编号为"
-                    + newId);
             //展示所有DVD信息
             display();
 
@@ -470,7 +463,6 @@ public class Menu {
     }
 
 }
-
 
 /**
  * 界面选项中数字-内容
