@@ -22,6 +22,18 @@
 </head>
 
 <body>
+<%
+    //初始化常量信息
+    String userName = "非法用户";
+
+    if (session.getAttribute("userName") != null) {
+        userName = (String) session.getAttribute("userName");
+    } else {
+        response.sendRedirect("../biggerdvd.jsp");
+        return;
+    }
+
+%>
     <form style="margin: 5%"
             class="layui-form layui-form-pane">
 
