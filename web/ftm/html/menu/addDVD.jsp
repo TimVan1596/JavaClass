@@ -80,6 +80,7 @@
                 elem: '#preview-upload'
                 ,url: '/ftm/html/menu/adddvd/UploadPreview.do'
                 ,before: function(obj){
+
                     //预读本地文件示例，不支持ie8
                     obj.preview(function(index, file, result){
                         $('#preview-upload-img').attr('src', result);                       //图片链接（base64）
