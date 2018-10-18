@@ -32,6 +32,7 @@ layui.use('layer', function(){
                     var id = DVD['id'];
                     var name = DVD['name'];
                     var status = DVD['status'];
+                    var preview = DVD['preview'];
 
                     //创造DVD节点(tr)
                     var $tr = $("#DVD_TEMPLATE").html();
@@ -52,24 +53,20 @@ layui.use('layer', function(){
 
                     $dvdRadio.attr("value", id);
 
+                    //预览图加载
+                    $('.dvd-preview:last').attr("src", preview);
                     $('.dvd-name:last').text(name);
-                    $('.dvd-status:last').text(
-                        status ? '已借出' : '未借出'
-                    );
 
                     //归还借出标识
                     var $dvdBtnLand = $('.dvd-btn-land:last');
                     $dvdBtnLand.text(
-                        status ? '归还' : '借出'
+                        status ? '归还' : '可借'
                     );
                     if (!status){
                         $('.dvd-tr-line:last').css("background-color"
                             ,"#7ef38296");
-
                     }
                     $dvdBtnLand.attr("value", id);
-
-
                 }
 
             }
@@ -87,34 +84,16 @@ layui.use('layer', function(){
 //添加DVD
 function addDVD() {
 
-    var name = prompt("请输入要添加的DVD名称？");
-
-    //判断用户是否输入内容
-    if (name) {
-        var loading = layer.load(1, {
-            //0.1透明度的白色背景
-            shade: [0.1,'#fff']
-        });
-        $.post('menu/AddDVD.do', {
-            name: name
-        }, function (ret) {
-            //解析ret
-            ret = eval("(" + ret + ")");
-
-            if (ret['error'] === 0) {
-                window.location.reload();
-            }
-            else {
-                var errorInfo = ret['errorInfo'];
-                alert("添加失败！" + errorInfo);
-            }
-
-            //关闭loading
-            layer.close(loading);
-        });
-
-    }
-
+    //添加DVD iframe层
+    layer.open({
+        type: 2,
+        title: '添加新的DVD',
+        shadeClose: true,
+        shade: 0.3,
+        area: ['380px', '63%'],
+        offset: ['110px', '35%'],
+        content: 'menu/addDVD.jsp' //iframe的url
+    });
 }
 
 //编辑DVD信息
@@ -158,7 +137,8 @@ function deleteDVD(){
 
         var loading = layer.load(1, {
             //0.1透明度的白色背景
-            shade: [0.1,'#fff']
+            shade: [0.1,'#fff'],
+            offset: '170px'
         });
 
 
@@ -191,7 +171,8 @@ function loanOrReturnDVD(obj){
     if ( LorRConfirm === true){
         var loading = layer.load(1, {
             //0.1透明度的白色背景
-            shade: [0.1,'#fff']
+            shade: [0.1,'#fff'],
+            offset: '170px'
         });
         $.post('menu/LoanOrReturnDVD.do', { id:dvdID}, function (ret) {
 
