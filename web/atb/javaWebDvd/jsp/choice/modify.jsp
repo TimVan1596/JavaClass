@@ -27,32 +27,19 @@
         %>
         <tr>
             <th width=150px>序号：</th>
-            <th><input name="no" type="text" title="" value="<%= Integer.parseInt(request.getParameter("no")) %>" readonly style = "color:gray; width: 150px;"/></th>
+            <th><input name="no" type="text" title="" value="<%= Integer.parseInt(request.getParameter("no")) %>" readonly style = "color:gray;"/></th>
         </tr>
         <tr>
             <th width=150px>书名：</th>
-            <th><input name="name" type="text" title="" value="<%= dvd.getName() %>" style="text-align: left; width: 150px;"/></th>
+            <th><input name="name" type="text" title="" value="<%= dvd.getName() %>" /></th>
         </tr>
         <tr>
-            <%
-                if(dvd.getState().equals("可以借")){
-            %>
-            <th width=150px>状态：</th>
-            <th>
-                <input type="radio" value="可以借" title="" name="state" checked>可以借
-                <input type="radio" value="已借出" title="" name="state">已借出
-            </th>
-            <%
-            }else{
-            %>
-            <th width=150px>状态：</th>
-            <th>
-                <input type="radio" value="可以借" title="" name="state">可以借
-                <input type="radio" value="已借出" title="" name="state" checked>已借出
-            </th>
-            <%
-                }
-            %>
+            <th width=150px>总数：</th>
+            <th><input name="state" type="text" title="" value="<%= dvd.getState() %>"/></th>
+        </tr>
+        <tr>
+            <th width=150px>借出：</th>
+            <th><input name="borrow" type="text" title="" value="<%= dvd.getBorrow() %>"/></th>
         </tr>
         <%
                 }

@@ -24,18 +24,18 @@ public class lendServlet extends HttpServlet {
         //name = new String(name.getBytes("ISO-8859-1"),"utf-8");
         JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
         List<Dvd> dvds = jdbcUtilDvd.queryStu();
+        int jd = 0;
         for (Dvd dvd : dvds) {
-            if (no == dvd.getNo() && dvd.getState().equals("可以借")) {
-                jdbcUtilDvd.updateState("已借出", dvd.getNo());
+            if (no == dvd.getNo() && dvd.getState()-dvd.getBorrow()>0) {
+                jd = jdbcUtilDvd.updateState(dvd.getBorrow()+1, dvd.getNo());
                 request.setAttribute("MSG", "借出成功！");
                 request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
                 break;
-            }else if (no == dvd.getNo() && dvd.getState().equals("已借出")) {
-                jdbcUtilDvd.updateState("可以借", dvd.getNo());
-                request.setAttribute("MSG", "归还成功！");
-                request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
-                break;
             }
+        }
+        if(jd == 0){
+            request.setAttribute("MSG", "借出失败，库存数量不足！");
+            request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
         }
     }
 }

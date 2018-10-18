@@ -3,17 +3,18 @@ package web.atb.javaWebDvd.dvd;
  * @author 安天宝
  * JAVA一班
  * 9月16日
- *
  * DVD信息
  */
 public class Dvd {
+    public static final int PAGE_SIZE = 5; //每页显示的数量
 
 	private int no;
 	private String name;
-	private String state;
+	private int state;
+	private int borrow;
 
 	public Dvd(){}
-	public Dvd(String name, String state){
+	public Dvd(String name, int state){
 		this.name = name;
 		this.state = state;
 	}
@@ -29,15 +30,26 @@ public class Dvd {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public String getState() {
+	public int getState() {
 		return state;
 	}
-	public void setState(String state) {
+	public void setState(int state) {
 		this.state = state;
 	}
+    public int getBorrow() {
+        return borrow;
+    }
+    public void setBorrow(int borrow) {
+        this.borrow = borrow;
+    }
 
-	@Override
-	public String toString() {
-		return  no + "\t" + name + "\t\t" + state;
-	}
+    @Override
+    public String toString() {
+        return "Dvd{" +
+                "no=" + no +
+                ", name='" + name + '\'' +
+                ", state='" + state + '\'' +
+                ", borrow=" + borrow +
+                '}';
+    }
 }

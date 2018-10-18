@@ -21,7 +21,9 @@
     int res=db.executeUpdate(sql,params);
     if(res>0){
         response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().write("<script language='javascript'>alert('DVD删除成功');location.href='/fy/servlet/toShowDvd';</script>");
+        response.getWriter().write("<script language='javascript'>alert('DVD删除成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
+
+        //location.href='/fy/servlet/toShowDvd';
     }
 %>
 

@@ -109,7 +109,7 @@ public class JDBCUtilDvd {
         PreparedStatement pstmt = getPrepareStatement(sql);
         try {
             pstmt.setString(1, dvd.getName());
-            pstmt.setString(2, dvd.getState());
+            pstmt.setInt(2, dvd.getState());
             rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
@@ -140,12 +140,12 @@ public class JDBCUtilDvd {
     /**
      * 修改状态
      */
-    public int updateState(String state,int no) {
+    public int updateState(int borrow,int no) {
         int rlt = 0;
         try {
-            String sql = "update dvd SET state = ? where no = ?";
+            String sql = "update dvd SET borrow = ? where no = ?";
             PreparedStatement pstat = getPrepareStatement(sql);
-            Object[] params = {state, no};
+            Object[] params = {borrow, no};
             for (int i = 1; i <= params.length; i++) {
                 pstat.setObject(i, params[i - 1]);
             }
@@ -161,12 +161,12 @@ public class JDBCUtilDvd {
     /**
      * 修改图书
      */
-    public int updateDvd(int no, String name, String state) {
+    public int updateDvd(int no, String name, int state,int borrow) {
         int rlt = 0;
         try {
-            String sql = "update dvd SET name = ?,state = ? where no = ?";
+            String sql = "update dvd SET name = ?,state = ?,borrow = ? where no = ?";
             PreparedStatement pstat = getPrepareStatement(sql);
-            Object[] params = {name,state,no};
+            Object[] params = {name,state,borrow,no};
             for (int i = 1; i <= params.length; i++) {
                 pstat.setObject(i, params[i - 1]);
             }
@@ -193,7 +193,8 @@ public class JDBCUtilDvd {
                 bd = new Dvd();
                 bd.setNo(rs.getInt("no"));
                 bd.setName(rs.getString("name"));
-                bd.setState(rs.getString("state"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
                 list.add(bd);
             }
             close();
@@ -208,8 +209,7 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> search(String search){
         List<Dvd> list = new ArrayList<>();
-        String sql = "SELECT *FROM dvd WHERE no like '%"+search+"%' or name like '%"+search+"%' or state like '%"+search+"%'";
-        System.out.println(search);
+        String sql = "SELECT *FROM dvd WHERE no like '%"+search+"%' or name like '%"+search+"%' or state-borrow like '%"+search+"%'";
         PreparedStatement pstat = getPrepareStatement(sql);
         try {
             ResultSet rs = pstat.executeQuery();
@@ -218,15 +218,62 @@ public class JDBCUtilDvd {
                 bd = new Dvd();
                 bd.setNo(rs.getInt("no"));
                 bd.setName(rs.getString("name"));
-                bd.setState(rs.getString("state"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
                 list.add(bd);
             }
             close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(list);
         return list;
     }
 
+    /**
+     * 查询指定页（page这页）的记录
+     * @param page
+     * @return
+     */
+    public List<Dvd> find(int page){
+        List<Dvd> list = new ArrayList<>();
+        String sql = "SELECT *FROM dvd LIMIT "+(page-1)*Dvd.PAGE_SIZE+","+Dvd.PAGE_SIZE+"";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            Dvd bd;
+            while (rs.next()) {
+                bd = new Dvd();
+                bd.setNo(rs.getInt("no"));
+                bd.setName(rs.getString("name"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
+                list.add(bd);
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * 总记录数
+     * @return
+     */
+    public int findCount(){
+        int count = 0;
+        String sql = "select count(*) from dvd";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            if (rs.next()){
+                count = rs.getInt(1);
+            }
+            close();
+        } catch (Exception e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

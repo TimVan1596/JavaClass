@@ -26,14 +26,33 @@
             <th>选择</th>
             <th>序号</th>
             <th>书名</th>
-            <th>状态</th>
+            <th>库存</th>
+            <th>操作</th>
             <th>操作</th>
             <th>操作</th>
         </tr>
         <%
             //遍历结果集
             JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
-            List<Dvd> dvds = jdbcUtilDvd.queryStu();
+            List<Dvd> dvds;
+//            List<Dvd> dvds = jdbcUtilDvd.queryStu();
+            int num = jdbcUtilDvd.findCount();
+            int pages;
+            if(num % Dvd.PAGE_SIZE == 0){
+                pages = num/Dvd.PAGE_SIZE;
+            }else{
+                pages = num/Dvd.PAGE_SIZE + 1;
+            }
+
+            int page1;
+            if(request.getAttribute("page") == null){
+                page1 = 1;
+                dvds = jdbcUtilDvd.find(1);
+            }else{
+                page1 = (Integer) request.getAttribute("page");
+                dvds = jdbcUtilDvd.find(page1);
+            }
+            //dvds = jdbcUtilDvd.find(1);
             for (Dvd dvd : dvds) {
         %>
         <tr>
@@ -41,22 +60,55 @@
             <td align="center"><input type='checkbox' name='check' title='choice' value='<%= dvd.getNo() %>'/></td>
             <td align="center"><%= dvd.getNo() %></td>
             <td align="center"><%= dvd.getName() %></td>
-            <% if(dvd.getState().equals("已借出")){ %>
-            <td align="center" style="background-color: red"><%= dvd.getState() %></td>
-            <td align="center" ><a href = './lend.do?no=<%= dvd.getNo() %>'>归还</a></td>
-            <% }else{ %>
-            <td align="center" style="background-color: green"><%= dvd.getState() %></td>
+            <%--<td align="center"><%= dvd.getState()-dvd.getBorrow() %></td>--%>
+            <%
+                if(dvd.getState()-dvd.getBorrow() == 0){
+            %>
+            <td style="background-color: red" align="center">
+                <%= dvd.getState()-dvd.getBorrow() %>
+            </td>
+            <%
+            }else if(dvd.getBorrow() == 0){
+            %>
+            <td style="background-color: green" align="center">
+                <%= dvd.getState()-dvd.getBorrow() %>
+            </td>
+            <%
+            }else{
+            %>
+            <td align="center">
+                <%= dvd.getState()-dvd.getBorrow() %>
+            </td>
+            <%
+                }
+            %>
             <td align="center"><a href = './lend.do?no=<%= dvd.getNo() %>'>借出</a></td>
-            <% } %>
+            <td align="center" ><a href = './return.do?no=<%= dvd.getNo() %>'>归还</a></td>
             <td align="center"><a href = './atb/javaWebDvd/jsp/choice/modify.jsp?no=<%= dvd.getNo() %>'>编辑</a></td>
         </tr>
         <%
             }
         %>
         <tr>
+            <td colspan = '7' align="right">
+                <a href = './add.do?page=1'>首页</a>
+                <a href = './add.do?page=<%= page1-1%>'>上一页</a>
+                <%
+                for(int i=1;i<pages+1;i++){
+                %>
+                <a href = './add.do?page=<%= i %>'><%= i %></a>
+                <%
+                }
+                %>
+                <a href = './add.do?page=<%= page1+1%>'>下一页</a>
+                <a href = './add.do?page=<%= pages%>'>尾页</a>
+            </td>
+        </tr>
+        <tr>
             <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
             <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/jsp/choice/add.jsp">添加</a></td>
-            <td colspan = '1' align="center"><a href = "./login.do">显示所有</a></td>
+            <td colspan = '1' align="center"><a href = "./login.do">主页</a></td>
+            <td colspan = '1' align="center"></td>
             <td colspan = '2' align="center"><a href = "./atb/javaWebDvd/jsp/choice/data.jsp">数据显示</a></td>
             <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/login.jsp">退出</a></td>
         </tr>

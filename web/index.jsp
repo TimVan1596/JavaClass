@@ -32,7 +32,7 @@
             <a href="ftm/biggerdvd.jsp">范天明</a>
         </h2>
         <h2>
-            <a href="atb/javaWebDvd/login.jsp">安天宝</a>
+            <a href="atb/javaWebDvdLogin.jsp">安天宝</a>
         </h2>
     </div>
     <div class="div-right">

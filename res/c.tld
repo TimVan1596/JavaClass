@@ -472,7 +472,7 @@
             <description>
                 Target object whose property will be set. Must evaluate to
                 a JavaBeans object with setter property property, or to a
-                java.util.Map object.
+                java.com.timvanx.biggerdvd.servlet.util.Map object.
             </description>
             <name>target</name>
             <required>false</required>

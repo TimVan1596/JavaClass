@@ -18,11 +18,15 @@
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>书名：</th>
-            <th><input type="text" name="name" title="name" style="text-align: left; width: 150px;"/></th>
+            <th><input type="text" name="name" title="书名"/></th>
+        </tr>
+        <tr>
+            <th width=150px>库存：</th>
+            <th><input type="text" name="state" title="库存"/></th>
         </tr>
         <tr>
             <th colspan = '1'><a href = '../../../../login.do'>返回</a></th>
-            <th colspan = '1'><input type="submit" value="提交" ></th>
+            <th colspan = '1'><input type="submit" value="提交"></th>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){
