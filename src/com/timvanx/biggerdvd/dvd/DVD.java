@@ -8,24 +8,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * DVD类
  *
  * @author TimVan
- * @date 2018年9月6日09:16:30
+ * @date 2018年10月18日09:47:57
  */
 public class DVD implements Serializable {
     /**
+     * p.s. 使用 Alibaba fastJson 传输对象时需要 JavaBean 标准
      * serialVersionUID = 版本一致性
-     * cnt = 随着构造函数自增(ID赋值)
      * status = 借出状态，未借出为false，反之亦然
      * name = DVD名称
      * id = （主键自增）DVD编号
      * preview = 预览图URL
      */
-    private static final long serialVersionUID = 1L;
-    private static int cnt = 1000;
+    private static final long serialVersionUID = 2L;
     private int id;
     private String name;
     private boolean status;
@@ -43,15 +41,9 @@ public class DVD implements Serializable {
 
     static {
         DVDArr = new ArrayList<>();
-        //编号从1000开始初始化
-        DVD.setCnt(1000);
+
         //初始化DVD数组
         loadDVDInfos();
-    }
-
-    private DVD(int id, String name, boolean status) {
-        //默认URL
-        this(id,name,status, "https://cloud.timvanx.com/timg.jpg");
     }
 
     private DVD(int id, String name
@@ -59,19 +51,9 @@ public class DVD implements Serializable {
         this.id = id;
         this.name = name;
         this.status = status;
-        //读取时读入主键
-        cnt = id;
         this.preview = preview;
     }
 
-
-    public static int getCnt() {
-        return cnt;
-    }
-
-    public static void setCnt(int cnt) {
-        DVD.cnt = cnt;
-    }
 
     public int getId() {
         return id;
@@ -216,7 +198,6 @@ public class DVD implements Serializable {
         return cnt;
     }
 
-
     /**
      * 使用数据库编辑DVD信息（通过主键ID）
      * @return boolean isExist  是否找到的标识符
@@ -317,20 +298,6 @@ public class DVD implements Serializable {
         return dvdSQLs;
     }
 
-    /**
-     * DVD信息转 HashMap (便于JSON格式转码)
-     */
-    public HashMap<String,String> toHashMap (DVD dvd){
-
-        HashMap<String, String> dvdMap
-                = new HashMap<>();
-        dvdMap.put("id",String.valueOf( dvd.getId()));
-        dvdMap.put("name",dvd.getName());
-        dvdMap.put("status",
-                dvd.isStatus()?"已借出":"未借出");
-        return dvdMap;
-    }
-
     @Override
     public String toString() {
         return "DVD{" +
@@ -341,10 +308,11 @@ public class DVD implements Serializable {
                 '}';
     }
 
-    public static void main(String[] args) {
-        ArrayList<DVD> dvdArr = DVD.loadDVDInfosByArray();
-        for (DVD dvd : dvdArr) {
-            System.out.println(dvd.toString());
-        }
+    public String getPreview() {
+        return preview;
+    }
+
+    public void setPreview(String preview) {
+        this.preview = preview;
     }
 }

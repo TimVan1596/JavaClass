@@ -47,6 +47,8 @@ public class GetAllDVDs extends HttpServlet {
         }
 
         //使用 Alibaba fastJson 序列化 ret
+        //p.s. 使用 Alibaba fastJson
+        // 传输对象时需要 JavaBean 标准(Getter、Setter方法)
         String retJson = JSON.toJSONString(ret);
         out.write(retJson);
     }

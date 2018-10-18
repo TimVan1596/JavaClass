@@ -34,12 +34,11 @@
                        type="radio" value=""/>
             </td>
             <td class="dvd-id"></td>
-            <td class="dvd-name"></td>
             <td >
                 <img class="dvd-preview"
                      src="https://cloud.timvanx.com/timg.jpg">
             </td>
-            <td class="dvd-status"></td>
+            <td class="dvd-name"></td>
             <td>
                 <button class="dvd-btn-land"
                         onclick="loanOrReturnDVD(this)"></button>
@@ -83,9 +82,9 @@
 <table border="1" id="DVDsTable">
     <tr>
         <th></th>
-        <th>编号</th>
+        <th width="80">编号</th>
+        <th width="100">预览</th>
         <th width="200">名称</th>
-        <th width="100">状态</th>
         <th width="100">操作</th>
     </tr>
     <!--填充模板区-->

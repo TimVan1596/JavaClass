@@ -56,14 +56,11 @@ layui.use('layer', function(){
                     //预览图加载
                     $('.dvd-preview:last').attr("src", preview);
                     $('.dvd-name:last').text(name);
-                    $('.dvd-status:last').text(
-                        status ? '已借出' : '未借出'
-                    );
 
                     //归还借出标识
                     var $dvdBtnLand = $('.dvd-btn-land:last');
                     $dvdBtnLand.text(
-                        status ? '归还' : '借出'
+                        status ? '归还' : '可借'
                     );
                     if (!status){
                         $('.dvd-tr-line:last').css("background-color"
@@ -158,7 +155,8 @@ function deleteDVD(){
 
         var loading = layer.load(1, {
             //0.1透明度的白色背景
-            shade: [0.1,'#fff']
+            shade: [0.1,'#fff'],
+            offset: '170px'
         });
 
 
@@ -191,7 +189,8 @@ function loanOrReturnDVD(obj){
     if ( LorRConfirm === true){
         var loading = layer.load(1, {
             //0.1透明度的白色背景
-            shade: [0.1,'#fff']
+            shade: [0.1,'#fff'],
+            offset: '170px'
         });
         $.post('menu/LoanOrReturnDVD.do', { id:dvdID}, function (ret) {
 
