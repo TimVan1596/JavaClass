@@ -26,10 +26,12 @@ public class QiNiuUpload {
      * accessKey = AccessKey的值
      * secretKey = SecretKey的值
      * bucket = 对象空间资源名
+     * DOMAIN = 上传路径
      */
     private static String accessKey ;
     private static String secretKey ;
     private static  String bucket ;
+    private static  String DOMAIN ;
 
     static {
         //配置文件读取(只做一次)
@@ -69,9 +71,9 @@ public class QiNiuUpload {
     /**
      * 上传图片功能
      */
-    private static void UploadImage(String localImagePath){
-        //zong0() 代表华东地区
-        Configuration cfg = new Configuration(Zone.zone1());
+    private static String UploadImage(String localImagePath){
+        //zone0() 代表华东地区
+        Configuration cfg = new Configuration(Zone.zone0());
         UploadManager uploadManager = new UploadManager(cfg);
 
         //在七牛云中图片的命名
@@ -85,6 +87,8 @@ public class QiNiuUpload {
             DefaultPutRet putRet = new Gson()
                     .fromJson(response.bodyString(), DefaultPutRet.class);
 
+            return DOMAIN + putRet.key;
+
         } catch (QiniuException ex) {
             Response r = ex.response;
             System.err.println(r.toString());
@@ -94,7 +98,7 @@ public class QiNiuUpload {
                 //ignore
             }
         }
-
+        return "false";
     }
 
 }
