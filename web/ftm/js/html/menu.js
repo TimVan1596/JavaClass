@@ -84,34 +84,16 @@ layui.use('layer', function(){
 //添加DVD
 function addDVD() {
 
-    var name = prompt("请输入要添加的DVD名称？");
-
-    //判断用户是否输入内容
-    if (name) {
-        var loading = layer.load(1, {
-            //0.1透明度的白色背景
-            shade: [0.1,'#fff']
-        });
-        $.post('menu/AddDVD.do', {
-            name: name
-        }, function (ret) {
-            //解析ret
-            ret = eval("(" + ret + ")");
-
-            if (ret['error'] === 0) {
-                window.location.reload();
-            }
-            else {
-                var errorInfo = ret['errorInfo'];
-                alert("添加失败！" + errorInfo);
-            }
-
-            //关闭loading
-            layer.close(loading);
-        });
-
-    }
-
+    //添加DVD iframe层
+    layer.open({
+        type: 2,
+        title: '添加新的DVD',
+        shadeClose: true,
+        shade: 0.3,
+        area: ['380px', '63%'],
+        offset: ['110px', '35%'],
+        content: 'menu/addDVD.jsp' //iframe的url
+    });
 }
 
 //编辑DVD信息

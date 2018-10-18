@@ -78,11 +78,12 @@ public class DVD implements Serializable {
     /**
      * 使用数据库增加DVD信息
      */
-    public static void addDVDInfo(String name) {
+    public static void addDVDInfo(String name,String preview) {
 
         Map<String, Object> insertData =
                 new HashMap<String, Object>(1);
         insertData.put("name", name);
+        insertData.put("preview", preview);
         JDBCUtil.insert("dvd", insertData);
     }
 

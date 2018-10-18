@@ -311,9 +311,6 @@ public class Menu {
             Scanner scanner = new Scanner(System.in);
             String inputString = scanner.nextLine();
 
-            //数据中新增DVD信息
-            DVD.addDVDInfo(inputString);
-
             //展示所有DVD信息
             display();
 

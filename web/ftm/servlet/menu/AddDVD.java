@@ -35,8 +35,9 @@ public class AddDVD extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String dvdName =  request.getParameter("name");
+        String dvdPreview =  request.getParameter("preview");
         //数据中新增DVD信息
-        DVD.addDVDInfo(dvdName);
+        DVD.addDVDInfo(dvdName,dvdPreview);
 
         Map<String, Object> ret = new HashMap<>(1);
         if (true) {

@@ -14,6 +14,7 @@
         .layui-upload-img{
             width: 92px; height: 92px;
             margin: 0 10px 10px 0;}
+
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -22,15 +23,16 @@
 
 <body>
     <form style="margin: 5%"
-            class="layui-form layui-form-pane" action="">
+            class="layui-form layui-form-pane">
 
+            <br>
             <%--DVD名称--%>
                 <div class="layui-form-item">
-            <label class="layui-form-label">DVD名称 ：
+            <label class="layui-form-label">DVD名称
             </label>
             <div class="layui-input-block">
                 <input type="text" name="name"
-                       autocomplete="off"
+                       autocomplete="off" lay-verify="name"
                        placeholder="请不要输入特殊字符"
                        class="layui-input">
             </div>
@@ -38,9 +40,8 @@
             <%--上传封面--%>
                 <div class="layui-upload">
 
-                    <div style="">
                         <button type="button"
-                                class="layui-btn"
+                                class="layui-btn  layui-btn-normal"
                                 id="preview-upload">
                             上传图片</button>
                         <div class="layui-upload-list">
@@ -48,15 +49,20 @@
                             <p id="demoText"></p>
                         </div>
                     </div>
-
-
+            <%--提交按钮--%>
+                <div style="margin-top: 1%">
+                    <button class="layui-btn  layui-btn-normal
+                    layui-btn-radius layui-btn-fluid"
+                            lay-filter = "addSubmmit"
+                            lay-submit="" >添加</button>
                 </div>
 
     </form>
 
     <script>
-        layui.use('upload', function(){
+        layui.use(['upload','form'], function(){
             var upload = layui.upload;
+            var form = layui.form;
 
             //DVD预览封面上传
             var uploadInst = upload.render({
@@ -84,7 +90,24 @@
                     });
                 }
             });
+
+            form.verify({
+                name: function(value, item){ //value：表单的值、item：表单的DOM对象
+                    if(!value){
+                        return 'DVD名称不能为空';
+                    }
+                }
+
+            });
+
+            form.on('submit(addSubmmit)', function(data){
+
+                //阻止表单跳转
+                return false;
+            });
+
         });
+
     </script>
 </body>
 </html>
