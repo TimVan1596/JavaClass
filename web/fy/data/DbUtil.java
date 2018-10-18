@@ -25,7 +25,7 @@ public class DbUtil {
    public static void init(){
     //初始化数据库连接配置
        Properties properties=new Properties();
-       InputStream in=DbUtil.class.getClassLoader().getResourceAsStream("db.properties");
+       InputStream in=DbUtil.class.getClassLoader().getResourceAsStream("fydb.properties");
 
        //读取db.properties
        try {
@@ -41,7 +41,7 @@ public class DbUtil {
 
        //注册JDBC驱动
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(JDBC_DRIVER);
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

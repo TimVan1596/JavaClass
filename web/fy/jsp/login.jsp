@@ -16,18 +16,18 @@
     </style>
 </head>
 <body>
-<form action="/fy/servlet/login.do" method="get" onsubmit="return checkLogin()">
+<form action="/fy/servlet/login.do" id="f1" method="get" onsubmit="return checkLogin()">
     <div id="login">
     <h2>MiniDVD 网页版</h2>
     <h4>用户登录</h4>
-
-    账号：<input type=" text" name="username" id="loginId"/><br>
+    账号：<input type=" text" name="username" id="loginId" /><br>
     密码：<input type="password" name="password" id="loginPass"/><br>
     <a href="register.jsp">注册</a><a style="margin-left: 100px" href="getpassword.jsp">找回密码</a><br>
         <input type="submit" value="登录">
     </div>
 </form>
 <script type="text/javascript">
+
     //检查登录表单
     function checkLogin()
     {

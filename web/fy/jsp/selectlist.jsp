@@ -18,7 +18,7 @@
     <h2>MiniDVD 网页版</h2>
     <h3>欢迎您，<%=session.getAttribute("loginName")%></h3>
 <a href="/fy/servlet/toShowDvd">显示DVD</a><br><br>
-<a href="/fy/servlet/toCancellingto">退出登陆</a>
+<a href="/fy/servlet/toCancelling">退出登陆</a>
 </div>
 </body>
 </html>

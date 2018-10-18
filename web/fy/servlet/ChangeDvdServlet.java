@@ -28,7 +28,9 @@ public class ChangeDvdServlet extends HttpServlet {
         if(change(dvdId,dvdName,dvdState)>0){
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("<script language='javascript'>alert('DVD修改成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
-
+        }else{
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().write("<script language='javascript'>alert('DVD修改失败')</script>");
         }
 
     }

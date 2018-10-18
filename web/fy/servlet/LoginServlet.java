@@ -52,7 +52,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
             HttpSession session = request.getSession();
             //把用户数据保存在session域对象中
             session.setAttribute("loginName", userName);
-            response.sendRedirect("/fy/jsp/selectlist.jsp");
+            response.sendRedirect("/fy/servlet/toShowDvd");
         }else{
             response.setContentType("text/html;charset=UTF-8");
             //response.getWriter().write("账号或密码错误");
