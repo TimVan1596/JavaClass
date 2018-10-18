@@ -209,6 +209,7 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> search(String search){
         List<Dvd> list = new ArrayList<>();
+        System.out.println(search);
         String sql = "SELECT *FROM dvd WHERE no like '%"+search+"%' or name like '%"+search+"%' or state-borrow like '%"+search+"%'";
         PreparedStatement pstat = getPrepareStatement(sql);
         try {

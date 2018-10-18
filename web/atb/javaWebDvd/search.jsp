@@ -24,17 +24,18 @@
 <form action='../../delete.do' method='post'>
     <table border="1" width="700" align = "center">
         <tr>
-            <th>选择</th>
-            <th>序号</th>
-            <th>书名</th>
-            <th>库存</th>
-            <th>操作</th>
-            <th>操作</th>
-            <th>操作</th>
+            <th width=70px>选择</th>
+            <th width=70px>序号</th>
+            <th width=280px>书名</th>
+            <th width=70px>库存</th>
+            <th width=70px>操作</th>
+            <th width=70px>操作</th>
+            <th width=70px>操作</th>
         </tr>
         <%
             List<Dvd> dvds;
             JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
+            request.setCharacterEncoding("utf-8");
             if(request.getParameter("search") == null){
                 dvds = jdbcUtilDvd.queryStu();
             }else{

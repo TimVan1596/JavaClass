@@ -71,7 +71,7 @@ public class RegisterServlet extends HttpServlet {
     }else{
         response.setContentType("text/html;charset=UTF-8");
 
-        response.getWriter().write("<script language='javascript'>alert('账号已被注册');location.href='/fy/jsp/register.jsp';</script>");
+        response.getWriter().write("<script language='javascript'>alert('账号已被注册');location.href='/fy/jsp/scImg.jsp';</script>");
 
     }
     }

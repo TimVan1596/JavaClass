@@ -6,7 +6,7 @@ package web.atb.javaWebDvd.dvd;
  * DVD信息
  */
 public class Dvd {
-    public static final int PAGE_SIZE = 5; //每页显示的数量
+    public static final int PAGE_SIZE = 8; //每页显示的数量
 
 	private int no;
 	private String name;

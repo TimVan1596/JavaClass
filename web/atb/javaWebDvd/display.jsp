@@ -1,6 +1,7 @@
 <%@ page import="web.atb.javaWebDvd.dvd.JDBCUtilDvd" %>
 <%@ page import="web.atb.javaWebDvd.dvd.Dvd" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018\10\12 0012
@@ -16,20 +17,20 @@
 <h1 align='center'>----欢迎进入DVD Mgr 6.0 管理系统----</h1>
 <div align='center'>
     <form action='./atb/javaWebDvd/search.jsp' method='post'>
-        搜关键字：<input type='text' title="序号书名状态" name='search' />
+        搜关键字：<input type='text' title="序号书名库存" name='search' />
         <input type='submit' value='搜索' />
     </form>
 </div>
 <form action='../../delete.do' method='post'>
     <table border="1" width="700" align = "center">
         <tr>
-            <th>选择</th>
-            <th>序号</th>
-            <th>书名</th>
-            <th>库存</th>
-            <th>操作</th>
-            <th>操作</th>
-            <th>操作</th>
+            <th width=70px>选择</th>
+            <th width=70px>序号</th>
+            <th width=280px>书名</th>
+            <th width=70px>库存</th>
+            <th width=70px>操作</th>
+            <th width=70px>操作</th>
+            <th width=70px>操作</th>
         </tr>
         <%
             //遍历结果集
@@ -52,7 +53,6 @@
                 page1 = (Integer) request.getAttribute("page");
                 dvds = jdbcUtilDvd.find(page1);
             }
-            //dvds = jdbcUtilDvd.find(1);
             for (Dvd dvd : dvds) {
         %>
         <tr>
