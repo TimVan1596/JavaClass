@@ -1,12 +1,12 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: r
+  主菜单页面
+  User: TimVan
   Date: 2018/10/8
   Time: 9:53
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+
 <head>
     <title>菜单 - BiggerDVD</title>
     <style>
@@ -50,7 +50,6 @@
     <script src="../../common/util/layui/layui.js"></script>
     <script src="../js/html/menu.js"></script>
 </head>
-
 
 <body>
 
@@ -97,4 +96,5 @@
 
 
 </body>
+
 </html>
