@@ -1,6 +1,6 @@
-package web.atb.javaWebDvd;
+package com.antianbao.javaWebDvd;
 
-import web.atb.javaWebDvd.user.JDBCUtilUser;
+import com.antianbao.javaWebDvd.user.JDBCUtilUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +27,7 @@ public class landServlet extends HttpServlet {
             if(jd > 0){
                 //跳转到新的界面
                 request.setAttribute("MSG", "登陆成功！");
+                //./atb/javaWebDvd/display.jsp
                 request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
             }else{
                 //输出登陆失败

@@ -1,6 +1,6 @@
-<%@ page import="web.atb.javaWebDvd.dvd.JDBCUtilDvd" %>
-<%@ page import="web.atb.javaWebDvd.dvd.Dvd" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.antianbao.javaWebDvd.dvd.JDBCUtilDvd" %>
+<%@ page import="com.antianbao.javaWebDvd.dvd.Dvd" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018\10\13 0013

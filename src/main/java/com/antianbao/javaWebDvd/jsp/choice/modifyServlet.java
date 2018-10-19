@@ -1,6 +1,6 @@
-package web.atb.javaWebDvd.jsp.choice;
+package com.antianbao.javaWebDvd.jsp.choice;
 
-import web.atb.javaWebDvd.dvd.JDBCUtilDvd;
+import com.antianbao.javaWebDvd.dvd.JDBCUtilDvd;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,7 +36,7 @@ public class modifyServlet extends HttpServlet {
                     request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
                 }
             }
-        }catch (java.lang.NumberFormatException e){
+        }catch (NumberFormatException e){
             request.setAttribute("MSG", "总数和借出应为整数！");
             request.getRequestDispatcher("./atb/javaWebDvd/jsp/choice/modify.jsp?no="+no+"").forward(request, response);
         }

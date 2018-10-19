@@ -1,6 +1,6 @@
-package web.atb.javaWebDvd.jsp.retrieve;
+package com.antianbao.javaWebDvd.jsp.retrieve;
 
-import web.atb.javaWebDvd.user.JDBCUtilUser;
+import com.antianbao.javaWebDvd.user.JDBCUtilUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,5 +1,5 @@
-<%@ page import="web.atb.javaWebDvd.dvd.JDBCUtilDvd" %>
-<%@ page import="web.atb.javaWebDvd.dvd.Dvd" %>
+<%@ page import="com.antianbao.javaWebDvd.dvd.JDBCUtilDvd" %>
+<%@ page import="com.antianbao.javaWebDvd.dvd.Dvd" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Administrator

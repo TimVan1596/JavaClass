@@ -1,7 +1,7 @@
-package web.atb.javaWebDvd.jsp.choice;
+package com.antianbao.javaWebDvd.jsp.choice;
 
-import web.atb.javaWebDvd.dvd.Dvd;
-import web.atb.javaWebDvd.dvd.JDBCUtilDvd;
+import com.antianbao.javaWebDvd.dvd.Dvd;
+import com.antianbao.javaWebDvd.dvd.JDBCUtilDvd;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +31,7 @@ public class addServlet extends HttpServlet {
                 request.setAttribute("MSG", "添加失败，该书已存在！");
                 request.getRequestDispatcher("./atb/javaWebDvd/jsp/choice/add.jsp").forward(request, response);
             }
-        }catch (java.lang.NumberFormatException e){
+        }catch (NumberFormatException e){
             request.setAttribute("MSG", "库存应为整数！");
             request.getRequestDispatcher("./atb/javaWebDvd/jsp/choice/add.jsp").forward(request, response);
         }

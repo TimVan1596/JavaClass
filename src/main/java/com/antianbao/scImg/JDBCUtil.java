@@ -1,16 +1,11 @@
-package web.atb.ceshi;
+package com.antianbao.scImg;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author 安天宝
- * JAVA一班
- * 9月20日
- * 链接数据库
- */
-public class JDBCUtilUser {
+public class JDBCUtil {
     //加载驱动
     static {
         try {
@@ -56,11 +51,12 @@ public class JDBCUtilUser {
         openConnection();
         try {
             pstmt = conn.prepareStatement(sql);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return pstmt;
     }
+
     /**
      * 释放资源
      */
@@ -81,38 +77,19 @@ public class JDBCUtilUser {
     }
 
     /**
-     * 用户注册
-     */
-    public int addStu(User stu) {
-        int rlt = 0;
-        String sql = "insert into ceshi(name,tupian) values(?,?)";
-        PreparedStatement pstmt = getPrepareStatement(sql);
-        try {
-            pstmt.setString(1, stu.getName());
-            pstmt.setString(2, stu.getTupian());
-            rlt = pstmt.executeUpdate();
-            close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return rlt;
-    }
-
-    /**
      * 将数据库中用户信息转为集合
      */
-    public List<User> queryStu() {
-        List<User> list = new ArrayList<User>();
+    public List<BookInfo> queryStu() {
+        List<BookInfo> list = new ArrayList<BookInfo>();
         String sql = "select *from ceshi";
         PreparedStatement pstat = getPrepareStatement(sql);
         try {
             ResultSet rs = pstat.executeQuery();
-            User bd = null;
+            BookInfo bd = null;
             while (rs.next()) {
-                bd = new User();
+                bd = new BookInfo();
                 bd.setName(rs.getString("name"));
-                bd.setTupian(rs.getString("Tupian"));
+                bd.setImg(rs.getBlob("img"));
                 list.add(bd);
             }
             close();
@@ -120,6 +97,24 @@ public class JDBCUtilUser {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public int addDvd(String name, InputStream str) {
+        int rlt = 0;
+        String sql = "insert into ceshi(name,img) values(?,?)";
+        PreparedStatement pstmt = getPrepareStatement(sql);
+        try {
+            pstmt.setString(1, name);
+            long l = (long) str.available();
+            pstmt.setBinaryStream(2, str, l);
+            //pstmt.setInt(2, dvd.getImg());
+            rlt = pstmt.executeUpdate();
+            close();
+        } catch (SQLException | IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return rlt;
     }
 
 }

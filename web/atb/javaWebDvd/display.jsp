@@ -1,7 +1,7 @@
-<%@ page import="web.atb.javaWebDvd.dvd.JDBCUtilDvd" %>
-<%@ page import="web.atb.javaWebDvd.dvd.Dvd" %>
+<%@ page import="com.antianbao.javaWebDvd.dvd.JDBCUtilDvd" %>
+<%@ page import="com.antianbao.javaWebDvd.dvd.Dvd" %>
 <%@ page import="java.util.List" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018\10\12 0012
@@ -92,13 +92,23 @@
         <tr>
             <td colspan = '7' align="right">
                 <a href = './add.do?page=1'>首页</a>
+                <%
+                    if(page1 == 1){
+                %>
+                <a href = './add.do?page=1'>上一页</a>
+                <%
+                    }else{
+                %>
                 <a href = './add.do?page=<%= page1-1%>'>上一页</a>
                 <%
-                for(int i=1;i<pages+1;i++){
+                    }
+                %>
+                <%
+                    for(int i=1;i<pages+1;i++){
                 %>
                 <a href = './add.do?page=<%= i %>'><%= i %></a>
                 <%
-                }
+                    }
                 %>
                 <a href = './add.do?page=<%= page1+1%>'>下一页</a>
                 <a href = './add.do?page=<%= pages%>'>尾页</a>

@@ -1,7 +1,7 @@
-package web.atb.javaWebDvd.jsp.register;
+package com.antianbao.javaWebDvd.jsp.register;
 
-import web.atb.javaWebDvd.user.JDBCUtilUser;
-import web.atb.javaWebDvd.user.User;
+import com.antianbao.javaWebDvd.user.JDBCUtilUser;
+import com.antianbao.javaWebDvd.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

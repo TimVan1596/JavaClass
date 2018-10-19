@@ -12,19 +12,35 @@
     <style type="text/css">
         ul{
             list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: green;
         }
-        li{
+        li {
             float: left;
             width: 150px;
             height: 50px;
+            text-align: center;
+            line-height: 50px;
+        }
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        li a:hover {
+            background-color: #111;
         }
     </style>
 </head>
 <body>
 <ul>
-    <li><a href=http://www.baidu.com>百度</a></li>
-    <li><a href=https://www.taobao.com/>淘宝</a></li>
-    <li><a href=http://www.youku.com/>优酷</a></li>
+    <li><a href="https://www.baidu.com">百度</a></li>
+    <li><a href="https://www.baidu.com">百度</a></li>
+    <li><a href="https://www.baidu.com">百度</a></li>
 </ul>
 </body>
 </html>
