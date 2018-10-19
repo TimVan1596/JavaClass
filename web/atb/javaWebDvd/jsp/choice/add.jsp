@@ -18,11 +18,11 @@
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>书名：</th>
-            <th><input type="text" name="name" title="书名"/></th>
+            <th><input type="text" name="name" title="书名" style="text-align: center; width: 150px;"/></th>
         </tr>
         <tr>
             <th width=150px>库存：</th>
-            <th><input type="text" name="state" title="库存"/></th>
+            <th><input type="text" name="state" title="库存" style="text-align: center; width: 150px;"/></th>
         </tr>
         <tr>
             <th colspan = '1'><a href = '../../../../login.do'>返回</a></th>

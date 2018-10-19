@@ -9,6 +9,7 @@ public class Dvd {
     public static final int PAGE_SIZE = 8; //每页显示的数量
 
 	private int no;
+    private String image;
 	private String name;
 	private int state;
 	private int borrow;
@@ -41,6 +42,12 @@ public class Dvd {
     }
     public void setBorrow(int borrow) {
         this.borrow = borrow;
+    }
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

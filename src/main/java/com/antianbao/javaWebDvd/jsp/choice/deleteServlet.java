@@ -35,6 +35,8 @@ public class deleteServlet extends HttpServlet {
 }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //get解决中文乱码
+        //name = new String(name.getBytes("ISO-8859-1"),"utf-8");
 
     }
 }

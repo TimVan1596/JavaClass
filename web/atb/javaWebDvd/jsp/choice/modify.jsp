@@ -27,19 +27,19 @@
         %>
         <tr>
             <th width=150px>序号：</th>
-            <th><input name="no" type="text" title="" value="<%= Integer.parseInt(request.getParameter("no")) %>" readonly style = "color:gray;"/></th>
+            <th><input name="no" type="text" title="" value="<%= Integer.parseInt(request.getParameter("no")) %>" readonly style = "text-align: center; color:gray;"/></th>
         </tr>
         <tr>
             <th width=150px>书名：</th>
-            <th><input name="name" type="text" title="" value="<%= dvd.getName() %>" /></th>
+            <th><input name="name" type="text" title="" style="text-align: center; width: 150px;" value="<%= dvd.getName() %>" /></th>
         </tr>
         <tr>
             <th width=150px>总数：</th>
-            <th><input name="state" type="text" title="" value="<%= dvd.getState() %>"/></th>
+            <th><input name="state" type="text" title="" style="text-align: center; width: 150px;" value="<%= dvd.getState() %>"/></th>
         </tr>
         <tr>
             <th width=150px>借出：</th>
-            <th><input name="borrow" type="text" title="" value="<%= dvd.getBorrow() %>"/></th>
+            <th><input name="borrow" type="text" title="" style="text-align: center; width: 150px;" value="<%= dvd.getBorrow() %>"/></th>
         </tr>
         <%
                 }

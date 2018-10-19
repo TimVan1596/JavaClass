@@ -24,7 +24,7 @@ public class registerServlet extends HttpServlet {
         if(name.equals("") || phone.equals("") || password.equals("") || cpassword.equals("")){
             //跳回注册界面
             request.setAttribute("MSG", "每项必填！");
-            request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/scImg.jsp").forward(request, response);
+            request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/register.jsp").forward(request, response);
         }//判断两次密码是否相同
         else if(password.equals(cpassword)){
             JDBCUtilUser jdbcUtil = new JDBCUtilUser();
@@ -37,12 +37,12 @@ public class registerServlet extends HttpServlet {
             }else{
                 //输出已账号存在,跳回注册界面
                 request.setAttribute("MSG", "账号已存在！");
-                request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/scImg.jsp").forward(request, response);
+                request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/register.jsp").forward(request, response);
             }
         }else {
             //输出两次密码不一致,跳回注册界面
             request.setAttribute("MSG", "两次密码不一致！");
-            request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/scImg.jsp").forward(request, response);
+            request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/register.jsp").forward(request, response);
         }
     }
 

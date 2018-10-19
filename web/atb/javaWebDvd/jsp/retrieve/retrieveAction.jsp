@@ -18,15 +18,15 @@
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>用户账号：</th>
-            <th><input name="name" type="text" title="" value="<%=request.getAttribute("name")%>" readonly style = "color:gray; width: 150px;"/></th>
+            <th><input name="name" type="text" title="" value="<%=request.getAttribute("name")%>" readonly style = "color:gray; text-align: center; width: 150px;"/></th>
         </tr>
         <tr>
             <th width=150px>账号密码：</th>
-            <th><input name="password" type="password" title="" style="width: 150px;"/></th>
+            <th><input name="password" type="password" title="" style="text-align: center; width: 150px;"/></th>
         </tr>
         <tr>
             <th width=150px>确认密码：</th>
-            <th><input name="cpassword" type="password" title="" style="width: 150px;"/></th>
+            <th><input name="cpassword" type="password" title="" style="text-align: center; width: 150px;"/></th>
         </tr>
         <tr>
             <th colspan = '1'></th>

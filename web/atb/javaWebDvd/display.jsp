@@ -21,12 +21,13 @@
         <input type='submit' value='搜索' />
     </form>
 </div>
-<form action='../../delete.do' method='post'>
-    <table border="1" width="700" align = "center">
+<form action='./delete.do' method='post'>
+    <table border="1" width="730" align = "center">
         <tr>
-            <th width=70px>选择</th>
-            <th width=70px>序号</th>
-            <th width=280px>书名</th>
+            <th width=50px>选择</th>
+            <th width=60px>序号</th>
+            <th width=60px>图片</th>
+            <th width=280px>名称</th>
             <th width=70px>库存</th>
             <th width=70px>操作</th>
             <th width=70px>操作</th>
@@ -36,7 +37,6 @@
             //遍历结果集
             JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
             List<Dvd> dvds;
-//            List<Dvd> dvds = jdbcUtilDvd.queryStu();
             int num = jdbcUtilDvd.findCount();
             int pages;
             if(num % Dvd.PAGE_SIZE == 0){
@@ -59,8 +59,8 @@
             <!-- 输出结果集 -->
             <td align="center"><input type='checkbox' name='check' title='choice' value='<%= dvd.getNo() %>'/></td>
             <td align="center"><%= dvd.getNo() %></td>
+            <td align="center"><img src="<%= dvd.getImage() %>" width="60px" height="50px"></td>
             <td align="center"><%= dvd.getName() %></td>
-            <%--<td align="center"><%= dvd.getState()-dvd.getBorrow() %></td>--%>
             <%
                 if(dvd.getState()-dvd.getBorrow() == 0){
             %>
@@ -90,7 +90,7 @@
             }
         %>
         <tr>
-            <td colspan = '7' align="right">
+            <td colspan = '8' align="right">
                 <a href = './add.do?page=1'>首页</a>
                 <%
                     if(page1 == 1){
@@ -110,7 +110,17 @@
                 <%
                     }
                 %>
+                <%
+                    if(page1 == pages){
+                %>
+                <a href = './add.do?page=<%= pages%>'>下一页</a>
+                <%
+                    }else{
+                %>
                 <a href = './add.do?page=<%= page1+1%>'>下一页</a>
+                <%
+                    }
+                %>
                 <a href = './add.do?page=<%= pages%>'>尾页</a>
             </td>
         </tr>
@@ -118,9 +128,9 @@
             <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
             <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/jsp/choice/add.jsp">添加</a></td>
             <td colspan = '1' align="center"><a href = "./login.do">主页</a></td>
-            <td colspan = '1' align="center"></td>
+            <td colspan = '2' align="center"></td>
             <td colspan = '2' align="center"><a href = "./atb/javaWebDvd/jsp/choice/data.jsp">数据显示</a></td>
-            <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/login.jsp">退出</a></td>
+            <td colspan = '1' align="center"><a href = "./atb/javaWebDvdLogin.jsp">退出</a></td>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){

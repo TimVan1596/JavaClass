@@ -22,11 +22,12 @@
 </div>
 
 <form action='../../delete.do' method='post'>
-    <table border="1" width="700" align = "center">
+    <table border="1" width="730" align = "center">
         <tr>
-            <th width=70px>选择</th>
-            <th width=70px>序号</th>
-            <th width=280px>书名</th>
+            <th width=50px>选择</th>
+            <th width=60px>序号</th>
+            <th width=60px>图片</th>
+            <th width=280px>名称</th>
             <th width=70px>库存</th>
             <th width=70px>操作</th>
             <th width=70px>操作</th>
@@ -50,8 +51,8 @@
             <!-- 输出结果集 -->
             <td align="center"><input type='checkbox' name='check' title='choice' value='<%= dvd.getNo() %>'/></td>
             <td align="center"><%= dvd.getNo() %></td>
+            <td align="center"><img src="<%= dvd.getImage() %>" width="60px" height="50px"></td>
             <td align="center"><%= dvd.getName() %></td>
-            <%--<td align="center"><%= dvd.getState()-dvd.getBorrow() %></td>--%>
             <%
                 if(dvd.getState()-dvd.getBorrow() == 0){
             %>
@@ -71,7 +72,7 @@
                 <%= dvd.getState()-dvd.getBorrow() %>
             </td>
             <%
-            }
+                }
             %>
             <td align="center"><a href = '../../lend.do?no=<%= dvd.getNo() %>'>借出</a></td>
             <td align="center"><a href = '../../return.do?no=<%= dvd.getNo() %>'>归还</a></td>
@@ -84,7 +85,7 @@
             <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
             <td colspan = '1' align="center"><a href = "./jsp/choice/add.jsp">添加</a></td>
             <td colspan = '1' align="center"><a href = "../../login.do">主页</a></td>
-            <td colspan = '1' align="center"></td>
+            <td colspan = '2' align="center"></td>
             <td colspan = '2' align="center"><a href = "./jsp/choice/data.jsp">数据显示</a></td>
             <td colspan = '1' align="center"><a href = "./login.jsp">退出</a></td>
         </tr>

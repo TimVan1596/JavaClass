@@ -192,6 +192,7 @@ public class JDBCUtilDvd {
             while (rs.next()) {
                 bd = new Dvd();
                 bd.setNo(rs.getInt("no"));
+                bd.setImage(rs.getString("image"));
                 bd.setName(rs.getString("name"));
                 bd.setState(rs.getInt("state"));
                 bd.setBorrow(rs.getInt("borrow"));
@@ -218,6 +219,7 @@ public class JDBCUtilDvd {
             while (rs.next()) {
                 bd = new Dvd();
                 bd.setNo(rs.getInt("no"));
+                bd.setImage(rs.getString("image"));
                 bd.setName(rs.getString("name"));
                 bd.setState(rs.getInt("state"));
                 bd.setBorrow(rs.getInt("borrow"));
@@ -245,6 +247,7 @@ public class JDBCUtilDvd {
             while (rs.next()) {
                 bd = new Dvd();
                 bd.setNo(rs.getInt("no"));
+                bd.setImage(rs.getString("image"));
                 bd.setName(rs.getString("name"));
                 bd.setState(rs.getInt("state"));
                 bd.setBorrow(rs.getInt("borrow"));
@@ -277,4 +280,5 @@ public class JDBCUtilDvd {
         }
         return count;
     }
+
 }
