@@ -4,11 +4,20 @@ package com.timvanx.biggerdvd.util;
  * @author TimVan
  * @date 2018/10/18 22:25
  */
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 
+import com.google.gson.Gson;
+import com.qiniu.common.QiniuException;
+import com.qiniu.common.Zone;
+import com.qiniu.http.Response;
+import com.qiniu.storage.Configuration;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.Base64;
 import com.qiniu.util.StringMap;
@@ -22,7 +31,6 @@ import okhttp3.RequestBody;
  * 七牛云上传文件工具类
  */
 public class QiniuCloudUtil {
-
 
     /**
      * 配置文件名 CONFIG_FILE
@@ -43,34 +51,45 @@ public class QiniuCloudUtil {
         init();
     }
 
+    /**
+     * 数据流上传
+     * InputStream对象的上传，适用于所有的InputStream子类
+     * @param fileInputStream InputStream对象
+     */
+    public static void uploadStreamToCloud(FileInputStream fileInputStream){
+        //构造一个带指定Zone对象的配置类
+        Configuration cfg = new Configuration(Zone.zone0());
 
-    public static String getUpToken() {
-        return auth.uploadToken(bucket, null, 3600, new StringMap().put("insertOnly", 1));
-    }
+        UploadManager uploadManager = new UploadManager(cfg);
 
+        //默认不指定key的情况下，以文件内容的hash值作为文件名
+        String key = null;
+        try {
 
-    //base64方式上传
-    public static String put64image(byte[] base64, String key) throws Exception{
-        String file64 = Base64.encodeToString(base64, 0);
-        Integer len = base64.length;
-
-        //华北空间使用 upload-z1.qiniu.com，
-        // 华南空间使用 upload-z2.qiniu.com，
-        // 北美空间使用 upload-na0.qiniu.com
-        String url = "http://upload.qiniu.com/putb64/" + len + "/key/"+ UrlSafeBase64.encodeToString(key);
-
-        RequestBody rb = RequestBody.create(null, file64);
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("Content-Type", "application/octet-stream")
-                .addHeader("Authorization", "UpToken " + getUpToken())
-                .post(rb).build();
-        //System.out.println(request.headers());
-        OkHttpClient client = new OkHttpClient();
-        okhttp3.Response response = client.newCall(request).execute();
-        System.out.println(response);
-
-        return DOMAIN + key ;
+            Auth auth = Auth.create(accessKey, secretKey);
+            String upToken = auth.uploadToken(bucket);
+            try {
+                Response response = uploadManager
+                        .put(fileInputStream
+                        ,key,upToken,null,null);
+                //解析上传成功的结果
+                DefaultPutRet putRet = new Gson()
+                        .fromJson(response.bodyString()
+                                , DefaultPutRet.class);
+                System.out.println(putRet.key);
+                System.out.println(putRet.hash);
+            } catch (QiniuException ex) {
+                Response r = ex.response;
+                System.err.println(r.toString());
+                try {
+                    System.err.println(r.bodyString());
+                } catch (QiniuException ex2) {
+                    //ignore
+                }
+            }
+        } catch (Exception ex) {
+            //ignore
+        }
     }
 
     /**
