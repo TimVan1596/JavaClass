@@ -5,12 +5,14 @@ public class DVD implements Serializable{
    private int id;
    private String dvdname;
    private String state;
+    private String picture;
 
     public DVD(){}
-   public DVD(int id, String dvdname, String state) {
+   public DVD(int id, String dvdname, String state,String picture) {
 	   this.id=id;
 	   this.dvdname=dvdname;
 	   this.state=state;
+	   this.picture=picture;
    }
    
    public int getId() {
@@ -42,4 +44,12 @@ public class DVD implements Serializable{
    	
    	System.out.println(this.id+"\t"+this.dvdname+"\t"+this.state);
    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
 }

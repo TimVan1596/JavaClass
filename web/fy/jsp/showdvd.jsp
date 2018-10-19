@@ -19,32 +19,42 @@
     <script type="text/javascript" src="/fy/js/echarts.simple.min.js"> </script>
 </head>
 <body>
+<jsp:include page="navigationBar.jsp"></jsp:include>
 <div style="text-align:center">
     <h3>DVD列表</h3>
-    <table id="tb" style="text-align:center;margin: 0 auto " border="1" width="500">
-        <tr><th>DVD编号</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th></tr>
-        <!-- i,j分别为可以借和已借出的初始值>
-        <%  int i=0;
-            int j=0;%>
+
+    <form action="/fy/servlet/toShowDvd" method="get" onsubmit="return checkSelect()">
+        <input  style="margin-left: 20px;margin-top: 20px" type="text" name="selectDVD" id="select"/>
+        <input type="submit" value="查询">
+    </form>
+
+    <table id="tb" style="text-align:center;margin: 0 auto " border="1" >
+        <tr><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th></tr>
         <!-- 这里使用标签遍历输出 集合数据 -->
         <c:forEach items="${listDVD }" var="dvd" >
             <tr>
-                <td>${dvd.id }</td>
-                <td>${dvd.dvdname }</td>
-                <c:if test="${dvd.state.equals('可以借')}"><%i++;%><td style="background-color: limegreen"}>${dvd.state }</td></c:if>
-                <c:if test="${dvd.state.equals('已借出')}"><%j++;%><td style="background-color: red"}>${dvd.state }</td></c:if>
-                <td><input type="button"  value="删除" onclick='window.location.href="/fy/jsp/deleteDVD.jsp?no=${dvd.id }"'></td>
+                <td style="width:100px">${dvd.id }</td>
+                <td><img style="width:100px;height:80px" src="${dvd.picture }" /></td>
+                <td style="width:100px">${dvd.dvdname }</td>
+                <c:if test="${dvd.state.equals('可以借')}"><td style="width:100px;background-color: limegreen"}>${dvd.state }</td></c:if>
+                <c:if test="${dvd.state.equals('已借出')}"><td style="width:100px;background-color: red"}>${dvd.state }</td></c:if>
+                <td style="width:100px"><input type="button"  value="删除" onclick='window.location.href="/fy/jsp/deleteDVD.jsp?no=${dvd.id }"'></td>
             </tr>
         </c:forEach>
-
     </table>
+    <p>
+        <a href="/fy/servlet/toShowDvd?page=${0}">&lt;&lt; 首页 </a>
+        <a href="/fy/servlet/toShowDvd?page=${page-1 }">    &lt; 上一页 </a>
+        <strong>第${page+1}页/共${pageNumber+1}页</strong>
+        <a href="/fy/servlet/toShowDvd?page=${page+1}">下一页 &gt;</a>
+        <a href="/fy/servlet/toShowDvd?page=${pageNumber}">末页 &gt;&gt;</a>
+    </p>
 </div>
 <div style="width: 800px;margin: 0 auto">
     <div style="width:100px;float:left">
         <br>
         <a href="addDVD.jsp" target="mainFrame" >添加DVD</a><br>
         <a href="changeDVD.jsp" target="mainFrame" >修改DVD</a><br>
-        <a href="selectDVD.jsp" target="mainFrame" >查询DVD</a><br>
     </div>
     <iframe style="width:550px;height:200px;margin-left:30px"   name="mainFrame" frameborder="0"></iframe>
 </div>
@@ -71,7 +81,7 @@
         series: [{
             name: '数量',
             type: 'bar',
-            data: [<%=i%>,<%=j%>],
+            data:[${cSize},${ncSize}],
             itemStyle:{
                 normal:{
                     color: function (params){
@@ -84,6 +94,17 @@
     };
     // 使用刚指定的配置项和数据显示图表
     myChart.setOption(option);
+
+    function checkSelect() {
+        var data=document.getElementById("select").value;
+        if(data==""){
+            alert("查询内容不能为空");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
 </script>
 
 </body>

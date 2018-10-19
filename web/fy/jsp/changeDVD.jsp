@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/fy/servlet/toChangeDvd" method="get">
+<form action="/fy/servlet/toChangeDvd" method="get" onsubmit="return check()">
     <br>
     请输入要修改的DVD编号<input type=" text" name="dvdid" id="dvdId"/><br>
     请输入修改后的DVD名称<input type=" text" name="dvdname" id="dvdName"/><br>
@@ -22,5 +22,22 @@
 </select><br>
     <input type="submit" value="修改">
 </form>
+<script>
+    function check(){
+        var id=document.getElementById("dvdId").value;
+        var name=document=document.getElementById("dvdName").value;
+            if(id==""){
+               alert("DVD编号不能为空");
+               return false;
+            }else{
+                if(name==""){
+                    alert("DVD名称不能为空");
+                    return false;
+                }
+                return true;
+             }
+
+    }
+</script>
 </body>
 </html>

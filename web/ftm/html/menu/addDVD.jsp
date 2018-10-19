@@ -20,7 +20,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../../../common/util/layui/layui.js"></script>
 </head>
-
 <body>
 <%
     //初始化常量信息
@@ -79,11 +78,12 @@
             //DVD预览封面上传
             var uploadInst = upload.render({
                 elem: '#preview-upload'
-                ,url: '/upload/'
+                ,url: '/ftm/html/menu/adddvd/UploadPreview.do'
                 ,before: function(obj){
+
                     //预读本地文件示例，不支持ie8
                     obj.preview(function(index, file, result){
-                        $('#preview-upload-img').attr('src', result);        //图片链接（base64）
+                        $('#preview-upload-img').attr('src', result);                       //图片链接（base64）
                     });
                 }
                 ,done: function(res){
