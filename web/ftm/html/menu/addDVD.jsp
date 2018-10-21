@@ -92,6 +92,15 @@
                         return layer.msg('上传失败');
                     }
                     //上传成功
+
+                    //解析ret
+                    var ret = eval("(" + res + ")");
+
+                    if (ret['error'] === 0) {
+                        var retURL = ret['data'];
+                        alert(retURL);
+
+                    }
                 }
                 ,error: function(){
                     //演示失败状态，并实现重传

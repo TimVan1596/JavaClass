@@ -109,11 +109,12 @@ public class UploadPreview extends HttpServlet {
                             // 保存文件到硬盘
                             item.write(storeFile);
 
-                            QiniuCloudUtil.uploadStreamToCloud(
+                            String retURL = QiniuCloudUtil.uploadStreamToCloud(
                                     new FileInputStream(storeFile)
                             );
 
                             ret.put("error", 0);
+                            ret.put("data", retURL);
 
                         }
                     }
