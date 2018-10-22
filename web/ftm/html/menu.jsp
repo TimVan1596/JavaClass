@@ -26,6 +26,8 @@
 
     </style>
 
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
     <!-- DVD信息（列表填充模板 template）-->
     <script type="text/html" id="DVD_TEMPLATE">
         <tr class="dvd-tr-line">

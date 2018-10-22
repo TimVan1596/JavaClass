@@ -291,10 +291,15 @@ public class DVD implements Serializable {
             add("status");
             add("preview");
         }};
+
+        String tableOrder = " id desc ";
+
         List<List<String>> dvdSQLs = JDBCUtil
                 .select("dvd",
                         tableField, null,
-                        null, null);
+                        tableOrder, null);
+
+
 
         return dvdSQLs;
     }

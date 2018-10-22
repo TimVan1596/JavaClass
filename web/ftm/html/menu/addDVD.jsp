@@ -67,7 +67,6 @@
                             lay-filter = "addSubmmit"
                             lay-submit="" >添加</button>
                 </div>
-
     </form>
 
     <script>
@@ -115,15 +114,23 @@
 
                 var loading = layer.load(1, {
                     //0.1透明度的白色背景
-                    shade: [0.1,'#fff']
+                    shade: [0.1,'#fff'],
+                    offset: '170px'
                 });
 
-                $.post('AddDVD.do',data, function (ret) {
+                $.post('adddvd/AddDVD.do',data.field
+                    , function (ret) {
                     //解析ret
                     ret = eval("(" + ret + ")");
 
                     if (ret['error'] === 0) {
-                        window.location.reload();
+                        alert("添加成功！");
+                        //先得到当前iframe层的索引
+                        var index = parent.layer
+                            .getFrameIndex(window.name);
+                        //再执行关闭
+                        parent.layer.close(index);
+                        parent.location.reload();
                     }
                     else {
                         var errorInfo = ret['errorInfo'];
@@ -132,7 +139,9 @@
 
                     //关闭所有弹窗
                     layer.closeAll();
+
                 });
+
 
                 //阻止表单跳转
                 return false;
