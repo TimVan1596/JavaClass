@@ -1,30 +1,14 @@
 <%--
   主菜单页面
-  User: TimVan
-  Date: 2018/10/8
-  Time: 9:53
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
 <head>
     <title>菜单 - BiggerDVD</title>
-    <style>
-        td {
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .dvd-preview {
-            width: 100px;
-            height: 100px;
-        }
-
-        .dvd-name{
-            font-weight: bold;
-        }
-
-    </style>
+    <link rel="stylesheet"
+          href="../style/html/menu.css"
+          media="all">
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
@@ -91,7 +75,19 @@
         <th width="100">操作</th>
     </tr>
     <!--填充模板区-->
+
 </table>
+
+<br>
+<div>
+    <ul class="pagination">
+        <li><a href="#">上一页</a></li>
+        <li><a class="active" href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">下一页</a></li>
+    </ul>
+</div>
 
 <section style="margin-top: 2%">
     <button onclick="logout()">注销</button>
