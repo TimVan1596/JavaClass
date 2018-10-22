@@ -215,3 +215,39 @@ function loanOrReturnDVD(obj){
 function getStatistics() {
     window.open("menu/statistics.html");
 }
+
+//绑定输入Dalalist模糊搜索事件
+$('#query_input').bind('input propertychange', function () {
+    //alert($("#query_input").val());
+
+    let query = $("#query_input").val();
+    alert(query);
+    // console.log(query);
+    $.post('menu/GetAllDVDs.do',
+        {   query: query,
+            pageNum: pageNum,
+            pageSize: 6
+        }, function (ret) {
+
+            //解析ret
+            ret = eval("(" + ret + ")");
+
+            $dvdList =  $('#dvdList');
+            $dvdList.empty();
+            if (parseInt(ret['errorNo']) === 0) {
+                var dvdArr = ret['data']['list'];
+                for (let i = 0; i < dvdArr.length; i++) {
+                    let id = dvdArr[i]['id'];
+                    let name = dvdArr[i]['name'];
+                    let status = dvdArr[i]['status'];
+                    let $option = $("<option>" + id + "-" + name + "-" + status + "</option>");
+                    $dvdList.append($option);
+                }
+            }
+            else {
+                layer.msg('查询失败！', {
+                });
+            }
+        });
+
+});

@@ -20,7 +20,7 @@
                        type="radio" value=""/>
             </td>
             <td class="dvd-id"></td>
-            <td >
+            <td>
                 <img class="dvd-preview"
                      src="https://cloud.timvanx.com/timg.jpg">
             </td>
@@ -65,6 +65,15 @@
     <button onclick="editDVD()">编辑</button>
     <button onclick="deleteDVD()">删除</button>
     <button onclick="getStatistics()">信息统计</button>
+
+    <%--绑定事件（JS代码中）--%>
+    <input list="dvdList"  id="query_input"
+           style="width:10%;height: 24px;margin-left: 10%;">
+    <datalist id="dvdList">
+        <option value="1059-刚好能够g-可借">
+        <option value="1036-时间简史-归还 ">
+    </datalist>
+    <button onclick="getStatistics()">搜索</button>
 
 </section>
 <%--标题头 结束--%>
