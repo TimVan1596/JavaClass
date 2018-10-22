@@ -38,7 +38,7 @@
     <script src="../js/common-js.js"></script>
 </head>
 
-<body>
+<body style="text-align: center;">
 
 <%
     //初始化常量信息
@@ -52,12 +52,14 @@
     }
 %>
 
+<%--标题头 start--%>
+<section>
 
-<h1>**********<span>
+    <h1>**********<span>
     <%=userName%>
 </span>，你好！欢迎进入系统菜单 **************</h1>
 
-<section style="margin-bottom: 1%;">
+    <br>
 
     <button onclick="addDVD()">添加</button>
     <button onclick="editDVD()">编辑</button>
@@ -65,28 +67,36 @@
     <button onclick="getStatistics()">信息统计</button>
 
 </section>
+<%--标题头 结束--%>
 
-<table border="1" id="DVDsTable">
-    <tr>
-        <th></th>
-        <th width="80">编号</th>
-        <th width="100">预览</th>
-        <th width="200">名称</th>
-        <th width="100">操作</th>
-    </tr>
-    <!--填充模板区-->
+<%--表格部分 start--%>
+<section style="margin:0 auto">
+    <br>
+    <table border="1" id="DVDsTable" style="margin-left: 30%;">
+        <tr>
+            <th></th>
+            <th width="80">编号</th>
+            <th width="100">预览</th>
+            <th width="200">名称</th>
+            <th width="100">操作</th>
+        </tr>
+        <!--填充模板区-->
 
-</table>
+    </table>
 
-<br>
-<div>
-    <ul class="pagination" id="table-pagination">
-    </ul>
-</div>
+    <br>
+    <div>
+        <ul class="pagination" id="table-pagination">
+        </ul>
+    </div>
+</section>
+<%--表格部分 结束--%>
 
+<%--注销 start--%>
 <section style="margin-top: 2%">
     <button onclick="logout()">注销</button>
 </section>
+<%--注销 结束--%>
 
 </body>
 
