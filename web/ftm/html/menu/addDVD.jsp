@@ -33,9 +33,7 @@
     }
 
 %>
-    <form style="margin: 5%"
-            class="layui-form layui-form-pane">
-
+    <form style="margin: 5%" class="layui-form layui-form-pane">
             <br>
             <%--DVD名称--%>
                 <div class="layui-form-item">
@@ -59,6 +57,8 @@
                             <img class="layui-upload-img"                                   id="preview-upload-img">
                             <p id="demoText"></p>
                         </div>
+
+                    <input type="hidden" name="preview" id="preview-hidden">
                     </div>
             <%--提交按钮--%>
                 <div style="margin-top: 1%">
@@ -86,21 +86,11 @@
                         $('#preview-upload-img').attr('src', result);                       //图片链接（base64）
                     });
                 }
-                ,done: function(res){
-                    //如果上传失败
-                    if(res.code > 0){
-                        return layer.msg('上传失败');
-                    }
-                    //上传成功
+                ,done: function(ret){
 
-                    //解析ret
-                    var ret = eval("(" + res + ")");
+                    var data = ret['data'];
+                    $('#preview-hidden').val(data);
 
-                    if (ret['error'] === 0) {
-                        var retURL = ret['data'];
-                        alert(retURL);
-
-                    }
                 }
                 ,error: function(){
                     //演示失败状态，并实现重传
@@ -113,7 +103,7 @@
             });
 
             form.verify({
-                name: function(value, item){ //value：表单的值、item：表单的DOM对象
+                name: function(value){ //value：表单的值、item：表单的DOM对象
                     if(!value){
                         return 'DVD名称不能为空';
                     }
@@ -122,6 +112,27 @@
             });
 
             form.on('submit(addSubmmit)', function(data){
+
+                var loading = layer.load(1, {
+                    //0.1透明度的白色背景
+                    shade: [0.1,'#fff']
+                });
+
+                $.post('AddDVD.do',data, function (ret) {
+                    //解析ret
+                    ret = eval("(" + ret + ")");
+
+                    if (ret['error'] === 0) {
+                        window.location.reload();
+                    }
+                    else {
+                        var errorInfo = ret['errorInfo'];
+                        alert("添加失败！" + errorInfo);
+                    }
+
+                    //关闭所有弹窗
+                    layer.closeAll();
+                });
 
                 //阻止表单跳转
                 return false;

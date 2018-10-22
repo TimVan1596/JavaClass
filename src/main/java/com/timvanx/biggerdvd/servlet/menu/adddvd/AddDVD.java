@@ -1,4 +1,4 @@
-package com.timvanx.biggerdvd.servlet.menu;
+package com.timvanx.biggerdvd.servlet.menu.adddvd;
 
 import com.alibaba.fastjson.JSON;
 import com.timvanx.biggerdvd.dvd.DVD;
@@ -12,13 +12,12 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * 添加DVD信息
  * @author TimVan
  */
 @WebServlet(name = "AddDVD",
-        urlPatterns = {"/ftm/html/menu/AddDVD.do"}, loadOnStartup = 1)
+        urlPatterns = {"/ftm/html/menu/adddvd/AddDVD.do"}, loadOnStartup = 1)
 public class AddDVD extends HttpServlet {
 
     @Override

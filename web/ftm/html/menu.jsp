@@ -91,11 +91,9 @@
     <!--填充模板区-->
 </table>
 
-
 <section style="margin-top: 2%">
     <button onclick="logout()">注销</button>
 </section>
-
 
 </body>
 

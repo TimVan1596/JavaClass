@@ -9,9 +9,7 @@ layui.use('layer', function(){
 
     //初始化页面
     $(function () {
-
         var ALL_STATUS = -1;
-
 
         var loading = layer.load(1, {
             //0.1透明度的白色背景
@@ -38,7 +36,6 @@ layui.use('layer', function(){
                     var $tr = $("#DVD_TEMPLATE").html();
 
                     $("#DVDsTable").append($tr);
-
 
                     //填充文字
                     $('.dvd-id:last').text(id);
