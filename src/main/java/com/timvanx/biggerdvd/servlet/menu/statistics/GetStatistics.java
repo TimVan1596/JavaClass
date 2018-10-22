@@ -36,7 +36,7 @@ public class GetStatistics extends HttpServlet {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        ArrayList<DVD> dvdArr = DVD.loadDVDInfosByArray();
+        ArrayList<DVD> dvdArr = DVD.loadDVDInfosByArray(1,10);
 
         Map<String, Object> ret = new HashMap<>(1);
         if (true) {

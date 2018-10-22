@@ -10,8 +10,33 @@
  * 判断输入字符串是否为空或者全部都是空格
  **/
 function isNull(str) {
-    if (str == "") return true;
+    if (str === "") return true;
+    else if ("undefined" === typeof(str)){
+        return true;
+    }
     var regu = "^[ ]+$";
     var re = new RegExp(regu);
     return re.test(str);
 }
+
+
+/**
+ * js获取GET参数(返回 $_GET 对象, 仿PHP模式)
+ * 使用时, 可以直接 $_GET['get参数'], 就直接获得GET参数的值
+ **/
+var $_GET = (function(){
+    var url = window.document.location.href.toString();
+    var u = url.split("?");
+    if(typeof(u[1]) === "string"){
+        u = u[1].split("&");
+        var get = {};
+        for(var i in u){
+            var j = u[i].split("=");
+            get[j[0]] = j[1];
+        }
+        return get;
+    } else {
+        return {};
+    }
+})();
+

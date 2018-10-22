@@ -35,6 +35,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../../common/util/layui/layui.js"></script>
     <script src="../js/html/menu.js"></script>
+    <script src="../js/common-js.js"></script>
 </head>
 
 <body>
@@ -49,7 +50,6 @@
         response.sendRedirect("../biggerdvd.jsp");
         return;
     }
-
 %>
 
 
@@ -80,12 +80,7 @@
 
 <br>
 <div>
-    <ul class="pagination">
-        <li><a href="#">上一页</a></li>
-        <li><a class="active" href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">下一页</a></li>
+    <ul class="pagination" id="table-pagination">
     </ul>
 </div>
 

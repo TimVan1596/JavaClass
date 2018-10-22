@@ -9,21 +9,30 @@ layui.use('layer', function(){
 
     //初始化页面
     $(function () {
-        var ALL_STATUS = -1;
 
         var loading = layer.load(1, {
             //0.1透明度的白色背景
             shade: [0.1,'#fff']
         });
+
+        var pageNum = 1;
+        if (!isNull($_GET['pageNum'])){
+            pageNum = $_GET['pageNum'];
+        }
+
         //通过ajax获取每一行
         $.post('menu/GetAllDVDs.do', {
-            status: ALL_STATUS
+            pageNum: pageNum,
+            pageSize: 6
         }, function (ret) {
             //解析ret
             ret = eval("(" + ret + ")");
 
             if (ret['error'] === 0) {
-                var dvdArr = ret['dvdArr'];
+                var dvdArr = ret['data']['list'];
+                var total = ret['data']['total'];
+
+                //插入列表
                 for (var i = 0; i < dvdArr.length; i++) {
                     //获取到DVD的信息
                     var DVD = dvdArr[i];
@@ -66,6 +75,18 @@ layui.use('layer', function(){
                     $dvdBtnLand.attr("value", id);
                 }
 
+                //插入分页
+                for (i = 0; i < total; i++){
+                    var retPageNum = i+1;
+                    //创造分页按钮节点(li)
+                    var $li = '<li><a ';
+                    if (pageNum == retPageNum){
+                        $li += 'class = "active"';
+                    }
+                    $li += 'href="?pageNum='+retPageNum+'">'
+                        +retPageNum+'</a></li>';
+                    $('#table-pagination').append($li);
+                }
             }
             else {
                 var errorInfo = ret['errorInfo'];
