@@ -37,14 +37,22 @@ public class GetAllDVDs extends HttpServlet {
 
         String pageNumStr =  request.getParameter("pageNum");
         String pageSizeStr =  request.getParameter("pageSize");
+        String queryStr =  request.getParameter("query");
 
         int pageNum = Integer.valueOf(pageNumStr);
         int pageSize = Integer.valueOf(pageSizeStr);
 
         int total = 1;
 
-        ArrayList<DVD> dvdArr = DVD.loadDVDInfosByArray(pageNum,pageSize);
-        int totalNum = DVD.countDVDs();
+        String tableWhere = null;
+        if (!queryStr.equals("")){
+            tableWhere = "name like '%" +queryStr+"%' ";
+            tableWhere += "or id like '%" +queryStr+"%' ";
+        }
+
+        ArrayList<DVD> dvdArr = DVD
+                .loadDVDInfosByArray(pageNum,pageSize,tableWhere);
+        int totalNum = DVD.countDVDs(tableWhere);
 
         total += totalNum/pageSize;
         if (totalNum - pageSize*total > 0){

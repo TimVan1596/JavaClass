@@ -180,9 +180,18 @@ public class DVD implements Serializable {
      * @return 返回数量
      */
     public static int countDVDs(){
+       return countDVDs(null);
+    }
+
+    /**
+     * 统计DVD的数量
+     * @param tableWhere
+     * @return 返回数量
+     */
+    public static int countDVDs(String tableWhere){
         int cnt = 0;
         cnt  = JDBCUtil.count("dvd",
-                "id",null);
+                "id",tableWhere);
 
         return cnt;
     }
@@ -233,7 +242,7 @@ public class DVD implements Serializable {
 
 
         List<List<String>> dvdSQLs =
-                getDVDInfosFromJDBC(1,100);
+                getDVDInfosFromJDBC(1,100,null);
 
         for (List<String> dvdInfo : dvdSQLs) {
             //将字符串转为3种数据
@@ -254,15 +263,16 @@ public class DVD implements Serializable {
      * (带返回值)使用数据库读入DVD信息到 DVDArr 集合
      * @param pageNum 分页当前页
      * @param pageSize 分页一页显示多少行
+     * @param tableWhere 查询条件
      * @return 返回DVD集合
      */
     public static ArrayList<DVD> loadDVDInfosByArray(int pageNum
-            , int pageSize) {
+            , int pageSize,String tableWhere) {
 
         ArrayList<DVD> dvds = new ArrayList<>();
 
         List<List<String>> dvdSQLs = getDVDInfosFromJDBC(pageNum
-            ,pageSize);
+                ,pageSize,tableWhere);
 
         for (List<String> dvdInfo : dvdSQLs) {
             //将字符串转为3种数据
@@ -287,7 +297,7 @@ public class DVD implements Serializable {
      * @return 返回DVD集合(二重)
      */
     private static List<List<String>> getDVDInfosFromJDBC(int pageNum
-            , int pageSize){
+            , int pageSize,String tableWhere){
         //设置查询条件
         ArrayList<String> tableField = new ArrayList<String>() {{
             add("id");
@@ -301,7 +311,7 @@ public class DVD implements Serializable {
 
         List<List<String>> dvdSQLs = JDBCUtil
                 .select("dvd",
-                        tableField, null,
+                        tableField, tableWhere,
                         tableOrder, tableLimit);
 
 

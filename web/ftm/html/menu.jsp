@@ -32,6 +32,17 @@
         </tr>
     </script>
 
+    <!-- DVD信息（列表填充模板 template）-->
+    <script type="text/html" id="DVD_TABLE_TH_TEMPLATE">
+        <tr>
+            <th></th>
+            <th width="80">编号</th>
+            <th width="100">预览</th>
+            <th width="200">名称</th>
+            <th width="100">操作</th>
+        </tr>
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../../common/util/layui/layui.js"></script>
     <script src="../js/html/menu.js"></script>
@@ -68,12 +79,9 @@
 
     <%--绑定事件（JS代码中）--%>
     <input list="dvdList"  id="query_input"
-           style="width:10%;height: 24px;margin-left: 10%;">
-    <datalist id="dvdList">
-        <option value="1059-刚好能够g-可借">
-        <option value="1036-时间简史-归还 ">
-    </datalist>
-    <button onclick="getStatistics()">搜索</button>
+           style="width:12%;height: 24px;margin-left: 10%;">
+    <datalist id="dvdList"></datalist>
+    <button onclick="search()">搜索</button>
 
 </section>
 <%--标题头 结束--%>
@@ -82,13 +90,10 @@
 <section style="margin:0 auto">
     <br>
     <table border="1" id="DVDsTable" style="margin-left: 30%;">
-        <tr>
-            <th></th>
-            <th width="80">编号</th>
-            <th width="100">预览</th>
-            <th width="200">名称</th>
-            <th width="100">操作</th>
-        </tr>
+
+
+
+
         <!--填充模板区-->
 
     </table>
