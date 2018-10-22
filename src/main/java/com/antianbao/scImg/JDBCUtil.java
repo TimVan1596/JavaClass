@@ -89,7 +89,7 @@ public class JDBCUtil {
             while (rs.next()) {
                 bd = new BookInfo();
                 bd.setName(rs.getString("name"));
-                bd.setImg(rs.getBlob("img"));
+                bd.setImg(rs.getString("tupian"));
                 list.add(bd);
             }
             close();
@@ -99,14 +99,13 @@ public class JDBCUtil {
         return list;
     }
 
-    public int addDvd(String name, InputStream str) {
+    public int addDvd(String name, InputStream inputStream) {
         int rlt = 0;
-        String sql = "insert into ceshi(name,img) values(?,?)";
+        String sql = "insert into ceshi(name,tupian) values(?,?)";
         PreparedStatement pstmt = getPrepareStatement(sql);
         try {
             pstmt.setString(1, name);
-            long l = (long) str.available();
-            pstmt.setBinaryStream(2, str, l);
+            pstmt.setBinaryStream(1, inputStream, inputStream.available());
             //pstmt.setInt(2, dvd.getImg());
             rlt = pstmt.executeUpdate();
             close();
@@ -117,4 +116,16 @@ public class JDBCUtil {
         return rlt;
     }
 
+    public int panduan(String name) {
+        int rlt = 0;
+        List<BookInfo> list = queryStu();
+        System.out.println(list);
+        System.out.println(name);
+        for (BookInfo ls : list) {
+            if (ls.getName().equals(name)) {
+                return 1;
+            }
+        }
+        return rlt;
+    }
 }
