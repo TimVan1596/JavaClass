@@ -35,12 +35,30 @@ public class GetAllDVDs extends HttpServlet {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        ArrayList<DVD> dvdArr = DVD.loadDVDInfosByArray();
+        String pageNumStr =  request.getParameter("pageNum");
+        String pageSizeStr =  request.getParameter("pageSize");
+
+        int pageNum = Integer.valueOf(pageNumStr);
+        int pageSize = Integer.valueOf(pageSizeStr);
+
+        int total = 1;
+
+        ArrayList<DVD> dvdArr = DVD.loadDVDInfosByArray(pageNum,pageSize);
+        int totalNum = DVD.countDVDs();
+
+        total += totalNum/pageSize;
+        if (totalNum - pageSize*total > 0){
+            total += 1;
+        }
 
         Map<String, Object> ret = new HashMap<>(1);
         if (true) {
             ret.put("error", 0);
-            ret.put("dvdArr", dvdArr);
+            //构建Json返回值
+            Map<String, Object> data = new HashMap<>(1);
+            data.put("list",dvdArr);
+            data.put("total",total);
+            ret.put("data", data);
         } else {
             ret.put("error", 1);
             ret.put("errorInfo", "获取所有的DVD信息出错");

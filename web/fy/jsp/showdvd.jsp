@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.smallfangyu.data.DVD" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/10/8 0008
@@ -6,12 +7,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 
 <% if(session.getAttribute("loginName")==null){
     response.sendRedirect("login.jsp");
 }
+    session.getAttribute("listDVD");
+    //把SESSION的dvd数据放进集合里
+    ArrayList<DVD> list=(ArrayList<DVD>)session.getAttribute("listDVD");
+    int pag= (int) session.getAttribute("page");
+    int pageNumber= (int) session.getAttribute("pageNumber");
+    int cSize=(int)session.getAttribute("cSize");
+    int ncSize=(int)session.getAttribute("ncSize");
 %>
 <html>
 <head>
@@ -20,7 +26,7 @@
 </head>
 <body>
 <jsp:include page="navigationBar.jsp"></jsp:include>
-<div style="text-align:center">
+<div  style="text-align:center">
     <h3>DVD列表</h3>
 
     <form action="/fy/servlet/toShowDvd" method="get" onsubmit="return checkSelect()">
@@ -30,24 +36,34 @@
 
     <table id="tb" style="text-align:center;margin: 0 auto " border="1" >
         <tr><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th></tr>
+        <% for(DVD dvd:list){ %>
+        <tr>
+            <td style="width:100px"><%=dvd.getId() %></td>
+            <td><img style="width:100px;height:80px" src="<%= dvd.getPicture()%>" /></td>
+            <td style="width:100px"> <%=dvd.getDvdname() %></td>
+            <% if(dvd.getState().equals("可以借")){%><td style="width:100px;background-color: limegreen"><%=dvd.getState() %></td><% }%>
+            <% if(dvd.getState().equals("已借出")){%><td style="width:100px;background-color: red"><%=dvd.getState() %></td><% }%>
+            <td style="width:100px"><input type="button"  value="删除" onclick='window.location.href="/fy/jsp/deleteDVD.jsp?no=<%=dvd.getId() %>"'></td>
+        </tr>
+   <%  }%>
         <!-- 这里使用标签遍历输出 集合数据 -->
-        <c:forEach items="${listDVD }" var="dvd" >
-            <tr>
-                <td style="width:100px">${dvd.id }</td>
-                <td><img style="width:100px;height:80px" src="${dvd.picture }" /></td>
-                <td style="width:100px">${dvd.dvdname }</td>
-                <c:if test="${dvd.state.equals('可以借')}"><td style="width:100px;background-color: limegreen"}>${dvd.state }</td></c:if>
-                <c:if test="${dvd.state.equals('已借出')}"><td style="width:100px;background-color: red"}>${dvd.state }</td></c:if>
-                <td style="width:100px"><input type="button"  value="删除" onclick='window.location.href="/fy/jsp/deleteDVD.jsp?no=${dvd.id }"'></td>
-            </tr>
-        </c:forEach>
+        <%--<c:forEach items="${listDVD }" var="dvd" >--%>
+            <%--<tr>--%>
+                <%--<td style="width:100px">${dvd.id }</td>--%>
+                <%--<td><img style="width:100px;height:80px" src="${dvd.picture }" /></td>--%>
+                <%--<td style="width:100px">${dvd.dvdname }</td>--%>
+                <%--<c:if test="${dvd.state.equals('可以借')}"><td style="width:100px;background-color: limegreen"}>${dvd.state }</td></c:if>--%>
+                <%--<c:if test="${dvd.state.equals('已借出')}"><td style="width:100px;background-color: red"}>${dvd.state }</td></c:if>--%>
+                <%--<td style="width:100px"><input type="button"  value="删除" onclick='window.location.href="/fy/jsp/deleteDVD.jsp?no=${dvd.id }"'></td>--%>
+            <%--</tr>--%>
+        <%--</c:forEach>--%>
     </table>
     <p>
-        <a href="/fy/servlet/toShowDvd?page=${0}">&lt;&lt; 首页 </a>
-        <a href="/fy/servlet/toShowDvd?page=${page-1 }">    &lt; 上一页 </a>
-        <strong>第${page+1}页/共${pageNumber+1}页</strong>
-        <a href="/fy/servlet/toShowDvd?page=${page+1}">下一页 &gt;</a>
-        <a href="/fy/servlet/toShowDvd?page=${pageNumber}">末页 &gt;&gt;</a>
+        <a href="/fy/servlet/toShowDvd?page=<%=0%>">&lt;&lt; 首页 </a>
+        <a href="/fy/servlet/toShowDvd?page=<%=pag-1 %>">    &lt; 上一页 </a>
+        <strong>第<%=pag+1 %>页/共<%=pageNumber+1 %>页</strong>
+        <a href="/fy/servlet/toShowDvd?page=<%=pag+1 %>">下一页 &gt;</a>
+        <a href="/fy/servlet/toShowDvd?page=<%=pageNumber %>">末页 &gt;&gt;</a>
     </p>
 </div>
 <div style="width: 800px;margin: 0 auto">
@@ -81,7 +97,7 @@
         series: [{
             name: '数量',
             type: 'bar',
-            data:[${cSize},${ncSize}],
+            data:[<%=cSize%>,<%=ncSize%>],
             itemStyle:{
                 normal:{
                     color: function (params){

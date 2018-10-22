@@ -232,7 +232,8 @@ public class DVD implements Serializable {
     private static void loadDVDInfos() {
 
 
-        List<List<String>> dvdSQLs = getDVDInfosFromJDBC();
+        List<List<String>> dvdSQLs =
+                getDVDInfosFromJDBC(1,100);
 
         for (List<String> dvdInfo : dvdSQLs) {
             //将字符串转为3种数据
@@ -242,24 +243,26 @@ public class DVD implements Serializable {
             if (dvdInfo.get(2).equals("0")) {
                 status = false;
             }
-            //String preview = dvdInfo.get(3);
-            String preview = "fucku";
+            String preview = "";
 
             DVD dvd = new DVD(id, name, status,preview);
-            DVDArr.add(dvd);
         }
 
     }
 
     /**
      * (带返回值)使用数据库读入DVD信息到 DVDArr 集合
+     * @param pageNum 分页当前页
+     * @param pageSize 分页一页显示多少行
      * @return 返回DVD集合
      */
-    public static ArrayList<DVD> loadDVDInfosByArray() {
+    public static ArrayList<DVD> loadDVDInfosByArray(int pageNum
+            , int pageSize) {
 
         ArrayList<DVD> dvds = new ArrayList<>();
 
-        List<List<String>> dvdSQLs = getDVDInfosFromJDBC();
+        List<List<String>> dvdSQLs = getDVDInfosFromJDBC(pageNum
+            ,pageSize);
 
         for (List<String> dvdInfo : dvdSQLs) {
             //将字符串转为3种数据
@@ -283,7 +286,8 @@ public class DVD implements Serializable {
      * 作为 loadDVDInfos() 和 loadDVDInfosByArray()的组件
      * @return 返回DVD集合(二重)
      */
-    private static List<List<String>> getDVDInfosFromJDBC(){
+    private static List<List<String>> getDVDInfosFromJDBC(int pageNum
+            , int pageSize){
         //设置查询条件
         ArrayList<String> tableField = new ArrayList<String>() {{
             add("id");
@@ -291,10 +295,16 @@ public class DVD implements Serializable {
             add("status");
             add("preview");
         }};
+
+        String tableOrder = " id desc ";
+        String tableLimit= (pageNum-1)*pageSize+","+pageSize;
+
         List<List<String>> dvdSQLs = JDBCUtil
                 .select("dvd",
                         tableField, null,
-                        null, null);
+                        tableOrder, tableLimit);
+
+
 
         return dvdSQLs;
     }

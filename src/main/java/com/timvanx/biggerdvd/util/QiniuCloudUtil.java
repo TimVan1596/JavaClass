@@ -55,12 +55,15 @@ public class QiniuCloudUtil {
      * 数据流上传
      * InputStream对象的上传，适用于所有的InputStream子类
      * @param fileInputStream InputStream对象
+     * @return 返回URL地址
      */
-    public static void uploadStreamToCloud(FileInputStream fileInputStream){
+    public static String uploadStreamToCloud(FileInputStream fileInputStream){
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone0());
 
         UploadManager uploadManager = new UploadManager(cfg);
+        //返回URL地址
+        String retURL = DOMAIN;
 
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = null;
@@ -77,7 +80,7 @@ public class QiniuCloudUtil {
                         .fromJson(response.bodyString()
                                 , DefaultPutRet.class);
                 System.out.println(putRet.key);
-                System.out.println(putRet.hash);
+                retURL += putRet.key;
             } catch (QiniuException ex) {
                 Response r = ex.response;
                 System.err.println(r.toString());
@@ -90,6 +93,8 @@ public class QiniuCloudUtil {
         } catch (Exception ex) {
             //ignore
         }
+
+        return retURL;
     }
 
     /**

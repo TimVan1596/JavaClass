@@ -1,5 +1,5 @@
 <%@ page import="com.sun.java.swing.plaf.windows.resources.windows" %>
-<%@ page import="web.fy.data.DbUtil" %><%--
+<%@ page import="com.smallfangyu.data.DbUtil" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/10/12 0012

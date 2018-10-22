@@ -21,7 +21,12 @@
 <h2>MiniDVD 网页版</h2>
 <h4>用户注册</h4>
 <form action="/fy/servlet/toRegister" method="get" onsubmit=" return checkRegister()">
-<p>账号：<input style="margin-left:30px " type=" text" name="username" id="regId"/><br></p>
+    <p><%
+        String msg=(String)session.getAttribute("MSG");
+        if(msg!=null){
+        out.println(msg);}
+    %></p>
+<p>账号：<input style="margin-left:30px " type=" text" name="username" id="regId"  value="<%=session.getAttribute("name")%>" onblur="checkl()"/><br></p>
 <p>密码：<input style="margin-left:30px "type="password" name="password" id="regPass"/><br></p>
 <p>重复密码：<input type="password" name="passsword" id="regPasss"/><br></p>
 
@@ -29,6 +34,39 @@
 </form>
 </div>
 <script type="text/javascript">
+
+    function checkl(){
+
+        var  myName=document.getElementById("regId").value;
+//1.创建Ajax 的 异步交互通信对象
+        var xmlhttp;
+        if (window.XMLHttpRequest)
+        {
+            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp=new XMLHttpRequest(); //浏览器内置的组件
+        }
+        else
+        {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        //2.监控请求的状态改变
+        xmlhttp.onreadystatechange=function() {
+            // alert("状态改变了");
+            // 4.请求完毕，且 成功
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                // 5.把后台响应的东西，转过来
+                //document.getElementById("login").innerHTML="<font color='red'>"+xmlhttp.responseText+"</font>";
+                document.getElementById("register").innerHTML = xmlhttp.responseText;
+
+            }
+        }
+
+        xmlhttp.open("GET","/toCheckName?login="+myName,true);
+        xmlhttp.send();
+
+    }
+
     //检查注册表单
     function checkRegister()
     {
