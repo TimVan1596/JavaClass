@@ -27,7 +27,7 @@
 <div align='center'>
     <h3>----添加DVD----</h3>
 </div>
-<form action="../../../../add.do" method="post">
+<form action="../../../../add.do" method="post" enctype="multipart/form-data">
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>书名：</th>
@@ -37,6 +37,10 @@
             <th width=150px>库存：</th>
             <th><input type="text" name="state" title="库存" style="text-align: center; width: 150px;"
                        onkeyup="this.value=this.value.replace(/\D/g,'')"/></th>
+        </tr>
+        <tr>
+            <th width=150px>图片：</th>
+            <th><input type="file" name="file" style="text-align: center; width: 150px;"/></th>
         </tr>
         <tr>
             <th colspan = '1'><a href = '../../../../login.do'>返回</a></th>

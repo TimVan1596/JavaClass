@@ -9,15 +9,16 @@ public class Dvd {
     public static final int PAGE_SIZE = 8; //每页显示的数量
 
 	private int no;
-    private String image;
 	private String name;
 	private int state;
 	private int borrow;
+	private String image;
 
 	public Dvd(){}
-	public Dvd(String name, int state){
+	public Dvd(String name, int state, String image){
 		this.name = name;
 		this.state = state;
+		this.image = image;
 	}
 	public String getName() {
 		return name;

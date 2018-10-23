@@ -11,9 +11,11 @@
     <title>Title</title>
 </head>
 <body>
-<form action="UploadServlet.do" enctype="multipart/form-data" id="loginform" name="loginform" method="post">
-    选择图片：<input type="file" name="filename"/>
-    <input id="subid" name="subid" type="submit" value="提交">
+<form action="../../imageServlet.do" enctype="multipart/form-data" method="post">
+    <input type="text" name="phone"/>
+    <input type="text" name="name"/>
+    选择图片：<input type="file" name="file"/>
+    <input type="submit" value="提交">
 </form>
 </body>
 </html>

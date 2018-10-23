@@ -11,6 +11,19 @@
 <html>
 <head>
     <title>数据显示</title>
+    <style>
+        .button {
+            background-color: #4183c4;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 150px;
+            height: 30px;
+            cursor: pointer;
+        }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0.rc2/echarts.min.js"></script>
 </head>
 <body>
@@ -114,6 +127,6 @@
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
 </script>
-<a href = '../../../../login.do'><button>返回</button></a>
+<a href = '../../../../login.do'><button class="button">返回</button></a>
 </body>
 </html>

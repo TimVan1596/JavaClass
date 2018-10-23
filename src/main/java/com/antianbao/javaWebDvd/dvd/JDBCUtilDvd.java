@@ -105,11 +105,12 @@ public class JDBCUtilDvd {
                 return rlt;
             }
         }
-        String sql = "insert into dvd(name,state) values(?,?)";
+        String sql = "insert into dvd(name,state,image) values(?,?,?)";
         PreparedStatement pstmt = getPrepareStatement(sql);
         try {
             pstmt.setString(1, dvd.getName());
             pstmt.setInt(2, dvd.getState());
+            pstmt.setString(3, dvd.getImage());
             rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
