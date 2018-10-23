@@ -295,7 +295,8 @@ public class DVD implements Serializable {
 
         ArrayList<DVD> dvds = new ArrayList<>();
 
-        List<List<String>> dvdSQLs = getDVDInfosFromJDBC();
+        List<List<String>> dvdSQLs = getDVDInfosFromJDBC( pageNum
+                , pageSize,tableWhere);
 
         for (List<String> dvdInfo : dvdSQLs) {
             //将字符串转为3种数据

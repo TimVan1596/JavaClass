@@ -495,7 +495,6 @@ public class JDBCUtil {
         }
     }
 
-
     /**
      * 将ArrayList<String>转换成" ? ," 格式(PreparedStatement，SQL用)
      * 常用于SQL语句的字段

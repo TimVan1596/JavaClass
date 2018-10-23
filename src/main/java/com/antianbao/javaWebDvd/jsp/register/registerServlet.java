@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @WebServlet(name = "registerServlet",urlPatterns = {"/Register.do"})
 public class registerServlet extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码
         request.setCharacterEncoding("utf-8");
