@@ -17,7 +17,7 @@
         <tr class="dvd-tr-line">
             <td class="dvd-radio">
                 <input class="dvd-radio-input" name="dvd-radio"
-                       type="radio" value=""/>
+                       type="checkbox" value=""/>
             </td>
             <td class="dvd-id"></td>
             <td>
@@ -74,7 +74,7 @@
 
     <button onclick="addDVD()">添加</button>
     <button onclick="editDVD()">编辑</button>
-    <button onclick="deleteDVD()">删除</button>
+    <button onclick="deleteDVD()">一键删除</button>
     <button onclick="getStatistics()">信息统计</button>
 
     <%--绑定事件（JS代码中）--%>
@@ -90,8 +90,6 @@
 <section style="margin:0 auto">
     <br>
     <table border="1" id="DVDsTable" style="margin-left: 30%;">
-
-
 
 
         <!--填充模板区-->

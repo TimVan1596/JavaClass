@@ -94,7 +94,7 @@ function editDVD() {
 
     //判断用户是否输入内容
     if (name) {
-        var loading = layer.load(1, {
+        let loading = layer.load(1, {
             //0.1透明度的白色背景
             shade: [0.1,'#fff']
         });
@@ -109,7 +109,7 @@ function editDVD() {
                 window.location.reload();
             }
             else {
-                var errorInfo = ret['errorInfo'];
+                let errorInfo = ret['errorInfo'];
                 alert("编辑失败！" + errorInfo);
             }
             //关闭loading
@@ -121,33 +121,71 @@ function editDVD() {
 
 //删除DVD信息
 function deleteDVD(){
-    var dvdID = $('input[name="dvd-radio"]:checked').val();
 
-    var deleteConfirm =confirm("是否确认删除DVD信息");
-    if ( deleteConfirm === true){
+    //jquery获取复选框值
+    let chkValStr = " ";
+    let cnt = 0;
+    $('input[name="dvd-radio"]:checked')
+        .each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数
+            if (cnt !== 0){
+                chkValStr += ',';
+            }
+            chkValStr += $(this).val();
+            cnt++;
 
-        var loading = layer.load(1, {
+    });
+
+    if (cnt.length > 0 ){
+        //警告询问框
+        layer.confirm('警告！是否确认删除选中的'+cnt.length+'项内容？', {
+            btn: ['是的','取消'], //按钮
             //0.1透明度的白色背景
             shade: [0.1,'#fff'],
             offset: '170px'
-        });
+        }, function(){
 
+            layer.confirm('选中数据将无条件删除（无视借出情况），并无法找回', {
+                btn: ['确定删除','取消'], //按钮
+                shade: [0.1,'#fff'],
+                offset: '170px'
+            }, function(){
 
-        $.post('menu/DeleteDVD.do', { id:dvdID}, function (ret) {
-            //解析ret
-            ret = eval("(" + ret + ")");
+                let loading = layer.load(1, {
+                    //0.1透明度的白色背景
+                    shade: [0.1,'#fff'],
+                    offset: '170px'
+                });
 
-            if (ret['error'] === 0) {
-                window.location.reload();
-            }
-            else {
-                var errorInfo = ret['errorInfo'];
-                alert("删除失败！" + errorInfo);
-            }
-            //关闭loading
-            layer.close(loading);
+                $.post('menu/DeleteManyDVD.do', { ids:chkValStr}
+                    , function (ret) {
+                        //解析ret
+                        ret = eval("(" + ret + ")");
+
+                        if (ret['error'] === 0) {
+                            window.location.reload();
+                        }
+                        else {
+                            let errorInfo = ret['errorInfo'];
+                            alert("删除失败！" + errorInfo);
+                        }
+                        //关闭loading
+                        layer.close(loading);
+                    });
+
+            }, function(){
+
+            });
+
+        }, function(){
+
         });
     }
+    else{
+        alert("未选择删除项");
+    }
+
+
+
 
 }
 
@@ -231,8 +269,8 @@ function getAllDVDs(query, pageNum, pageSize){
         ret = eval("(" + ret + ")");
 
         if (ret['error'] === 0) {
-            var dvdArr = ret['data']['list'];
-            var total = ret['data']['total'];
+            let dvdArr = ret['data']['list'];
+            let total = ret['data']['total'];
 
             //插入列表
             for (let i = 0; i < dvdArr.length; i++) {
@@ -254,10 +292,6 @@ function getAllDVDs(query, pageNum, pageSize){
                 //单选框补id
                 var $dvdRadio = $('.dvd-radio-input:last');
                 $dvdRadio.attr("value", id);
-                //单选框第一个checked
-                if (i === 0) {
-                    $dvdRadio.attr("checked", "checked");
-                }
 
                 $dvdRadio.attr("value", id);
 
@@ -300,7 +334,7 @@ function getAllDVDs(query, pageNum, pageSize){
             }
         }
         else {
-            var errorInfo = ret['errorInfo'];
+            let errorInfo = ret['errorInfo'];
             alert("载入失败！" + errorInfo);
         }
         //关闭loading

@@ -117,6 +117,15 @@ public class DVD implements Serializable {
 
     /**
      * 使用数据库删除DVD信息（通过主键ID）
+     * @param query 批量删除条件
+     */
+    private static void deleteDVDInfo(String query) {
+        String tableWhere = " id  in ( " + query + " ) ";
+        JDBCUtil.delete("dvd", tableWhere);
+    }
+
+    /**
+     * 使用数据库删除DVD信息（通过主键ID）
      * Web项目专用接口
      * @return  -1 = 找到，但未归还 , 0 = 未找到  , 1 = 删除成功
      */
@@ -148,17 +157,30 @@ public class DVD implements Serializable {
     }
 
     /**
+     * 使用数据库删除DVD信息（通过主键ID）
+     * Web项目专用接口
+     * @param query  删除条件
+     */
+    public static void deleteDVDForWeb(String query){
+        //使用数据库删除DVD信息（通过主键ID）
+        DVD.deleteDVDInfo(query);
+    }
+
+    /**
      * 使用数据库借出和归还DVD信息（通过主键ID）
      * Web项目专用接口
-     * @return   0 = 未找到  , 1 = 删除成功
+     * @return   0 = 未找到  , 1 = 编辑成功
      */
     public static int loanOrReturnDVDForWeb(int id){
+
+
+        loadDVDInfos();
         //返回的状态的识别码
         int retStatus = 0;
-        loadDVDInfos();
 
         for (int i = 0; i < DVD.getDVDArr().size(); i++) {
             int dvdId = DVD.getDVDArr().get(i).getId();
+
             //是否存在
             if (dvdId == id) {
                 DVD dvd = DVD.getDVDArr().get(i);
@@ -172,6 +194,7 @@ public class DVD implements Serializable {
             }
         }
 
+        System.out.println("退出 loanOrReturnDVDForWeb");
         return retStatus;
     }
 
@@ -242,7 +265,7 @@ public class DVD implements Serializable {
 
 
         List<List<String>> dvdSQLs =
-                getDVDInfosFromJDBC(1,100,null);
+                getDVDInfosFromJDBC();
 
         for (List<String> dvdInfo : dvdSQLs) {
             //将字符串转为3种数据
@@ -255,6 +278,7 @@ public class DVD implements Serializable {
             String preview = "";
 
             DVD dvd = new DVD(id, name, status,preview);
+            DVDArr.add(dvd);
         }
 
     }
@@ -271,8 +295,7 @@ public class DVD implements Serializable {
 
         ArrayList<DVD> dvds = new ArrayList<>();
 
-        List<List<String>> dvdSQLs = getDVDInfosFromJDBC(pageNum
-                ,pageSize,tableWhere);
+        List<List<String>> dvdSQLs = getDVDInfosFromJDBC();
 
         for (List<String> dvdInfo : dvdSQLs) {
             //将字符串转为3种数据
@@ -315,6 +338,30 @@ public class DVD implements Serializable {
                         tableOrder, tableLimit);
 
 
+
+        return dvdSQLs;
+    }
+
+    /**
+     * 从数据库读入DVD信息到 DVDArr 集合
+     * 作为 loadDVDInfos() 和 loadDVDInfosByArray()的组件
+     * @return 返回DVD集合(二重)
+     */
+    private static List<List<String>> getDVDInfosFromJDBC(){
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("id");
+            add("name");
+            add("status");
+            add("preview");
+        }};
+
+        String tableOrder = " id desc ";
+
+        List<List<String>> dvdSQLs = JDBCUtil
+                .select("dvd",
+                        tableField,null,
+                        tableOrder, null);
 
         return dvdSQLs;
     }
