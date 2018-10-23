@@ -6,11 +6,14 @@
 
 <head>
     <title>菜单 - BiggerDVD</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
     <link rel="stylesheet"
           href="../style/html/menu.css"
           media="all">
-
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet"
+          href="../../common/util/layui/css/layui.css"
+          media="all">
 
     <!-- DVD信息（列表填充模板 template）-->
     <script type="text/html" id="DVD_TEMPLATE">
@@ -32,10 +35,10 @@
         </tr>
     </script>
 
-    <!-- DVD信息（列表填充模板 template）-->
+    <!-- DVD表格的表头（列表填充模板 template）-->
     <script type="text/html" id="DVD_TABLE_TH_TEMPLATE">
         <tr>
-            <th></th>
+            <th width="30"></th>
             <th width="80">编号</th>
             <th width="100">预览</th>
             <th width="200">名称</th>
@@ -66,16 +69,33 @@
 <%--标题头 start--%>
 <section>
 
-    <h1>**********<span>
-    <%=userName%>
-</span>，你好！欢迎进入系统菜单 **************</h1>
+    <ul class="layui-nav" style="text-align: left;">
+
+        <li class="layui-nav-item">
+            <a href="./menu/statistics.html">信息统计<span class="layui-badge-dot"></span></a>
+        </li>
+        <li class="layui-nav-item" >
+            <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img"><%=userName%></a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;" onclick="logout();">退出登录</a></dd>
+            </dl>
+        </li>
+    </ul>
+
 
     <br>
+    <div class="layui-btn-group">
+        <button class="layui-btn layui-btn-normal"  onclick="addDVD()">
+            <i class="layui-icon">&#xe608;</i> 添加
+        </button>
 
-    <button onclick="addDVD()">添加</button>
+        <button class="layui-btn layui-btn-danger" onclick="deleteDVD()">
+            <i class="layui-icon">&#xe640;</i>一键删除
+        </button>
+
+    </div>
+
     <button onclick="editDVD()">编辑</button>
-    <button onclick="deleteDVD()">一键删除</button>
-    <button onclick="getStatistics()">信息统计</button>
 
     <%--绑定事件（JS代码中）--%>
     <input list="dvdList"  id="query_input"
@@ -90,8 +110,6 @@
 <section style="margin:0 auto">
     <br>
     <table border="1" id="DVDsTable" style="margin-left: 30%;">
-
-
         <!--填充模板区-->
 
     </table>
@@ -104,11 +122,6 @@
 </section>
 <%--表格部分 结束--%>
 
-<%--注销 start--%>
-<section style="margin-top: 2%">
-    <button onclick="logout()">注销</button>
-</section>
-<%--注销 结束--%>
 
 </body>
 

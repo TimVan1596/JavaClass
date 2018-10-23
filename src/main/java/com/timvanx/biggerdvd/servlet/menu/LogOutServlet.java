@@ -36,7 +36,7 @@ public class LogOutServlet extends HttpServlet {
             session.removeAttribute("username");
         }
         CommonUtil.popAlert(out, "注销成功"
-                , "biggerdvd.jsp");
+                , "index.html");
 
         return;
     }

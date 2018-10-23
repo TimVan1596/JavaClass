@@ -30,17 +30,26 @@
     <script src="http://libs.baidu.com/html5shiv/3.7/html5shiv.min.js"></script>
     <![endif]-->
     <style type="text/css">
-        :root .fdad,
-        :root .adsbygoogle,
-        :root .container > a.mid-wrapper,
-        :root #container > a.item,
-        :root #container > a.block,
-        :root #container > .wrapper > .fl,
-        :root #container > .item.title_top,
-        :root #container > .item.title_normal,
-        :root #container > #pic_container,
-        :root .adinfo
-        { display: none !important; }</style>
+        :root .fdad {
+            display: none !important;
+        }
+
+        input::-webkit-input-placeholder {
+            color: white !important;    /* WebKit browsers */
+        }
+
+        input:-moz-placeholder {
+            color: white !important;   /* Mozilla Firefox 4 to 18 */
+        }
+
+        input::-moz-placeholder {
+            　　color: white !important;   /* Mozilla Firefox 19+ */
+        }
+
+        input:-ms-input-placeholder {
+            color: white !important;   /* Internet Explorer 10+ */
+        }
+    </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
     </script>
@@ -60,27 +69,27 @@
     <div class="login_fields">
         <div class="login_fields__user">
             <div class="icon">
-                <img src="img/biggerdvd/user_icon_copy.png">
+                <img src="./带CSS3动画特效的时尚登录界面UI设计_files/user_icon_copy.png">
             </div>
-            <input placeholder="用户名" type="text">
+            <input placeholder="用户名" type="text" style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;" autocomplete="off" >
             <div class="validation">
-                <img src="img/biggerdvd/tick.png">
+                <img src="./带CSS3动画特效的时尚登录界面UI设计_files/tick.png">
             </div>
 
         </div>
         <div class="login_fields__password">
             <div class="icon">
-                <img src="img/biggerdvd/lock_icon_copy.png">
+                <img src="./带CSS3动画特效的时尚登录界面UI设计_files/lock_icon_copy.png">
             </div>
-            <input placeholder="密码" type="password">
+            <input placeholder="密码" type="password" autocomplete="off" style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;" >
             <div class="validation">
-                <img src="img/biggerdvd/tick.png">
+                <img src="./带CSS3动画特效的时尚登录界面UI设计_files/tick.png">
             </div>
         </div>
         <div class="login_fields__submit">
             <input type="submit" value="登录">
             <div class="forgot">
-                <a href="#">忘记密码?</a>
+                <a href="http://www.jq22.com/demo/css3signin20160815/#">忘记密码?</a>
             </div>
         </div>
     </div>
@@ -89,8 +98,13 @@
         <p>欢迎回来</p>
     </div>
     <div class="disclaimer">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper laoreet placerat. Nullam semper auctor justo, rutrum posuere odio vulputate nec.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper laoreet placerat. Nullam semper auctor
+            justo, rutrum posuere odio vulputate nec.</p>
     </div>
+</div>
+<div class="authent">
+    <img src="./带CSS3动画特效的时尚登录界面UI设计_files/puff.svg">
+    <p>认证中...</p>
 </div>
 
 <form>
@@ -159,69 +173,6 @@
     }
 </script>
 
-<script>
-    $('input[type="submit"]').click(function () {
-        $('.login').addClass('test');
-        setTimeout(function () {
-            $('.login').addClass('testtwo');
-        }, 300);
-        setTimeout(function () {
-            $('.authent').show().animate({ right: -320 }, {
-                easing: 'easeOutQuint',
-                duration: 600,
-                queue: false
-            });
-            $('.authent').animate({ opacity: 1 }, {
-                duration: 200,
-                queue: false
-            }).addClass('visible');
-        }, 500);
-        setTimeout(function () {
-            $('.authent').show().animate({ right: 90 }, {
-                easing: 'easeOutQuint',
-                duration: 600,
-                queue: false
-            });
-            $('.authent').animate({ opacity: 0 }, {
-                duration: 200,
-                queue: false
-            }).addClass('visible');
-            $('.login').removeClass('testtwo');
-        }, 2500);
-        setTimeout(function () {
-            $('.login').removeClass('test');
-            $('.login div').fadeOut(123);
-        }, 2800);
-        setTimeout(function () {
-            $('.success').fadeIn();
-        }, 3200);
-    });
-    $('input[type="text"],input[type="password"]').focus(function () {
-        $(this).prev().animate({ 'opacity': '1' }, 200);
-    });
-    $('input[type="text"],input[type="password"]').blur(function () {
-        $(this).prev().animate({ 'opacity': '.5' }, 200);
-    });
-    $('input[type="text"],input[type="password"]').keyup(function () {
-        if (!$(this).val() == '') {
-            $(this).next().animate({
-                'opacity': '1',
-                'right': '30'
-            }, 200);
-        } else {
-            $(this).next().animate({
-                'opacity': '0',
-                'right': '20'
-            }, 200);
-        }
-    });
-    var open = 0;
-    $('.tab').click(function () {
-        $(this).fadeOut(200, function () {
-            $(this).parent().animate({ 'left': '0' });
-        });
-    });
-</script>
 
 </body>
 </html>
