@@ -9,6 +9,19 @@
 <html>
 <head>
     <title>修改密码</title>
+    <style>
+        .button {
+            background-color: #4183c4;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 150px;
+            height: 30px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div align='center'>
@@ -22,15 +35,17 @@
         </tr>
         <tr>
             <th width=150px>账号密码：</th>
-            <th><input name="password" type="password" title="" style="text-align: center; width: 150px;"/></th>
+            <th><input name="password" type="password" title="" style="text-align: center; width: 150px;"
+                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/></th>
         </tr>
         <tr>
             <th width=150px>确认密码：</th>
-            <th><input name="cpassword" type="password" title="" style="text-align: center; width: 150px;"/></th>
+            <th><input name="cpassword" type="password" title="" style="text-align: center; width: 150px;"
+                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/></th>
         </tr>
         <tr>
             <th colspan = '1'></th>
-            <th colspan = '1'><input type="submit" value="提交" ></th>
+            <th colspan = '1'><button type="submit" class="button">提交</button></th>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){

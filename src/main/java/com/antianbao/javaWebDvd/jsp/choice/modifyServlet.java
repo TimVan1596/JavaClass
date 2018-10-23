@@ -44,6 +44,18 @@ public class modifyServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        //1.取值
+        String password =request.getParameter("password");
+        String cpassword =request.getParameter("cpassword");
+        password = new String(password.getBytes("ISO-8859-1"),"utf-8");
+        cpassword = new String(cpassword.getBytes("ISO-8859-1"),"utf-8");
+        //2.判断，此处用于判断是否已存在该用户
+        response.setContentType("text/html;charset=UTF-8");
+        //3.返回结果
+        if(password.equals(cpassword)) {
+            response.getWriter().print("<font color='green'>两次密码相同</font>");
+        }else {
+            response.getWriter().print("<font color='red'>两次密码不一致</font>");
+        }
     }
 }

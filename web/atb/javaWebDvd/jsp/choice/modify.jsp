@@ -15,6 +15,19 @@
 <body>
 <div align='center'>
     <h3>----修改信息----</h3>
+    <style>
+        .button {
+            background-color: #4183c4;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 150px;
+            height: 30px;
+            cursor: pointer;
+        }
+    </style>
 </div>
 <form action="../../../../modify.do" method="post">
     <table border="1" width="300" align="center">
@@ -27,7 +40,11 @@
         %>
         <tr>
             <th width=150px>序号：</th>
-            <th><input name="no" type="text" title="" value="<%= Integer.parseInt(request.getParameter("no")) %>" readonly style = "text-align: center; color:gray;"/></th>
+            <th>
+                <input name="no" type="text" title=""
+                       value="<%= Integer.parseInt(request.getParameter("no")) %>"
+                       readonly style = "text-align: center; width: 150px; color:gray;"/>
+            </th>
         </tr>
         <tr>
             <th width=150px>书名：</th>
@@ -35,11 +52,13 @@
         </tr>
         <tr>
             <th width=150px>总数：</th>
-            <th><input name="state" type="text" title="" style="text-align: center; width: 150px;" value="<%= dvd.getState() %>"/></th>
+            <th><input name="state" type="text" title="" style="text-align: center; width: 150px;" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                       value="<%= dvd.getState() %>"/></th>
         </tr>
         <tr>
             <th width=150px>借出：</th>
-            <th><input name="borrow" type="text" title="" style="text-align: center; width: 150px;" value="<%= dvd.getBorrow() %>"/></th>
+            <th><input name="borrow" type="text" title="" style="text-align: center; width: 150px;" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                       value="<%= dvd.getBorrow() %>"/></th>
         </tr>
         <%
                 }
@@ -47,7 +66,7 @@
         %>
         <tr>
             <th colspan = '1'><a href = '../../../../login.do'>返回</a></th>
-            <th colspan = '1'><input type="submit" value="提交" ></th>
+            <th colspan = '1'><button type="submit" class="button">提交</button></th>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){

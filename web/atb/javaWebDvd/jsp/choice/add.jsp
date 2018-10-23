@@ -9,6 +9,19 @@
 <html>
 <head>
     <title>新增界面</title>
+    <style>
+        .button {
+            background-color: #4183c4;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 150px;
+            height: 30px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div align='center'>
@@ -22,11 +35,12 @@
         </tr>
         <tr>
             <th width=150px>库存：</th>
-            <th><input type="text" name="state" title="库存" style="text-align: center; width: 150px;"/></th>
+            <th><input type="text" name="state" title="库存" style="text-align: center; width: 150px;"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')"/></th>
         </tr>
         <tr>
             <th colspan = '1'><a href = '../../../../login.do'>返回</a></th>
-            <th colspan = '1'><input type="submit" value="提交"></th>
+            <th colspan = '1'><button type="submit" class="button">提交</button></th>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){

@@ -50,6 +50,18 @@ public class registerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //get解决中文乱码
         //name = new String(name.getBytes("ISO-8859-1"),"utf-8");
-
+        //1.取值
+        String name =request.getParameter("name");
+        name = new String(name.getBytes("ISO-8859-1"),"utf-8");
+        //2.判断，此处用于判断是否已存在该用户
+        JDBCUtilUser userService = new JDBCUtilUser();
+        int isExist = userService.panduan(name);
+        response.setContentType("text/html;charset=UTF-8");
+        //3.返回结果
+        if(isExist == 1) {
+            response.getWriter().print("<font color='red'>该账号已存在</font>");
+        }else {
+            response.getWriter().print("<font color='green'>恭喜您账号可用</font>");
+        }
     }
 }

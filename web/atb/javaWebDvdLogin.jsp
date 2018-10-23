@@ -9,6 +9,21 @@
 <html>
 <head>
     <title>DVD管理系统</title>
+    <style>
+        .button {
+            background-color: #4183c4;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 150px;
+            height: 30px;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div align='center'>
@@ -18,18 +33,23 @@
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>账号：</th>
-            <th><input type="text" name="username" title="username" style="text-align: center; width: 150px;"/></th>
+            <th><input type="text" name="username" title="username" style="text-align: center; width: 150px;"
+                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/></th>
         </tr>
         <tr>
             <th width=150px>密码：</th>
-            <th><input type="password" name="userpassword" title="userpassword" style="text-align: center; width: 150px;"/></th>
+            <th><input type="password" name="userpassword" title="userpassword" style="text-align: center; width: 150px;"
+                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/></th>
         </tr>
         <tr>
             <th><a style="text-decoration-line: underline;color: blue;width: 150px;" href="./javaWebDvd/jsp/retrieve/retrieve.jsp">找回密码</a></th>
             <th><a style="text-decoration-line: underline;color: blue;width: 150px;" href="./javaWebDvd/jsp/register/register.jsp">注册账号</a></th>
         </tr>
         <tr>
-            <th colspan = '2'><input type="submit" value="登陆" style="text-align: center;width: 50px;"></th>
+            <th colspan = '2'>
+                <button type="submit" class="button">登陆</button>
+                <%--<input type="submit" value="登陆" style="text-align: center;width: 50px;">--%>
+            </th>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){
@@ -39,12 +59,13 @@
     </table>
 </form>
 <div align='center'>
-    <br>1.注册（账号、密码、确认密码、手机号）
+    <br>输入注意：账号密码都为字母和数字组成、库存和手机号为数字组成
+    <br>1.注册（账号：检测是否存在、密码：检测两次密码是否相同、手机号：检测是否为手机号）
     <br>2.修改密码（账号、手机号）
     <br>3.登陆（账号、密码）
-    <br>4.增删改查（批量删除、关键字搜索）
-    <br>5.分页功能
-    <br>6.借书情况柱状图，库存：未借出绿色、剩余为0红色
+    <br>4.增删改查（序号自增、批量删除：删除密码、编辑时原数据显示、模糊查询：分页）
+    <br>5.分页功能（每页八条、页数会随着总数增加：如7条数据共一页，12条数据共两页）
+    <br>6.借书情况柱状图（添加数据同步），库存：一本未借蓝色（不可归还）、剩余为零红色（不可借出）
 </div>
 </body>
 </html>

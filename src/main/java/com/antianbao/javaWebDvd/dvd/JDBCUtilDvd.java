@@ -210,7 +210,6 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> search(String search){
         List<Dvd> list = new ArrayList<>();
-        System.out.println(search);
         String sql = "SELECT *FROM dvd WHERE no like '%"+search+"%' or name like '%"+search+"%' or state-borrow like '%"+search+"%'";
         PreparedStatement pstat = getPrepareStatement(sql);
         try {
@@ -281,4 +280,55 @@ public class JDBCUtilDvd {
         return count;
     }
 
+    /**
+     * 查询指定页（page这页）的记录
+     * @param page
+     * @return
+     */
+    public List<Dvd> findPage(int page,String search){
+        List<Dvd> list = new ArrayList<>();
+        String sql = "SELECT *FROM dvd " +
+                "WHERE no like '%"+search+"%' or name like '%"+search+"%' or state-borrow like '%"+search+"%' " +
+                "LIMIT "+(page-1)*Dvd.PAGE_SIZE+","+Dvd.PAGE_SIZE+"";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            Dvd bd;
+            while (rs.next()) {
+                bd = new Dvd();
+                bd.setNo(rs.getInt("no"));
+                bd.setImage(rs.getString("image"));
+                bd.setName(rs.getString("name"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
+                list.add(bd);
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * 总记录数
+     * @return
+     */
+    public int findCountPage(String search){
+        int count = 0;
+        String sql = "select count(*) from dvd " +
+                "WHERE no like '%"+search+"%' or name like '%"+search+"%' or state-borrow like '%"+search+"%'";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            if (rs.next()){
+                count = rs.getInt(1);
+            }
+            close();
+        } catch (Exception e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

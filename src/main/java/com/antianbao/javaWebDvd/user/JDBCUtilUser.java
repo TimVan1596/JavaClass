@@ -176,4 +176,14 @@ public class JDBCUtilUser {
         return list;
     }
 
+    public int panduan(String name) {
+        int rlt = 0;
+        List<User> list = queryStu();
+        for (User ls : list) {
+            if (ls.getName().equals(name)) {
+                return 1;
+            }
+        }
+        return rlt;
+    }
 }
