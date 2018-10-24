@@ -25,7 +25,7 @@
 </head>
 <body>
 <div align='center'>
-    <h3>----添加DVD----</h3>
+    <h2>----添加DVD----</h2>
 </div>
 <form action="../../../../add.do" method="post" enctype="multipart/form-data">
     <table border="1" width="300" align="center">

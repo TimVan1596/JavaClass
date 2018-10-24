@@ -80,7 +80,10 @@
             <!-- 输出结果集 -->
             <td align="center"><input type='checkbox' name='check' title='choice' value='<%= dvd.getNo() %>'/></td>
             <td align="center"><%= dvd.getNo() %></td>
-            <td align="center"><img src="<%= dvd.getImage() %>" width="60px" height="50px"></td>
+            <td align="center">
+                <img src="./image/<%=dvd.getImage()%>" width="60px" height="50px">
+                <%--<img src="<%= dvd.getImage() %>" width="60px" height="50px">--%>
+            </td>
             <td align="center"><%= dvd.getName() %></td>
             <%
                 if(dvd.getState()-dvd.getBorrow() == 0){
@@ -151,7 +154,7 @@
             <td colspan = '1' align="center"><a href = "../../login.do">主页</a></td>
             <td colspan = '2' align="center"></td>
             <td colspan = '2' align="center"><a href = "./jsp/choice/data.jsp">数据显示</a></td>
-            <td colspan = '1' align="center"><a href = "./login.jsp">退出</a></td>
+            <td colspan = '1' align="center"><a href = "./javaWebDvdLogin.jsp">退出</a></td>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){

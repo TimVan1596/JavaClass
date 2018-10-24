@@ -60,7 +60,10 @@
             <!-- 输出结果集 -->
             <td align="center"><input type='checkbox' name='check' title='choice' value='<%= dvd.getNo() %>'/></td>
             <td align="center"><%= dvd.getNo() %></td>
-            <td align="center"><img src="<%= dvd.getImage() %>" width="60px" height="50px"></td>
+            <td align="center">
+                <img src="./atb/javaWebDvd/image/<%=dvd.getImage()%>" width="60px" height="50px">
+                <%--<img src="<%= dvd.getImage() %>" width="60px" height="50px">--%>
+            </td>
             <td align="center"><%= dvd.getName() %></td>
             <%
                 if(dvd.getState()-dvd.getBorrow() == 0){

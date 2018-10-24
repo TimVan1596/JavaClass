@@ -160,7 +160,28 @@ public class JDBCUtilDvd {
     }
 
     /**
-     * 修改图书
+     * 编辑图书带图片
+     */
+    public int updateDvd(int no,String image, String name, int state,int borrow) {
+        int rlt = 0;
+        try {
+            String sql = "update dvd SET name = ?,state = ?,borrow = ?,image = ? where no = ?";
+            PreparedStatement pstat = getPrepareStatement(sql);
+            Object[] params = {name,state,borrow,image,no};
+            for (int i = 1; i <= params.length; i++) {
+                pstat.setObject(i, params[i - 1]);
+            }
+            rlt = pstat.executeUpdate();
+            close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return rlt;
+    }
+
+    /**
+     * 编辑图书无图片
      */
     public int updateDvd(int no, String name, int state,int borrow) {
         int rlt = 0;

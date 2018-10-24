@@ -12,8 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,16 +41,20 @@ public class addServlet extends HttpServlet {
                 List<FileItem> items = upload.parseRequest(request);
                 //处理参数
                 for(FileItem item:items){
+                    if(item.getString("utf-8").equals("")){
+                        //添加界面
+                        request.setAttribute("MSG", "每项内容不得为空!");
+                        request.getRequestDispatcher("./atb/javaWebDvd/jsp/choice/add.jsp").forward(request, response);
+                    }
                     //如果非文件类型
                     if(item.isFormField()){
                         list.add(item.getString("utf-8"));
                         //参数的类型
-//                        item.getContentType().equals("image/png") || item.getContentType().equals("image/jpeg")
-//                                || item.getContentType().equals("image/gif") || item.getContentType().equals("image/bmp")
 //                        System.out.println(item.getString("utf-8"));
                     }else{
                         //判断是否为图片格式
-                        if( item.getContentType().equals("image/*") ){
+                        if( item.getContentType().equals("image/png") || item.getContentType().equals("image/jpeg")
+                                || item.getContentType().equals("image/gif") || item.getContentType().equals("image/bmp") ){
                             //写入文件
                             String rootPath = servletContext.getRealPath("//");
                             String savePath = rootPath+File.separator+"upload";
@@ -64,14 +67,28 @@ public class addServlet extends HttpServlet {
                             SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
                             //完整的存储文件名
                             String saveFileName = savePath+File.separator+df.format(day)+item.getName();
-                            list.add(saveFileName);
-//                            System.out.println(saveFileName);
                             //存储文件
                             File uploadedFile = new File(saveFileName);
                             item.write(uploadedFile);
+                            try {
+                                FileInputStream fis = new FileInputStream(saveFileName);
+                                FileOutputStream fos = new FileOutputStream("E:\\JAVA\\java_direction_class\\web\\atb\\javaWebDvd\\image\\"+df.format(day)+item.getName());
+                                int n;
+                                byte[] bytes = new byte[1024];
+                                while ((n = (fis.read(bytes))) != -1) {
+                                    fos.write(bytes, 0, n);
+                                }
+                                fis.close();
+                                fos.close();
+                            } catch (FileNotFoundException e) {
+                                System.out.println("要复制的图片不存在");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            list.add(df.format(day)+item.getName());
                         }else{
-                            request.setAttribute("MSG", "选择的不是图片");
-                            request.getRequestDispatcher("./atb/javaWebDvd/choice/add.jsp").forward(request, response);
+                            request.setAttribute("MSG", "图片仅支持png/jpg/gif/bmp格式");
+                            request.getRequestDispatcher("./atb/javaWebDvd/jsp/choice/add.jsp").forward(request, response);
                         }
                     }
                 }

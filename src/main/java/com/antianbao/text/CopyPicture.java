@@ -11,8 +11,8 @@ import java.io.*;
 public class CopyPicture {
     public static void main(String[] args) {
         try {
-            FileInputStream fis = new FileInputStream("E:\\touxiang.jpg");
-            FileOutputStream fos = new FileOutputStream("E:\\touxiangCopy.jpg");
+            FileInputStream fis = new FileInputStream("E:\\JAVA\\java_direction_class\\out\\artifacts\\java_direction_class_war_exploded\\\\upload\\20181023220142png.png");
+            FileOutputStream fos = new FileOutputStream("E:\\JAVA\\java_direction_class\\web\\atb\\javaWebDvd\\image\\"+"JD.png");
             int n;
             byte[] bytes = new byte[1024];
             while ((n = (fis.read(bytes))) != -1) {

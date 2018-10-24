@@ -14,7 +14,8 @@
 </head>
 <body>
 <div align='center'>
-    <h3>----修改信息----</h3>
+    <h2>----修改信息----</h2>
+    <h6 style="color: red">修改图片请选择新图片，若不选择则图片不变</h6>
     <style>
         .button {
             background-color: #4183c4;
@@ -29,7 +30,7 @@
         }
     </style>
 </div>
-<form action="../../../../modify.do" method="post">
+<form action="../../../../modify.do" method="post" enctype="multipart/form-data">
     <table border="1" width="300" align="center">
         <%
             //遍历结果集
@@ -47,8 +48,15 @@
             </th>
         </tr>
         <tr>
+            <th width=150px>图片：</th>
+            <th>
+                <img src="../../image/<%=dvd.getImage()%>" width="60px" height="50px">
+                <input type="file" name="file" style="text-align: center; width: 150px;" value="<%= dvd.getImage() %>"/>
+            </th>
+        </tr>
+        <tr>
             <th width=150px>书名：</th>
-            <th><input name="name" type="text" title="" style="text-align: center; width: 150px;" value="<%= dvd.getName() %>" /></th>
+            <th><input type="text" name="name" title="" style="text-align: center; width: 150px;" value="<%= dvd.getName() %>" /></th>
         </tr>
         <tr>
             <th width=150px>总数：</th>

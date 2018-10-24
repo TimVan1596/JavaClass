@@ -12,8 +12,7 @@
 //import javax.servlet.http.HttpServlet;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
-//import java.io.File;
-//import java.io.IOException;
+//import java.io.*;
 //import java.text.SimpleDateFormat;
 //import java.util.ArrayList;
 //import java.util.Date;
@@ -44,47 +43,83 @@
 //                for(FileItem item:items){
 //                    //如果非文件类型
 //                    if(item.isFormField()){
+//                        if(item.getString("utf-8").equals("")){
+//                            //添加界面
+//                            request.setAttribute("MSG", "每项内容不得为空!(图片可不选)");
+//                            request.getRequestDispatcher("./atb/javaWebDvd/jsp/choice/modify.jsp?no="+Integer.parseInt(list.get(0))+"").forward(request, response);
+//                        }
 //                        list.add(item.getString("utf-8"));
 //                        //参数的类型
 ////                        System.out.println(item.getString("utf-8"));
 //                    }else{
-//                        //判断是否为图片格式
-//                        if( item.getContentType().equals("image/png") || item.getContentType().equals("image/jpeg")
-//                                || item.getContentType().equals("image/gif") || item.getContentType().equals("image/bmp") ){
-//                            //写入文件
-//                            String rootPath = servletContext.getRealPath("//");
-//                            String savePath = rootPath+File.separator+"upload";
-//                            File fileSaveFolder = new File(savePath);
-//                            if(!fileSaveFolder.exists()){
-//                                fileSaveFolder.mkdir();
-//                            }
-//                            //获取时间
-//                            Date day = new Date();
-//                            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-//                            //完整的存储文件名
-//                            String saveFileName = savePath+File.separator+df.format(day)+item.getName();
-//                            list.add(saveFileName);
-////                            System.out.println(saveFileName);
-//                            //存储文件
-//                            File uploadedFile = new File(saveFileName);
-//                            item.write(uploadedFile);
+//                        System.out.println(1);
+//                        if(item.getName().equals("")){
+//                            list.add("1");
+//                            System.out.println(2);
 //                        }else{
-//                            request.setAttribute("MSG", "选择的不是图片");
-//                            request.getRequestDispatcher("./atb/javaWebDvd/choice/add.jsp").forward(request, response);
+//                            System.out.println(3);
+//                            //判断是否为图片格式
+//                            if( item.getContentType().equals("image/png") || item.getContentType().equals("image/jpeg")
+//                                    || item.getContentType().equals("image/gif") || item.getContentType().equals("image/bmp") ){
+//                                //写入文件
+//                                String rootPath = servletContext.getRealPath("//");
+//                                String savePath = rootPath+File.separator+"upload";
+//                                File fileSaveFolder = new File(savePath);
+//                                if(!fileSaveFolder.exists()){
+//                                    fileSaveFolder.mkdir();
+//                                }
+//                                //获取时间
+//                                Date day = new Date();
+//                                SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+//                                //完整的存储文件名
+//                                String saveFileName = savePath+File.separator+df.format(day)+item.getName();
+//                                //存储文件
+//                                File uploadedFile = new File(saveFileName);
+//                                item.write(uploadedFile);
+//                                try {
+//                                    FileInputStream fis = new FileInputStream(saveFileName);
+//                                    FileOutputStream fos = new FileOutputStream("E:\\JAVA\\java_direction_class\\web\\atb\\javaWebDvd\\image\\"+df.format(day)+item.getName());
+//                                    int n;
+//                                    byte[] bytes = new byte[1024];
+//                                    while ((n = (fis.read(bytes))) != -1) {
+//                                        fos.write(bytes, 0, n);
+//                                    }
+//                                    fis.close();
+//                                    fos.close();
+//                                } catch (FileNotFoundException e) {
+//                                    System.out.println("要复制的图片不存在");
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                                list.add(df.format(day)+item.getName());
+//                            }else{
+//                                request.setAttribute("MSG", "图片仅支持png/jpg/gif/bmp格式");
+//                                request.getRequestDispatcher("./atb/javaWebDvd/jsp/choice/modify.jsp?no="+Integer.parseInt(list.get(0))+"").forward(request, response);
+//                            }
 //                        }
 //                    }
 //                }
-//                JDBCUtilDvd jdbcUtil = new JDBCUtilDvd();
-//                Dvd dvd1 = new Dvd(list.get(0), Integer.parseInt(list.get(1)),list.get(2));
-//                int jd = jdbcUtil.addDvd(dvd1);
+//                System.out.println(4);
+//                int jd = 0;
+//                if(list.get(1).length() == 1){
+//                    JDBCUtilDvd jdbcUtil = new JDBCUtilDvd();
+//                    jd = jdbcUtil.updateDvd(Integer.parseInt(list.get(0)),list.get(2)
+//                            ,Integer.parseInt(list.get(3)),Integer.parseInt(list.get(4)));
+//                }else{
+//                    System.out.println(7);
+//                    JDBCUtilDvd jdbcUtil = new JDBCUtilDvd();
+//                    jd = jdbcUtil.updateDvd(Integer.parseInt(list.get(0)),list.get(1),list.get(2)
+//                            ,Integer.parseInt(list.get(3)),Integer.parseInt(list.get(4)));
+//                }
+//                System.out.println(5);
 //                if(jd > 0){
-//                    //添加成功跳转显示界面
-//                    request.setAttribute("MSG", "添加成功！");
+//                    //修改成功跳转显示界面
+//                    request.setAttribute("MSG", "修改成功！");
 //                    request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
 //                }else{
-//                    //输出登陆失败
-//                    request.setAttribute("MSG", "添加失败，该书已存在！");
-//                    request.getRequestDispatcher("./atb/javaWebDvd/jsp/choice/add.jsp").forward(request, response);
+//                    //输出修改失败
+//                    request.setAttribute("MSG", "修改失败！代码写错啦！");
+//                    request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
 //                }
 //            } catch (Exception e) {
 //                e.printStackTrace();
@@ -95,8 +130,18 @@
 //    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        //get解决中文乱码
 //        //name = new String(name.getBytes("ISO-8859-1"),"utf-8");
-//        int page = Integer.parseInt(request.getParameter("page"));
-//        request.setAttribute("page", page);
-//        request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
+//        //1.取值
+//        String password =request.getParameter("password");
+//        String cpassword =request.getParameter("cpassword");
+//        password = new String(password.getBytes("ISO-8859-1"),"utf-8");
+//        cpassword = new String(cpassword.getBytes("ISO-8859-1"),"utf-8");
+//        //2.判断，此处用于判断是否已存在该用户
+//        response.setContentType("text/html;charset=UTF-8");
+//        //3.返回结果
+//        if(password.equals(cpassword)) {
+//            response.getWriter().print("<font color='green'>两次密码相同</font>");
+//        }else {
+//            response.getWriter().print("<font color='red'>两次密码不一致</font>");
+//        }
 //    }
 //}
