@@ -15,10 +15,9 @@ public class pagingServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //get解决中文乱码
-        //name = new String(name.getBytes("ISO-8859-1"),"utf-8");
+        //name = new String(name.getBytes("ISO8859-1"),"utf-8");
         int page = Integer.parseInt(request.getParameter("page"));
         String search = request.getParameter("search");
-        search = new String(search.getBytes("ISO-8859-1"),"utf-8");
         request.setAttribute("page", page);
         request.setAttribute("search", search);
         request.getRequestDispatcher("./atb/javaWebDvd/paging.jsp").forward(request, response);

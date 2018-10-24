@@ -26,6 +26,7 @@
 <body>
 <div align='center'>
     <h2>----添加DVD----</h2>
+    <h6 style="color: red">库存需为数字，图片格式支持png/jpg/gif/bmp</h6>
 </div>
 <form action="../../../../add.do" method="post" enctype="multipart/form-data">
     <table border="1" width="300" align="center">

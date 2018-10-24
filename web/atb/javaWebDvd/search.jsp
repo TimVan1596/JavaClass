@@ -14,6 +14,7 @@
 </head>
 <body>
 <h1 align='center'>----欢迎进入DVD Mgr 6.0 管理系统----</h1>
+<h5 align='center' style="color: red">介绍：搜索（关键字）,编辑（修改信息,图片可改可不改）,分页（数据分页）,删除（多删且要密码）,添加（添加信息需加图片）,主页（返回首页）,数据显示（借阅情况柱状图）,退出（返回登录页面）</h5>
 <div align='center'>
     <form action='./search.jsp' method='post'>
         搜关键字：<input type='text' title="序号书名状态" name='search' />
@@ -62,7 +63,6 @@
                 dvds = jdbcUtilDvd.findPage(page1,request.getParameter("search"));
             }
             for (Dvd dvd : dvds) {
-
 //            List<Dvd> dvds;
 //            JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
 //            request.setCharacterEncoding("utf-8");
@@ -152,9 +152,9 @@
             <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
             <td colspan = '1' align="center"><a href = "./jsp/choice/add.jsp">添加</a></td>
             <td colspan = '1' align="center"><a href = "../../login.do">主页</a></td>
-            <td colspan = '2' align="center"></td>
+            <td colspan = '2' align="center" style="color: red">主页:返回首页  库存:蓝色未借出,红色已借完</td>
             <td colspan = '2' align="center"><a href = "./jsp/choice/data.jsp">数据显示</a></td>
-            <td colspan = '1' align="center"><a href = "./javaWebDvdLogin.jsp">退出</a></td>
+            <td colspan = '1' align="center"><a href = "../javaWebDvdLogin.jsp">退出</a></td>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){

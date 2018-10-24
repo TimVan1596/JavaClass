@@ -1,7 +1,6 @@
 package com.antianbao.javaWebDvd.jsp.choice;
 
 import com.antianbao.javaWebDvd.dvd.JDBCUtilDvd;
-import com.antianbao.javaWebDvd.user.JDBCUtilUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

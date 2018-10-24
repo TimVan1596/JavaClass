@@ -37,8 +37,8 @@ public class registerServlet extends HttpServlet {
                 request.getRequestDispatcher("./atb/javaWebDvd/login.jsp").forward(request, response);
             }else{
                 //输出已账号存在,跳回注册界面
-                request.setAttribute("MSG", "账号已存在！");
-                request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/register.jsp").forward(request, response);
+                request.setAttribute("MSG", "账号已存在，请登录！若忘记密码可找回！");
+                request.getRequestDispatcher("./atb/javaWebDvd/login.jsp").forward(request, response);
             }
         }else {
             //输出两次密码不一致,跳回注册界面

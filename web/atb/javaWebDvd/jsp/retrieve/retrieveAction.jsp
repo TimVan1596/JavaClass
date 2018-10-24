@@ -25,7 +25,8 @@
 </head>
 <body>
 <div align='center'>
-    <h3>----修改密码----</h3>
+    <h2>----修改密码----</h2>
+    <h6 style="color: red">账号和密码为字母和数字组成</h6>
 </div>
 <form action="../../../../Retrieve.do" method="get">
     <table border="1" width="300" align="center">

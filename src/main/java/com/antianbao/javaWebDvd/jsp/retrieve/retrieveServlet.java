@@ -32,7 +32,7 @@ public class retrieveServlet extends HttpServlet {
             }else{
                 //输出登陆失败
                 request.setAttribute("MSG", "账号或手机号错误！");
-                request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieve.jsp").forward(request, response);
+                request.getRequestDispatcher("./atb/javaWebDvd/login.jsp").forward(request, response);
             }
         }
     }
