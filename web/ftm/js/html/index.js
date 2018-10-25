@@ -2,6 +2,11 @@
 let $loginPage =  $('#login-page');
 let $registerPage =  $('#register-page');
 
+//layui
+layui.use('layer', function () {
+    let layer = layui.layer;
+});
+
 //绑定登录点击事件
 $('#login-submit').click(function () {
 
@@ -66,12 +71,26 @@ $('#login-submit').click(function () {
                     $loginPage.removeClass('testtwo');
                 }, 2500);
 
-                window.location.href = 'html/menu.jsp';
+                let isFirstLogin = ret['data']['isFirstLogin'];
+
+                let MenuURL = 'html/menu.jsp';
+
+                if (isFirstLogin === '1'){
+                    MenuURL += '?first=1';
+                }
+
+                window.location.href = MenuURL;
 
             } else if (ret['error'] === 1) {
                 var errorInfo = ret['errorInfo'];
-                alert("登录失败！" + errorInfo);
-                location.reload();
+
+                layer.msg("登录失败！" + errorInfo, {
+                    anim: 6
+                });
+
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
             }
 
         });

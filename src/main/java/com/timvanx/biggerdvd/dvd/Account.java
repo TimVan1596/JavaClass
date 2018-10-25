@@ -108,6 +108,39 @@ public class Account implements Serializable {
         return usrPassword;
     }
 
+    /**
+     * 获取用户是否首次登录
+     * @param tableWhere 查询条件
+     * @return isfirstlogin boolean true=首次登录
+     */
+    public static boolean isFirstLogin(String tableWhere) {
+
+        boolean isfirstlogin = false;
+
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("isfirstlogin");
+        }};
+        List<List<String>> isfirstloginList =
+                JDBCUtil.select("account",
+                tableField, tableWhere, null,
+                        null);
+        if ("1".equals( isfirstloginList.get(0).get(0))){
+            isfirstlogin = true;
+
+            //若首次登录则检测后，覆盖为false
+            Map<String, Object> updateData =
+                    new HashMap<>(1);
+            updateData.put("isfirstlogin", "0");
+            JDBCUtil.update("account", updateData
+                    , tableWhere);
+
+        }
+
+
+        return isfirstlogin;
+    }
+
     public void setUsrPassword(String usrPassword) {
         this.usrPassword = usrPassword;
     }
@@ -180,4 +213,10 @@ public class Account implements Serializable {
 
         return isAccountExist;
     }
+
+    public static void main(String[] args) {
+        Account.isFirstLogin("id = 31");
+        Account.isFirstLogin("id = 32");
+    }
+
 }
