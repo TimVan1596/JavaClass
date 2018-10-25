@@ -8,9 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<% if(session.getAttribute("loginName")==null){
-    response.sendRedirect("login.jsp");
-}
+<%
     session.getAttribute("listDVD");
     //把SESSION的dvd数据放进集合里
     ArrayList<DVD> list=(ArrayList<DVD>)session.getAttribute("listDVD");

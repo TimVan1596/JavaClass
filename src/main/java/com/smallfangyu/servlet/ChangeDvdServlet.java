@@ -19,16 +19,16 @@ public class ChangeDvdServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+        //request.setCharacterEncoding("UTF-8");
         int dvdId=Integer.parseInt(request.getParameter("dvdid"));
         String dvdName=request.getParameter("dvdname");
         String dvdState=request.getParameter("dvdstate");
 
         if(change(dvdId,dvdName,dvdState)>0){
-            response.setContentType("text/html;charset=UTF-8");
+            //response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("<script language='javascript'>alert('DVD修改成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
         }else{
-            response.setContentType("text/html;charset=UTF-8");
+            //response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("<script language='javascript'>alert('DVD修改失败')</script>");
         }
 

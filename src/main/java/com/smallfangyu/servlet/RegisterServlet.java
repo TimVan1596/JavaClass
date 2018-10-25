@@ -58,18 +58,18 @@ public class RegisterServlet extends HttpServlet {
     }
 @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    request.setCharacterEncoding("UTF-8");
+    //request.setCharacterEncoding("UTF-8");
     String userName=request.getParameter("username");
     String passWord=request.getParameter("password");
 
     if(check(userName)){
           int res=register(userName,passWord);
            if(res>0){
-               response.setContentType("text/html;charset=UTF-8");
+               //response.setContentType("text/html;charset=UTF-8");
                response.getWriter().write("<script language='javascript'>alert('账号注册成功');location.href='/fy/jsp/login.jsp';</script>");
            }
     }else{
-        response.setContentType("text/html;charset=UTF-8");
+        //response.setContentType("text/html;charset=UTF-8");
 
         response.getWriter().write("<script language='javascript'>alert('账号已被注册');location.href='/fy/jsp/register.jsp';</script>");
 
