@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "retrieveServlet",urlPatterns = {"/Retrieve.do"})
+@WebServlet(name = "retrieveServlet",urlPatterns = {"/atbRetrieve.do"})
 public class retrieveServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码

@@ -37,7 +37,7 @@
     <h2>DVD Mgr 6.0 管理系统</h2>
     <div class="login-top">
         <h1>欢迎登陆</h1>
-        <form action="../login.do" method="post">
+        <form action="../atblogin.do" method="post">
             <input type="text" name="username" title="username" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
             <input type="text" name="userpassword" title="userpassword" value="账号密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
             <%--<input type="text" name="username" title="username" value="账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号';}">--%>

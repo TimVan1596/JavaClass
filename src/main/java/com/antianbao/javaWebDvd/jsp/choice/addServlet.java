@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet(name = "addServlet",urlPatterns = {"/add.do"})
+@WebServlet(name = "addServlet",urlPatterns = {"/atbadd.do"})
 public class addServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码

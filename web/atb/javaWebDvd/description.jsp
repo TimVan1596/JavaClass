@@ -63,11 +63,11 @@
 </div>
 <div align='center'>
     <ul>
-        <li><a href="./login.do">主页</a></li>
-        <li><a href="./login.do">管理数据</a></li>
+        <li><a href="./atblogin.do">主页</a></li>
+        <li><a href="./atblogin.do">管理数据</a></li>
         <li><a href="./atb/javaWebDvd/jsp/choice/data.jsp">借阅情况</a></li>
-        <li><a href="./login.do">撤回数据</a></li>
-        <li><a href="./description.do">说明介绍</a></li>
+        <li><a href="./atblogin.do">撤回数据</a></li>
+        <li><a href="./atbdescription.do">说明介绍</a></li>
     </ul>
 </div>
 <div align='center'>

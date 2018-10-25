@@ -30,7 +30,7 @@
         }
     </style>
 </div>
-<form action="../../../../modify.do" method="post" enctype="multipart/form-data">
+<form action="../../../../atbmodify.do" method="post" enctype="multipart/form-data">
     <table border="1" width="300" align="center">
         <%
             //遍历结果集
@@ -73,7 +73,7 @@
             }
         %>
         <tr>
-            <th colspan = '1'><a href = '../../../../login.do'>返回</a></th>
+            <th colspan = '1'><a href = '../../../../atblogin.do'>返回</a></th>
             <th colspan = '1'><button type="submit" class="button">提交</button></th>
         </tr>
         <script type="text/javascript">

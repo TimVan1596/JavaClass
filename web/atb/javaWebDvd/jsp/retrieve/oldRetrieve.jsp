@@ -28,7 +28,7 @@
     <h2>----找回密码----</h2>
     <h6 style="color: red">账号为字母和数字组成，手机号格式（十一位）：13+任意数,15+除4的任意数,18+除1和4的任意数,17+除9的任意数,147</h6>
 </div>
-<form action="../../../../Retrieve.do" method="post">
+<form action="../../../../atbRetrieve.do" method="post">
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>用户账号：</th>

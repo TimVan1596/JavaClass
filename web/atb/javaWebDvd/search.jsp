@@ -52,7 +52,8 @@
 </head>
 <body background="./images/banner.jpg">
 <h1 align='center' style="color: white">----欢迎进入DVD Mgr 6.0 管理系统----</h1>
-<h5 align='center' style="color: red">介绍：搜索（关键字）,编辑（修改信息,图片可改可不改）,分页（数据分页）,删除（多删且要密码）,添加（添加信息需加图片）,主页（返回首页）,数据显示（借阅情况柱状图）,退出（返回登录页面）</h5>
+<h5 align='center' style="color: red">介绍：搜索（关键字）,管理数据（操作数据）,数据显示（借阅情况柱状图）,退出（返回登录页面）</h5>
+<h5 align='center' style="color: red">界面操作：编辑（修改信息,图片可改可不改）,分页（数据分页）,删除（多删可恢复但要密码）,添加（添加信息需加图片）</h5>
 <div align='center'>
     <form action='./search.jsp' method='post'>
         <h4 style="color: white">搜关键字：<input type='text' title="序号书名库存" name='search' style="width: 150px; height: 30px"/>
@@ -63,13 +64,13 @@
 <div align='center'>
     <ul>
         <li><a href="https://www.baidu.com">主页</a></li>
-        <li><a href="../../login.do">管理数据</a></li>
+        <li><a href="../../atblogin.do">管理数据</a></li>
         <li><a href="./jsp/choice/data.jsp">借阅情况</a></li>
-        <li><a href="../../login.do">撤回数据</a></li>
-        <li><a href="../../description.do">说明介绍</a></li>
+        <li><a href="../../atbrevoke.do">历史数据</a></li>
+        <li><a href="../../atbdescription.do">说明介绍</a></li>
     </ul>
 </div>
-<form action='../../delete.do' method='post' onsubmit="return GL()">
+<form action='../../atbdelete.do' method='post' onsubmit="return GL()">
     <table border="1" width="750" align = "center" style="background-color: white">
         <tr>
             <th width=50px>选择</th>
@@ -153,8 +154,8 @@
             <%
                 }
             %>
-            <td align="center"><a href = '../../lend.do?no=<%= dvd.getNo() %>'>借出</a></td>
-            <td align="center"><a href = '../../return.do?no=<%= dvd.getNo() %>'>归还</a></td>
+            <td align="center"><a href = '../../atblend.do?no=<%= dvd.getNo() %>'>借出</a></td>
+            <td align="center"><a href = '../../atbreturn.do?no=<%= dvd.getNo() %>'>归还</a></td>
             <td align="center"><a href = './jsp/choice/modify.jsp?no=<%= dvd.getNo() %>'>编辑</a></td>
         </tr>
         <%
@@ -162,43 +163,43 @@
         %>
         <tr>
             <td colspan = '8' align="right">
-                <a href = '../../paging.do?page=1&search=<%=request.getParameter("search")%>'>首页</a>
+                <a href = '../../atbpaging.do?page=1&search=<%=request.getParameter("search")%>'>首页</a>
                 <%
                     if(page1 == 1){
                 %>
-                <a href = '../../paging.do?page=1&search=<%=request.getParameter("search")%>'>上一页</a>
+                <a href = '../../atbpaging.do?page=1&search=<%=request.getParameter("search")%>'>上一页</a>
                 <%
                 }else{
                 %>
-                <a href = '../../paging.do?page=<%= page1-1%>&search=<%=request.getParameter("search")%>'>上一页</a>
+                <a href = '../../atbpaging.do?page=<%= page1-1%>&search=<%=request.getParameter("search")%>'>上一页</a>
                 <%
                     }
                 %>
                 <%
                     for(int i=1;i<pages+1;i++){
                 %>
-                <a href = '../../paging.do?page=<%= i %>&search=<%=request.getParameter("search")%>'><%= i %></a>
+                <a href = '../../atbpaging.do?page=<%= i %>&search=<%=request.getParameter("search")%>'><%= i %></a>
                 <%
                     }
                 %>
                 <%
                     if(page1 == pages){
                 %>
-                <a href = '../../paging.do?page=<%= pages%>&search=<%=request.getParameter("search")%>'>下一页</a>
+                <a href = '../../atbpaging.do?page=<%= pages%>&search=<%=request.getParameter("search")%>'>下一页</a>
                 <%
                 }else{
                 %>
-                <a href = '../../paging.do?page=<%= page1+1%>&search=<%=request.getParameter("search")%>'>下一页</a>
+                <a href = '../../atbpaging.do?page=<%= page1+1%>&search=<%=request.getParameter("search")%>'>下一页</a>
                 <%
                     }
                 %>
-                <a href = '../../paging.do?page=<%= pages%>&search=<%=request.getParameter("search")%>'>尾页</a>
+                <a href = '../../atbpaging.do?page=<%= pages%>&search=<%=request.getParameter("search")%>'>尾页</a>
             </td>
         </tr>
         <tr>
             <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
             <td colspan = '1' align="center"><a href = "./jsp/choice/add.jsp">添加</a></td>
-            <td colspan = '1' align="center"><a href = "../../login.do">主页</a></td>
+            <td colspan = '1' align="center"><a href = "../../atblogin.do">主页</a></td>
             <td colspan = '2' align="center" style="color: red">主页:返回首页  库存:蓝色未借出,红色已借完</td>
             <td colspan = '2' align="center"><a href = "./jsp/choice/data.jsp">数据显示</a></td>
             <td colspan = '1' align="center"><a href = "../javaWebDvdLogin.jsp">退出</a></td>
@@ -211,7 +212,7 @@
              * @return {boolean}
              */
             function GL(){
-                var theResponse = window.prompt("想删库请输入：","请在此输入删库密码");
+                var theResponse = window.prompt("想删库请输入密码：","请在此输入删库密码");
                 // var truthBeTold = window.confirm("单击“确定”继续。单击“取消”停止。");
                 if (theResponse == 123) {
                     window.alert("又删我库,很难受！");
