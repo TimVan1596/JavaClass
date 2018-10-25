@@ -9,6 +9,21 @@
 <html>
 <head>
     <title>找回密码</title>
+    <style>
+        .button {
+            background-color: #008CBA;
+            border-radius: 4px;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
@@ -16,7 +31,7 @@
     <h4>找回密码</h4>
 <form action="/fy/servlet/toGetPassWord" method="get" onsubmit="return returnPassword()">
     请输入账号：<input type=" text" name="username" id="returnName"/><br>
-    <input type="submit" value="提交"/>
+    <input type="submit" class="button" value="提交"/>
 </form>
 </div>
     <script>
