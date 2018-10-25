@@ -1,9 +1,7 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: r
-  Date: 2018/10/8
-  Time: 16:52
-  To change this template use File | Settings | File Templates.
+  注册页面
+  User: TimVan
+  Date: 2018-10-26 00:58:54
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -40,15 +38,10 @@
         }
     </style>
 
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-    </script>
-    <script src="../js/common-js.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../js/common-js.js"></script>
 </head>
 <body>
-<h1>注册账号</h1>
 
 <!--登录页面-->
 <div id="login-page" class="login">
@@ -90,9 +83,9 @@
             </div>
         </div>
         <div class="login_fields__submit">
-            <input type="submit" value="提交" id="login-submit"   onclick="register()">>
+            <input type="submit" value="提交" id="login-submit"   onclick="register()">
             <div class="forgot">
-                <a href="../html/register.jsp">返回登录</a>
+                <a href="../index.html">返回登录</a>
             </div>
         </div>
     </div>
@@ -104,8 +97,6 @@
         <p>© 2018-2019 TimVanX.com 版权所有 皖ICP备18002720号 .</p>
     </div>
 </div>
-
-
 
 <script>
     //注册账号

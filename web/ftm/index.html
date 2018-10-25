@@ -14,19 +14,19 @@
         }
 
         input::-webkit-input-placeholder {
-            color: white !important;    /* WebKit browsers */
+            color: white !important; /* WebKit browsers */
         }
 
         input:-moz-placeholder {
-            color: white !important;   /* Mozilla Firefox 4 to 18 */
+            color: white !important; /* Mozilla Firefox 4 to 18 */
         }
 
         input::-moz-placeholder {
-            color: white !important;   /* Mozilla Firefox 19+ */
+            color: white !important; /* Mozilla Firefox 19+ */
         }
 
         input:-ms-input-placeholder {
-            color: white !important;   /* Internet Explorer 10+ */
+            color: white !important; /* Internet Explorer 10+ */
         }
     </style>
 </head>
@@ -42,7 +42,7 @@
                 <img src="img/biggerdvd/user_icon_copy.png">
             </div>
             <input placeholder="用户名" type="text" name="name" id="user-name"
-                   style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;" autocomplete="off" >
+                   style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;" autocomplete="off">
             <div class="validation">
                 <img src="img/biggerdvd/tick.png">
             </div>
@@ -61,8 +61,10 @@
         </div>
         <div class="login_fields__submit">
             <input type="submit" value="登录" id="login-submit">
-            <div class="forgot">
-                <a href="html/register.jsp">注册/忘记密码</a>
+            <div class="forgot" style="width: 40%;">
+                <a href="html/register.jsp">注册</a>
+                <a href="html/reset_password.jsp"
+                   style="margin-left: 20%;">忘记密码</a>
             </div>
         </div>
     </div>
