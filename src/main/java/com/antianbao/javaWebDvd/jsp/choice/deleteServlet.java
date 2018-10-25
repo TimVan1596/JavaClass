@@ -34,7 +34,7 @@ public class deleteServlet extends HttpServlet {
             request.setAttribute("MSG", "删除成功！");
             request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
         }
-        if(zc != 0){
+        if(zc == 0){
             request.setAttribute("MSG", "转存失败！");
             request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
         }
