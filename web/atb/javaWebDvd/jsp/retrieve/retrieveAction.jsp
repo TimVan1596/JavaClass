@@ -12,7 +12,7 @@
     <title>修改密码</title>
     <!-- Custom Theme files -->
     <%
-        if(request.getAttribute("FH") == null){
+        if(request.getAttribute("name") == null){
     %>
     <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <%
@@ -38,24 +38,59 @@
     <div class="login-top">
         <h1>修改密码</h1>
         <form action="../../../../Retrieve.do" method="get">
-            <input type="text" name="name" id="name" title="" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+            <input type="text" name="name" id="name" title="" value="<%=request.getAttribute("name")%>" readonly />
+            <%--<input type="text" name="name" id="name" title="" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>--%>
             <input type="text" name="password" id="password" title="" value="账号密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
             <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <%--<input type="text" name="name" title="name" value="用户账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户账号';}">--%>
-            <%--<input type="text" name="password" title="password" value="账号密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号密码';}">--%>
-            <%--<input type="text" name="cpassword" title="cpassword" value="确认密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '确认密码';}">--%>
-            <%--<input type="text" name="phone" title="phone" value="绑定手机" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '绑定手机';}">--%>
             <div class="forgot">
                 <input type="submit" value="确认">
             </div>
         </form>
     </div>
     <div class="login-bottom">
+        <h3><span id="tishi1"></span></h3>
     </div>
 </div>
 <script type="text/javascript">
     if(<%= request.getAttribute("MSG")!=null %>){
         alert('<%=request.getAttribute("MSG") %>');
+    }
+</script>
+<script src="jquery-3.3.1.min.js" type="text/javascript"></script>
+<script>
+    //先将提示隐藏起来
+    $("#tishi1").hide();
+    $(function() {
+        //当输入注册名的输入框获得焦点后就先隐藏提示语
+        $("#cpassword").focus(function cls() {
+            $("#tishi1").hide();
+        });
+        //当输入框失去焦点就通过AJAX将数据传递给后端，在后端验证是否已存在该用户名
+        $("#cpassword").blur(
+            function() {
+                var cpassword = $(this).val();
+                cpassword = $.trim(cpassword);
+                var password = $("[name=password]").val();
+                password = $.trim(password);
+                if (cpassword != "") {
+                    var url = "../../../../modify.do?";
+                    cpassword="cpassword="+cpassword;
+                    password="&password="+password;
+                    url = url + cpassword + password;
+                    //$.get()方法能够返回一个JQuery XMLHttpRequest对象
+                    var jqxhr = $.get(url, callback);
+                    //若执行JQuery出现错误则提示错误信息
+                    //在JQuery3.0以后需要用done()、fail()、alwayls()代替success()、error()、complete();
+                    jqxhr.fail(function(xhr, error, throwerror) {
+                        // alert("error" + xhr.status + " error=" + error + " throwerror:" + throwerror);
+                    });
+                }
+            });
+    });
+    //ajax的回调函数
+    function callback(data, status) {
+        $("#tishi1").show();
+        $("#tishi1").html(data);
     }
 </script>
 <div class="copyright">

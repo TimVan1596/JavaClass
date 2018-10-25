@@ -51,13 +51,14 @@ public class Dvd {
         this.image = image;
     }
 
-    @Override
-    public String toString() {
-        return "Dvd{" +
-                "no=" + no +
-                ", name='" + name + '\'' +
-                ", state='" + state + '\'' +
-                ", borrow=" + borrow +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Dvd{" +
+				"no=" + no +
+				", name='" + name + '\'' +
+				", state=" + state +
+				", borrow=" + borrow +
+				", image='" + image + '\'' +
+				'}';
+	}
 }
