@@ -1,73 +1,86 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2018\10\8 0008
-  Time: 22:09
+  Date: 2018\10\25 0025
+  Time: 9:15
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>DVD管理系统</title>
-    <style>
-        .button {
-            background-color: #4183c4;
-            border: none;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            width: 150px;
-            height: 30px;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
+    <!-- Custom Theme files -->
+    <%
+        if(request.getAttribute("DL") == null){
+    %>
+    <link href="./javaWebDvd/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <%
+    }else{
+    %>
+    <link href="./atb/javaWebDvd/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <%
         }
-    </style>
+    %>
+    <!-- Custom Theme files -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+    <!--Google Fonts-->
+    <link href='http://fonts.useso.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <!--Google Fonts-->
 </head>
 <body>
-<div align='center'>
-    <h2>----欢迎进入DVD Mgr 6.0 管理系统----</h2>
+<div class="login">
+    <h2>DVD Mgr 6.0 管理系统</h2>
+    <div class="login-top">
+        <h1>欢迎登陆</h1>
+        <form action="../login.do" method="post">
+            <input type="text" name="username" title="username" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+            <input type="text" name="userpassword" title="userpassword" value="账号密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+            <%--<input type="text" name="username" title="username" value="账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号';}">--%>
+            <%--<input type="text" name="userpassword" title="userpassword" value="密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '密码';}">--%>
+            <div class="forgot">
+                <%
+                    if(request.getAttribute("DL") == null){
+                %>
+                <a href="./javaWebDvd/jsp/retrieve/retrieve.jsp">忘记密码</a>
+                <%
+                }else{
+                %>
+                <a href="./atb/javaWebDvd/jsp/retrieve/retrieve.jsp">忘记密码</a>
+                <%
+                    }
+                %>
+                <input type="submit" value="登陆">
+            </div>
+        </form>
+    </div>
+    <div class="login-bottom">
+        <h3>新用户 &nbsp;
+            <%
+                if(request.getAttribute("DL") == null){
+            %>
+            <a href="./javaWebDvd/jsp/register/register.jsp">注册</a>
+            <%
+            }else{
+            %>
+            <a href="./atb/javaWebDvd/jsp/register/register.jsp">注册</a>
+            <%
+                }
+            %>
+            &nbsp 账号</h3>
+    </div>
 </div>
-<form action="../login.do" method="post">
-    <table border="1" width="300" align="center">
-        <tr>
-            <th width=150px>账号：</th>
-            <th><input type="text" name="username" title="username" style="text-align: center; width: 150px;"
-                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/></th>
-        </tr>
-        <tr>
-            <th width=150px>密码：</th>
-            <th><input type="password" name="userpassword" title="userpassword" style="text-align: center; width: 150px;"
-                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/></th>
-        </tr>
-        <tr>
-            <th><a style="text-decoration-line: underline;color: blue;width: 150px;" href="./javaWebDvd/jsp/retrieve/retrieve.jsp">找回密码</a></th>
-            <th><a style="text-decoration-line: underline;color: blue;width: 150px;" href="./javaWebDvd/jsp/register/register.jsp">注册账号</a></th>
-        </tr>
-        <tr>
-            <th colspan = '2'>
-                <button type="submit" class="button">登陆</button>
-                <%--<input type="submit" value="登陆" style="text-align: center;width: 50px;">--%>
-            </th>
-        </tr>
-        <script type="text/javascript">
-            if(<%= request.getAttribute("MSG")!=null %>){
-                alert('<%=request.getAttribute("MSG") %>');
-            }
-        </script>
-    </table>
-</form>
-<div align='center'>
-    <br>输入注意：账号和密码为字母和数字组成、库存和手机号为数字组成
-    <br>1.注册（账号：检测是否存在、密码：检测两次密码是否相同、手机号：检测是否为手机号（13+任意数,15+除4的任意数,18+除1和4的任意数,17+除9的任意数,147））
-    <br>2.修改密码（账号、手机号）
-    <br>3.登陆（账号、密码）
-    <br>4.增删改查（序号自增和添加图片、批量删除：删除密码、编辑时原数据显示和修改图片、模糊查询：分页）
-    <br>5.分页功能（每页八条、页数会随着总数增加：如7条数据共一页，12条数据共两页）
-    <br>6.借书情况柱状图（添加数据同步），库存：一本未借蓝色（不可归还）、剩余为零红色（不可借出）
-    <br>待完成功能：界面美化，用户反馈，搜索下拉
-    <br>BUG：1.搜索汉字不能点首页尾页（已修复：href传中文参数到Servlet不用解决乱码）。2.搜索一次后进行下一页操作不能再次搜索(已修复：路径错误)
+<script type="text/javascript">
+    if(<%= request.getAttribute("MSG")!=null %>){
+        alert('<%=request.getAttribute("MSG") %>');
+    }
+</script>
+<div class="copyright">
+    <p>安徽信息工程学院 2016级 JAVA①班 安天宝 JavaWeb项目作业</p>
 </div>
 </body>
 </html>

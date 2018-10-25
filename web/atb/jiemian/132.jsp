@@ -1,77 +1,77 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2018\10\25 0025
-  Time: 9:15
+  Date: 2018\10\9 0009
+  Time: 10:46
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE HTML>
 <html>
 <head>
     <title>用户注册</title>
-    <!-- Custom Theme files -->
-    <%
-        if(request.getAttribute("FH") == null){
-    %>
-    <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <%
-    }else{
-    %>
-    <link href="./atb/javaWebDvd/css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <%
-        }
-    %>
-    <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <!-- Custom Theme files -->
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-    <!--Google Fonts-->
-    <link href='http://fonts.useso.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.useso.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <!--Google Fonts-->
 </head>
 <body>
-<div class="login">
-    <h2>DVD Mgr 6.0 管理系统</h2>
-    <div class="login-top">
-        <h1>欢迎注册</h1>
-        <form action="../../../../Register.do" method="post">
-            <input type="text" name="name" id="name" title="" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="password" id="password" title="" value="账号密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
-            <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="phone" id="phone" title="" value="绑定手机" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-            <%--<input type="text" name="name" title="name" value="用户账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户账号';}">--%>
-            <%--<input type="text" name="password" title="password" value="账号密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号密码';}">--%>
-            <%--<input type="text" name="cpassword" title="cpassword" value="确认密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '确认密码';}">--%>
-            <%--<input type="text" name="phone" title="phone" value="绑定手机" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '绑定手机';}">--%>
-            <div class="forgot">
-                <%
-                    if(request.getAttribute("FH") == null){
-                %>
-                <a href = '../../../javaWebDvdLogin.jsp'>返回</a>
-                <%
-                }else{
-                %>
-                <a href = './atb/javaWebDvdLogin.jsp'>返回</a>
-                <%
-                    }
-                %>
-                <input type="submit" value="注册">
-            </div>
-        </form>
-    </div>
-    <div class="login-bottom">
-        <h3><span id="tishi1"></span></h3>
-    </div>
+<div align='center'>
+    <h2>----欢迎来到注册界面----</h2>
+    <h6 style="color: red">账号和密码为字母和数字组成，手机号格式（十一位）：13+任意数,15+除4的任意数,18+除1和4的任意数,17+除9的任意数,147</h6>
+    <style>
+        .button {
+            background-color: #4183c4;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 150px;
+            height: 30px;
+            cursor: pointer;
+        }
+    </style>
+    <span id="tishi1"></span>
 </div>
-<script type="text/javascript">
-    if(<%= request.getAttribute("MSG")!=null %>){
-        alert('<%=request.getAttribute("MSG") %>');
-    }
-</script>
+<form action="../../../../Register.do" method="post">
+    <table border="1" width="300" align="center">
+        <tr>
+            <th width=150px>用户账号：</th>
+            <th><input type="text" name="name" id="name" title="" style="text-align: center; width: 150px;"
+                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/></th>
+        </tr>
+        <tr>
+            <th width=150px>账号密码：</th>
+            <th><input name="password" id="password" type="password" title="" style="text-align: center; width: 150px;"
+                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" /></th>
+        </tr>
+        <tr>
+            <th width=150px>确认密码：</th>
+            <th><input name="cpassword" id="cpassword" type="password" title="" style="text-align: center; width: 150px;"
+                       onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/></th>
+        </tr>
+        <tr>
+            <th width=150px>绑定手机：</th>
+            <th><input name="phone" id="phone" type="text" title="" style="text-align: center; width: 150px;"
+                       onkeyup="this.value=this.value.replace(/\D/g,'')"/></th>
+        </tr>
+        <tr>
+            <%
+                if(request.getAttribute("FH") == null){
+            %>
+            <th colspan = '1'><a href = '../../../javaWebDvdLogin.jsp'>返回</a></th>
+            <%
+            }else{
+            %>
+            <th colspan = '1'><a href = './atb/javaWebDvdLogin.jsp'>返回</a></th>
+            <%
+                }
+            %>
+            <th colspan = '1'><button type="submit" class="button">提交</button></th>
+        </tr>
+        <script type="text/javascript">
+            if(<%= request.getAttribute("MSG")!=null %>){
+                alert('<%=request.getAttribute("MSG") %>');
+            }
+        </script>
+    </table>
+</form>
 <script src="jquery-3.3.1.min.js" type="text/javascript"></script>
 <script>
     //先将提示隐藏起来
@@ -161,8 +161,5 @@
         $("#tishi1").html(data);
     }
 </script>
-<div class="copyright">
-    <p>安徽信息工程学院 2016级 JAVA①班 安天宝 JavaWeb项目作业</p>
-</div>
 </body>
 </html>

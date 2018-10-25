@@ -17,9 +17,10 @@ public class retrieveServlet extends HttpServlet {
         //获取输入信息
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
-        if(name.equals("") || phone.equals("")){
+        if(name.equals("用户账号") || phone.equals("绑定手机") || name.equals("") || phone.equals("")){
             //跳转到登陆界面
             request.setAttribute("MSG", "请填写信息");
+            request.setAttribute("FH", "就是想返回");
             request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieve.jsp").forward(request, response);
         }else{
             JDBCUtilUser jdbcUtil = new JDBCUtilUser();
@@ -32,7 +33,8 @@ public class retrieveServlet extends HttpServlet {
             }else{
                 //输出登陆失败
                 request.setAttribute("MSG", "账号或手机号错误！");
-                request.getRequestDispatcher("./atb/javaWebDvd/login.jsp").forward(request, response);
+                request.setAttribute("FH", "就是想返回");
+                request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieve.jsp").forward(request, response);
             }
         }
     }
@@ -58,7 +60,8 @@ public class retrieveServlet extends HttpServlet {
             if(jd > 0){
                 //跳转到登陆界面
                 request.setAttribute("MSG", "修改成功！");
-                request.getRequestDispatcher("./atb/javaWebDvd/login.jsp").forward(request, response);
+                request.setAttribute("DL", "意思下");
+                request.getRequestDispatcher("./atb/javaWebDvdLogin.jsp").forward(request, response);
             }else{
                 //输出已账号存在,跳回注册界面
                 request.setAttribute("MSG", "修改失败！");
