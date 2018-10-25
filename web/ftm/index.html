@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0044)http://www.jq22.com/demo/css3signin20160815/ -->
 <html lang="zh">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -33,7 +32,8 @@
     </style>
 </head>
 <body>
-<div class="login">
+<!--登录页面-->
+<div id="login-page" class="login">
     <div class="login_title">
         <span>BiggerDVD.v6 账号登录</span>
     </div>
@@ -61,9 +61,9 @@
             </div>
         </div>
         <div class="login_fields__submit">
-            <input type="submit" value="登录">
+            <input type="submit" value="登录" id="login-submit">
             <div class="forgot">
-                    <a href="">忘记密码 / 注册</a>
+                    <a href="html/register.jsp">注册/忘记密码</a>
             </div>
         </div>
     </div>
@@ -75,9 +75,54 @@
         <p>© 2018-2019 TimVanX.com 版权所有 皖ICP备18002720号 .</p>
     </div>
 </div>
+
 <div class="authent">
     <img src="img/biggerdvd/puff.svg">
     <p>认证中...</p>
+</div>
+
+
+<div id="register-page" class="register login">
+    <div class="login_title">
+        <span>注册</span>
+    </div>
+    <div class="login_fields">
+        <div class="login_fields__user">
+            <div class="icon">
+                <img src="img/biggerdvd/user_icon_copy.png">
+            </div>
+            <input placeholder="用户名" type="text" name="name" id="register-user-name"
+                   style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;" autocomplete="off" >
+            <div class="validation">
+                <img src="img/biggerdvd/tick.png">
+            </div>
+
+        </div>
+        <div class="login_fields__password">
+            <div class="icon">
+                <img src="img/biggerdvd/lock_icon_copy.png">
+            </div>
+            <input placeholder="密码" type="password"
+                   autocomplete="off" id="register-user-password"
+                   style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;" name="password">
+            <div class="validation">
+                <img src="img/biggerdvd/tick.png">
+            </div>
+        </div>
+        <div class="login_fields__submit">
+            <input type="submit" value="注册">
+            <div class="forgot">
+                <a href="html/register.jsp">返回</a>
+            </div>
+        </div>
+    </div>
+    <div class="success">
+        <h2>注册成功</h2>
+        <p>返回登录页面</p>
+    </div>
+    <div class="disclaimer">
+        <p>© 2018-2019 TimVanX.com 版权所有 皖ICP备18002720号 .</p>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -229,7 +229,15 @@ function loanOrReturnDVD(obj){
 
 //信息统计
 function getStatistics() {
-    window.open("menu/statistics.html");
+    layer.open({
+        type: 2,
+        title: '信息统计',
+        shadeClose: true,
+        shade: 0.6,
+        offset: '100px',
+        area: ['640px', '460px'],
+        content: 'menu/statistics.html' //iframe的url
+    });
 }
 
 //模糊搜索
@@ -329,6 +337,11 @@ function getAllDVDs(query, pageNum, pageSize){
                     $('.dvd-tr-line:last').css("background-color"
                         ,"#7ef38296");
                 }
+                //修改借出归还按钮样式
+                $dvdBtnLand.addClass(
+                    status ? 'layui-btn-warm'
+                        : 'layui-btn-normal'
+                );
                 $dvdBtnLand.attr("value", id);
 
                 //编辑ID标识
