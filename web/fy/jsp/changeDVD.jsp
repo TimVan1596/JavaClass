@@ -9,6 +9,21 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        .button {
+            background-color: #008CBA;
+            border-radius: 4px;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <form action="/fy/servlet/toChangeDvd" method="get" onsubmit="return check()">
@@ -20,7 +35,7 @@
     <option>可以借</option>
     <option>已借出</option>
 </select><br>
-    <input type="submit" value="修改">
+    <input type="submit" class="button" value="修改">
 </form>
 <script>
     function check(){

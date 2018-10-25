@@ -21,27 +21,42 @@
 <head>
     <title>显示DVD</title>
     <script type="text/javascript" src="/fy/js/echarts.simple.min.js"> </script>
+    <style>
+        .button {
+            background-color: #008CBA;
+            border-radius: 4px;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="navigationBar.jsp"></jsp:include>
 <div  style="text-align:center">
     <h3>DVD列表</h3>
 
-    <form action="/fy/servlet/toShowDvd" method="get" onsubmit="return checkSelect()">
-        <input  style="margin-left: 20px;margin-top: 20px" type="text" name="selectDVD" id="select"/>
-        <input type="submit" value="查询">
+    <form action="/fy/servlet/toShowDvd" method="get" >
+        <input  style="margin-left: 20px;margin-top: 20px;height:35px;" type="text" name="selectDVD" id="select"/>
+        <input type="submit"  class="button" value="查询">
     </form>
 
     <table id="tb" style="text-align:center;margin: 0 auto " border="1" >
         <tr><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th></tr>
         <% for(DVD dvd:list){ %>
         <tr>
-            <td style="width:100px"><%=dvd.getId() %></td>
-            <td><img style="width:100px;height:80px" src="<%= dvd.getPicture()%>" /></td>
-            <td style="width:100px"> <%=dvd.getDvdname() %></td>
-            <% if(dvd.getState().equals("可以借")){%><td style="width:100px;background-color: limegreen"><%=dvd.getState() %></td><% }%>
-            <% if(dvd.getState().equals("已借出")){%><td style="width:100px;background-color: red"><%=dvd.getState() %></td><% }%>
-            <td style="width:100px"><input type="button"  value="删除" onclick='window.location.href="/fy/jsp/deleteDVD.jsp?no=<%=dvd.getId() %>"'></td>
+            <td style="width:110px"><%=dvd.getId() %></td>
+            <td><img style="width:110px;height:80px" src="<%= dvd.getPicture()%>" /></td>
+            <td style="width:110px"> <%=dvd.getDvdname() %></td>
+            <% if(dvd.getState().equals("可以借")){%><td style="width:110px;background-color: limegreen"><%=dvd.getState() %></td><% }%>
+            <% if(dvd.getState().equals("已借出")){%><td style="width:110px;background-color: red"><%=dvd.getState() %></td><% }%>
+            <td style="width:110px"><input type="button"  class="button" value="删除" onclick='return isDelete(),window.location.href="/fy/jsp/deleteDVD.jsp?no=<%=dvd.getId() %>"'></td>
         </tr>
    <%  }%>
         <!-- 这里使用标签遍历输出 集合数据 -->
@@ -109,14 +124,12 @@
     // 使用刚指定的配置项和数据显示图表
     myChart.setOption(option);
 
-    function checkSelect() {
-        var data=document.getElementById("select").value;
-        if(data==""){
-            alert("查询内容不能为空");
-            return false;
-        }else{
-            return true;
-        }
+    function isDelete() {
+    if(confirm('确定删除吗?')){
+        return true;
+    }else{
+        return false;
+    }
     }
 
 </script>

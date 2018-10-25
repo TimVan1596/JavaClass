@@ -59,7 +59,6 @@ public class AddDvdServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //request.setCharacterEncoding("UTF-8");
 
-
         boolean isMultipart= ServletFileUpload.isMultipartContent(request);
         if(isMultipart){
             DiskFileItemFactory factory=new DiskFileItemFactory();
@@ -70,7 +69,6 @@ public class AddDvdServlet extends HttpServlet {
             upload.setFileSizeMax(1028*1028*2);
 
             try {
-
                 List<FileItem> items=upload.parseRequest(request);
                 Iterator<FileItem> iter=items.iterator();
                 while(iter.hasNext()){

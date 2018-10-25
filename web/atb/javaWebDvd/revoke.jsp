@@ -53,10 +53,10 @@
 </head>
 <body background="./atb/javaWebDvd/images/banner.jpg">
 <h1 align='center' style="color: white">----欢迎进入DVD Mgr 6.0 管理系统----</h1>
-<h5 align='center' style="color: red">介绍：搜索（关键字）,管理数据（操作数据）,数据显示（借阅情况柱状图）,退出（返回登录页面）</h5>
-<h5 align='center' style="color: red">界面操作：归还（还一本书）,恢复（恢复数据）,分页（数据分页）,清除（多删无法找回且要密码）</h5>
+<h5 align='center' style="color: red">介绍：搜索（关键字）、管理数据（操作数据）、借阅情况（借阅情况柱状图）、历史数据（回收站）、说明介绍（项目记录）、退出（返回登录页面）</h5>
+<h5 align='center' style="color: red">界面操作：归还（还一本书）、恢复（恢复数据）、分页（数据分页）、清除（多删要密码无法找回）</h5>
 <div align='center'>
-    <form action='./atb/javaWebDvd/search.jsp' method='post'>
+    <form action='./atb/javaWebDvd/revokeSearch.jsp' method='post'>
         <h4 style="color: white">搜关键字：<input type='text' title="序号书名库存" name='search' style="width: 150px; height: 30px"/>
             <input type='submit' value='搜索' style="width: 50px; height: 30px"/>
         </h4>
@@ -71,7 +71,7 @@
         <li><a href="./atbdescription.do">说明介绍</a></li>
     </ul>
 </div>
-<form action='./atbdelete.do' method='post' onsubmit="return GL()">
+<form action='./atbrevokeDelete.do' method='post' onsubmit="return GL()">
     <table border="1" width="750" align = "center" style="background-color: white">
         <tr>
             <th width=50px>选择</th>

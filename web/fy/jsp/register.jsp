@@ -14,6 +14,20 @@
     #register{
         text-align:center;
     }
+
+    .button {
+        background-color: #008CBA;
+        border-radius: 4px;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 10px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
 </style>
 <body>
 
@@ -31,7 +45,7 @@
 <p>密码：<input style="margin-left:30px "type="password" name="password" id="regPass"/><br></p>
 <p>重复密码：<input type="password" name="passsword" id="regPasss"/><br></p>
 
-<input type="submit" value="注册">
+<input type="submit" class="button" value="注册">
 </form>
 </div>
 <script type="text/javascript">

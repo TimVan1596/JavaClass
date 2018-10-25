@@ -52,8 +52,8 @@
 </head>
 <body background="./atb/javaWebDvd/images/banner.jpg">
 <h1 align='center' style="color: white">----欢迎进入DVD Mgr 6.0 管理系统----</h1>
-<h5 align='center' style="color: red">介绍：搜索（关键字）,管理数据（操作数据）,数据显示（借阅情况柱状图）,退出（返回登录页面）</h5>
-<h5 align='center' style="color: red">界面操作：编辑（修改信息,图片可改可不改）,分页（数据分页）,删除（多删可恢复但要密码）,添加（添加信息需加图片）</h5>
+<h5 align='center' style="color: red">介绍：搜索（关键字）、管理数据（操作数据）、借阅情况（借阅情况柱状图）、历史数据（回收站）、说明介绍（项目记录）、退出（返回登录页面）</h5>
+<h5 align='center' style="color: red">界面操作：添加（添加信息需加图片）、编辑（修改信息，图片可改可不改）、分页（数据分页）、删除（多删要密码可恢复）</h5>
 <div align='center'>
     <form action='./atb/javaWebDvd/search.jsp' method='post'>
         <h4 style="color: white">搜关键字：<input type='text' title="序号书名库存" name='search' style="width: 150px; height: 30px"/>

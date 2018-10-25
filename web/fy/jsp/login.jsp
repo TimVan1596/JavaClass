@@ -1,46 +1,49 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2018/10/7 0007
-  Time: 17:33
+  Date: 2018/10/25 0025
+  Time: 21:04
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>登陆</title>
-    <style>
-        #login{
-            text-align:center;
-        }
-    </style>
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="/fy/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/fy/css/body.css"/>
 </head>
 <body>
-<div id="login">
-<form action="/fy/servlet/login.do" id="f1" method="get" onsubmit="return checkLogin()">
-    <h2>MiniDVD 网页版</h2>
-    <h4>用户登录</h4>
-    <table style="margin: 0 auto " border="0">
-        <tr>
-        <td>账号：</td>
-        <td><input type=" text" name="username" id="loginId" /></td>
-        </tr>
-        <tr>
-        <td>密码：</td>
-        <td><input type="password" name="password" id="loginPass"/></td>
-        </tr>
-    </table>
-    <a href="register.jsp">注册</a><a style="margin-left: 100px" href="getpassword.jsp">找回密码</a><br>
-    <input type="submit" value="登录"/>
-</form>
+
+<div class="container">
+    <section id="content">
+        <form action="/fy/servlet/login.do" id="f1" method="get" onsubmit="return checkLogin()">
+            <h1>DVD登录</h1>
+            <div>
+                <input type="text" placeholder="账号" name="username" id="username" />
+            </div>
+            <div>
+                <input type="password" placeholder="密码" name="password" id="password" />
+            </div>
+
+            <div>
+                <input type="submit" value="登录" />
+                <a style="margin-left: 100px" href="getpassword.jsp">找回密码</a>
+
+            </div>
+        </form>
+        <div class="button">
+
+            <a href="register.jsp">注册</a>
+        </div>
+    </section>
 </div>
 <script type="text/javascript">
     //检查登录表单
     function checkLogin()
     {
         //1.取值
-        var  name=document.getElementById("loginId").value;
-        var  pass=document.getElementById("loginPass").value;
+        var  name=document.getElementById("username").value;
+        var  pass=document.getElementById("password").value;
         //2.判断
         if(name!="")
         {
@@ -48,14 +51,14 @@
                 return true;
             }else{
                 alert("亲，密码不能为空哦~");
-                document.getElementById("loginPass").focus(); //光标占位
+                document.getElementById("password").focus(); //光标占位
                 return false;
             }
         }
         else
         {
             alert("亲，账号不能为空哦~");
-            document.getElementById("loginId").focus(); //光标占位
+            document.getElementById("username").focus(); //光标占位
             return false;
         }
     }
