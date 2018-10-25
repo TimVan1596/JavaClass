@@ -6,7 +6,9 @@ import java.sql.*;
 import java.io.IOException;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "LoginServlet",urlPatterns = {"/fy/servlet/login.do"})
+//@WebServlet(name = "LoginServlet",urlPatterns = {"/fy/servlet/login.do"})
+@WebServlet(name = "LoginServlet",
+        urlPatterns = {"/fy/servlet/login.do"}, loadOnStartup = 1)
 public class LoginServlet extends javax.servlet.http.HttpServlet {
     DbUtil db = new DbUtil();
 
@@ -41,7 +43,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
     }
     @Override
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+        //request.setCharacterEncoding("UTF-8");
         String userName=request.getParameter("username");
         String passWord=request.getParameter("password");
         if(check(userName,passWord)){
@@ -51,7 +53,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
             session.setAttribute("loginName", userName);
             response.sendRedirect("/fy/servlet/toShowDvd");
         }else{
-            response.setContentType("text/html;charset=UTF-8");
+            //response.setContentType("text/html;charset=UTF-8");
             //response.getWriter().write("账号或密码错误");
 
             response.getWriter().write("<script language='javascript'>alert('账号或密码错误');location.href='/fy/jsp/login.jsp';</script>");

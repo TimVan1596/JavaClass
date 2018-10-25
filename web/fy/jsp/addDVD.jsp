@@ -11,9 +11,10 @@
     <title>添加DVD</title>
 </head>
 <body>
-<form action="/fy/servlet/toAddDvd" method="get" onsubmit="return check()">
+<form action="/fy/servlet/toAddDvd" method="get" enctype="multipart/form-data" onsubmit="return check()">
     <br>
 DVD名称：<input style="margin-top: 10px" type=" text" name="dvdname" id="dvdId"/><br>
+    <input type="file" name="fname" /><br>
 <input type="submit" value="添加">
 </form>
 

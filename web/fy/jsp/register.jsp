@@ -21,12 +21,13 @@
 <h2>MiniDVD 网页版</h2>
 <h4>用户注册</h4>
 <form action="/fy/servlet/toRegister" method="get" onsubmit=" return checkRegister()">
-    <p><%
+    <%
         String msg=(String)session.getAttribute("MSG");
         if(msg!=null){
-        out.println(msg);}
-    %></p>
-<p>账号：<input style="margin-left:30px " type=" text" name="username" id="regId"  value="<%=session.getAttribute("name")%>" onblur="checkl()"/><br></p>
+            out.print(msg);
+        }else{
+    %> <br> <% } %>
+<p>账号：<input style="margin-left:30px" type="text" name="username" id="regId"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%>" onblur="checkl()"/><br></p>
 <p>密码：<input style="margin-left:30px "type="password" name="password" id="regPass"/><br></p>
 <p>重复密码：<input type="password" name="passsword" id="regPasss"/><br></p>
 

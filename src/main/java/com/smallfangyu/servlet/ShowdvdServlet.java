@@ -40,7 +40,7 @@ public class ShowdvdServlet extends HttpServlet {
     /**
      * 定义一个页面多少条数据
      */
-    static int pageSize=7;
+    static int pageSize=5;
 
     /**
      * 定义一共的页数
@@ -107,17 +107,25 @@ public class ShowdvdServlet extends HttpServlet {
             String sql = "SELECT * FROM dvd WHERE dvdno like ? OR dvdname like ? OR state like ?";
             Object[] params={"%"+data+"%","%"+data+"%","%"+data+"%"};
             rs = db.executeQuery(sql, params);
-        }
+       }
+        int len=0;
             try {
                 while (rs.next()) {
                     list.add(new DVD(rs.getInt("dvdno"), rs.getString("dvdname"), rs.getString("state"), rs.getString("picture")));
+                    len++;
                 }
                 db.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        dvdLength=len;
 
-        //将当前页的值传给新的list_page集合中，list集合是全部数据综合，用i调用其中的几条数据给list_page
+        if (dvdLength % pageSize == 0) {
+            pageNumber = (dvdLength / pageSize) - 1;
+        } else {
+            pageNumber = dvdLength / pageSize;
+        }
+        //将当前页的值传给新的list_page集合中，list集合是全部数据综合，调用其中的几条数据给list_page
         if(!list_page.isEmpty()){
             list_page.clear();
         }
@@ -129,13 +137,15 @@ public class ShowdvdServlet extends HttpServlet {
    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-       request.setCharacterEncoding("UTF-8");
+       //request.setCharacterEncoding("UTF-8");
        //得到传过来的当前页
        String str_page=request.getParameter("page");
-
+       //得到传过来的搜索关键字
+       String data=request.getParameter("selectDVD");
        //定义当前页数
        int page;
-       count();
+       //count();
+
        if(str_page==null){
           page=0;
        }else{
@@ -147,22 +157,15 @@ public class ShowdvdServlet extends HttpServlet {
               page=pageNumber;
           }
        }
-       //得到传过来的搜索关键字
-       String data=request.getParameter("selectDVD");
-
        dvdList(data,page);
+
+
        //创建session对象
        HttpSession session = request.getSession();
 
        //把用户数据保存在session域对象中
        session.setAttribute("listDVD", list_page);
 
-       for(DVD dvd:list_page){
-           dvd.getId();
-           dvd.getDvdname();
-           dvd.getState();
-           dvd.getPicture();
-       }
        //把最大页数保存在session域对象中
        session.setAttribute("pageNumber", pageNumber);
 
