@@ -28,7 +28,7 @@
     <h2>----添加DVD----</h2>
     <h6 style="color: red">库存需为数字，图片格式支持png/jpg/gif/bmp</h6>
 </div>
-<form action="../../../../add.do" method="post" enctype="multipart/form-data">
+<form action="../../../../atbadd.do" method="post" enctype="multipart/form-data">
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>书名：</th>
@@ -44,7 +44,7 @@
             <th><input type="file" name="file" style="text-align: center; width: 150px;"/></th>
         </tr>
         <tr>
-            <th colspan = '1'><a href = '../../../../login.do'>返回</a></th>
+            <th colspan = '1'><a href = '../../../../atblogin.do'>返回</a></th>
             <th colspan = '1'><button type="submit" class="button">提交</button></th>
         </tr>
         <script type="text/javascript">

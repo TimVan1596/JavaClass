@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "pagingServlet",urlPatterns = {"/paging.do"})
+@WebServlet(name = "pagingServlet",urlPatterns = {"/atbpaging.do"})
 public class pagingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

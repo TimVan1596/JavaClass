@@ -29,7 +29,7 @@
     </style>
     <span id="tishi1"></span>
 </div>
-<form action="../../../../Register.do" method="post">
+<form action="../../../../atbRegister.do" method="post">
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>用户账号：</th>

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "deleteServlet",urlPatterns = {"/delete.do"})
+@WebServlet(name = "deleteServlet",urlPatterns = {"/atbdelete.do"})
 public class deleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码
@@ -38,11 +38,10 @@ public class deleteServlet extends HttpServlet {
             request.setAttribute("MSG", "转存失败！");
             request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
         }
-
-}
-/**
- * 判断手机号是否正确
- * */
+    }
+    /**
+     * 判断手机号是否正确
+     * */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //get解决中文乱码
         //name = new String(name.getBytes("ISO-8859-1"),"utf-8");

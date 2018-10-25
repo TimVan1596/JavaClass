@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "registerServlet",urlPatterns = {"/Register.do"})
+@WebServlet(name = "registerServlet",urlPatterns = {"/atbRegister.do"})
 public class registerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
