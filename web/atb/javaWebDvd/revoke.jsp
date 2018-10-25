@@ -71,7 +71,7 @@
         <li><a href="./atbdescription.do">说明介绍</a></li>
     </ul>
 </div>
-<form action='./atbdelete.do' method='post' onsubmit="return GL()">
+<form action='./atbrevokeDelete.do' method='post' onsubmit="return GL()">
     <table border="1" width="750" align = "center" style="background-color: white">
         <tr>
             <th width=50px>选择</th>

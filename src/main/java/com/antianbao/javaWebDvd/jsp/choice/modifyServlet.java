@@ -139,7 +139,7 @@ public class modifyServlet extends HttpServlet {
         if(password.equals(cpassword)) {
             response.getWriter().print("<font color='green'>两次密码相同</font>");
         }else {
-            response.getWriter().print("<font color='red'>两次密码不一致</font>");
+            response.getWriter().print("<font color='yellow'>两次密码不一致</font>");
         }
     }
 }
