@@ -29,7 +29,7 @@
 <section style="text-align: center">
     <div class="div-left">
         <h2>
-            <a href="ftm/biggerdvd.jsp">范天明</a>
+            <a href="ftm/index.html">范天明</a>
         </h2>
         <h2>
             <a href="atb/javaWebDvdLogin.jsp">安天宝</a>

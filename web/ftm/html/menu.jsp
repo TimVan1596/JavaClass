@@ -14,6 +14,9 @@
     <link rel="stylesheet"
           href="../../common/util/layui/css/layui.css"
           media="all">
+    <link rel="stylesheet"
+          href="../style/search-form.css"
+          media="all">
 
     <!-- DVD信息（列表填充模板 template）-->
     <script type="text/html" id="DVD_TEMPLATE">
@@ -31,6 +34,8 @@
             <td>
                 <button class="dvd-btn-land"
                         onclick="loanOrReturnDVD(this)"></button>
+                <button class="dvd-btn-edit"
+                        onclick="editDVD(this)">编辑</button>
             </td>
         </tr>
     </script>
@@ -61,7 +66,7 @@
     if (session.getAttribute("userName") != null) {
         userName = (String) session.getAttribute("userName");
     } else {
-        response.sendRedirect("../biggerdvd.jsp");
+        response.sendRedirect("../index.html");
         return;
     }
 %>
@@ -70,7 +75,6 @@
 <section>
 
     <ul class="layui-nav" style="text-align: left;">
-
         <li class="layui-nav-item">
             <a href="./menu/statistics.html">信息统计<span class="layui-badge-dot"></span></a>
         </li>
@@ -84,25 +88,35 @@
 
 
     <br>
-    <div class="layui-btn-group">
-        <button class="layui-btn layui-btn-normal"  onclick="addDVD()">
-            <i class="layui-icon">&#xe608;</i> 添加
-        </button>
+    <div  style="display: inline-block;margin-left: -30%;">
+        <div class="layui-btn-group">
+            <button class="layui-btn layui-btn-normal"  onclick="addDVD()">
+                <i class="layui-icon">&#xe608;</i> 添加
+            </button>
 
-        <button class="layui-btn layui-btn-danger" onclick="deleteDVD()">
-            <i class="layui-icon">&#xe640;</i>一键删除
-        </button>
+            <button class="layui-btn layui-btn-danger" onclick="deleteDVD()">
+                <i class="layui-icon">&#xe640;</i>一键删除
+            </button>
+        </div>
+        <form onsubmit="submitFn(this, event);"
+              style="display: inline-block;">
+            <div class="search-wrapper" style="margin-left: 23%;">
+                <div class="input-holder">
+                    <input type="text" class="search-input" placeholder="Type to search">
+                    <button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
+                </div>
+                <span class="close" onclick="searchToggle(this, event);"></span>
+                <div class="result-container">
 
+                </div>
+            </div>
+        </form>
     </div>
 
-    <button onclick="editDVD()">编辑</button>
-
     <%--绑定事件（JS代码中）--%>
-    <input list="dvdList"  id="query_input"
-           style="width:12%;height: 24px;margin-left: 10%;">
-    <datalist id="dvdList"></datalist>
-    <button onclick="search()">搜索</button>
-
+    <%--<input list="dvdList"  id="query_input"--%>
+           <%--style="width:12%;height: 24px;margin-left: 10%;">--%>
+    <%--<datalist id="dvdList"></datalist>--%>
 </section>
 <%--标题头 结束--%>
 
@@ -111,9 +125,7 @@
     <br>
     <table border="1" id="DVDsTable" style="margin-left: 30%;">
         <!--填充模板区-->
-
     </table>
-
     <br>
     <div>
         <ul class="pagination" id="table-pagination">

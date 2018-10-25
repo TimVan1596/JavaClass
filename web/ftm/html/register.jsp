@@ -62,7 +62,7 @@
 
                 if (ret['error'] === 0) {
                     alert("注册成功！");
-                    window.location.href = '../biggerdvd.jsp';
+                    window.location.href = '../index.html';
 
                 } else if (ret['error'] === 1) {
                     var errorInfo = ret['errorInfo'];

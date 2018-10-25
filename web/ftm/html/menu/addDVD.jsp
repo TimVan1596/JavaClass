@@ -28,7 +28,7 @@
     if (session.getAttribute("userName") != null) {
         userName = (String) session.getAttribute("userName");
     } else {
-        response.sendRedirect("../biggerdvd.jsp");
+        response.sendRedirect("../index.html");
         return;
     }
 

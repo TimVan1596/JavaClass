@@ -10,8 +10,9 @@ let pageSize = 5;
 let query = "";
 
 //模块化初始化 LayUI 框架
-layui.use('layer', function(){
+layui.use(['layer','element'], function(){
     var layer = layui.layer;
+    var element = layui.element;
 
     //初始化页面
     $(function () {
@@ -58,7 +59,8 @@ layui.use('layer', function(){
                             status ? '归还' : '可借'
                         ;
 
-                        let $option = $("<option>" + id + "-" + name + "-" + statusText + "</option>");
+                        let $option = $("<option>" + id + "-" + name
+                            + "-" + statusText + "</option>");
                         $dvdList.append($option);
                     }
                 }
@@ -88,9 +90,11 @@ function addDVD() {
 }
 
 //编辑DVD信息
-function editDVD() {
-    var dvdID = $('input[name="dvd-radio"]:checked').val();
-    var name = prompt("请输入DVD的新名称");
+function editDVD(obj) {
+    let dvdID = obj.getAttribute("value");
+    let dvdName = obj.getAttribute("name");
+
+    let name = prompt("请输入 "+dvdID+"-《"+dvdName+"》 的新名称");
 
     //判断用户是否输入内容
     if (name) {
@@ -228,16 +232,49 @@ function getStatistics() {
 }
 
 //模糊搜索
-function search() {
-    //获取查询内容
-    let $queryInputVal =  $('#query_input').val();
+// function search() {
+//     //获取查询内容
+//     let $queryInputVal =  $('#query_input').val();
+//
+//     let info = $queryInputVal.split('-');
+//     let query = info[0];
+//
+//     getAllDVDs(query,pageNum,pageSize);
+//
+//
+// }
 
-    let info = $queryInputVal.split('-');
-    let query = info[0];
+function searchToggle(obj, evt){
+        let container = $(obj).closest('.search-wrapper');
 
-    getAllDVDs(query,pageNum,pageSize);
+        if(!container.hasClass('active')){
+            container.addClass('active');
+            evt.preventDefault();
+        }
+        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+            container.removeClass('active');
+            // clear input
+            container.find('.search-input').val('');
+            // clear and hide result container when we press close
+            container.find('.result-container').fadeOut(100, function(){$(this).empty();});
+        }
+    }
 
+function submitFn(obj, evt){
+    value = $(obj).find('.search-input').val().trim();
 
+    _html = "Yup yup! Your search text sounds like this: ";
+    if(!value.length){
+        _html = "Yup yup! Add some text friend :D";
+    }
+    else{
+        _html += "<b>" + value + "</b>";
+    }
+
+    $(obj).find('.result-container').html('<span>' + _html + '</span>');
+    $(obj).find('.result-container').fadeIn(100);
+
+    evt.preventDefault();
 }
 
 /**Post方法获取DVD信息
@@ -293,8 +330,6 @@ function getAllDVDs(query, pageNum, pageSize){
                 var $dvdRadio = $('.dvd-radio-input:last');
                 $dvdRadio.attr("value", id);
 
-                $dvdRadio.attr("value", id);
-
                 //预览图加载
                 $('.dvd-preview:last').attr("src", preview);
                 $('.dvd-name:last').text(name);
@@ -309,6 +344,11 @@ function getAllDVDs(query, pageNum, pageSize){
                         ,"#7ef38296");
                 }
                 $dvdBtnLand.attr("value", id);
+
+                //编辑ID标识
+                let $dvdBtnEdit = $('.dvd-btn-edit:last');
+                $dvdBtnEdit.attr("value", id);
+                $dvdBtnEdit.attr("name", name);
             }
 
             //插入分页
