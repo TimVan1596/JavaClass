@@ -73,7 +73,7 @@
                 var password = $("[name=password]").val();
                 password = $.trim(password);
                 if (cpassword != "") {
-                    var url = "../../../../modify.do?";
+                    var url = "../../../../atbmodify.do?";
                     cpassword="cpassword="+cpassword;
                     password="&password="+password;
                     url = url + cpassword + password;

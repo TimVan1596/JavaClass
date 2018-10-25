@@ -64,7 +64,7 @@ public class deleteServlet extends HttpServlet {
         if(m.matches()) {
             response.getWriter().print("<font color='green'>手机号正确</font>");
         }else {
-            response.getWriter().print("<font color='red'>手机号错误</font>");
+            response.getWriter().print("<font color='yellow'>手机号错误</font>");
         }
     }
 }

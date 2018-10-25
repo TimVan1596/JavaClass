@@ -83,7 +83,7 @@
                 var name = $(this).val();
                 name = $.trim(name);
                 if (name != "") {
-                    var url = "../../../../Register.do?";
+                    var url = "../../../../atbRegister.do?";
                     name="name="+name;
                     url = url + name;
                     //$.get()方法能够返回一个JQuery XMLHttpRequest对象
@@ -111,7 +111,7 @@
                 var password = $("[name=password]").val();
                 password = $.trim(password);
                 if (cpassword != "") {
-                    var url = "../../../../modify.do?";
+                    var url = "../../../../atbmodify.do?";
                     cpassword="cpassword="+cpassword;
                     password="&password="+password;
                     url = url + cpassword + password;
@@ -138,7 +138,7 @@
                 var phone = $(this).val();
                 phone = $.trim(phone);
                 if (phone != "") {
-                    var url = "../../../../delete.do?";
+                    var url = "../../../../atbdelete.do?";
                     phone="phone="+phone;
                     url = url + phone;
                     //$.get()方法能够返回一个JQuery XMLHttpRequest对象
