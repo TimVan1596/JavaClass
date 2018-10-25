@@ -36,7 +36,6 @@ layui.use(['layer','element'], function(){
     $query_input.bind('input propertychange', function () {
         let query = $query_input.val();
 
-        // console.log(query);
         $.post('menu/GetAllDVDs.do',
             {   query: query,
                 pageNum: 1,
@@ -129,8 +128,10 @@ function deleteDVD(){
     //jquery获取复选框值
     let chkValStr = " ";
     let cnt = 0;
+    //遍历每一个名字为dvd-radio的复选框
+    //其中选中的执行函数
     $('input[name="dvd-radio"]:checked')
-        .each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数
+        .each(function(){
             if (cnt !== 0){
                 chkValStr += ',';
             }
@@ -139,9 +140,11 @@ function deleteDVD(){
 
     });
 
-    if (cnt.length > 0 ){
+    if (cnt> 0 ){
         //警告询问框
-        layer.confirm('警告！是否确认删除选中的'+cnt.length+'项内容？', {
+        layer.confirm('警告！是否确认删除选中的'+cnt+'项内容？'
+
+            , {
             btn: ['是的','取消'], //按钮
             //0.1透明度的白色背景
             shade: [0.1,'#fff'],
@@ -185,10 +188,8 @@ function deleteDVD(){
         });
     }
     else{
-        alert("未选择删除项");
+        alert("您还未选中任何一行");
     }
-
-
 
 
 }
@@ -232,18 +233,6 @@ function getStatistics() {
 }
 
 //模糊搜索
-// function search() {
-//     //获取查询内容
-//     let $queryInputVal =  $('#query_input').val();
-//
-//     let info = $queryInputVal.split('-');
-//     let query = info[0];
-//
-//     getAllDVDs(query,pageNum,pageSize);
-//
-//
-// }
-
 function searchToggle(obj, evt){
         let container = $(obj).closest('.search-wrapper');
 
@@ -251,28 +240,25 @@ function searchToggle(obj, evt){
             container.addClass('active');
             evt.preventDefault();
         }
-        else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+        else if(container.hasClass('active') && $(obj).closest('.input-holder').length === 0){
             container.removeClass('active');
             // clear input
             container.find('.search-input').val('');
             // clear and hide result container when we press close
-            container.find('.result-container').fadeOut(100, function(){$(this).empty();});
+            container.find('.result-container')
+                .fadeOut(100, function(){$(this).empty();});
         }
     }
 
 function submitFn(obj, evt){
-    value = $(obj).find('.search-input').val().trim();
+    let value = $(obj).find('.search-input')
+        .val().trim();
 
-    _html = "Yup yup! Your search text sounds like this: ";
-    if(!value.length){
-        _html = "Yup yup! Add some text friend :D";
+    if(value.length){
+        let info = value.split('-');
+        let query = info[0];
+        getAllDVDs(query,pageNum,pageSize);
     }
-    else{
-        _html += "<b>" + value + "</b>";
-    }
-
-    $(obj).find('.result-container').html('<span>' + _html + '</span>');
-    $(obj).find('.result-container').fadeIn(100);
 
     evt.preventDefault();
 }

@@ -88,7 +88,7 @@
 
 
     <br>
-    <div  style="display: inline-block;margin-left: -30%;">
+    <div  style="display: inline-block;margin-left: -24%;">
         <div class="layui-btn-group">
             <button class="layui-btn layui-btn-normal"  onclick="addDVD()">
                 <i class="layui-icon">&#xe608;</i> 添加
@@ -100,10 +100,19 @@
         </div>
         <form onsubmit="submitFn(this, event);"
               style="display: inline-block;">
-            <div class="search-wrapper" style="margin-left: 23%;">
+            <div class="search-wrapper" style="margin-left: 14%;">
                 <div class="input-holder">
-                    <input type="text" class="search-input" placeholder="Type to search">
-                    <button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
+                    <%--绑定事件（JS代码中）--%>
+                    <input type="text" class="search-input"
+                           list="dvdList"  id="query_input"
+                           placeholder="" style="margin-top: -2%">
+                    <datalist id="dvdList"></datalist>
+                    <button class="search-icon"
+                            onclick="searchToggle(this, event);"
+                    ><span></span>
+                    </button>
+
+
                 </div>
                 <span class="close" onclick="searchToggle(this, event);"></span>
                 <div class="result-container">
@@ -122,6 +131,7 @@
 
 <%--表格部分 start--%>
 <section style="margin:0 auto">
+    <br>
     <br>
     <table border="1" id="DVDsTable" style="margin-left: 30%;">
         <!--填充模板区-->
