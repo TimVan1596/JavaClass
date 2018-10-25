@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "lendServlet",urlPatterns = {"/lend.do"})
+@WebServlet(name = "lendServlet",urlPatterns = {"/atblend.do"})
 public class lendServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

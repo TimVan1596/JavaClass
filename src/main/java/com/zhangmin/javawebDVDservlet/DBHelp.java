@@ -1,14 +1,10 @@
-package com.zhangmin.com.aiit.daofangfa;
+package com.zhangmin.javawebDVDservlet;
 
 import java.sql.*;
 
-/*
- * 连接数据库的封装
- */
-public class DBHelper {
-
+public class DBHelp {
     private Connection conn;
-    private Statement  sta;
+    private Statement sta;
     private PreparedStatement pre;
     //加载驱动
     static {

@@ -37,7 +37,7 @@
     <h2>DVD Mgr 6.0 管理系统</h2>
     <div class="login-top">
         <h1>修改密码</h1>
-        <form action="../../../../Retrieve.do" method="get">
+        <form action="../../../../atbRetrieve.do" method="get">
             <input type="text" name="name" id="name" title="" value="<%=request.getAttribute("name")%>" readonly />
             <%--<input type="text" name="name" id="name" title="" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>--%>
             <input type="text" name="password" id="password" title="" value="账号密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
@@ -73,7 +73,7 @@
                 var password = $("[name=password]").val();
                 password = $.trim(password);
                 if (cpassword != "") {
-                    var url = "../../../../modify.do?";
+                    var url = "../../../../atbmodify.do?";
                     cpassword="cpassword="+cpassword;
                     password="&password="+password;
                     url = url + cpassword + password;

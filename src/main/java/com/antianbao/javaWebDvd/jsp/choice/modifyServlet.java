@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet(name = "modifyServlet",urlPatterns = {"/modify.do"})
+@WebServlet(name = "modifyServlet",urlPatterns = {"/atbmodify.do"})
 public class modifyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码
@@ -139,7 +139,7 @@ public class modifyServlet extends HttpServlet {
         if(password.equals(cpassword)) {
             response.getWriter().print("<font color='green'>两次密码相同</font>");
         }else {
-            response.getWriter().print("<font color='red'>两次密码不一致</font>");
+            response.getWriter().print("<font color='yellow'>两次密码不一致</font>");
         }
     }
 }

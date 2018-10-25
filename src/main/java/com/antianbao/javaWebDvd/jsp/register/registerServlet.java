@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "registerServlet",urlPatterns = {"/Register.do"})
+@WebServlet(name = "registerServlet",urlPatterns = {"/atbRegister.do"})
 public class registerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,7 +80,7 @@ public class registerServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         //3.返回结果
         if(isExist == 1) {
-            response.getWriter().print("<font color='red'>该账号已存在</font>");
+            response.getWriter().print("<font color='yellow'>该账号已存在</font>");
         }else {
             response.getWriter().print("<font color='green'>恭喜您账号可用</font>");
         }

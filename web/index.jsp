@@ -37,7 +37,7 @@
     </div>
     <div class="div-right">
         <h2>
-            <a href="zm/hello.jsp">张敏</a>
+            <a href="zm/test/hello.jsp">张敏</a>
         </h2>
         <h2>
             <a href="fy/login.jsp">方宇</a>

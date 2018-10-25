@@ -1,3 +1,36 @@
+/*------ start  input checkbox 复选框样式更改  -------------*/
+input[type="checkbox"]{
+    -webkit-appearance: none;
+    vertical-align:middle;
+    margin-top:0;
+    background:#fff;
+    border:#999 solid 1px;
+    border-radius: 3px;
+    min-height: 20px;
+    min-width: 20px;
+}
+input[type="checkbox"]:checked {
+    background: #3190e8;
+}
+input[type=checkbox]:checked::after{
+    content: '';
+    position: absolute;
+    background: transparent;
+    border: #fff solid 2px;
+    border-top: none;
+    border-right: none;
+    height: 6px;
+    width: 11px;
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    margin-top: 3px;
+    margin-left: 2px;
+}
+/*------  结束  input checkbox 复选框样式更改  -------------*/
+
+
 td {
     text-align: center;
     white-space: nowrap;

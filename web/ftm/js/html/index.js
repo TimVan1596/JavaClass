@@ -1,10 +1,12 @@
+//全局变量
+let $loginPage =  $('#login-page');
+let $registerPage =  $('#register-page');
+
 //绑定登录点击事件
-$('input[type="submit"]').click(function () {
+$('#login-submit').click(function () {
 
     let name = $("#user-name").val();
     let password = $("#user-password").val();
-
-
 
     //非空判断
     if (isNull(name) || isNull(password)) {
@@ -13,9 +15,9 @@ $('input[type="submit"]').click(function () {
     else {
 
         //动画 - 收起登录页面，展开认证中
-        $('.login').addClass('test');
+        $loginPage.addClass('test');
         setTimeout(function () {
-            $('.login').addClass('testtwo');
+            $loginPage.addClass('testtwo');
         }, 300);
 
         setTimeout(function () {
@@ -40,12 +42,30 @@ $('input[type="submit"]').click(function () {
 
             //关闭动画
             setTimeout(function () {
-                $('.login').removeClass('test');
+                $loginPage.removeClass('test');
                 $('.login div').fadeOut(123);
             }, 100);
 
 
             if (ret['error'] === 0) {
+
+                //运行成功动画
+                setTimeout(function () {
+                    $('.success').fadeIn();
+                }, 3200);
+                setTimeout(function () {
+                    $('.authent').show().animate({right: 90}, {
+                        easing: 'easeOutQuint',
+                        duration: 600,
+                        queue: false
+                    });
+                    $('.authent').animate({opacity: 0}, {
+                        duration: 200,
+                        queue: false
+                    }).addClass('visible');
+                    $loginPage.removeClass('testtwo');
+                }, 2500);
+
                 window.location.href = 'html/menu.jsp';
 
             } else if (ret['error'] === 1) {
@@ -61,21 +81,6 @@ $('input[type="submit"]').click(function () {
     if (isSuccess){
 
 
-        setTimeout(function () {
-            $('.success').fadeIn();
-        }, 3200);
-        setTimeout(function () {
-            $('.authent').show().animate({right: 90}, {
-                easing: 'easeOutQuint',
-                duration: 600,
-                queue: false
-            });
-            $('.authent').animate({opacity: 0}, {
-                duration: 200,
-                queue: false
-            }).addClass('visible');
-            $('.login').removeClass('testtwo');
-        }, 2500);
 
     }
 
@@ -107,3 +112,4 @@ $('.tab').click(function () {
         $(this).parent().animate({'left': '0'});
     });
 });
+

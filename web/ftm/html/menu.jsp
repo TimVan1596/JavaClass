@@ -26,28 +26,36 @@
                        type="checkbox" value=""/>
             </td>
             <td class="dvd-id"></td>
-            <td>
+            <td height="110">
                 <img class="dvd-preview"
                      src="https://cloud.timvanx.com/timg.jpg">
             </td>
             <td class="dvd-name"></td>
             <td>
-                <button class="dvd-btn-land"
-                        onclick="loanOrReturnDVD(this)"></button>
-                <button class="dvd-btn-edit"
-                        onclick="editDVD(this)">编辑</button>
+                <button onclick="loanOrReturnDVD(this)"
+                        class="layui-btn layui-btn-sm
+                            dvd-btn-land">
+                    <i class="layui-icon">&#xe642;</i>
+                </button>
+
+                <button onclick="editDVD(this)"
+                        class="layui-btn layui-btn-sm
+                            dvd-btn-edit">
+                    <i class="layui-icon">&#xe642;</i>编辑
+                </button>
+
             </td>
         </tr>
     </script>
 
     <!-- DVD表格的表头（列表填充模板 template）-->
     <script type="text/html" id="DVD_TABLE_TH_TEMPLATE">
-        <tr>
-            <th width="30"></th>
-            <th width="80">编号</th>
-            <th width="100">预览</th>
-            <th width="200">名称</th>
-            <th width="100">操作</th>
+        <tr >
+            <th width="30" height="30"></th>
+            <th width="100" >编号</th>
+            <th width="110">预览</th>
+            <th width="250">名称</th>
+            <th width="150">操作</th>
         </tr>
     </script>
 
@@ -76,7 +84,8 @@
 
     <ul class="layui-nav" style="text-align: left;">
         <li class="layui-nav-item">
-            <a href="./menu/statistics.html">信息统计<span class="layui-badge-dot"></span></a>
+            <a href="javascript:void(0);"
+            onclick="getStatistics()">信息统计<span class="layui-badge-dot"></span></a>
         </li>
         <li class="layui-nav-item" >
             <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img"><%=userName%></a>
@@ -86,9 +95,8 @@
         </li>
     </ul>
 
-
     <br>
-    <div  style="display: inline-block;margin-left: -30%;">
+    <div  style="display: inline-block;margin-left: -24%;">
         <div class="layui-btn-group">
             <button class="layui-btn layui-btn-normal"  onclick="addDVD()">
                 <i class="layui-icon">&#xe608;</i> 添加
@@ -100,10 +108,19 @@
         </div>
         <form onsubmit="submitFn(this, event);"
               style="display: inline-block;">
-            <div class="search-wrapper" style="margin-left: 23%;">
+            <div class="search-wrapper" style="margin-left: 14%;">
                 <div class="input-holder">
-                    <input type="text" class="search-input" placeholder="Type to search">
-                    <button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
+                    <%--绑定事件（JS代码中）--%>
+                    <input type="text" class="search-input"
+                           list="dvdList"  id="query_input"
+                           placeholder="" style="margin-top: -2%">
+                    <datalist id="dvdList"></datalist>
+                    <button class="search-icon"
+                            onclick="searchToggle(this, event);"
+                    ><span></span>
+                    </button>
+
+
                 </div>
                 <span class="close" onclick="searchToggle(this, event);"></span>
                 <div class="result-container">
@@ -112,18 +129,14 @@
             </div>
         </form>
     </div>
-
-    <%--绑定事件（JS代码中）--%>
-    <%--<input list="dvdList"  id="query_input"--%>
-           <%--style="width:12%;height: 24px;margin-left: 10%;">--%>
-    <%--<datalist id="dvdList"></datalist>--%>
 </section>
 <%--标题头 结束--%>
 
 <%--表格部分 start--%>
 <section style="margin:0 auto">
     <br>
-    <table border="1" id="DVDsTable" style="margin-left: 30%;">
+    <br>
+    <table border="1" id="DVDsTable" style="margin-left: 25%;">
         <!--填充模板区-->
     </table>
     <br>

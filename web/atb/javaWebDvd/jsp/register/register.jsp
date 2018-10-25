@@ -38,7 +38,7 @@
     <h2>DVD Mgr 6.0 管理系统</h2>
     <div class="login-top">
         <h1>欢迎注册</h1>
-        <form action="../../../../Register.do" method="post">
+        <form action="../../../../atbRegister.do" method="post">
             <input type="text" name="name" id="name" title="" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
             <input type="text" name="password" id="password" title="" value="账号密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
             <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
@@ -83,7 +83,7 @@
                 var name = $(this).val();
                 name = $.trim(name);
                 if (name != "") {
-                    var url = "../../../../Register.do?";
+                    var url = "../../../../atbRegister.do?";
                     name="name="+name;
                     url = url + name;
                     //$.get()方法能够返回一个JQuery XMLHttpRequest对象
@@ -111,7 +111,7 @@
                 var password = $("[name=password]").val();
                 password = $.trim(password);
                 if (cpassword != "") {
-                    var url = "../../../../modify.do?";
+                    var url = "../../../../atbmodify.do?";
                     cpassword="cpassword="+cpassword;
                     password="&password="+password;
                     url = url + cpassword + password;
@@ -138,7 +138,7 @@
                 var phone = $(this).val();
                 phone = $.trim(phone);
                 if (phone != "") {
-                    var url = "../../../../delete.do?";
+                    var url = "../../../../atbdelete.do?";
                     phone="phone="+phone;
                     url = url + phone;
                     //$.get()方法能够返回一个JQuery XMLHttpRequest对象

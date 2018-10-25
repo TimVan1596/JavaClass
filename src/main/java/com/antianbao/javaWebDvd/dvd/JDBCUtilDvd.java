@@ -121,7 +121,7 @@ public class JDBCUtilDvd {
     }
 
     /**
-     * 删除操作
+     * 删除dvd操作
      */
     public int deleteDvd(int no) {
         int rlt = 0;
@@ -139,31 +139,58 @@ public class JDBCUtilDvd {
     }
 
     /**
-     * 回收数据成集合
+     * 删除recovery操作
      */
-//    public List<Dvd> recoveryDvd(int no) {
-//        int rlt = 0;
-//        List<Dvd> list = new ArrayList<Dvd>();
-//        String sql = "select *from dvd where no = "+no+" ";
-//        PreparedStatement pstat = getPrepareStatement(sql);
-//        try {
-//            ResultSet rs = pstat.executeQuery();
-//            Dvd bd = null;
-//            while (rs.next()) {
-//                bd = new Dvd();
-//                bd.setNo(rs.getInt("no"));
-//                bd.setImage(rs.getString("image"));
-//                bd.setName(rs.getString("name"));
-//                bd.setState(rs.getInt("state"));
-//                bd.setBorrow(rs.getInt("borrow"));
-//                list.add(bd);
-//            }
-//            close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return list;
-//    }
+    public int deleteRecovery(int no) {
+        int rlt = 0;
+        try {
+            String sql = "DELETE FROM recovery where no = ?";
+            PreparedStatement pstmt = getPrepareStatement(sql);
+            pstmt.setObject(1, no);
+            rlt = pstmt.executeUpdate();
+            close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return rlt;
+    }
+
+    /**
+     * 恢复数据
+     */
+    public int reductionAddDvd(int no) {
+        int rlt = 0;
+        List<Dvd> list = new ArrayList<Dvd>();
+        String sql = "select *from recovery where no = "+no+" ";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            Dvd bd = null;
+            while (rs.next()) {
+                bd = new Dvd();
+                bd.setNo(rs.getInt("no"));
+                bd.setImage(rs.getString("image"));
+                bd.setName(rs.getString("name"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
+                list.add(bd);
+            }
+            for (Dvd ls : list) {
+                String sql1 = "insert into dvd(name,state,borrow,image) values(?,?,?)";
+                PreparedStatement pstmt = getPrepareStatement(sql1);
+                pstmt.setString(1, ls.getName());
+                pstmt.setInt(2, ls.getState());
+                pstmt.setInt(3, ls.getBorrow());
+                pstmt.setString(4, ls.getImage());
+                rlt = pstmt.executeUpdate();
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rlt;
+    }
 
     /**
      * 回收数据
@@ -202,12 +229,33 @@ public class JDBCUtilDvd {
     }
 
     /**
-     * 修改状态
+     * 修改dvd状态
      */
     public int updateState(int borrow,int no) {
         int rlt = 0;
         try {
             String sql = "update dvd SET borrow = ? where no = ?";
+            PreparedStatement pstat = getPrepareStatement(sql);
+            Object[] params = {borrow, no};
+            for (int i = 1; i <= params.length; i++) {
+                pstat.setObject(i, params[i - 1]);
+            }
+            rlt = pstat.executeUpdate();
+            close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return rlt;
+    }
+
+    /**
+     * 修改recovery状态
+     */
+    public int recoveryState(int borrow,int no) {
+        int rlt = 0;
+        try {
+            String sql = "update recovery SET borrow = ? where no = ?";
             PreparedStatement pstat = getPrepareStatement(sql);
             Object[] params = {borrow, no};
             for (int i = 1; i <= params.length; i++) {
@@ -265,7 +313,7 @@ public class JDBCUtilDvd {
     }
 
     /**
-     * 将数据库中用户信息转为集合
+     * 将dvd数据库中用户信息转为集合
      */
     public List<Dvd> queryStu() {
         List<Dvd> list = new ArrayList<Dvd>();
@@ -291,7 +339,33 @@ public class JDBCUtilDvd {
     }
 
     /**
-     * 查找DVD
+     * 将recovery数据库中用户信息转为集合
+     */
+    public List<Dvd> recovery() {
+        List<Dvd> list = new ArrayList<Dvd>();
+        String sql = "select *from recovery";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            Dvd bd = null;
+            while (rs.next()) {
+                bd = new Dvd();
+                bd.setNo(rs.getInt("no"));
+                bd.setImage(rs.getString("image"));
+                bd.setName(rs.getString("name"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
+                list.add(bd);
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * 管理数据查找DVD
      */
     public List<Dvd> search(String search){
         List<Dvd> list = new ArrayList<>();
@@ -345,12 +419,61 @@ public class JDBCUtilDvd {
     }
 
     /**
+     * 查询指定页（page这页）的记录
+     * @param page
+     * @return
+     */
+    public List<Dvd> revokefind(int page){
+        List<Dvd> list = new ArrayList<>();
+        String sql = "SELECT *FROM recovery LIMIT "+(page-1)*Dvd.PAGE_SIZE+","+Dvd.PAGE_SIZE+"";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            Dvd bd;
+            while (rs.next()) {
+                bd = new Dvd();
+                bd.setNo(rs.getInt("no"));
+                bd.setImage(rs.getString("image"));
+                bd.setName(rs.getString("name"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
+                list.add(bd);
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
      * 总记录数
      * @return
      */
     public int findCount(){
         int count = 0;
         String sql = "select count(*) from dvd";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            if (rs.next()){
+                count = rs.getInt(1);
+            }
+            close();
+        } catch (Exception e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    /**
+     * 总记录数
+     * @return
+     */
+    public int revokeFindCount(){
+        int count = 0;
+        String sql = "select count(*) from recovery";
         PreparedStatement pstat = getPrepareStatement(sql);
         try {
             ResultSet rs = pstat.executeQuery();
