@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>管理数据</title>
+    <title>撤销数据</title>
     <style type="text/css">
         ul{
             margin:0 auto;

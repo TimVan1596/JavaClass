@@ -43,10 +43,6 @@
             <input type="text" name="password" id="password" title="" value="账号密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
             <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
             <input type="text" name="phone" id="phone" title="" value="绑定手机" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-            <%--<input type="text" name="name" title="name" value="用户账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户账号';}">--%>
-            <%--<input type="text" name="password" title="password" value="账号密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号密码';}">--%>
-            <%--<input type="text" name="cpassword" title="cpassword" value="确认密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '确认密码';}">--%>
-            <%--<input type="text" name="phone" title="phone" value="绑定手机" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '绑定手机';}">--%>
             <div class="forgot">
                 <%
                     if(request.getAttribute("FH") == null){
@@ -95,7 +91,7 @@
                     //若执行JQuery出现错误则提示错误信息
                     //在JQuery3.0以后需要用done()、fail()、alwayls()代替success()、error()、complete();
                     jqxhr.fail(function(xhr, error, throwerror) {
-                        alert("error" + xhr.status + " error=" + error + " throwerror:" + throwerror);
+                        // alert("error" + xhr.status + " error=" + error + " throwerror:" + throwerror);
                     });
                 }
             });
@@ -124,7 +120,7 @@
                     //若执行JQuery出现错误则提示错误信息
                     //在JQuery3.0以后需要用done()、fail()、alwayls()代替success()、error()、complete();
                     jqxhr.fail(function(xhr, error, throwerror) {
-                        alert("error" + xhr.status + " error=" + error + " throwerror:" + throwerror);
+                        // alert("error" + xhr.status + " error=" + error + " throwerror:" + throwerror);
                     });
                 }
             });
@@ -150,7 +146,7 @@
                     //若执行JQuery出现错误则提示错误信息
                     //在JQuery3.0以后需要用done()、fail()、alwayls()代替success()、error()、complete();
                     jqxhr.fail(function(xhr, error, throwerror) {
-                        alert("error" + xhr.status + " error=" + error + " throwerror:" + throwerror);
+                        // alert("error" + xhr.status + " error=" + error + " throwerror:" + throwerror);
                     });
                 }
             });

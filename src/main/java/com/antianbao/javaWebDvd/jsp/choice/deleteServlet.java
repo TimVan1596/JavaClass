@@ -18,19 +18,24 @@ public class deleteServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         //获取输入信息
         String[] check = request.getParameterValues("check");
-        int jd = 0;
+        int jd = 0,zc = 0;
         if(check == null){
             request.setAttribute("MSG", "请选择要删除的图书！");
             request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
         }else{
             for(String c : check){
                 JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
+                zc = jdbcUtilDvd.recoveryAddDvd(Integer.parseInt(c));
                 jd = jdbcUtilDvd.deleteDvd(Integer.parseInt(c));
             }
         }
         //删除成功跳转显示界面
         if(jd > 0){
             request.setAttribute("MSG", "删除成功！");
+            request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
+        }
+        if(zc != 0){
+            request.setAttribute("MSG", "转存失败！");
             request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
         }
 

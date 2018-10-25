@@ -139,6 +139,69 @@ public class JDBCUtilDvd {
     }
 
     /**
+     * 回收数据成集合
+     */
+//    public List<Dvd> recoveryDvd(int no) {
+//        int rlt = 0;
+//        List<Dvd> list = new ArrayList<Dvd>();
+//        String sql = "select *from dvd where no = "+no+" ";
+//        PreparedStatement pstat = getPrepareStatement(sql);
+//        try {
+//            ResultSet rs = pstat.executeQuery();
+//            Dvd bd = null;
+//            while (rs.next()) {
+//                bd = new Dvd();
+//                bd.setNo(rs.getInt("no"));
+//                bd.setImage(rs.getString("image"));
+//                bd.setName(rs.getString("name"));
+//                bd.setState(rs.getInt("state"));
+//                bd.setBorrow(rs.getInt("borrow"));
+//                list.add(bd);
+//            }
+//            close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return list;
+//    }
+
+    /**
+     * 回收数据
+     */
+    public int recoveryAddDvd(int no) {
+        int rlt = 0;
+        List<Dvd> list = new ArrayList<Dvd>();
+        String sql = "select *from dvd where no = "+no+" ";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            Dvd bd = null;
+            while (rs.next()) {
+                bd = new Dvd();
+                bd.setNo(rs.getInt("no"));
+                bd.setImage(rs.getString("image"));
+                bd.setName(rs.getString("name"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
+                list.add(bd);
+            }
+            for (Dvd ls : list) {
+                String sql1 = "insert into recovery(name,state,borrow,image) values(?,?,?)";
+                PreparedStatement pstmt = getPrepareStatement(sql1);
+                pstmt.setString(1, ls.getName());
+                pstmt.setInt(2, ls.getState());
+                pstmt.setInt(3, ls.getBorrow());
+                pstmt.setString(4, ls.getImage());
+                rlt = pstmt.executeUpdate();
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rlt;
+    }
+
+    /**
      * 修改状态
      */
     public int updateState(int borrow,int no) {
