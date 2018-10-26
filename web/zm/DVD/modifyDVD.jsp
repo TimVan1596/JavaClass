@@ -1,16 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2018/10/24/024
-  Time: 20:16
+  Date: 2018/10/26/026
+  Time: 8:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>注册账号</title>
+    <title>修改DVD</title>
 </head>
 <body>
-注册账号
+<form action="/zm/DVD/modifyDVD.do" method="post"></form>
 </body>
 </html>
