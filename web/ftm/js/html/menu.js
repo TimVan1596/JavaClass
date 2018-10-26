@@ -9,6 +9,8 @@ let pageNum = 1;
 let pageSize = 5;
 let query = "";
 
+
+
 //模块化初始化 LayUI 框架
 layui.use(['layer','element'], function(){
     var layer = layui.layer;
@@ -17,12 +19,22 @@ layui.use(['layer','element'], function(){
     //初始化页面
     $(function () {
 
+        //判断是否首次登录，若首次则弹出公告窗口
+        if (!isNull($_GET['first'])){
+            popUpdateNews();
+        }
+
         //获取当前页
         if (!isNull($_GET['pageNum'])){
             pageNum = $_GET['pageNum'];
         }
         if (!isNull($_GET['query'])){
             query = $_GET['query'];
+
+            //获取【重置搜索】按钮，并让其显示
+            let $refreshSearchBtn =  $('#refresh-Search-btn');
+            $refreshSearchBtn.removeClass('hidden');
+
         }
 
         query = decodeURI(query);
@@ -151,7 +163,7 @@ function deleteDVD(){
             offset: '170px'
         }, function(){
 
-            layer.confirm('选中数据将无条件删除（无视借出情况），并无法找回', {
+            layer.confirm('选中数据将被无条件移入回收站（忽略借出情况），您可在10日内还原数据', {
                 btn: ['确定删除','取消'], //按钮
                 shade: [0.1,'#fff'],
                 offset: '170px'
@@ -266,6 +278,10 @@ function submitFn(obj, evt){
         let info = value.split('-');
         let query = info[0];
         getAllDVDs(query,pageNum,pageSize);
+
+        //获取【重置搜索】按钮，并让其显示
+        let $refreshSearchBtn =  $('#refresh-Search-btn');
+        $refreshSearchBtn.removeClass('hidden');
     }
 
     evt.preventDefault();
@@ -379,4 +395,27 @@ function getAllDVDs(query, pageNum, pageSize){
         //关闭loading
         layer.close(loading);
     });
+}
+
+//弹出本次[更新内容]窗口
+function popUpdateNews(){
+    //弹出本次[更新内容]窗口
+    layer.open({
+        type: 2,
+        title: 'BiggerDVD 6.0.0 更新内容',
+        shadeClose: true,
+        shade: 0.6,
+        area: ['380px', '90%'],
+        content: 'menu/updateNews.html', //iframe的url
+        cancel: function(index){
+            layer.close(index);
+            window.location.replace("menu.jsp");
+            return false;
+        }
+    });
+}
+
+//重置搜索结果
+function refreshSearch(){
+    window.location.replace("menu.jsp");
 }

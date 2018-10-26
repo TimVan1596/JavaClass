@@ -1,11 +1,11 @@
 <%--
-  主菜单页面
+  回收站
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
 <head>
-    <title>菜单 - BiggerDVD</title>
+    <title>回收站 - BiggerDVD</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
     <link rel="stylesheet"
@@ -22,17 +22,13 @@
             display: none;
         }
         tr:hover{
-            background-color: rgba(0, 129, 255, 0.3) !important;
+            background-color: rgba(0, 129, 255, 0.3);
         }
     </style>
 
     <!-- DVD信息（列表填充模板 template）-->
     <script type="text/html" id="DVD_TEMPLATE">
         <tr class="dvd-tr-line">
-            <td class="dvd-radio">
-                <input class="dvd-radio-input" name="dvd-radio"
-                       type="checkbox" value=""/>
-            </td>
             <td class="dvd-id"></td>
             <td height="110">
                 <img class="dvd-preview"
@@ -40,16 +36,10 @@
             </td>
             <td class="dvd-name"></td>
             <td>
-                <button onclick="loanOrReturnDVD(this)"
+                <button onclick="returnShow(this)"
                         class="layui-btn layui-btn-sm
-                            dvd-btn-land">
-                    <i class="layui-icon">&#xe642;</i>
-                </button>
-
-                <button onclick="editDVD(this)"
-                        class="layui-btn layui-btn-sm
-                            dvd-btn-edit">
-                    <i class="layui-icon">&#xe642;</i>编辑
+                            dvd-btn-return">
+                    <i class="layui-icon">&#xe642;</i>还原
                 </button>
 
             </td>
@@ -59,7 +49,6 @@
     <!-- DVD表格的表头（列表填充模板 template）-->
     <script type="text/html" id="DVD_TABLE_TH_TEMPLATE">
         <tr >
-            <th width="30" height="30"></th>
             <th width="100" >编号</th>
             <th width="110">预览</th>
             <th width="250">名称</th>
@@ -69,7 +58,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../../common/util/layui/layui.js"></script>
-    <script src="../js/html/menu.js"></script>
+    <script src="../js/html/recyclebin.js"></script>
     <script src="../js/common-js.js"></script>
 </head>
 
@@ -92,11 +81,9 @@
 
     <ul class="layui-nav" style="text-align: left;">
         <li class="layui-nav-item">
-            <a href="recyclebin.jsp">回收站<span class="layui-badge">3</span></a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="javascript:void(0);"
-            onclick="getStatistics()">信息统计<span class="layui-badge-dot"></span></a>
+            <a href="menu.jsp">
+                <i class="layui-icon">&#xe65c;</i>
+                回到菜单</a>
         </li>
         <li class="layui-nav-item" >
             <a href=""><img src="https://cloud.timvanx.com/Fu7yXecEjIMj2_g2CPRmYEKGuIK3" class="layui-nav-img"><%=userName%></a>
@@ -114,16 +101,10 @@
                     onclick="refreshSearch()">
                 <i class="layui-icon">&#xe9aa;</i> 重置搜索
             </button>
-            <button class="layui-btn layui-btn-normal"  onclick="addDVD()">
-                <i class="layui-icon">&#xe608;</i> 添加
-            </button>
-            <button class="layui-btn layui-btn-danger" onclick="deleteDVD()">
-                <i class="layui-icon">&#xe640;</i>一键删除
-            </button>
         </div>
         <form onsubmit="submitFn(this, event);"
               style="display: inline-block;">
-            <div class="search-wrapper" style="margin-left: 14%;">
+            <div class="search-wrapper" style="margin-left: 24%;">
                 <div class="input-holder">
                     <%--绑定事件（JS代码中）--%>
                     <input type="text" class="search-input"

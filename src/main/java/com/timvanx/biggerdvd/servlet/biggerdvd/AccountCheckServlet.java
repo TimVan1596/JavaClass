@@ -44,6 +44,15 @@ public class AccountCheckServlet extends HttpServlet {
         //判断输入账户是否存在
         if (Account.login(userName, userPassword)) {
             ret.put("error", 0);
+            Map<String, Object> data =
+                    new HashMap<>(1);
+            //判断是否初次登录
+            Boolean isFirstLogin =
+                    Account.isFirstLogin("name = '"
+                            +userName+"'");
+            data.put("isFirstLogin",isFirstLogin?"1":"0");
+
+            ret.put("data", data);
             HttpSession session = request.getSession();
             session.setAttribute("userName", userName);
 

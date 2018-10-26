@@ -116,12 +116,31 @@ public class DVD implements Serializable {
     }
 
     /**
-     * 使用数据库删除DVD信息（通过主键ID）
+     * 使用数据库将DVD信息从回收站还原（通过主键ID）
+     * @param query 批量还原条件
+     */
+    public static void returnDVDInfoFromBin(String query) {
+        //在数据库中修改DVD的hidden为true
+        Map<String, Object> updateData =
+                new HashMap<>(1);
+        updateData.put("hidden", "0");
+        String tableWhere = " id  in ( " + query + " ) ";
+        JDBCUtil.update("dvd", updateData
+                , tableWhere);
+    }
+
+    /**
+     * 使用数据库将DVD信息移入回收站（通过主键ID）
      * @param query 批量删除条件
      */
     private static void deleteDVDInfo(String query) {
+        //在数据库中修改DVD的hidden为true
+        Map<String, Object> updateData =
+                new HashMap<>(1);
+        updateData.put("hidden", "1");
         String tableWhere = " id  in ( " + query + " ) ";
-        JDBCUtil.delete("dvd", tableWhere);
+        JDBCUtil.update("dvd", updateData
+                , tableWhere);
     }
 
     /**
@@ -208,15 +227,27 @@ public class DVD implements Serializable {
 
     /**
      * 统计DVD的数量
-     * @param tableWhere
      * @return 返回数量
      */
-    public static int countDVDs(String tableWhere){
+    public static int countDVDs(boolean isHidden,String tableWhere){
+        String tableName = "showDVD";
+        if (isHidden){
+            tableName = "hiddenDVD";
+        }
+
         int cnt = 0;
-        cnt  = JDBCUtil.count("dvd",
+        cnt  = JDBCUtil.count(tableName,
                 "id",tableWhere);
 
         return cnt;
+    }
+
+    /**
+     *(不显示回收站）
+     * @return 返回数量
+     */
+    public static int countDVDs(String tableWhere){
+        return countDVDs(false,tableWhere);
     }
 
     /**
@@ -226,7 +257,7 @@ public class DVD implements Serializable {
     public static int countLoanedDVDs(){
         int cnt = 0;
         String tableWhere = "status = 1";
-        cnt  = JDBCUtil.count("dvd",
+        cnt  = JDBCUtil.count("showdvd",
                 "id",tableWhere);
         return cnt;
     }
@@ -285,17 +316,19 @@ public class DVD implements Serializable {
 
     /**
      * (带返回值)使用数据库读入DVD信息到 DVDArr 集合
+     * @param isHidden 是否显示已被收入回收站的DVD（true = 回收站）
      * @param pageNum 分页当前页
      * @param pageSize 分页一页显示多少行
      * @param tableWhere 查询条件
      * @return 返回DVD集合
      */
-    public static ArrayList<DVD> loadDVDInfosByArray(int pageNum
+    public static ArrayList<DVD> loadDVDInfosByArray(boolean isHidden,int pageNum
             , int pageSize,String tableWhere) {
 
         ArrayList<DVD> dvds = new ArrayList<>();
 
-        List<List<String>> dvdSQLs = getDVDInfosFromJDBC( pageNum
+        List<List<String>> dvdSQLs = getDVDInfosFromJDBC(
+                isHidden,pageNum
                 , pageSize,tableWhere);
 
         for (List<String> dvdInfo : dvdSQLs) {
@@ -316,12 +349,28 @@ public class DVD implements Serializable {
     }
 
     /**
+     * (带返回值)使用数据库读入DVD信息到 DVDArr 集合
+     * （不显示回收站）
+     */
+    public static ArrayList<DVD> loadDVDInfosByArray(int pageNum
+            , int pageSize,String tableWhere) {
+        return loadDVDInfosByArray(false,pageNum
+                ,pageSize,tableWhere);
+    }
+
+    /**
      * 从数据库读入DVD信息到 DVDArr 集合
      * 作为 loadDVDInfos() 和 loadDVDInfosByArray()的组件
      * @return 返回DVD集合(二重)
      */
-    private static List<List<String>> getDVDInfosFromJDBC(int pageNum
+    private static List<List<String>> getDVDInfosFromJDBC(boolean isHidden,int pageNum
             , int pageSize,String tableWhere){
+
+       String tableName = "showDVD";
+       if (isHidden){
+           tableName = "hiddenDVD";
+       }
+
         //设置查询条件
         ArrayList<String> tableField = new ArrayList<String>() {{
             add("id");
@@ -334,7 +383,7 @@ public class DVD implements Serializable {
         String tableLimit= (pageNum-1)*pageSize+","+pageSize;
 
         List<List<String>> dvdSQLs = JDBCUtil
-                .select("dvd",
+                .select(tableName,
                         tableField, tableWhere,
                         tableOrder, tableLimit);
 
@@ -360,7 +409,7 @@ public class DVD implements Serializable {
         String tableOrder = " id desc ";
 
         List<List<String>> dvdSQLs = JDBCUtil
-                .select("dvd",
+                .select("showdvd",
                         tableField,null,
                         tableOrder, null);
 
