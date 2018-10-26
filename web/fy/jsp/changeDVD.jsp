@@ -27,6 +27,8 @@
 </head>
 <body>
 <form action="/fy/servlet/toChangeDvd" method="get" onsubmit="return check()">
+    <fieldset>
+        <legend>修改</legend>
     <br>
     请输入要修改的DVD编号<input type=" text" name="dvdid" id="dvdId"/><br>
     请输入修改后的DVD名称<input type=" text" name="dvdname" id="dvdName"/><br>
@@ -35,7 +37,8 @@
     <option>可以借</option>
     <option>已借出</option>
 </select><br>
-    <input type="submit" class="button" value="修改">
+    <input type="submit" class="button" value="修改" />
+    </fieldset>
 </form>
 <script>
     function check(){

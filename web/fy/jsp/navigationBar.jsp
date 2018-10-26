@@ -40,8 +40,9 @@
 <body>
 <ul>
     <li><a class="active" href="showdvd.jsp">主页</a></li>
+    <li><a href="column.jsp">统计</a></li>
     <li><a href="">其它</a></li>
-    <li><a href="/fy/servlet/toCancelling"  style="margin-left: 1553px;">退出登陆</a></li>
+    <li><a href="/fy/servlet/toCancelling"  style="margin-left: 1400px;">退出登陆</a></li>
 </ul>
 </body>
 </html>

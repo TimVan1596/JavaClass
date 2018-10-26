@@ -27,10 +27,13 @@
 </style>
 <body>
 <form action="/fy/servlet/toAddDvd" method="post" enctype="multipart/form-data" onsubmit="return check()">
-    <br>
-<%--DVD名称：<input style="margin-top: 10px" type=" text" name="dvdname" id="dvdId"/><br>--%>
+    <fieldset>
+        <legend>添加</legend>
+     DVD名称：<input style="margin-top: 10px" type=" text" name="dvdname" id="dvdId"/><br>
     <input type="file" name="file" /><br>
     <input type="submit" class="button" value="添加">
+
+    </fieldset>
 </form>
 
 <script>
