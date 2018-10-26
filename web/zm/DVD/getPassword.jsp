@@ -13,7 +13,7 @@
 <body>
 <div style="text-align: center">
     <h4>找回密码</h4>
-    <form action="abc.do" method="post" onsubmit="return returnPassword()">
+    <form action="/zm/DVD/getPassword.do" method="post" onsubmit="return returnPassword()">
         请输入账号：<input type=" text" name="username" id="returnName"/><br>
         <input type="submit" value="提交"/>
     </form>
@@ -24,7 +24,7 @@
         if(name!=""){
             return true;
         }else{
-            alert("亲，账号不能为空哦~");
+            alert("账号不能为空");
             return false;
         }
 

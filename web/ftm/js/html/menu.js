@@ -104,8 +104,20 @@ function addDVD() {
 function editDVD(obj) {
     let dvdID = obj.getAttribute("value");
     let dvdName = obj.getAttribute("name");
+    let dvdPreview = obj.getAttribute("preview");
 
-    let name = prompt("请输入 "+dvdID+"-《"+dvdName+"》 的新名称");
+    //添加DVD iframe层
+    layer.open({
+        type: 2,
+        title: '编辑DVD信息',
+        shadeClose: true,
+        shade: 0.3,
+        area: ['380px', '63%'],
+        offset: ['110px', '35%'],
+        content: 'menu/editDVD.jsp?id='+dvdID
+        +'&name='+dvdName+'&preview='+dvdPreview//iframe的url
+    });
+
 
     //判断用户是否输入内容
     if (name) {
@@ -364,6 +376,7 @@ function getAllDVDs(query, pageNum, pageSize){
                 let $dvdBtnEdit = $('.dvd-btn-edit:last');
                 $dvdBtnEdit.attr("value", id);
                 $dvdBtnEdit.attr("name", name);
+                $dvdBtnEdit.attr("preview", preview);
             }
 
             //插入分页

@@ -51,9 +51,10 @@
     </style>
 </head>
 <body background="./atb/javaWebDvd/images/banner.jpg">
+<div style='position:fixed; z-index:999; top:0;color: white'><h4>欢迎您小伙子，想走就<a href="./atb/javaWebDvdLogin.jsp" style="color: red">退出</a></h4></div>
 <h1 align='center' style="color: white">----欢迎进入DVD Mgr 6.0 管理系统----</h1>
 <h5 align='center' style="color: red">介绍：搜索（关键字）、管理数据（操作数据）、借阅情况（借阅情况柱状图）、历史数据（回收站）、说明介绍（项目记录）、退出（返回登录页面）</h5>
-<h5 align='center' style="color: red">界面操作：添加（添加信息需加图片）、编辑（修改信息，图片可改可不改）、分页（数据分页）、删除（多删要密码可恢复）</h5>
+<h5 align='center' style="color: red">界面操作：添加（添加信息需加图片）、编辑（修改信息，图片可改可不改）、分页（数据分页）、删除（多删要密码可恢复）、库存（未借出蓝色，已借完红色）</h5>
 <div align='center'>
     <form action='./atb/javaWebDvd/search.jsp' method='post'>
         <h4 style="color: white">搜关键字：<input type='text' title="序号书名库存" name='search' style="width: 150px; height: 30px"/>
@@ -63,10 +64,10 @@
 </div>
 <div align='center'>
     <ul>
-        <li><a href="https://www.baidu.com">主页</a></li>
-        <li><a href="./atblogin.do">管理数据</a></li>
+        <li><a href="./atblogin.do" style="background-color: red">管理数据</a></li>
         <li><a href="./atb/javaWebDvd/jsp/choice/data.jsp">借阅情况</a></li>
         <li><a href="./atbrevoke.do">历史数据</a></li>
+        <li><a href="./atbuser.do">用户管理</a></li>
         <li><a href="./atbdescription.do">说明介绍</a></li>
     </ul>
 </div>
@@ -151,7 +152,9 @@
             }
         %>
         <tr>
-            <td colspan = '8' align="right">
+            <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
+            <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/jsp/choice/add.jsp">添加</a></td>
+            <td colspan = '6' align="right">
                 <a href = './atbpaging.do?page=1&search=<%=search%>'>首页</a>
                 <%
                     if(page1 == 1){
@@ -184,14 +187,6 @@
                 %>
                 <a href = './atbpaging.do?page=<%= pages%>&search=<%=search%>'>尾页</a>
             </td>
-        </tr>
-        <tr>
-            <td colspan = '1' align="center"><input type="submit" value="删除" style="text-align: left;"></td>
-            <td colspan = '1' align="center"><a href = "./atb/javaWebDvd/jsp/choice/add.jsp">添加</a></td>
-            <td colspan = '1' align="center"><a href = "./atblogin.do">主页</a></td>
-            <td colspan = '2' align="center" style="color: red">主页:返回首页  库存:蓝色未借出,红色已借完</td>
-            <td colspan = '2' align="center"><a href = "./atb/javaWebDvd/jsp/choice/data.jsp">数据显示</a></td>
-            <td colspan = '1' align="center"><a href = "./atb/javaWebDvdLogin.jsp">退出</a></td>
         </tr>
         <script type="text/javascript">
             if(<%= request.getAttribute("MSG")!=null %>){

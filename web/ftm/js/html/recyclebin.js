@@ -222,7 +222,8 @@ function returnShow(obj) {
 
     //询问框
 
-    layer.confirm('是否还原'+dvdID+"-《"+dvdName+"》？", {
+    layer.confirm('是否从回收站中还原'+dvdID+"-《"+dvdName+"》？"
+        , {
         btn: ['确定还原','取消'], //按钮
         shade: [0.1,'#fff'],
         offset: '170px'

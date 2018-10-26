@@ -16,7 +16,7 @@ public class revokeDeleteServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         //获取输入信息
         String[] check = request.getParameterValues("check");
-        int jd = 0;
+        int jd = 0,image = 0;
         if(check == null){
             request.setAttribute("MSG", "请选择要清除的图书！");
             request.getRequestDispatcher("./atb/javaWebDvd/revoke.jsp").forward(request, response);
@@ -24,9 +24,14 @@ public class revokeDeleteServlet extends HttpServlet {
             for(String c : check){
                 JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
                 jd = jdbcUtilDvd.deleteRecovery(Integer.parseInt(c));
+//                image = jdbcUtilDvd.deleteImage(Integer.parseInt(c));
             }
         }
         //删除成功跳转显示界面
+//        if(image == 0){
+//            request.setAttribute("MSG", "删除图片失败！");
+//            request.getRequestDispatcher("./atb/javaWebDvd/revoke.jsp").forward(request, response);
+//        }
         if(jd > 0){
             request.setAttribute("MSG", "删除成功！");
             request.getRequestDispatcher("./atb/javaWebDvd/revoke.jsp").forward(request, response);
