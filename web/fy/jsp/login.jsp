@@ -27,9 +27,9 @@
 
             <div>
                 <input type="submit" value="登录" />
-                <a style="margin-left: 100px" href="getpassword.jsp">找回密码</a>
-
+                <a href="getpassword.jsp">找回密码</a>
             </div>
+
         </form>
         <div class="button">
 

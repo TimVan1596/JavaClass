@@ -26,11 +26,11 @@
     }
 </style>
 <body>
-<form action="/fy/servlet/toAddDvd" method="get" enctype="multipart/form-data" onsubmit="return check()">
+<form action="/fy/servlet/toAddDvd" method="post" enctype="multipart/form-data" onsubmit="return check()">
     <br>
-DVD名称：<input style="margin-top: 10px" type=" text" name="dvdname" id="dvdId"/><br>
-    <input type="file" name="fname" /><br>
-<input type="submit" class="button" value="添加">
+<%--DVD名称：<input style="margin-top: 10px" type=" text" name="dvdname" id="dvdId"/><br>--%>
+    <input type="file" name="file" /><br>
+    <input type="submit" class="button" value="添加">
 </form>
 
 <script>
