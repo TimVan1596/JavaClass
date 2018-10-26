@@ -52,6 +52,7 @@
     </style>
 </head>
 <body background="./images/banner.jpg">
+<div style='position:fixed; z-index:999; top:0;color: white'><h4>欢迎您小伙子，想走就<a href="../javaWebDvdLogin.jsp" style="color: red">退出</a></h4></div>
 <h1 align='center' style="color: white">----欢迎进入DVD Mgr 6.0 管理系统----</h1>
 <h5 align='center' style="color: red">介绍：搜索（关键字）、管理数据（操作数据）、借阅情况（借阅情况柱状图）、历史数据（回收站）、说明介绍（项目记录）、退出（返回登录页面）</h5>
 <h5 align='center' style="color: red">界面操作：归还（还一本书）、恢复（恢复数据）、分页（数据分页）、清除（多删要密码无法找回）</h5>
@@ -64,10 +65,10 @@
 </div>
 <div align='center'>
     <ul>
-        <li><a href="../../atblogin.do">主页</a></li>
         <li><a href="../../atblogin.do">管理数据</a></li>
         <li><a href="./jsp/choice/data.jsp">借阅情况</a></li>
-        <li><a href="../../atbrevoke.do">历史数据</a></li>
+        <li><a href="../../atbrevoke.do" style="background-color: red">历史数据</a></li>
+        <li><a href="../../atbuser.do">用户管理</a></li>
         <li><a href="../../atbdescription.do">说明介绍</a></li>
     </ul>
 </div>

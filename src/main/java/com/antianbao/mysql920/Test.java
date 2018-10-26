@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class Test {
     public static void main(String[] args){
-        JDBCUtil jdbcUtil = new JDBCUtil();
-        List<BookInfo> books = jdbcUtil.queryStu();
+        JDBCUtilBook jdbcUtilBook = new JDBCUtilBook();
+        List<BookInfo> books = jdbcUtilBook.queryStu();
         for (BookInfo book : books) {
             if(book.getPrice() > 50 && book.getPrice() < 100){
                 System.out.println(book);

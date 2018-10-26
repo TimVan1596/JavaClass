@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCUtil {
+public class JDBCUtilBook {
     //加载驱动
     static {
         try {

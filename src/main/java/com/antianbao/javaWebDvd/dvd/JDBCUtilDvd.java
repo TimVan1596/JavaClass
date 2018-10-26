@@ -1,5 +1,6 @@
 package com.antianbao.javaWebDvd.dvd;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -139,6 +140,33 @@ public class JDBCUtilDvd {
     }
 
     /**
+     * 删除图片操作
+     */
+    public int deleteImage(int no) {
+        int rlt = 0;
+        List<Dvd> list = new ArrayList<Dvd>();
+        String sql = "select image from recovery where no = "+no+" ";
+        PreparedStatement pstat = getPrepareStatement(sql);
+        try {
+            ResultSet rs = pstat.executeQuery();
+            Dvd bd = null;
+            while (rs.next()) {
+                bd = new Dvd();
+                bd.setImage(rs.getString("image"));
+                list.add(bd);
+            }
+            for (Dvd ls : list) {
+                File file = new File("E:\\JAVA\\java_direction_class\\web\\atb\\javaWebDvd\\image\\"+ls.getImage());
+                file.delete();
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rlt;
+    }
+
+    /**
      * 删除recovery操作
      */
     public int deleteRecovery(int no) {
@@ -175,9 +203,6 @@ public class JDBCUtilDvd {
                 bd.setState(rs.getInt("state"));
                 bd.setBorrow(rs.getInt("borrow"));
                 list.add(bd);
-            }
-            for (Dvd ls : list) {
-                System.out.println(ls);
             }
             for (Dvd ls : list) {
                 String sql1 = "insert into dvd(name,state,borrow,image) values(?,?,?,?)";
