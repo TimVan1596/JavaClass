@@ -38,8 +38,8 @@
             <td>
                 <button onclick="returnShow(this)"
                         class="layui-btn layui-btn-sm
-                            dvd-btn-return">
-                    <i class="layui-icon">&#xe642;</i>还原
+                            dvd-btn-return layui-btn-warm">
+                    <i class="layui-icon">&#x1005;</i>还原
                 </button>
 
             </td>

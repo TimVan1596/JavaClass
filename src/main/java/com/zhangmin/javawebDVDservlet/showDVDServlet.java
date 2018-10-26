@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name="showDVDServlet",urlPatterns = {"/zm/showDVD.do"})
+@WebServlet(name="showDVDServlet",urlPatterns = {"/zm/DVD/showDVD.do"})
 public class showDVDServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

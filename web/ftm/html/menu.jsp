@@ -96,13 +96,17 @@
         </li>
         <li class="layui-nav-item">
             <a href="javascript:void(0);"
-            onclick="getStatistics()">信息统计<span class="layui-badge-dot"></span></a>
+            onclick="getStatistics()">信息统计</a>
         </li>
         <li class="layui-nav-item" >
             <a href=""><img src="https://cloud.timvanx.com/Fu7yXecEjIMj2_g2CPRmYEKGuIK3" class="layui-nav-img"><%=userName%></a>
             <dl class="layui-nav-child">
                 <dd><a href="javascript:;" onclick="logout();">退出登录</a></dd>
             </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:void(0);"
+               onclick="getStatistics()">实验室功能<span class="layui-badge-dot"></span></a>
         </li>
     </ul>
 
@@ -159,6 +163,7 @@
         <ul class="pagination" id="table-pagination">
         </ul>
     </div>
+    <br>
 </section>
 <%--表格部分 结束--%>
 
