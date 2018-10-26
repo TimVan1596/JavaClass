@@ -127,6 +127,6 @@
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
 </script>
-<a href = '../../../../login.do'><button class="button">返回</button></a>
+<a href = '../../../../atblogin.do'><button class="button">返回</button></a>
 </body>
 </html>
