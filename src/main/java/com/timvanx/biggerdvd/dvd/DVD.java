@@ -108,6 +108,22 @@ public class DVD implements Serializable {
     }
 
     /**
+     * 通过ID，使用数据库修改DVD信息
+     */
+    public static void updateDVDInfo(int id, String newName
+            ,String preview) {
+
+        //在数据库中update DVD的名称和状态
+        Map<String, Object> updateData =
+                new HashMap<>(1);
+        updateData.put("name", newName);
+        updateData.put("preview", preview);
+        String tableWhere = " id = " + id;
+        JDBCUtil.update("dvd", updateData
+                , tableWhere);
+    }
+
+    /**
      * 使用数据库删除DVD信息（通过主键ID）
      */
     public static void deleteDVDInfo(int id) {
@@ -266,27 +282,18 @@ public class DVD implements Serializable {
      * 使用数据库编辑DVD信息（通过主键ID）
      * @return boolean isExist  是否找到的标识符
      */
+    public static boolean editDVDInfo(int id, String newName
+            ,String preview){
+
+            DVD.updateDVDInfo(id,newName,preview);
+
+        return true;
+    }
+
+    //
     public static boolean editDVDInfo(int id, String newName){
-
-        //是否找到的标识符
-        boolean isExist = false;
-        loadDVDInfos();
-
-        for (int i = 0; i < DVD.getDVDArr().size(); i++) {
-            int dvdId = DVD.getDVDArr().get(i).getId();
-            //是否存在
-            if (dvdId == id){
-                DVD dvd = (DVD) DVD.getDVDArr().get(i);
-                dvd.setName(newName);
-                //在数据中更改dvd信息
-                DVD.updateDVDInfo(dvd);
-                System.out.println("修改成功！新DVD名称为" + newName);
-                isExist = true;
-                break;
-            }
-        }
-
-        return isExist;
+            String preview = "https://cloud.timvanx.com/timg.jpg";
+            return editDVDInfo(id,newName,preview);
     }
 
     /**

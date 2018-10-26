@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@WebFilter(filterName = "FilterMessy",urlPatterns = {"/*"})
+//@WebFilter(filterName = "FilterMessy",urlPatterns = {"/*"})
 public class FilterMessy implements Filter {
     @Override
     public void destroy() {

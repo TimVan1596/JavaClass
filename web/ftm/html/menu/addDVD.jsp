@@ -52,7 +52,7 @@
                         <button type="button"
                                 class="layui-btn  layui-btn-normal"
                                 id="preview-upload">
-                            上传图片</button>
+                            上传封面</button>
                         <div class="layui-upload-list">
                             <img class="layui-upload-img"                                   id="preview-upload-img">
                             <p id="demoText"></p>
@@ -77,7 +77,7 @@
             //DVD预览封面上传
             var uploadInst = upload.render({
                 elem: '#preview-upload'
-                ,url: '/ftm/html/menu/adddvd/UploadPreview.do'
+                ,url: '/java/ftm/html/menu/adddvd/UploadPreview.do'
                 ,before: function(obj){
 
                     //预读本地文件示例，不支持ie8
