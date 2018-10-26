@@ -14,7 +14,7 @@
 <div align='center'>
     <h3>******欢迎进入DVD管理系统******</h3>
 </div>
-<form action="../../landServlet1.do" method="post" align="center">
+<form action="/zm/DVD/login.do" method="post" align="center">
     <table border="1" weight="300px" align="center">
         <tr>
             <td width="150px" style="text-align: center">账号：</td>
