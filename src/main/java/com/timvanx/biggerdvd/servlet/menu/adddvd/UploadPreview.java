@@ -99,8 +99,10 @@ public class UploadPreview extends HttpServlet {
                     for (FileItem item : formItems) {
                         // 处理不在表单中的字段
                         if (!item.isFormField()) {
-                            String fileName = new File(item.getName())
-                                    .getName();
+
+
+                            String fileName = System.currentTimeMillis()+
+                                    "."+(item.getName().split("\\."))[1];
                             String filePath = uploadPath + File.separator
                                     + fileName;
                             File storeFile = new File(filePath);

@@ -5,7 +5,7 @@ layui.use(['upload','form'], function(){
     //DVD预览封面上传
     var uploadInst = upload.render({
         elem: '#preview-upload'
-        ,url: '/java/ftm/html/menu/adddvd/UploadPreview.do'
+        ,url: '/ftm/html/menu/adddvd/UploadPreview.do'
         ,before: function(obj){
 
             //预读本地文件示例，不支持ie8
