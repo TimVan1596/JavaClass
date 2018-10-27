@@ -35,7 +35,7 @@
             </td>
             <td class="dvd-id"></td>
             <td height="110">
-                <img class="dvd-preview"
+                <img class="dvd-preview" onclick="onclickImg(this)"
                      src="https://cloud.timvanx.com/timg.jpg">
             </td>
             <td class="dvd-name"></td>
@@ -166,6 +166,10 @@
     <br>
 </section>
 <%--表格部分 结束--%>
+
+<%-- start layer点击图片弹出放大层(默认隐藏)--%>
+<img alt="DVD图片" style="display:none" id="display-img" src="" />
+<%--finish layer点击图片弹出放大层(默认隐藏)--%>
 
 
 </body>
