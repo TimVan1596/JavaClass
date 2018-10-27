@@ -1,11 +1,15 @@
 package com.timvanx.biggerdvd.util;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 
 /**
+ * 基于 Druid 的 MySQL 数据库连接池
  * 封装MySQL数据库的工具类
  * <p>包含常用的select、update、insert、delete、count操作</p>
  * <p>含有sql方法，可以直接运行MySQL脚本（未完美测试，支持select）</p>
@@ -18,35 +22,32 @@ import java.util.*;
  * </ul>
  *
  * @author TimVan
- * @date 2018-9-17 17:12:03
+ * @date 2018年10月27日17:42:47
  * @since 4.0
  */
 public class JDBCUtil {
-    /**
-     * 驱动url、用户名、密码
-     * (以上通过 CONFIG_FILE 文件自动读取)
-     * 配置文件名 CONFIG_FILE
-     */
-    private static String DB_URL;
-    private static String USER;
-    private static String PASS;
-    private static String CONFIG_FILE = "ftmdb.properties";
 
 
-    /**
-     * 设置数据库连接信息配置文件
-     *
-     * @param configFile 配置文件名，默认为"db.properties"
-     *                   配置文件放在 IntelliJ IDEA 2018 里,为根目录下res资源文件夹中
-     */
-    public static void setConfigFile(String configFile) {
-        CONFIG_FILE = configFile;
-    }
-
+    static DruidDataSource dataSource;
 
     static {
-        //初始化JDBC-MySQL连接(只做一次)
-        init();
+        //初始化Druid-MySQL连接(只做一次)
+
+        Properties properties = new Properties();
+        try {
+
+            String propFileName = "ftmdb.properties";
+
+            properties.load(JDBCUtil.class.getClassLoader()
+                    .getResourceAsStream(propFileName));
+            dataSource = (DruidDataSource) DruidDataSourceFactory
+                    .createDataSource(properties);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -62,13 +63,11 @@ public class JDBCUtil {
     public static List<List<String>> select
     (String tableName, ArrayList<String> tableField
             , String tableWhere, String tableOrder, String tableLimit) {
-        Connection conn = null;
+        Connection conn = JDBCUtil.getConnection();
 
         List<List<String>> list = new ArrayList<>();
 
         try {
-            //连接数据库
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             //构建基于PreparedStatement的SQL语句
             StringBuilder stringBuilder = new StringBuilder();
@@ -118,9 +117,6 @@ public class JDBCUtil {
         } catch (Exception e) {
             // 处理 Class.forName 错误
             e.printStackTrace();
-        } finally {
-            //释放资源
-            close(conn);
         }
 
         return list;
@@ -139,12 +135,10 @@ public class JDBCUtil {
     public static int update(String tableName
             , Map<String, Object> updateData
             , String tableWhere) {
-        Connection conn = null;
+        Connection conn = JDBCUtil.getConnection();
         //返回值：返回受影响的记录条数(失败返回-1)
         int affectRowCNT = -1;
         try {
-            //连接数据库
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             //构建基于PreparedStatement的SQL语句
             StringBuilder stringBuilder = new StringBuilder();
@@ -191,9 +185,6 @@ public class JDBCUtil {
         } catch (Exception e) {
             // 处理 Class.forName 错误
             e.printStackTrace();
-        } finally {
-            //释放资源
-            close(conn);
         }
 
         return affectRowCNT;
@@ -210,14 +201,11 @@ public class JDBCUtil {
      */
     public static int insert(String tableName
             , Map<String, Object> insertData) {
-        Connection conn = null;
+        Connection conn = JDBCUtil.getConnection();
         //返回值：返回受影响的记录条数(失败返回-1)
         int affectRowCNT = -1;
 
         try {
-            //连接数据库
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
             //构建基于PreparedStatement的SQL语句
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(" insert into ");
@@ -260,9 +248,6 @@ public class JDBCUtil {
         } catch (Exception e) {
             // 处理 Class.forName 错误
             e.printStackTrace();
-        } finally {
-            //释放资源
-            close(conn);
         }
 
         return affectRowCNT;
@@ -276,13 +261,11 @@ public class JDBCUtil {
      * @return int 返回受影响的记录条数(失败返回-1)
      */
     public static int delete(String tableName, String tableWhere) {
-        Connection conn = null;
+        Connection conn = JDBCUtil.getConnection();
         //返回值：返回受影响的记录条数(失败返回-1)
         int affectRowCNT = -1;
 
         try {
-            //连接数据库
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             //构建基于PreparedStatement的SQL语句
             StringBuilder stringBuilder = new StringBuilder();
@@ -312,11 +295,7 @@ public class JDBCUtil {
         } catch (Exception e) {
             // 处理 Class.forName 错误
             e.printStackTrace();
-        } finally {
-            //释放资源
-            close(conn);
         }
-
 
         return affectRowCNT;
     }
@@ -332,13 +311,11 @@ public class JDBCUtil {
      */
     public static int count(String tableName, String tableField
             , String tableWhere) {
-        Connection conn = null;
+        Connection conn = JDBCUtil.getConnection();
         //返回值：符合条件的字段个数
         int rowCount = 0;
 
         try {
-            //连接数据库
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             //构建基于PreparedStatement的SQL语句
             StringBuilder stringBuilder = new StringBuilder();
@@ -373,9 +350,6 @@ public class JDBCUtil {
         } catch (Exception e) {
             // 处理 Class.forName 错误
             e.printStackTrace();
-        } finally {
-            //释放资源
-            close(conn);
         }
 
         return rowCount;
@@ -388,14 +362,12 @@ public class JDBCUtil {
      * @param script 自定义操作脚本语句
      * @return array $jarr 返回值数组
      */
-    public static List<List<String>> sql(String script) {
-        Connection conn = null;
+    public static List<List<String>> sql4Select(String script) {
+        Connection conn = JDBCUtil.getConnection();
 
         List<List<String>> list = new ArrayList<>();
 
         try {
-            //连接数据库
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
             //构建基于PreparedStatement的SQL语句
             PreparedStatement preparedStatement = conn.prepareStatement(script);
@@ -428,72 +400,45 @@ public class JDBCUtil {
         } catch (Exception e) {
             // 处理 Class.forName 错误
             e.printStackTrace();
-        } finally {
-            //释放资源
-            close(conn);
         }
-
         return list;
     }
 
     /**
-     * 初始化JDBC-MySQL连接(只做一次)
-     * <ul>
-     * <li>初始化数据库连接配置（.properties）</li>
-     * <li>注册连接</li>
-     * </ul>
+     * TODO:该方法复杂度较高，其他未测试
+     * !!!警告   自定义方法（除select查询）   警告!!!
+     *
+     * @param script 自定义操作脚本语句
+     * @return 返回受影响的记录条数(失败返回-1)
      */
-    private static void init() {
-        //初始化数据库连接配置(使用Properties读取配置文件)
-        //配置文件在 IntelliJ IDEA 2018 里,为根目录下res资源文件夹中
-        // CONFIG_FILE 默认为 "ftmdb.properties"
-        Properties properties = new Properties();
-        InputStream in = JDBCUtil.class.getClassLoader()
-                .getResourceAsStream(CONFIG_FILE);
-        /**
-         * 设置驱动、url、用户名、密码
-         * 通过db.properties配置
-         */
+    public static int sql(String script) {
+        Connection conn = JDBCUtil.getConnection();
+
+        List<List<String>> list = new ArrayList<>();
+        //返回值：返回受影响的记录条数(失败返回-1)
+        int affectRowCNT = -1;
+
         try {
-            properties.load(in);
-        } catch (IOException e) {
-            Constants.reportError("数据库配置文件");
-            e.printStackTrace();
-        }
 
-        /**
-         设置驱动、url、用户名、密码
-         通过db.properties文件配置
-         */
-        String JDBC_DRIVER = properties.getProperty("JDBC_DRIVER");
-        DB_URL = properties.getProperty("DB_URL");
-        USER = properties.getProperty("USER");
-        PASS = properties.getProperty("PASS");
+            //构建基于PreparedStatement的SQL语句
+            PreparedStatement preparedStatement = conn.prepareStatement(script);
+
+            //非select使用 executeUpdate ，只会返回影响行数
+            affectRowCNT = preparedStatement.executeUpdate();
 
 
-        // 注册 JDBC 驱动
-        try {
-            Class.forName(JDBC_DRIVER);
-        } catch (ClassNotFoundException e) {
-            Constants.reportError("JDBC驱动");
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * 释放资源
-     */
-    private static void close(Connection conn) {
-        // 关闭资源
-        try {
-            if (conn != null) {
-                conn.close();
-            }
+            preparedStatement.close();
+            conn.close();
         } catch (SQLException se) {
+            // 处理 JDBC 错误
             se.printStackTrace();
+        } catch (Exception e) {
+            // 处理 Class.forName 错误
+            e.printStackTrace();
         }
+        return affectRowCNT;
     }
+
 
     /**
      * 将ArrayList<String>转换成" ? ," 格式(PreparedStatement，SQL用)
@@ -539,59 +484,19 @@ public class JDBCUtil {
         return stringBuilder;
     }
 
-    public static void main(String[] args) {
-        //设置数据表名
-        String tableName = "account";
-
-
-        //插入数据
-//        Map<String, Object> insertData =
-//                new HashMap<String, Object>(3);
-//        Calendar now = Calendar.getInstance();
-//        insertData.put("name", "hello");
-//        insertData.put("password", "123");
-//        insertData.put("age", 66);
-//        int affectRowCNT = insert(tableName, insertData);
-
-//        //更新数据
-//        //设置where子句
-//        String tableWhere = "name = 'admin'";
-//        Map<String, String> updateData =
-//                new HashMap<String, String>(3);
-//        updateData.put("password", "'20180926'");
-//        affectRowCNT = update(tableName,updateData,tableWhere);
-//
-//        //删除数据
-//       // affectRowCNT = delete(tableName,tableWhere);
-//        affectRowCNT =
-//                count(tableName,"id",null);
-//        System.out.println("affectRowCNT = "+affectRowCNT);
-
-
-        //设置查询条件
-        ArrayList<String> tableField = new ArrayList<String>() {{
-            add("id");
-            add("name");
-            add("password");
-        }};
-//        String tableOrder = " age desc ";
-//        String tableLimit = " 0,5 ";
-//        List<List<String>> list =
-////                select(tableName, tableField, null,tableOrder,tableLimit);
-        String script = "select name,password from account where age > 20";
-        List<List<String>> list =
-                sql(script);
-        //打印结果
-        for (List<String> cache : list) {
-            for (String data : cache) {
-                System.out.print(data + "\t");
-            }
-            System.out.println();
+    public static Connection getConnection() {
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
+        return null;
 
     }
 
+    public static void colse() {
+        dataSource.close();
+    }
 
 }
 
