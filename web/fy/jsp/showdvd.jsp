@@ -40,12 +40,12 @@
 <jsp:include page="navigationBar.jsp"></jsp:include>
 <div  style="text-align:center">
     <form action="/fy/servlet/toShowDvd" method="get" >
-        <input  style="margin-left: 20px;margin-top: 20px;height:35px;" type="text" name="selectDVD" id="select"/>
+        <input  style="margin-left: 20px;margin-top: 20px;height:25px;" type="text" name="selectDVD" id="select"/>
         <input type="submit"  class="button" value="查询">
     </form>
 
     <table id="tb" style="text-align:center;margin: 0 auto " border="1" >
-        <tr><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th></tr>
+        <tr><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th><th>修改操作</th></tr>
         <% for(DVD dvd:list){ %>
         <tr>
             <td style="width:110px"><%=dvd.getId() %></td>
