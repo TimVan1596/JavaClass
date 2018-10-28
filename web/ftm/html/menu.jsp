@@ -24,6 +24,12 @@
         tr:hover{
             background-color: rgba(0, 129, 255, 0.3) !important;
         }
+        /*IMG自动适应DIV容器大小*/
+        auto-img{
+            width:100%;
+            height:auto;
+        }
+
     </style>
 
     <!-- DVD信息（列表填充模板 template）-->
