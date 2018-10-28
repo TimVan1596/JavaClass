@@ -112,7 +112,7 @@
         </li>
         <li class="layui-nav-item">
             <a href="javascript:void(0);"
-               onclick="getStatistics()">实验室功能<span class="layui-badge-dot"></span></a>
+               onclick="openLab()">黑科技<span class="layui-badge-dot"></span></a>
         </li>
     </ul>
 
