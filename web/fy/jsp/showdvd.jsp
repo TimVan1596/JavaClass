@@ -40,7 +40,7 @@
 <jsp:include page="navigationBar.jsp"></jsp:include>
 <div  style="text-align:center">
     <form action="/fy/servlet/toShowDvd" method="get" >
-        <input  style="margin-left: 20px;margin-top: 20px;height:25px;" type="text" name="selectDVD" id="select"/>
+        <input  style="margin-left: 20px;margin-top: 20px;height:35px;" type="text" name="selectDVD" id="select"/>
         <input type="submit"  class="button" value="查询">
     </form>
 

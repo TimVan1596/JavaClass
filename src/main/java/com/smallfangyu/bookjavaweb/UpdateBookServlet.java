@@ -18,6 +18,7 @@ public class UpdateBookServlet extends HttpServlet {
     }
 @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    request.setCharacterEncoding("UTF-8");
     int id=Integer.parseInt(request.getParameter("id"));
     String name=request.getParameter("name");
     String author=request.getParameter("author");
@@ -25,9 +26,9 @@ public class UpdateBookServlet extends HttpServlet {
     String date=request.getParameter("date");
     String type=request.getParameter("type");
     if(type.equals("玄幻")){
-        type="1";
-    }else if(type.equals("仙侠")){
         type="2";
+    }else if(type.equals("仙侠")){
+        type="1";
     }else{
         type="3";
     }
