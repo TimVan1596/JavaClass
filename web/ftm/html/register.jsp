@@ -8,6 +8,9 @@
 <head>
     <title>BiggerDVD - 注册</title>
 
+    <link rel="stylesheet"
+          href="../../common/util/layui/css/layui.css"
+          media="all">
     <link rel="stylesheet" type="text/css" href="../style/html/biggerdvd/default.css">
     <link rel="stylesheet" type="text/css" href="../style/html/biggerdvd/styles.css">
     <style>
@@ -39,6 +42,7 @@
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../../common/util/layui/layui.js"></script>
     <script src="../js/common-js.js"></script>
 </head>
 <body>
@@ -97,43 +101,14 @@
         <p>© 2018-2019 TimVanX.com 版权所有 皖ICP备18002720号 .</p>
     </div>
 </div>
+<%--加载页面--%>
+<div class="authent">
+    <img src="../img/biggerdvd/puff.svg">
+    <p>注册中...</p>
+</div>
 
-<script>
-    //注册账号
-    function register() {
+<script src = "../js/html/register.js"></script>
 
-        let name = $("[name=name]").val();
-        let password = $("[name=password]").val();
-        let rePassword = $("[name=re-password]").val();
-
-        if (password !== rePassword) {
-            alert("两次输入的密码不同！");
-        }
-        else {
-            //通过ajax检查是否正常登录
-            $.post('../registerAccount.do', {
-                name: name,
-                password: password
-            }, function (ret) {
-                //解析ret
-                ret = eval("(" + ret + ")");
-
-                if (ret['error'] === 0) {
-                    alert("注册成功！");
-                    window.location.href = '../index.html';
-
-                } else if (ret['error'] === 1) {
-                    var errorInfo = ret['errorInfo'];
-                    alert("注册失败！" + errorInfo);
-                    location.reload();
-                }
-
-
-            });
-        }
-
-    }
-</script>
 
 </body>
 </html>
