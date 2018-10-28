@@ -80,15 +80,20 @@
                 ,url: '/java/ftm/html/menu/adddvd/UploadPreview.do'
                 ,before: function(obj){
 
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function(index, file, result){
-                        $('#preview-upload-img').attr('src', result);                       //图片链接（base64）
+                    let uploadLoading = layer.msg('上传中', {
+                        icon: 16
+                        ,shade: 0.01
                     });
                 }
                 ,done: function(ret){
 
-                    var data = ret['data'];
+                    let data = ret['data'];
                     $('#preview-hidden').val(data);
+
+                    $('#preview-upload-img').attr('src', data);
+
+                    //关闭上传loading
+                    layer.closeAll();
 
                 }
                 ,error: function(){

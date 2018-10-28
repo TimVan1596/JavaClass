@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "CheckNameServlet",urlPatterns = {"/toCheckName"})
+@WebServlet(name = "CheckNameServlet",urlPatterns = {"/fy/toCheckName"})
 public class CheckNameServlet extends HttpServlet {
     DbUtil db = new DbUtil();
     public boolean checkname(String userName){

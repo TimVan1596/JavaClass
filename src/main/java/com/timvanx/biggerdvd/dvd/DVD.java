@@ -10,41 +10,24 @@ import java.util.Map;
 
 /**
  * DVD类
+ *全面支持 Web ， 去除 JavaSE 时代部分接口
  *
  * @author TimVan
- * @date 2018年10月18日09:47:57
+ * @date 2018年10月27日19:45:40
  */
 public class DVD implements Serializable {
     /**
      * p.s. 使用 Alibaba fastJson 传输对象时需要 JavaBean 标准
-     * serialVersionUID = 版本一致性
-     * status = 借出状态，未借出为false，反之亦然
+     * status =  DVD借出状态，未借出为false，反之亦然
      * name = DVD名称
-     * id = （主键自增）DVD编号
+     * id =  DVD编号
      * preview = 预览图URL
      */
-    private static final long serialVersionUID = 2L;
     private int id;
     private String name;
     private boolean status;
     private String preview;
 
-    public static ArrayList<DVD> getDVDArr() {
-        loadDVDInfos();
-        return DVDArr;
-    }
-
-    /**
-     * Static DVDArr = DVD集合信息
-     */
-    private static ArrayList<DVD> DVDArr;
-
-    static {
-        DVDArr = new ArrayList<>();
-
-        //初始化DVD数组
-        loadDVDInfos();
-    }
 
     private DVD(int id, String name
             , boolean status , String preview) {
@@ -146,11 +129,12 @@ public class DVD implements Serializable {
     }
 
     /**
-     * 使用数据库将DVD信息移入回收站（通过主键ID）
-     * @param query 批量删除条件
+     * 使用数据库删除DVD信息（通过主键ID）
+     * Web项目专用接口
+     * @param query  删除条件
      */
-    private static void deleteDVDInfo(String query) {
-        //在数据库中修改DVD的hidden为true
+    public static void deleteDVDForWeb(String query){
+        //在数据库中修改DVD的hidden为true(移如hiddenDVD)
         Map<String, Object> updateData =
                 new HashMap<>(1);
         updateData.put("hidden", "1");
@@ -160,77 +144,13 @@ public class DVD implements Serializable {
     }
 
     /**
-     * 使用数据库删除DVD信息（通过主键ID）
-     * Web项目专用接口
-     * @return  -1 = 找到，但未归还 , 0 = 未找到  , 1 = 删除成功
-     */
-    public static int deleteDVDForWeb(int id) {
-
-        //返回的状态的识别码
-        int retStatus = 0;
-        loadDVDInfos();
-
-        for (int i = 0; i < DVD.getDVDArr().size(); i++) {
-            int dvdId = DVD.getDVDArr().get(i).getId();
-            //是否存在
-            if (dvdId == id) {
-                DVD dvd = DVD.getDVDArr().get(i);
-                retStatus = -1;
-                //是否未被借出,未归还
-                if (!dvd.isStatus()) {
-                    DVD.getDVDArr().remove(i);
-                    //使用数据库删除DVD信息（通过主键ID）
-                    DVD.deleteDVDInfo(id);
-                    System.out.println(id + "删除成功");
-                    retStatus = 1;
-                }
-                break;
-            }
-        }
-
-        return retStatus;
-    }
-
-    /**
-     * 使用数据库删除DVD信息（通过主键ID）
-     * Web项目专用接口
-     * @param query  删除条件
-     */
-    public static void deleteDVDForWeb(String query){
-        //使用数据库删除DVD信息（通过主键ID）
-        DVD.deleteDVDInfo(query);
-    }
-
-    /**
      * 使用数据库借出和归还DVD信息（通过主键ID）
      * Web项目专用接口
-     * @return   0 = 未找到  , 1 = 编辑成功
      */
-    public static int loanOrReturnDVDForWeb(int id){
-
-
-        loadDVDInfos();
-        //返回的状态的识别码
-        int retStatus = 0;
-
-        for (int i = 0; i < DVD.getDVDArr().size(); i++) {
-            int dvdId = DVD.getDVDArr().get(i).getId();
-
-            //是否存在
-            if (dvdId == id) {
-                DVD dvd = DVD.getDVDArr().get(i);
-                dvd.setStatus(
-                        !dvd.isStatus()
-                );
-                //在数据中更改dvd信息
-                DVD.updateDVDInfo(dvd);
-                retStatus = 1;
-                break;
-            }
-        }
-
-        System.out.println("退出 loanOrReturnDVDForWeb");
-        return retStatus;
+    public static void loanOrReturnDVDForWeb(int id){
+        //在数据中更改dvd信息
+        String sql = "update dvd set status = !status where id = "+id;
+        JDBCUtil.sql(sql);
     }
 
     /**
@@ -296,30 +216,6 @@ public class DVD implements Serializable {
             return editDVDInfo(id,newName,preview);
     }
 
-    /**
-     * 使用数据库读入DVD信息到 DVDArr 集合
-     */
-    private static void loadDVDInfos() {
-
-
-        List<List<String>> dvdSQLs =
-                getDVDInfosFromJDBC();
-
-        for (List<String> dvdInfo : dvdSQLs) {
-            //将字符串转为3种数据
-            int id = Integer.valueOf(dvdInfo.get(0));
-            String name = dvdInfo.get(1);
-            boolean status = true;
-            if (dvdInfo.get(2).equals("0")) {
-                status = false;
-            }
-            String preview = "";
-
-            DVD dvd = new DVD(id, name, status,preview);
-            DVDArr.add(dvd);
-        }
-
-    }
 
     /**
      * (带返回值)使用数据库读入DVD信息到 DVDArr 集合

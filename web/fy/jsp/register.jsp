@@ -9,29 +9,15 @@
 <html>
 <head>
     <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="/fy/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/fy/css/body.css"/>
 </head>
-<style>
-    #register{
-        text-align:center;
-    }
 
-    .button {
-        background-color: #008CBA;
-        border-radius: 4px;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 10px;
-        margin: 4px 2px;
-        cursor: pointer;
-    }
-</style>
 <body>
 
 <div id="register">
+    <div class="container">
+        <section id="content">
 <h2>MiniDVD 网页版</h2>
 <h4>用户注册</h4>
 <form action="/fy/servlet/toRegister" method="get" onsubmit=" return checkRegister()">
@@ -41,18 +27,24 @@
             out.print(msg);
         }else{
     %> <br> <% } %>
-<p>账号：<input style="margin-left:30px" type="text" name="username" id="regId"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%>" onblur="checkl()"/><br></p>
-<p>密码：<input style="margin-left:30px "type="password" name="password" id="regPass"/><br></p>
-<p>重复密码：<input type="password" name="passsword" id="regPasss"/><br></p>
+<p>账号：<input style="margin-left:30px" type="text" name="username" id="username"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%>" onblur="checkl()"/><br></p>
+<p>密码：<input style="margin-left:30px " type="password" name="password" id="password"/><br></p>
+<p>重复密码：<input type="password" name="passsword" id="passsword"/><br></p>
 
-<input type="submit" class="button" value="注册">
-</form>
+    <div>
+     <input type="submit"  value="注册" />
+     <a href="/fy/jsp/login.jsp" >登录</a>
+    </div>
+
+         </form>
+      </section>
+    </div>
 </div>
 <script type="text/javascript">
 
     function checkl(){
 
-        var  myName=document.getElementById("regId").value;
+        var  myName=document.getElementById("username").value;
 //1.创建Ajax 的 异步交互通信对象
         var xmlhttp;
         if (window.XMLHttpRequest)
@@ -77,7 +69,7 @@
             }
         }
 
-        xmlhttp.open("GET","/toCheckName?login="+myName,true);
+        xmlhttp.open("GET","/fy/toCheckName?login="+myName,true);
         xmlhttp.send();
 
     }
@@ -86,9 +78,9 @@
     function checkRegister()
     {
         //1.取值
-        var  name=document.getElementById("regId").value;
-        var  pass=document.getElementById("regPass").value;
-        var  passs=document.getElementById("regPasss").value;
+        var  name=document.getElementById("username").value;
+        var  pass=document.getElementById("password").value;
+        var  passs=document.getElementById("passsword").value;
         //2.判断
         if(name!=""){
             if(pass!="") {
@@ -97,24 +89,24 @@
                         return true;
                     }else{
                         alert("两次密码输入不一致，请重输~");
-                        document.getElementById("regPasss").focus(); //光标占位
+                        document.getElementById("passsword").focus(); //光标占位
                         return false;
                     }
                 }else{
                     alert("请再次输入密码~");
-                    document.getElementById("regPasss").focus(); //光标占位
+                    document.getElementById("passsword").focus(); //光标占位
                     return false;
                 }
             }else{
                 alert("亲，密码不能为空哦~");
-                document.getElementById("regPass").focus(); //光标占位
+                document.getElementById("password").focus(); //光标占位
                 return false;
             }
         }
         else
         {
             alert("亲，账号不能为空哦~");
-            document.getElementById("regId").focus(); //光标占位
+            document.getElementById("username").focus(); //光标占位
             return false;
         }
     }

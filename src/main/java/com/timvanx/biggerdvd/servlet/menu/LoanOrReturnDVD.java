@@ -40,9 +40,9 @@ public class LoanOrReturnDVD extends HttpServlet {
 
         Map<String, Object> ret = new HashMap<>(1);
         //借出和归还DVD操作
-        // 0 = 未找到  , 1 = 删除成功
 
-        if (DVD.loanOrReturnDVDForWeb(id) == 1) {
+        if (true) {
+            DVD.loanOrReturnDVDForWeb(id);
             ret.put("error", 0);
         }
         else {

@@ -20,7 +20,6 @@
 <html>
 <head>
     <title>显示DVD</title>
-    <script type="text/javascript" src="/fy/js/echarts.simple.min.js"> </script>
     <style>
         .button {
             background-color: #008CBA;
@@ -40,15 +39,13 @@
 <body>
 <jsp:include page="navigationBar.jsp"></jsp:include>
 <div  style="text-align:center">
-    <h3>DVD列表</h3>
-
     <form action="/fy/servlet/toShowDvd" method="get" >
-        <input  style="margin-left: 20px;margin-top: 20px;height:35px;" type="text" name="selectDVD" id="select"/>
+        <input  style="margin-left: 20px;margin-top: 20px;height:25px;" type="text" name="selectDVD" id="select"/>
         <input type="submit"  class="button" value="查询">
     </form>
 
     <table id="tb" style="text-align:center;margin: 0 auto " border="1" >
-        <tr><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th></tr>
+        <tr><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>删除操作</th><th>修改操作</th></tr>
         <% for(DVD dvd:list){ %>
         <tr>
             <td style="width:110px"><%=dvd.getId() %></td>
@@ -87,42 +84,8 @@
     </div>
     <iframe style="width:550px;height:200px;margin-left:30px"   name="mainFrame" frameborder="0"></iframe>
 </div>
-<h3 style="margin-left: 240px">DVD状态柱形图</h3>
-<div id="main" style="width: 400px;height:350px;margin-left: 190px;">
 
-</div>
 <script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: '柱形图'
-        },
-        tooltip: {},
-        legend: {
-            data:['数量']
-        },
-        xAxis: {
-            data: ["可以借","已借出"]
-        },
-        yAxis: {},
-        series: [{
-            name: '数量',
-            type: 'bar',
-            data:[<%=cSize%>,<%=ncSize%>],
-            itemStyle:{
-                normal:{
-                    color: function (params){
-                        var colorList = ['green','red'];
-                        return colorList[params.dataIndex];
-                    }
-                }
-            }
-        }]
-    };
-    // 使用刚指定的配置项和数据显示图表
-    myChart.setOption(option);
 
     function isDelete() {
     if(confirm('确定删除吗?')){
