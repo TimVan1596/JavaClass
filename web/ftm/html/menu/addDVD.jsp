@@ -52,6 +52,7 @@
                         <button type="button"
                                 class="layui-btn  layui-btn-normal"
                                 id="preview-upload">
+                            <i class="layui-icon">&#xe67c;</i>
                             上传封面</button>
                         <div class="layui-upload-list">
                             <img class="layui-upload-img"                                   id="preview-upload-img">
@@ -84,6 +85,8 @@
                         icon: 16
                         ,shade: 0.01
                     });
+
+
                 }
                 ,done: function(ret){
 

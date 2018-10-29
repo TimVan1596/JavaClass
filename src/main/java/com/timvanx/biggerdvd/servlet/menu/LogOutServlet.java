@@ -30,8 +30,6 @@ public class LogOutServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("application/text; charset=utf-8");
-
         PrintWriter out = response.getWriter();
 
         HttpSession session = request.getSession(false);

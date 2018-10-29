@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="../../../common/util/layui/css/layui.css"
+          media="all">
+</head>
+
+<body>
+
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md12">
+            <div style="margin: 20% 5% 5%">
+                <button class="layui-btn layui-btn-fluid layui-btn-normal
+                    layui-btn-radius" style="margin-bottom: 10%;"
+                onclick="idCardScan()">身份证识别</button>
+                <br>
+                <button class="layui-btn layui-btn-fluid layui-btn-radius"
+                        style="background-color:#8bc34a;margin-left: 0"
+                        onclick="stuCardScan()">学生卡识别</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function idCardScan() {
+        window.location.href="lab/idCardScan.html";
+    }
+
+    function stuCardScan() {
+        window.location.href="lab/stuCardScan.html";
+    }
+</script>
+
+</body>
+</html>

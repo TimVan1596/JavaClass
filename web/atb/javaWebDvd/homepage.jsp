@@ -1,6 +1,3 @@
-<%@ page import="com.antianbao.javaWebDvd.dvd.JDBCUtilDvd" %>
-<%@ page import="com.antianbao.javaWebDvd.dvd.Dvd" %>
-<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -57,9 +54,9 @@
 <h5 align='center' style="color: red">介绍：搜索（关键字）、管理数据（操作数据）、借阅情况（借阅情况柱状图）、历史数据（回收站）、说明介绍（项目记录）、退出（返回登录页面）</h5>
 <h5 align='center' style="color: red">界面操作（待完成）：进入该界面需要密码，管理用户信息，可看到用户进行的操作</h5>
 <div align='center'>
-    <form action='./atb/javaWebDvd/search.jsp' method='post'>
+    <form action='./atbuser.do' method='post'>
         <h4 style="color: white">搜关键字：<input type='text' title="序号书名库存" name='search' style="width: 150px; height: 30px"/>
-            <input type='submit' value='搜索' style="width: 50px; height: 30px"/>
+            <input type='submit' value='搜索' style="width: 50px; height: 30px"/>（这个搜索没用哦~）
         </h4>
     </form>
 </div>

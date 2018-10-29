@@ -1,9 +1,9 @@
 //修改账号密码
 function resetPassword() {
 
-    var name = $("[name=name]").val();
-    var password = $("[name=password]").val();
-    var rePassword = $("[name=re-password]").val();
+    let name = $("[name=name]").val();
+    let password = $("[name=password]").val();
+    let rePassword = $("[name=re-password]").val();
 
     if (password !== rePassword) {
         alert("两次输入的密码不同！");

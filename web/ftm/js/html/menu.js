@@ -415,7 +415,7 @@ function popUpdateNews(){
     //弹出本次[更新内容]窗口
     layer.open({
         type: 2,
-        title: 'BiggerDVD 6.0.0 更新内容',
+        title: 'BiggerDVD 6.1.0 更新内容',
         shadeClose: true,
         shade: 0.6,
         area: ['380px', '90%'],
@@ -431,4 +431,21 @@ function popUpdateNews(){
 //重置搜索结果
 function refreshSearch(){
     window.location.replace("menu.jsp");
+}
+
+
+//打开黑科技
+function openLab() {
+    //黑科技 iframe层
+    layer.open({
+        type: 2,
+        title: '黑科技实验室',
+        shade: 0.3,
+        area: ['500px', '75' +
+        '%'],
+        offset: ['110px', '35%'],
+        content: 'menu/lab.html' //iframe的url
+    });
+
+
 }
