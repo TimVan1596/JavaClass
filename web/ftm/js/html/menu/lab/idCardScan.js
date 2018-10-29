@@ -6,7 +6,7 @@ layui.use(['upload','form'], function(){
     //DVD预览封面上传
     let uploadInst = upload.render({
         elem: '#preview-upload'
-        ,url: '/ftm/html/menu/lab/IDCardScan.do'
+        ,url: '/java/ftm/html/menu/lab/IDCardScan.do'
         ,before: function(obj){
 
             let uploadLoading = layer.msg('识别中', {
@@ -73,4 +73,8 @@ layui.use(['upload','form'], function(){
     });
 
 });
+
+function back() {
+    history.back(-1);
+}
 
