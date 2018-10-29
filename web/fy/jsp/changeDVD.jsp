@@ -24,14 +24,21 @@
             cursor: pointer;
         }
     </style>
+    <%
+        String id=request.getParameter("id");
+        String name=request.getParameter("name");
+        name=name.substring(1,name.length()-1);
+        String state=request.getParameter("state");
+
+        %>
 </head>
 <body>
 <form action="/fy/servlet/toChangeDvd" method="get" onsubmit="return check()">
     <fieldset>
         <legend>修改</legend>
     <br>
-    请输入要修改的DVD编号<input type=" text" name="dvdid" id="dvdId"/><br>
-    请输入修改后的DVD名称<input type=" text" name="dvdname" id="dvdName"/><br>
+    你选择要修改的DVD编号<input style="color:	#D0D0D0" type=" text" name="dvdid" value="<%=id%>" id="dvdId" readonly="readonly"/><br>
+    请输入修改后的DVD名称<input type=" text" name="dvdname" value="<%=name%>" id="dvdName"/><br>
     请选择修改后的DVD状态
   <select name="dvdstate">
     <option>可以借</option>

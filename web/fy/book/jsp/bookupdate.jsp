@@ -17,7 +17,6 @@
     String author=request.getParameter("author");
     String price=request.getParameter("price");
     String date=request.getParameter("date");
-    String type=request.getParameter("type");
 %>
 <h2>修改列表</h2>
 <form action="/book/updatebook" method="get">
