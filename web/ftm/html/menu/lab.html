@@ -18,7 +18,8 @@
                 onclick="idCardScan()">身份证识别</button>
                 <br>
                 <button class="layui-btn layui-btn-fluid layui-btn-radius"
-                        style="background-color:#8bc34a;margin-left: 0">学生卡识别</button>
+                        style="background-color:#8bc34a;margin-left: 0"
+                        onclick="stuCardScan()">学生卡识别</button>
             </div>
         </div>
     </div>
@@ -27,6 +28,10 @@
 <script>
     function idCardScan() {
         window.location.href="lab/idCardScan.html";
+    }
+
+    function stuCardScan() {
+        window.location.href="lab/stuCardScan.html";
     }
 </script>
 
