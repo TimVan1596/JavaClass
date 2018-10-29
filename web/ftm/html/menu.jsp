@@ -30,6 +30,14 @@
             height:auto;
         }
 
+        table th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #dedede;
+        }
+
     </style>
 
     <!-- DVD信息（列表填充模板 template）-->
@@ -67,7 +75,7 @@
         <tr >
             <th width="30" height="30"></th>
             <th width="100" >编号</th>
-            <th width="110">预览</th>
+            <th width="110">封面</th>
             <th width="250">名称</th>
             <th width="150">操作</th>
         </tr>
