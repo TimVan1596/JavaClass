@@ -12,9 +12,9 @@
 <head>
     <title>修改信息</title>
 </head>
-<body>
+<body background="../../images/banner.jpg">
 <div align='center'>
-    <h2>----修改信息----</h2>
+    <h2 style="color: white">----修改信息----</h2>
     <h6 style="color: red">修改图片请选择新图片，若不选择则图片不变</h6>
     <style>
         .button {
@@ -31,7 +31,7 @@
     </style>
 </div>
 <form action="../../../../atbmodify.do" method="post" enctype="multipart/form-data">
-    <table border="1" width="300" align="center">
+    <table border="1" width="300" align="center" style="background-color: white">
         <%
             //遍历结果集
             JDBCUtilDvd jdbcUtilDvd = new JDBCUtilDvd();
