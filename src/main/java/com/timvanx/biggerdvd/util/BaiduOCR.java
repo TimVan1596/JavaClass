@@ -1,17 +1,15 @@
 package com.timvanx.biggerdvd.util;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.pool.DruidDataSourceFactory;
+
+import com.alibaba.fastjson.JSON;
 import com.baidu.aip.ocr.AipOcr;
-import com.qiniu.util.Auth;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Properties;
 
 
@@ -20,7 +18,6 @@ import java.util.Properties;
  */
 public class BaiduOCR {
 
-
     /**
      * 设置APPID/AK/SK
      */
@@ -28,6 +25,10 @@ public class BaiduOCR {
     private static  String API_KEY ;
     private static  String SECRET_KEY;
 
+    static {
+        //初始化APP_ID、API_KEY等配置信息
+        init();
+    }
 
     /**
      * 设置AipOcr
@@ -49,8 +50,6 @@ public class BaiduOCR {
      * 图片识别成文字(学生卡)
      */
     public HashMap<String, String> imageToStuCard(String path) {
-        //初始化APP_ID、API_KEY等配置信息
-        init("stuCard");
 
         // 传入可选参数调用接口
         HashMap<String, String> options = new HashMap<String, String>();
@@ -98,8 +97,6 @@ public class BaiduOCR {
      * 身份证识别成文字
      */
     public HashMap<String, String> idImageToIDCard(String path){
-        //初始化APP_ID、API_KEY等配置信息
-        init("idCard");
 
         // 传入可选参数调用接口
         HashMap<String, String> options = new HashMap<String, String>();
@@ -112,30 +109,33 @@ public class BaiduOCR {
         String idCardSide = "front";
 
         // 参数为本地图片路径
-        JSONObject res  = client.custom(path, idCardSide, options);
+        JSONObject res  = client.idcard(path, idCardSide, options);
 
         String image_status = res.getString("image_status");
+
         if ("normal".equals(image_status)) {
-            JSONObject data = res.getJSONObject("data");
-            JSONArray ret = data.getJSONArray("words_result");
+
+            JSONObject ret=res.getJSONObject("words_result");
+
             //获取住址、号码、出生日期、姓名、性别、民族
-            JSONObject addressObj = (JSONObject) ret.get(0);
-            String address = addressObj.getString("word");
 
-            JSONObject idObj = (JSONObject) ret.get(1);
-            String id = idObj.getString("word");
+            JSONObject addressObj = (JSONObject) ret.get("住址");
+            String address = addressObj.getString("words");
 
-            JSONObject dateObj = (JSONObject) ret.get(2);
-            String date = dateObj.getString("word");
+            JSONObject idObj = (JSONObject) ret.get("公民身份号码");
+            String id = idObj.getString("words");
 
-            JSONObject nameObj = (JSONObject) ret.get(3);
-            String name = nameObj.getString("word");
+            JSONObject dateObj = (JSONObject) ret.get("出生");
+            String date = dateObj.getString("words");
 
-            JSONObject sexObj = (JSONObject) ret.get(4);
-            String sex = sexObj.getString("word");
+            JSONObject nameObj = (JSONObject) ret.get("姓名");
+            String name = nameObj.getString("words");
 
-            JSONObject rationObj = (JSONObject) ret.get(5);
-            String ration = rationObj.getString("word");
+            JSONObject sexObj = (JSONObject) ret.get("性别");
+            String sex = sexObj.getString("words");
+
+            JSONObject rationObj = (JSONObject) ret.get("民族");
+            String ration = rationObj.getString("words");
 
             retval.put("address", address);
             retval.put("id", id);
@@ -149,7 +149,6 @@ public class BaiduOCR {
             retval.put("error", "1");
             retval.put("error_msg", image_status);
         }
-        System.out.println(res.getString("ret"));
 
         return retval;
     }
@@ -158,7 +157,7 @@ public class BaiduOCR {
     /**
      * 配置文件读取(只做一次)
      */
-    private static void init(String option){
+    private static void init(){
 
         //使用Properties读取配置文件
         // CONFIG_FILE 默认为 "ftmdb.properties"
@@ -176,18 +175,9 @@ public class BaiduOCR {
             e.printStackTrace();
         }
 
-        if ("stuCard".equals(option)){
             APP_ID = properties.getProperty("AIP_STUCARD_APP_ID");
             API_KEY = properties.getProperty("AIP_STUCARD_API_KEY");
             SECRET_KEY = properties.getProperty("AIP_STUCARD_SECRET_KEY");
-        }
-        else if ("idCard".equals(option)){
-            APP_ID = properties.getProperty("AIP_IDCARD_APP_ID");
-            API_KEY = properties.getProperty("AIP_IDCARD_API_KEY");
-            SECRET_KEY = properties.getProperty("AIP_IDCARD_SECRET_KEY");
-        }
-
-
 
     }
 
@@ -202,8 +192,7 @@ public class BaiduOCR {
 
         //显示消息
         object.idImageToIDCard
-                ("C:\\Users\\r\\IdeaProjects\\" +
-                        "java_direction_class\\src\\main\\timg.jpg");
+                ("test.jpg");
     }
 
 }

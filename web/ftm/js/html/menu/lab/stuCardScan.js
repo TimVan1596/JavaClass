@@ -71,3 +71,7 @@ layui.use(['upload','form'], function(){
 
 });
 
+function back() {
+    window.location.href="../lab.html";
+}
+

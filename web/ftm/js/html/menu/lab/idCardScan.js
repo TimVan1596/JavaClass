@@ -74,3 +74,7 @@ layui.use(['upload','form'], function(){
 
 });
 
+function back() {
+    history.back(-1);
+}
+
