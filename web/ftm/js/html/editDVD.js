@@ -8,6 +8,12 @@ layui.use(['upload','form'], function(){
         ,url: '/java/ftm/html/menu/adddvd/UploadPreview.do'
         ,before: function(obj){
 
+            let uploadLoading = layer.msg('上传中', {
+                icon: 16
+                ,offset:['15%','15%']
+                ,shade: 0.01
+            });
+
             //预读本地文件示例，不支持ie8
             obj.preview(function(index, file, result){
                 $('#preview-upload-img').attr('src', result);                       //图片链接（base64）
@@ -17,6 +23,9 @@ layui.use(['upload','form'], function(){
 
             var data = ret['data'];
             $('#preview-hidden').val(data);
+
+            //关闭上传loading
+            layer.closeAll();
 
         }
         ,error: function(){
@@ -40,10 +49,10 @@ layui.use(['upload','form'], function(){
 
     form.on('submit(addSubmmit)', function(data){
 
-        var loading = layer.load(1, {
-            //0.1透明度的白色背景
-            shade: [0.1,'#fff'],
-            offset: '170px'
+        let uploadLoading = layer.msg('上传中', {
+            icon: 16
+            ,offset:['15%','15%']
+            ,shade: 0.01
         });
 
         $.post('editdvd/EditDVD.do',data.field
