@@ -8,13 +8,46 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>柱形图</title>
     <script type="text/javascript" src="/fy/js/echarts.simple.min.js"> </script>
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid #e7e7e7;
+            background-color: #f3f3f3;
+        }
+        li {
+            float:left;
+        }
+        li a{
+            display: block;
+            color: #666;
+            text-align: center;
+            padding: 24px 34px;
+            text-decoration-line: none;
+        }
+        li a:hover{
+            background-color: #ddd;
+        }
+        li a.active{
+            color:white;
+            background-color: #4CAF50;
+        }
+    </style>
 </head>
 <body>
 <% int cSize=(int)session.getAttribute("cSize");
     int ncSize=(int)session.getAttribute("ncSize");%>
-<jsp:include page="navigationBar.jsp"></jsp:include>
+
+<ul>
+    <li><a href="/fy/servlet/toShowDvd" >主页</a></li>
+    <li><a class="active" href="column.jsp">柱形图</a></li>
+    <li><a href="/fy/recycle">回收站</a></li>
+    <li><a href="/fy/servlet/toCancelling" style="margin-left:1200px;">退出登录</a></li>
+</ul>
 <h3 style="margin-left: 240px">DVD状态柱形图</h3>
 <div id="main" style="width: 400px;height:350px;margin-left: 190px;">
 

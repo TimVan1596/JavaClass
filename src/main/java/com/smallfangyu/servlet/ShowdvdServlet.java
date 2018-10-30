@@ -47,9 +47,6 @@ public class ShowdvdServlet extends HttpServlet {
      */
     static int pageNumber=0;
 
-    static{
-    dvdList("");
-     }
 
         /**
          * 查询数据库一共几条数据
@@ -103,10 +100,10 @@ public class ShowdvdServlet extends HttpServlet {
         }
         ResultSet rs;
 
-//        if(data==null){
-//            data="";
-//        }
-        String sql = "SELECT * FROM dvd WHERE dvdno like ? OR dvdname like ? OR state like ?";
+       if(data==null){
+            data="";
+       }
+        String sql = "SELECT * FROM dvd WHERE `show`=1 AND (dvdno like ? OR dvdname like ? OR state like ?)";
             Object[] params = {"%" + data + "%", "%" + data + "%", "%" + data + "%"};
             rs = db.executeQuery(sql, params);
 
@@ -165,10 +162,8 @@ public class ShowdvdServlet extends HttpServlet {
        }
 
        //根据查询的数据把数据添加进数组
-       if (data != null) {
-           dvdList(data);
-       }
 
+       dvdList(data);
 
        //换页
        updatepage(page);
