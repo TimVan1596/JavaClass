@@ -36,12 +36,10 @@
 <body>
 <script type="text/javascript">
     function press() {
-        document.getElementById("name").style.display="block";
-        document.getElementById("timeShow").style.display="none";
-    }
-    function press1() {
-        document.getElementById("timeShow").style.display="block";
-        document.getElementById("name").style.display="none";
+        var oB = document.getElementById("timeShow");
+        var oH = document.createElement("div");
+        oH.innerHTML = "安天宝";
+        oB.replaceChild(oH,oB.firstChild);
     }
     var t = null;
     function time(){
@@ -59,8 +57,6 @@
 </script>
 <h1>当前日期</h1>
 <div id="timeShow"></div>
-<div id="name" style="display:none;">安天宝</div>
-<button onclick="press()">显示名字</button>&nbsp;&nbsp;&nbsp;&nbsp;
-<button onclick="press1()">显示日期</button>
+<button onclick="press()">显示名字</button>
 </body>
 </html>
