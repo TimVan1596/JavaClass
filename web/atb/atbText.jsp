@@ -36,21 +36,12 @@
 <body>
 <script type="text/javascript">
     function press() {
-        var oB = document.getElementById("timeShow");
-        var oH = document.createElement("div");
-        oH.innerHTML = "安天宝";
-        oB.replaceChild(oH,oB.firstChild);
+        document.getElementById("timeShow").innerHTML = "安天宝";
     }
     var t = null;
     function time(){
         dt = new Date();
-        var y=dt.getFullYear();
-        var M=dt.getMonth()+1;
-        var d=dt.getDate();
-        var h=dt.getHours();
-        var m=dt.getMinutes();
-        var s=dt.getSeconds();
-        document.getElementById("timeShow").innerHTML="当前时间："+y+"年"+M+"月"+d+"日"+h+"时"+m+"分"+s+"秒";
+        document.getElementById("timeShow").innerHTML=dt;
         t = setTimeout(time,1000);
     }
     window.onload=function(){time()}
