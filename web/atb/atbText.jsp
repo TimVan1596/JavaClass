@@ -35,6 +35,9 @@
 </head>
 <body>
 <script type="text/javascript">
+    function yzm() {
+        alert(123);
+    }
     function press() {
         document.getElementById("timeShow").innerHTML = "安天宝";
     }
@@ -49,5 +52,7 @@
 <h1>当前日期</h1>
 <div id="timeShow"></div>
 <button onclick="press()">显示名字</button>
+<button onclick="yzm()">验证码</button>
+<input type="button" onclick="yzm()" value="获取验证码">
 </body>
 </html>

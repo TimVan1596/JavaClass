@@ -9,12 +9,12 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>DVD管理系统</title>
+    <title>用户注册</title>
     <!-- Custom Theme files -->
     <%
-        if(request.getAttribute("DL") == null){
+        if(request.getAttribute("FH") == null){
     %>
-    <link href="./javaWebDvd/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <%
     }else{
     %>
@@ -22,6 +22,7 @@
     <%
         }
     %>
+    <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- Custom Theme files -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -36,47 +37,47 @@
 <div class="login">
     <h2>DVD Mgr 6.0 管理系统</h2>
     <div class="login-top">
-        <h1>欢迎登陆</h1>
-        <form action="../atblogin.do" method="post">
-            <input type="text" name="username" title="username" value="用户账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户账号';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="userpassword" title="userpassword" value="账号密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号密码';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <%--<input type="text" name="username" title="username" value="账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号';}">--%>
-            <%--<input type="text" name="userpassword" title="userpassword" value="密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '密码';}">--%>
+        <h1>欢迎注册</h1>
+        <form action="../../../../atbRegister.do" method="post">
+            <input type="hidden" name="yc" id="yc" title="<%=(int)((Math.random()*9+1)*1000)%>" value="<%=(int)((Math.random()*9+1)*1000)%>">
+            <input type="button" id="btn" onclick="settime(this)" value="获取验证码">
             <div class="forgot">
                 <%
-                    if(request.getAttribute("DL") == null){
+                    if(request.getAttribute("FH") == null){
                 %>
-                <a href="./javaWebDvd/jsp/retrieve/retrieve.jsp">忘记密码</a>
+                <a href = '../../../javaWebDvdLogin.jsp'>返回</a>
                 <%
                 }else{
                 %>
-                <a href="./atb/javaWebDvd/jsp/retrieve/retrieve.jsp">忘记密码</a>
+                <a href = './atb/javaWebDvdLogin.jsp'>返回</a>
                 <%
                     }
                 %>
-                <input type="submit" value="登陆">
+                <input type="submit" value="注册">
             </div>
         </form>
-    </div>
-    <div class="login-bottom">
-        <h3>新用户 &nbsp;
-            <%
-                if(request.getAttribute("DL") == null){
-            %>
-            <a href="./javaWebDvd/jsp/register/register.jsp">注册</a>
-            <%
-            }else{
-            %>
-            <a href="./atb/javaWebDvd/jsp/register/register.jsp">注册</a>
-            <%
-                }
-            %>
-            &nbsp 账号</h3>
     </div>
 </div>
 <script type="text/javascript">
     if(<%= request.getAttribute("MSG")!=null %>){
         alert('<%=request.getAttribute("MSG") %>');
+    }
+    var countdown=5;
+    function settime(val) {
+        if (countdown == 0) {
+            <%System.out.println(1);%>
+            val.removeAttribute("disabled");
+            val.value="获取验证码";
+            countdown = 5;
+        } else {
+            <%System.out.println(5);%>
+            val.setAttribute("disabled", true);
+            val.value="重新发送(" + countdown + ")";
+            countdown--;
+        }
+        setTimeout(function() {
+            settime(val)
+        },1000)
     }
 </script>
 <div class="copyright">
