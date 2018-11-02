@@ -51,6 +51,21 @@
             <version>[7.2.0, 7.2.99]</version>
         </dependency>
 
+        <!--百度AI - Java SDK -->
+        <dependency>
+            <groupId>com.baidu.aip</groupId>
+            <artifactId>java-sdk</artifactId>
+            <version>4.7.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.5</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

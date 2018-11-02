@@ -19,7 +19,7 @@ public class ShowdvdServlet extends HttpServlet {
     /**所有DVD集合
      *
      */
-    ArrayList<DVD> list=new ArrayList<DVD>();
+    static ArrayList<DVD> list=new ArrayList<DVD>();
 
     /**当前页面DVD集合
      *
@@ -46,7 +46,6 @@ public class ShowdvdServlet extends HttpServlet {
      * 定义一共的页数
      */
     static int pageNumber=0;
-
 
 
         /**
@@ -95,31 +94,33 @@ public class ShowdvdServlet extends HttpServlet {
     /**
      * 把数据库dvd表里的数据添加进数组里
      */
-    public void dvdList(String data,int page) {
+    public static void dvdList(String data) {
         if (!list.isEmpty()) {
             list.clear();
         }
         ResultSet rs;
-        if(data==null) {
-            String sql = "SELECT * FROM dvd";
-            rs = db.executeQuery(sql, null);
-        }else {
-            String sql = "SELECT * FROM dvd WHERE dvdno like ? OR dvdname like ? OR state like ?";
-            Object[] params={"%"+data+"%","%"+data+"%","%"+data+"%"};
-            rs = db.executeQuery(sql, params);
-       }
-        int len=0;
-            try {
-                while (rs.next()) {
-                    list.add(new DVD(rs.getInt("dvdno"), rs.getString("dvdname"), rs.getString("state"), rs.getString("picture")));
-                    len++;
-                }
-                db.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        dvdLength=len;
 
+       if(data==null){
+            data="";
+       }
+        String sql = "SELECT * FROM dvd WHERE `show`=1 AND (dvdno like ? OR dvdname like ? OR state like ?)";
+            Object[] params = {"%" + data + "%", "%" + data + "%", "%" + data + "%"};
+            rs = db.executeQuery(sql, params);
+
+        int len = 0;
+        try {
+            while (rs.next()) {
+                list.add(new DVD(rs.getInt("dvdno"), rs.getString("dvdname"), rs.getString("state"), rs.getString("picture")));
+                len++;
+            }
+            db.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        dvdLength = len;
+    }
+
+    public void updatepage(int page){
         if (dvdLength % pageSize == 0) {
             pageNumber = (dvdLength / pageSize) - 1;
         } else {
@@ -159,8 +160,13 @@ public class ShowdvdServlet extends HttpServlet {
               page=pageNumber;
           }
        }
-       dvdList(data,page);
 
+       //根据查询的数据把数据添加进数组
+
+       dvdList(data);
+
+       //换页
+       updatepage(page);
 
        //创建session对象
        HttpSession session = request.getSession();

@@ -13,15 +13,19 @@
 <body>
 <%
     DbUtil db=new DbUtil();
-    int no=Integer.parseInt(request.getParameter("no"));
-    String sql="DELETE FROM book WHERE id=?";
-    Object[] params={no};
-    int res=db.executeUpdate(sql,params);
+    request.setCharacterEncoding("UTF-8");
+    String no=request.getParameter("no");
+    String[] id=no.split(",");
+    int res=0;
+    for(String i:id){
+    String sql="DELETE FROM book WHERE id in (?)";
+    Object[] params={i};
+    res=db.executeUpdate(sql,params);
+          }
     if(res>0){
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write("<script language='javascript'>alert('BOOK删除成功');window.location.href='/book/showbook';</script>");
 
-        //location.href='/fy/servlet/toShowDvd';
     }
 %>
 </body>

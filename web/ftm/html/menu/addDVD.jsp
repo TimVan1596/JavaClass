@@ -52,6 +52,7 @@
                         <button type="button"
                                 class="layui-btn  layui-btn-normal"
                                 id="preview-upload">
+                            <i class="layui-icon">&#xe67c;</i>
                             上传封面</button>
                         <div class="layui-upload-list">
                             <img class="layui-upload-img"                                   id="preview-upload-img">
@@ -77,19 +78,25 @@
             //DVD预览封面上传
             var uploadInst = upload.render({
                 elem: '#preview-upload'
-                ,url: '/java/ftm/html/menu/adddvd/UploadPreview.do'
+                ,url:
+                    '/java/ftm/html/menu/adddvd/UploadPreview.do'
                 ,before: function(obj){
 
                     let uploadLoading = layer.msg('上传中', {
                         icon: 16
+                        ,offset:['15%','15%']
                         ,shade: 0.01
                     });
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#preview-upload-img').attr('src', result);                       //图片链接（base64）
+                    });
+
                 }
                 ,done: function(ret){
 
                     let data = ret['data'];
                     $('#preview-hidden').val(data);
-
                     $('#preview-upload-img').attr('src', data);
 
                     //关闭上传loading

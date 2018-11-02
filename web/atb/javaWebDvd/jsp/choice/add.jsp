@@ -23,13 +23,13 @@
         }
     </style>
 </head>
-<body>
+<body background="../../images/banner.jpg">
 <div align='center'>
-    <h2>----添加DVD----</h2>
+    <h2 style="color: white">----添加DVD----</h2>
     <h6 style="color: red">库存需为数字，图片格式支持png/jpg/gif/bmp</h6>
 </div>
 <form action="../../../../atbadd.do" method="post" enctype="multipart/form-data">
-    <table border="1" width="300" align="center">
+    <table border="1" width="300" align="center" style="background-color: white">
         <tr>
             <th width=150px>书名：</th>
             <th><input type="text" name="name" title="书名" style="text-align: center; width: 150px;"/></th>

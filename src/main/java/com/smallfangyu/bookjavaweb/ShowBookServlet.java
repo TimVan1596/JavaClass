@@ -33,7 +33,7 @@ public class ShowBookServlet extends HttpServlet {
     /**
      * 定义一个页面多少条数据
      */
-    static int pageSize=3;
+    static int pageSize=5;
 
     /**
      * 定义一共的页数
@@ -74,10 +74,10 @@ public class ShowBookServlet extends HttpServlet {
         }
         ResultSet rs;
         if(data==null) {
-            String sql = "SELECT * FROM book,booktype WHERE book.typeid=booktype.typeid";
+            String sql = "SELECT * FROM book,booktype WHERE book.typeid=booktype.typeid ORDER BY id";
             rs = db.executeQuery(sql, null);
         }else {
-            String sql = "SELECT * FROM book,booktype WHERE  book.typeid=booktype.typeid AND id like ? OR name like ? OR author like ?";
+            String sql = "SELECT * FROM book,booktype WHERE  book.typeid=booktype.typeid AND (id like ? OR name like ? OR author like ? ORDER BY id)";
             Object[] params={"%"+data+"%","%"+data+"%","%"+data+"%"};
             rs = db.executeQuery(sql, params);
         }

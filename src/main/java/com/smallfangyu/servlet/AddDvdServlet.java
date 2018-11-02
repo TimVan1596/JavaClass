@@ -37,9 +37,12 @@ private String processUploadFile(FileItem item){
 
     String fileName=item.getName();
     //String file=fileName.substring(fileName.lastIndexOf("\\")+1);
-    String newPicName = UUID.randomUUID()+ fileName.substring(fileName.lastIndexOf("."));
+    if(fileName.length()==0){
+        return "http://wx3.sinaimg.cn/mw690/0060lm7Tly1fwc6vyd1c1j30850643yj.jpg";
+    }else {
+        String newPicName = UUID.randomUUID() + fileName.substring(fileName.lastIndexOf("."));
 
-    File save=new File("F:/IdeaProjects/java_direction_class/web/fy/uploads/"+newPicName);
+        File save = new File("F:/IdeaProjects/java_direction_class/web/fy/uploads/" + newPicName);
 
     if(!save.isDirectory()) {
         try {
@@ -49,7 +52,7 @@ private String processUploadFile(FileItem item){
         }
     }
 
-     return "../uploads/"+newPicName;
+     return "../uploads/"+newPicName;}
 }
 
     private String processFormField(FileItem item){

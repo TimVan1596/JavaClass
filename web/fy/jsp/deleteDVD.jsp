@@ -15,10 +15,15 @@
 
 <%
     DbUtil db=new DbUtil();
-    int no=Integer.parseInt(request.getParameter("no"));
-    String sql="DELETE FROM dvd WHERE dvdno=?";
-    Object[] params={no};
-    int res=db.executeUpdate(sql,params);
+    String no=request.getParameter("no");
+    String[] id=no.split(",");
+    int res=0;
+    for(String i:id) {
+        //String sql = "DELETE FROM dvd WHERE dvdno=?";
+        String sql="UPDATE dvd SET `show`=0 WHERE dvdno=?";
+        Object[] params = {i};
+        res = db.executeUpdate(sql, params);
+    }
     if(res>0){
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write("<script language='javascript'>alert('DVD删除成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");

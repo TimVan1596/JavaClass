@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet"
+          href="../../../../common/util/layui/css/layui.css"
+          media="all">
+    <style>
+        .layui-upload-img{
+            width: 92px; height: 92px;
+            margin: 0 10px 10px 0;}
+
+        .result-text{
+            color: #1e85d6;
+            font-size: medium;
+            line-height: 30px;
+        }
+
+        .result-text span{
+            color: black;
+            font-size: large;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../../../../common/util/layui/layui.js"></script>
+</head>
+<body>
+
+<form style="margin: 5%" class="layui-form layui-form-pane">
+    <br>
+
+    <!--上传封面-->
+    <div class="layui-upload">
+        <div style="text-align: center">
+            <img class="layui-upload-img" id="preview-upload-img"
+                 style="width: 300px;height: 180px;"
+            src="../../../img/menu/lab/idCardScan/idcardBG.jpg">
+        </div>
+
+        <div style="text-align: center">
+            <button type="button"
+                    class="layui-btn  layui-btn-normal"
+                    id="preview-upload">
+                <i class="layui-icon"></i>
+                上传身份证照片</button>
+
+            <div class="layui-upload-list">
+                <p id="demoText"></p>
+            </div>
+
+        </div>
+
+        <div >
+            <p class="result-text">姓名：<span id="stu-name"></span></p>
+            <p class="result-text">性别：<span id="stu-sex"></span></p>
+            <p class="result-text">公民身份号码：
+                <br>
+                <span id="stu-id"></span>
+            </p>
+            <p class="result-text">出生：
+                <br>
+                <span id="stu-date"></span>
+            </p>
+            <p class="result-text">住址：
+                <br>
+                <span id="stu-address"></span>
+            </p>
+            <p class="result-text">民族：
+                <br>
+                <span id="stu-ration"></span>
+            </p>
+        </div>
+
+        <!--<div style="margin-top: 5%;text-align: center">-->
+            <!--<button class="layui-btn layui-btn-primary"-->
+                    <!--onclick="back()">返回</button>-->
+        <!--</div>-->
+        <input type="hidden" name="preview" id="preview-hidden">
+    </div>
+
+</form>
+
+
+<script src="../../../js/html/menu/lab/idCardScan.js"></script>
+</body>
+</html>
