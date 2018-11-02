@@ -72,7 +72,7 @@ public class GetpasswordServlet extends HttpServlet {
             Session session = Session.getDefaultInstance(properties, new Authenticator() {
                 @Override
                 public PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("928247992@qq.com", "vsmqdqfqfbolbfda");
+                    return new PasswordAuthentication("928247992@qq.com", "glzkuagauplkbeef");
                     // 发件人邮箱账号、授权码
                 }
             });
@@ -90,12 +90,13 @@ public class GetpasswordServlet extends HttpServlet {
             message.setContent(content, "text/html;charset=UTF-8");
             // 3.发送邮件
             Transport.send(message);
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().write("<script language='javascript'>alert('邮件发送成功，请注意查收！');location.href='/fy/jsp/getpassword.jsp';</script>");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().write("<script language='javascript'>alert('邮件发送成功，请注意查收！');location.href='/fy/jsp/getpassword.jsp';</script>");
+
 
 
 

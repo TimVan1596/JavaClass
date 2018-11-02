@@ -51,7 +51,7 @@ private String processUploadFile(FileItem item){
             e.printStackTrace();
         }
     }
-
+System.out.println("../uploads/"+newPicName);
      return "../uploads/"+newPicName;}
 }
 
@@ -63,7 +63,7 @@ private String processUploadFile(FileItem item){
         }catch(UnsupportedEncodingException e){
             e.printStackTrace();
         }
-        //System.out.println(name+":"+value);
+        System.out.println(value);
         return value;
     }
 
