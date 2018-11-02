@@ -21,6 +21,11 @@
 <head>
     <title>显示DVD</title>
     <style>
+
+        table{
+            border:1px solid blue;
+        }
+
         .button {
             background-color: #008CBA;
             border-radius: 4px;
@@ -34,11 +39,22 @@
             margin: 4px 2px;
             cursor: pointer;
         }
+
+        p{
+            color:blue;
+            font-family: 楷体;
+            font-size: x-large;
+              }
     </style>
 
 </head>
 <body>
 <jsp:include page="navigationBar.jsp"></jsp:include>
+<h3 style="margin-left: 3px">欢迎你:<%=session.getAttribute("loginName")%></h3>
+<p id = "timeP"></p>
+<p id = "nameP"></p>
+<input type="button" id="change" value="显示名字" />
+
 <div  style="text-align:center;margin: 0 auto">
     <form action="/fy/servlet/toShowDvd" method="get" >
         <input  style="margin-left: 20px;margin-top: 20px;height:35px;"  type="text" name="selectDVD" id="select"/>
@@ -61,17 +77,6 @@
             <td style="width:110px"><a class="button" href="changeDVD.jsp?id=<%=dvd.getId() %>&name=<%=dvd.getDvdname()%>&state=<%=dvd.getState()%>" target="mainFrame" >修改</a></td>
         </tr>
    <%  }%>
-        <!-- 这里使用标签遍历输出 集合数据 -->
-        <%--<c:forEach items="${listDVD }" var="dvd" >--%>
-            <%--<tr>--%>
-                <%--<td style="width:100px">${dvd.id }</td>--%>
-                <%--<td><img style="width:100px;height:80px" src="${dvd.picture }" /></td>--%>
-                <%--<td style="width:100px">${dvd.dvdname }</td>--%>
-                <%--<c:if test="${dvd.state.equals('可以借')}"><td style="width:100px;background-color: limegreen"}>${dvd.state }</td></c:if>--%>
-                <%--<c:if test="${dvd.state.equals('已借出')}"><td style="width:100px;background-color: red"}>${dvd.state }</td></c:if>--%>
-                <%--<td style="width:100px"><input type="button"  value="删除" onclick='window.location.href="/fy/jsp/deleteDVD.jsp?no=${dvd.id }"'></td>--%>
-            <%--</tr>--%>
-        <%--</c:forEach>--%>
     </table>
 
         <div>
@@ -129,6 +134,23 @@
         }
     }
 
+    function time(){
+           date=new Date();
+           var ti=document.getElementById("timeP");
+           ti.innerText=date;
+           setTimeout(time,1000);
+        }
+
+    $(function(){
+            time();
+        });
+
+        $(function(){
+                $("#change").click(function(){
+                 $("#timeP").hide();
+                 $("#nameP").html("宇哥");
+                       });
+            });
 </script>
 
 </body>

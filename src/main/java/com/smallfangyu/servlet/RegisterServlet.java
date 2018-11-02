@@ -45,9 +45,9 @@ public class RegisterServlet extends HttpServlet {
         return false;
     }
 
-    public int register(String userName,String passWord){
-        String sql = "INSERT INTO user VALUES(?,?)";
-        Object[] params={userName,passWord};
+    public int register(String userName,String passWord,String mail){
+        String sql = "INSERT INTO user() VALUES(?,?,?)";
+        Object[] params={userName,passWord,mail};
         int res = db.executeUpdate(sql, params);
         return res;
     }
@@ -58,19 +58,19 @@ public class RegisterServlet extends HttpServlet {
     }
 @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    //request.setCharacterEncoding("UTF-8");
+
     String userName=request.getParameter("username");
     String passWord=request.getParameter("password");
-
+    String email=request.getParameter("email");
     if(check(userName)){
-          int res=register(userName,passWord);
+          int res=register(userName,passWord,email);
+          System.out.println(res);
            if(res>0){
-               //response.setContentType("text/html;charset=UTF-8");
                response.getWriter().write("<script language='javascript'>alert('账号注册成功');location.href='/fy/jsp/login.jsp';</script>");
+           }else{
+               response.getWriter().write("<script language='javascript'>alert('邮箱重复');location.href='/fy/jsp/register.jsp';</script>");
            }
     }else{
-        //response.setContentType("text/html;charset=UTF-8");
-
         response.getWriter().write("<script language='javascript'>alert('账号已被注册');location.href='/fy/jsp/register.jsp';</script>");
 
     }

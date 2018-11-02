@@ -29,18 +29,19 @@
 
 <div style="text-align: center">
     <h4>找回密码</h4>
-<form action="/fy/servlet/toGetPassWord" method="get" onsubmit="return returnPassword()">
-    请输入账号：<input type=" text" name="username" id="returnName"/><br>
-    <input type="submit" class="button" value="提交"/>
+<form action="/servlet/toGetPassWord" method="get" onsubmit="return returnPassword()">
+    <%--请输入账号：<input type=" text" name="username" id="returnName"/><br>--%>
+    请输入邮箱：<input type="email" name="email" id="email"/><br>
+        <input type="submit" class="button" value="提交"/><a style="margin-left: 100px" href="/fy/jsp/login.jsp" >登录</a>
 </form>
 </div>
     <script>
         function returnPassword(){
-            var  name=document.getElementById("returnName").value;
+            var  name=document.getElementById("email").value;
             if(name!=""){
                 return true;
             }else{
-                alert("亲，账号不能为空哦~");
+                alert("亲，邮箱不能为空哦~");
                 return false;
             }
 

@@ -27,16 +27,15 @@
             out.print(msg);
         }else{
     %> <br> <% } %>
-<p>账号：<input style="margin-left:30px" type="text" name="username" id="username"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%>" onblur="checkl()"/><br></p>
+<p>账号：<input  style="margin-left:30px " type="text" name="username" id="username"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%>" onblur="checkl()"/><br></p>
 <p>密码：<input style="margin-left:30px " type="password" name="password" id="password"/><br></p>
 <p>重复密码：<input type="password" name="passsword" id="passsword"/><br></p>
-
+邮箱：<input  type="email" name="email" id="email"/><br>
     <div>
      <input type="submit"  value="注册" />
      <a href="/fy/jsp/login.jsp" >登录</a>
     </div>
-
-         </form>
+ </form>
       </section>
     </div>
 </div>

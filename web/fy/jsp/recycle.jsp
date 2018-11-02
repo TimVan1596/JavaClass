@@ -11,6 +11,9 @@
 <head>
     <title>回收站</title>
     <style>
+        table{
+            border:1px solid blue;
+        }
         .button {
             background-color: #008CBA;
             border-radius: 4px;
