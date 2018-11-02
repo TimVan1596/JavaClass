@@ -68,6 +68,19 @@
             <div class="icon">
                 <img src="../img/biggerdvd/lock_icon_copy.png">
             </div>
+
+            <input placeholder="邮箱" type="email"
+                   autocomplete="off" id="user-email"
+                   style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;width: 100%" name="email">
+            <div class="validation">
+                <img src="../img/biggerdvd/tick.png">
+            </div>
+        </div>
+        <div class="login_fields__password">
+            <div class="icon">
+                <img src="../img/biggerdvd/lock_icon_copy.png">
+            </div>
+
             <input placeholder="密码" type="password"
                    autocomplete="off" id="user-password"
                    style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;width: 100%" name="password">

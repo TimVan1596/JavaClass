@@ -10,6 +10,7 @@ function register() {
     let name = $("[name=name]").val();
     let password = $("[name=password]").val();
     let rePassword = $("[name=re-password]").val();
+    let email = $("[name=email]").val();
 
     if (password !== rePassword) {
 
@@ -43,7 +44,8 @@ function register() {
         //通过ajax检查是否正常登录
         $.post('../registerAccount.do', {
             name: name,
-            password: password
+            password: password,
+            email:email
         }, function (ret) {
             //解析ret
             ret = eval("(" + ret + ")");

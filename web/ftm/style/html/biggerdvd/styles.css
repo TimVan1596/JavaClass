@@ -147,7 +147,9 @@ body .login_fields input[type=password] {
     color: #dc6180 !important
 }
 
-body .login_fields input[type=text], body .login_fields input[type=password] {
+body .login_fields input[type=text]
+, body .login_fields input[type=password]
+, body .login_fields input[type=email]{
     color: #afb1be;
     width: 190px;
     margin-top: -2px;
