@@ -41,6 +41,8 @@
         }
     </style>
 
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../../common/util/layui/layui.js"></script>
     <script src="../js/common-js.js"></script>
@@ -69,7 +71,7 @@
                 <img src="../img/biggerdvd/lock_icon_copy.png">
             </div>
 
-            <input placeholder="邮箱" type="email"
+            <input placeholder="请填写您的邮箱" type="email"
                    autocomplete="off" id="user-email"
                    style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;width: 100%" name="email">
             <div class="validation">
