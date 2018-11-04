@@ -47,24 +47,35 @@ public class deleteServlet extends HttpServlet {
         //name = new String(name.getBytes("ISO-8859-1"),"utf-8");
         //1.取值
         String phone =request.getParameter("phone");
-        phone = new String(phone.getBytes("ISO-8859-1"),"utf-8");
-        //2.判断，此处用于判断是否已存在该用户
-        /*
-         * 13+任意数
-         * 15+除4的任意数
-         * 18+除1和4的任意数
-         * 17+除9的任意数
-         * 147
-         */
         response.setContentType("text/html;charset=UTF-8");
-        String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
-        Pattern p = Pattern.compile(regExp);
-        Matcher m = p.matcher(phone);
-        //3.返回结果
+        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regEx1);
+        m = p.matcher(phone);
+//        2.返回结果
         if(m.matches()) {
-            response.getWriter().print("<font color='green'>手机号正确</font>");
+            response.getWriter().print("<font color='green'>邮箱格式正确</font>");
         }else {
-            response.getWriter().print("<font color='yellow'>手机号错误</font>");
+            response.getWriter().print("<font color='yellow'>邮箱格式错误</font>");
         }
+//        /*
+//         * 13+任意数
+//         * 15+除4的任意数
+//         * 18+除1和4的任意数
+//         * 17+除9的任意数
+//         * 147
+//         */
+//        response.setContentType("text/html;charset=UTF-8");
+//        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+//        String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+//        Pattern p = Pattern.compile(regExp);
+//        Matcher m = p.matcher(phone);
+//        //2.返回结果
+//        if(m.matches()) {
+//            response.getWriter().print("<font color='green'>手机号正确</font>");
+//        }else {
+//            response.getWriter().print("<font color='yellow'>手机号错误</font>");
+//        }
     }
 }

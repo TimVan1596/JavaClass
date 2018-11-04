@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.smallfangyu.data.LogUtil" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/10/25 0025
@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>登录</title>
@@ -19,7 +20,7 @@
         <form action="/fy/servlet/login.do" id="f1" method="get" onsubmit="return checkLogin()">
             <h1>DVD登录</h1>
             <div>
-                <input type="text" placeholder="账号" name="username" id="username" />
+                <input type="text" placeholder="邮箱" name="username" id="username" />
             </div>
             <div>
                 <input type="password" placeholder="密码" name="password" id="password" />

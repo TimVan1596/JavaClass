@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.smallfangyu.data.DVD" %><%--
+<%@ page import="com.smallfangyu.data.DVD" %>
+<%@ page import="com.smallfangyu.data.LogUtil" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/10/8 0008
@@ -14,8 +15,7 @@
     ArrayList<DVD> list=(ArrayList<DVD>)session.getAttribute("listDVD");
     int pag= (int) session.getAttribute("page");
     int pageNumber= (int) session.getAttribute("pageNumber");
-    int cSize=(int)session.getAttribute("cSize");
-    int ncSize=(int)session.getAttribute("ncSize");
+
 %>
 <html>
 <head>
@@ -135,9 +135,7 @@
     }
 
     function time(){
-           date=new Date();
-           var ti=document.getElementById("timeP");
-           ti.innerText=date;
+           document.getElementById("timeP").innerText=new Date();
            setTimeout(time,1000);
         }
 
@@ -145,12 +143,12 @@
             time();
         });
 
-        $(function(){
-                $("#change").click(function(){
-                 $("#timeP").hide();
-                 $("#nameP").html("宇哥");
+    $(function(){
+           $("#change").click(function(){
+           $("#timeP").html("宇哥");
                        });
             });
+
 </script>
 
 </body>

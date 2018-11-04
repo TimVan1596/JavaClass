@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.regex.Pattern" %>
+<%@ page import="java.util.regex.Matcher" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018\10\25 0025
@@ -39,10 +40,13 @@
     <div class="login-top">
         <h1>欢迎注册</h1>
         <form action="../../../../atbRegister.do" method="post">
-            <input type="text" name="name" id="name" title="" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="password" id="password" title="" value="账号密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
-            <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="phone" id="phone" title="" value="绑定手机" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+            <input type="text" name="name" id="name" title="" value="用户账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户账号';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+            <input type="text" name="password" id="password" title="" value="账号密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号密码';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
+            <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '确认密码';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+            <input type="text" name="phone" id="phone" title="" value="绑定邮箱" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '绑定邮箱';}">
+            <input type="text" name="yzm" id="yzm" title="" value="验证码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}">
+            <input type="hidden" name="yc" id="yc" title="<%=(int)((Math.random()*9+1)*1000)%>" value="<%=(int)((Math.random()*9+1)*1000)%>">
+            <input type="button" onclick="Code()" value="获取验证码">
             <div class="forgot">
                 <%
                     if(request.getAttribute("FH") == null){
@@ -66,6 +70,11 @@
 <script type="text/javascript">
     if(<%= request.getAttribute("MSG")!=null %>){
         alert('<%=request.getAttribute("MSG") %>');
+    }
+    function Code() {
+        var userEmail = $("[name=phone]").val();
+        var yc = $("[name=yc]").val();
+        $.post("../../../../atbemail.do?userEmail="+userEmail+"&yc="+yc);
     }
 </script>
 <script src="jquery-3.3.1.min.js" type="text/javascript"></script>
