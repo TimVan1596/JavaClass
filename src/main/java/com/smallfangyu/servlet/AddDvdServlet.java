@@ -21,39 +21,43 @@ import java.util.*;
 @WebServlet(name = "AddDvdServlet",urlPatterns = {"/fy/servlet/toAddDvd"})
 public class AddDvdServlet extends HttpServlet {
 
-  private static final long serialVersionUID = 1L;
-    String dvdname=null;
-    String photo=null;
+    private static final long serialVersionUID = 1L;
+    String dvdname = null;
+    String photo = null;
 
     DbUtil db = new DbUtil();
 
-    public int addDvd(String dvdName,String photo) {
+    public int addDvd(String dvdName, String photo) {
         String sql = "INSERT INTO dvd(dvdname,state,picture) VALUES(?,?,?)";
-        Object[] params = {"《" + dvdName + "》", "可以借",photo};
+        Object[] params = {"《" + dvdName + "》", "可以借", photo};
         int res = db.executeUpdate(sql, params);
         return res;
     }
-private String processUploadFile(FileItem item){
 
-    String fileName=item.getName();
-    //String file=fileName.substring(fileName.lastIndexOf("\\")+1);
-    if(fileName.length()==0){
-        return "http://wx3.sinaimg.cn/mw690/0060lm7Tly1fwc6vyd1c1j30850643yj.jpg";
-    }else {
-        String newPicName = UUID.randomUUID() + fileName.substring(fileName.lastIndexOf("."));
+    private String processUploadFile(FileItem item) {
+        String fileName = item.getName();
+        //String file=fileName.substring(fileName.lastIndexOf("\\")+1);
+        if (fileName.length() == 0) {
+            return "http://wx3.sinaimg.cn/mw690/0060lm7Tly1fwc6vyd1c1j30850643yj.jpg";
+        } else {
+            String newPicName = UUID.randomUUID() + fileName.substring(fileName.lastIndexOf("."));
 
-        File save = new File("F:/IdeaProjects/java_direction_class/web/fy/uploads/" + newPicName);
-
-    if(!save.isDirectory()) {
-        try {
-            FileUtils.copyInputStreamToFile(item.getInputStream(), save);
-        } catch (IOException e) {
-            e.printStackTrace();
+            File save = new File("F:/IdeaProjects/java_direction_class/web/fy/uploads/" + newPicName);
+              if(!save.exists()){
+                  save.mkdirs();
+              }
+            if (!save.isDirectory()) {
+                try {
+                    FileUtils.copyInputStreamToFile(item.getInputStream(), save);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("../uploads/" + newPicName);
+            return "../uploads/" + newPicName;
         }
     }
-System.out.println("../uploads/"+newPicName);
-     return "../uploads/"+newPicName;}
-}
+
 
     private String processFormField(FileItem item){
         //String name=item.getFieldName();
@@ -63,7 +67,7 @@ System.out.println("../uploads/"+newPicName);
         }catch(UnsupportedEncodingException e){
             e.printStackTrace();
         }
-        System.out.println(value);
+
         return value;
     }
 
@@ -83,7 +87,10 @@ System.out.println("../uploads/"+newPicName);
          boolean isMultipart= ServletFileUpload.isMultipartContent(request);
          if(isMultipart){
              DiskFileItemFactory factory=new DiskFileItemFactory();
-             File repository=new File("F:/IdeaProjects/java_direction_class/web/fy/temps");
+             File repository=new File("F:/IdeaProjects/java_direction_class/web/fy/temps/");
+             if(!repository.exists()){
+                 repository.mkdirs();
+             }
              factory.setRepository(repository);
              ServletFileUpload upload=new ServletFileUpload(factory);
              upload.setHeaderEncoding("UTF-8");
@@ -108,7 +115,8 @@ System.out.println("../uploads/"+newPicName);
          }else{
 
          }
-
+        System.out.println("名称"+dvdname);
+        System.out.println("图片"+photo);
         if(addDvd(dvdname,photo)>0){
         //response.setContentType("text/html;charset=UTF-8");
          response.getWriter().write("<script language='javascript'>alert('DVD添加成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");

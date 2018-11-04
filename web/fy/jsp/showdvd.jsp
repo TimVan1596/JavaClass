@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.smallfangyu.data.DVD" %><%--
+<%@ page import="com.smallfangyu.data.DVD" %>
+<%@ page import="com.smallfangyu.data.LogUtil" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/10/8 0008
@@ -14,6 +15,7 @@
     ArrayList<DVD> list=(ArrayList<DVD>)session.getAttribute("listDVD");
     int pag= (int) session.getAttribute("page");
     int pageNumber= (int) session.getAttribute("pageNumber");
+
 %>
 <html>
 <head>
