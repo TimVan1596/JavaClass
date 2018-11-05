@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "emailServlet",urlPatterns = {"/atbemail.do"})
+@WebServlet(name = "emailServlet",urlPatterns = {"/atbEmail.do"})
 public class emailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码
@@ -20,6 +20,7 @@ public class emailServlet extends HttpServlet {
         String yc = request.getParameter("yc");
         //正则表达式邮箱
         String regExp = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        //手机号
         //String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(userEmail);

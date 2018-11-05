@@ -35,7 +35,8 @@ public class registerServlet extends HttpServlet {
         }
         //正则表达式邮箱
         String regExp = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-//        String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+        //手机号
+        //String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(phone);
         //3.返回结果
