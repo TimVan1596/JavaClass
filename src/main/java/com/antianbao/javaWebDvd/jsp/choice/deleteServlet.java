@@ -45,6 +45,18 @@ public class deleteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //get解决中文乱码
         //name = new String(name.getBytes("ISO-8859-1"),"utf-8");
+        String name =request.getParameter("name");
+        name = new String(name.getBytes("ISO-8859-1"),"utf-8");
+        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regEx1);
+        m = p.matcher(name);
+        response.setContentType("text/html;charset=UTF-8");
+        //2.返回结果
+        if(!m.matches()) {
+            response.getWriter().print("<font color='yellow'>邮箱格式错误</font>");
+        }
 //        /*
 //         * 13+任意数
 //         * 15+除4的任意数

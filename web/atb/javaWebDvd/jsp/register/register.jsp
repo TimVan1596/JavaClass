@@ -11,18 +11,12 @@
 <head>
     <title>用户注册</title>
     <!-- Custom Theme files -->
-    <%
-        if(request.getAttribute("FH") == null){
-    %>
+    <%String FH = (String) request.getAttribute("FH");
+    if(FH == null){%>
     <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <%
-    }else{
-    %>
+    <%}else{%>
     <link href="./atb/javaWebDvd/css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <%
-        }
-    %>
-    <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <%}%>
     <!-- Custom Theme files -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -38,32 +32,30 @@
     <h2>DVD Mgr 6.0 管理系统</h2>
     <div class="login-top">
         <h1>欢迎注册</h1>
+        <%if(FH == null){%>
         <form action="../../../../atbRegister.do" method="post">
-            <input type="text" name="name" id="name" title="" value="绑定邮箱" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = '绑定邮箱';}" />
-            <input type="text" name="password" id="password" title="" value="输入密码" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = '输入密码';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
-            <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = '确认密码';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="yzm" id="yzm" title="" value="验证码"
-                   onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}">
-            <input type="hidden" name="yc" id="yc" title="<%=(int)((Math.random()*9+1)*1000)%>" value="<%=(int)((Math.random()*9+1)*1000)%>">
-            <input type="button" onclick="Code()" value="获取验证码">
-            <div class="forgot">
-                <%
-                    if(request.getAttribute("FH") == null){
-                %>
-                <a href = '../../../javaWebDvdLogin.jsp'>返回</a>
-                <%
-                }else{
-                %>
-                <a href = './atb/javaWebDvdLogin.jsp'>返回</a>
-                <%
-                    }
-                %>
-                <input type="submit" value="注册">
-            </div>
-        </form>
+                <%}else{%>
+            <form action="./atbRegister.do" method="post">
+                <%}%>
+                <input type="text" name="name" id="name" title="" value="绑定邮箱"
+                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '绑定邮箱';}" />
+                <input type="text" name="password" id="password" title="" value="输入密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"
+                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '输入密码';}"  />
+                <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"
+                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '确认密码';}" />
+                <input type="text" name="yzm" id="yzm" title="" value="验证码"
+                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}">
+                <input type="hidden" name="yc" id="yc" title="<%=(int)((Math.random()*9+1)*1000)%>" value="<%=(int)((Math.random()*9+1)*1000)%>">
+                <input type="button" onclick="Code()" value="获取验证码">
+                <div class="forgot">
+                    <%if(FH == null){%>
+                    <a href = '../../../javaWebDvdLogin.jsp'>返回</a>
+                    <%}else{%>
+                    <a href = './atb/javaWebDvdLogin.jsp'>返回</a>
+                    <%}%>
+                    <input type="submit" value="注册">
+                </div>
+            </form>
     </div>
     <div class="login-bottom">
         <h3><span id="tishi1"></span></h3>
@@ -73,24 +65,32 @@
     if(<%= request.getAttribute("MSG")!=null %>){
         alert('<%=request.getAttribute("MSG") %>');
     }
+</script>
+<%if(FH == null){%>
+<script src="./jquery-3.3.1.min.js" type="text/javascript"></script>
+<%}else{%>
+<script src="./atb/javaWebDvd/jsp/register/jquery-3.3.1.min.js" type="text/javascript"></script>
+<%}%>
+<script>
+    //获取验证码
     function Code() {
         var userEmail = $("[name=name]").val();
+        userEmail = $.trim(userEmail);
         var yc = $("[name=yc]").val();
-        <%
-        if(request.getAttribute("FH") == null){
-        %>
-        $.post("../../../../atbEmail.do?userEmail="+userEmail+"&yc="+yc);
-        <%
-        }else{
-        %>
-        $.post("./atbEmail.do?userEmail="+userEmail+"&yc="+yc);
-        <%
-        }
-        %>
+        yc = $.trim(yc);
+        <%if(FH == null){%>
+        var url = "../../../../atbEmail.do?";
+        // $.post("../../../../atbEmail.do?userEmail="+userEmail+"&yc="+yc);
+        <%}else{%>
+        var url = "./atbEmail.do?";
+        // $.post("./atbEmail.do?userEmail="+userEmail+"&yc="+yc);
+        <%}%>
+        userEmail="userEmail="+userEmail;
+        yc="&yc="+yc;
+        url = url + userEmail + yc;
+        //$.get()方法能够返回一个JQuery XMLHttpRequest对象
+        $.post(url, callback);
     }
-</script>
-<script src="jquery-3.3.1.min.js" type="text/javascript"></script>
-<script>
     //先将提示隐藏起来
     $("#tishi1").hide();
     $(function() {
@@ -104,7 +104,11 @@
                 var name = $(this).val();
                 name = $.trim(name);
                 if (name != "") {
+                    <%if(FH == null){%>
                     var url = "../../../../atbRegister.do?";
+                    <%}else{%>
+                    var url = "./atbRegister.do?";
+                    <%}%>
                     name="name="+name;
                     url = url + name;
                     //$.get()方法能够返回一个JQuery XMLHttpRequest对象
@@ -132,7 +136,11 @@
                 var password = $("[name=password]").val();
                 password = $.trim(password);
                 if (cpassword != "") {
+                    <%if(FH == null){%>
                     var url = "../../../../atbmodify.do?";
+                    <%}else{%>
+                    var url = "./atbmodify.do?";
+                    <%}%>
                     cpassword="cpassword="+cpassword;
                     password="&password="+password;
                     url = url + cpassword + password;

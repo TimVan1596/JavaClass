@@ -16,7 +16,7 @@ public class emailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码
         request.setCharacterEncoding("utf-8");
-        System.out.println(1);
+        response.setContentType("text/html;charset=UTF-8");
         String userEmail = request.getParameter("userEmail");
         String yc = request.getParameter("yc");
         //正则表达式邮箱
@@ -25,9 +25,7 @@ public class emailServlet extends HttpServlet {
         //String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(userEmail);
-        System.out.println(2);
         if (m.matches()) {
-            System.out.println(3);
             //跳转到登陆界面
             try {
                 //不用更改
@@ -49,6 +47,8 @@ public class emailServlet extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else{
+            response.getWriter().print("<font color='yellow'>邮箱格式错误无法获取验证码</font>");
         }
     }
     /**
