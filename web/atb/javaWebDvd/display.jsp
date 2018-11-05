@@ -138,8 +138,8 @@
                 }
             %>
             <td align="center">
+                <%--<a href = '../../atblend.do?no=<%= dvd.getNo() %>'>借出</a>--%>
                 <a href = './atblend.do?no=<%= dvd.getNo() %>'>借出</a>
-                <%--<a href = './lend.do?no=<%= dvd.getNo() %>'>借出</a>--%>
             </td>
             <td align="center" >
                 <a href = './atbreturn.do?no=<%= dvd.getNo() %>'>归还</a>

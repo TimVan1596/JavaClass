@@ -22,44 +22,55 @@ public class registerServlet extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         String cpassword = request.getParameter("cpassword");
-        String phone = request.getParameter("phone");
+        String yzm = request.getParameter("yzm");
+        String yc = request.getParameter("yc");
         //每项必填
-        if(name.equals("用户账号") || phone.equals("绑定手机") || password.equals("账号密码") || cpassword.equals("确认密码")
-                || name.equals("") || phone.equals("") || password.equals("") || cpassword.equals("")){
+        if(name.equals("绑定邮箱") || password.equals("账号密码") || cpassword.equals("确认密码")
+                || name.equals("") || password.equals("") || cpassword.equals("")){
             //跳回注册界面
             request.setAttribute("MSG", "每项必填！");
             request.setAttribute("FH", "就是想返回");
             request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/register.jsp").forward(request, response);
-        }//判断两次密码是否相同
-        String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+        }
+        //正则表达式邮箱
+        String regExp = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        //手机号
+        //String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
         Pattern p = Pattern.compile(regExp);
-        Matcher m = p.matcher(phone);
+        Matcher m = p.matcher(name);
         //3.返回结果
-        if(m.matches()) {
-            if(password.equals(cpassword)){
-                JDBCUtilUser jdbcUtil = new JDBCUtilUser();
-                User user = new User(name, password, phone);
-                int jd = jdbcUtil.addStu(user);
-                if(jd > 0){
-                    //跳转到登陆界面
-                    request.setAttribute("MSG", "注册成功！");
-                    request.setAttribute("DL", "意思下");
-                    request.getRequestDispatcher("./atb/javaWebDvdLogin.jsp").forward(request, response);
-                }else{
-                    //输出已账号存在,跳回注册界面
-                    request.setAttribute("MSG", "账号已存在注册失败！");
+        if(yzm.equals(yc)){
+            if(m.matches()) {
+                if(password.equals(cpassword)){
+                    JDBCUtilUser jdbcUtil = new JDBCUtilUser();
+                    User user = new User(name, password);
+                    int jd = jdbcUtil.addStu(user);
+                    if(jd > 0){
+                        //跳转到登陆界面
+                        request.setAttribute("MSG", "注册成功！");
+                        request.setAttribute("DL", "意思下");
+                        request.getRequestDispatcher("./atb/javaWebDvdLogin.jsp").forward(request, response);
+                    }else{
+                        //输出已账号存在,跳回注册界面
+                        request.setAttribute("MSG", "账号已存在注册失败！");
+                        request.setAttribute("FH", "就是想返回");
+                        request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/register.jsp").forward(request, response);
+                    }
+                }else {
+                    //输出两次密码不一致,跳回注册界面
+                    request.setAttribute("MSG", "两次密码不一致！");
                     request.setAttribute("FH", "就是想返回");
                     request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/register.jsp").forward(request, response);
                 }
             }else {
                 //输出两次密码不一致,跳回注册界面
-                request.setAttribute("MSG", "两次密码不一致！");
+                request.setAttribute("MSG", "邮箱格式不正确！");
                 request.setAttribute("FH", "就是想返回");
                 request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/register.jsp").forward(request, response);
             }
-        }else {
-            //输出两次密码不一致,跳回注册界面
-            request.setAttribute("MSG", "手机号不正确！");
+        }else{
+            //输出验证码不对,跳回注册界面
+            request.setAttribute("MSG", "验证码不正确！");
             request.setAttribute("FH", "就是想返回");
             request.getRequestDispatcher("./atb/javaWebDvd/jsp/register/register.jsp").forward(request, response);
         }
@@ -74,15 +85,25 @@ public class registerServlet extends HttpServlet {
         //1.取值
         String name =request.getParameter("name");
         name = new String(name.getBytes("ISO-8859-1"),"utf-8");
+        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regEx1);
+        m = p.matcher(name);
         //2.判断，此处用于判断是否已存在该用户
         JDBCUtilUser userService = new JDBCUtilUser();
         int isExist = userService.panduan(name);
         response.setContentType("text/html;charset=UTF-8");
-        //3.返回结果
-        if(isExist == 1) {
-            response.getWriter().print("<font color='yellow'>该账号已存在</font>");
+        //3.返回结果if(name.equals("用户账号")){
+//        2.返回结果
+        if(m.matches()) {
+            if(isExist == 1) {
+                response.getWriter().print("<font color='yellow'>该账号已存在</font>");
+            }else {
+                response.getWriter().print("<font color='green'>恭喜您账号可用</font>");
+            }
         }else {
-            response.getWriter().print("<font color='green'>恭喜您账号可用</font>");
+            response.getWriter().print("<font color='yellow'>邮箱格式错误</font>");
         }
     }
 }

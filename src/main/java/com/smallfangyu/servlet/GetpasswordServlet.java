@@ -24,7 +24,7 @@ public class GetpasswordServlet extends HttpServlet {
    private String password;
 
     public String returnPass(String email){
-        String sql="SELECT * FROM user WHERE email=?";
+        String sql="SELECT * FROM user WHERE username=?";
         Object[] params={email};
         ResultSet rs=db.executeQuery(sql,params);
         try {
@@ -43,6 +43,7 @@ public class GetpasswordServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         String email=request.getParameter("email");
+
         password=returnPass(email);
         // 1.创建连接对象javax.mail.Session
         // 2.创建邮件对象 javax.mail.Message
@@ -72,7 +73,7 @@ public class GetpasswordServlet extends HttpServlet {
             Session session = Session.getDefaultInstance(properties, new Authenticator() {
                 @Override
                 public PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("928247992@qq.com", "vsmqdqfqfbolbfda");
+                    return new PasswordAuthentication("928247992@qq.com", "bowmgbusuvwubfeg");
                     // 发件人邮箱账号、授权码
                 }
             });
@@ -86,16 +87,17 @@ public class GetpasswordServlet extends HttpServlet {
             // 2.3设置邮件主题
             message.setSubject("找回密码");
             // 2.4设置邮件内容
-            String content = "<html><head></head><body><h1>尊敬的用户，你好！</h1><h3>你邮箱绑定的账号"+name+"</h3><h3>密码为"+password+"</h3></body></html>";
+            String content = "<html><head></head><body><h1>尊敬的用户，你好！</h1><h3>你的邮箱账号为"+name+"</h3><h3>密码为"+ password+"</h3></body></html>";
             message.setContent(content, "text/html;charset=UTF-8");
             // 3.发送邮件
             Transport.send(message);
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().write("<script language='javascript'>alert('邮件发送成功，请注意查收！');location.href='/fy/jsp/getpassword.jsp';</script>");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        response.setContentType("text/html;charset=UTF-8");
-        response.getWriter().write("<script language='javascript'>alert('邮件发送成功，请注意查收！');location.href='/fy/jsp/getpassword.jsp';</script>");
+
 
 
 

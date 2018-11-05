@@ -10,12 +10,12 @@ layui.use('layer', function () {
 //绑定登录点击事件
 $('#login-submit').click(function () {
 
-    let name = $("#user-name").val();
+    let email = $("[name=email]").val();
     let password = $("#user-password").val();
 
     //非空判断
-    if (isNull(name) || isNull(password)) {
-        alert("用户名或密码不能为空！");
+    if (isNull(email) || isNull(password)) {
+        alert("邮箱或密码不能为空！");
     }
     else {
 
@@ -39,7 +39,7 @@ $('#login-submit').click(function () {
 
         //通过ajax检查是否正常登录
         $.post('AccountCheckServlet.do', {
-            name: name,
+            email: email,
             password: password
         }, function (ret) {
             //解析ret

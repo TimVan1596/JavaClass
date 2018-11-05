@@ -11,17 +11,12 @@
 <head>
     <title>找回密码</title>
     <!-- Custom Theme files -->
-    <%
-        if(request.getAttribute("FH") == null){
-    %>
+    <%String FH = (String) request.getAttribute("FH");
+    if(FH == null){%>
     <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <%
-    }else{
-    %>
+    <%}else{%>
     <link href="./atb/javaWebDvd/css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <%
-        }
-    %>
+    <%}%>
     <!-- Custom Theme files -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -37,35 +32,95 @@
     <h2>DVD Mgr 6.0 管理系统</h2>
     <div class="login-top">
         <h1>找回密码</h1>
+        <%if(FH == null){%>
         <form action="../../../../atbRetrieve.do" method="post">
-            <input type="text" name="name" id="name" title="" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="phone" id="phone" title="" value="绑定手机" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-            <%--<input type="text" name="name" title="name" value="用户账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户账号';}">--%>
-            <%--<input type="text" name="password" title="password" value="账号密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号密码';}">--%>
-            <%--<input type="text" name="cpassword" title="cpassword" value="确认密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '确认密码';}">--%>
-            <%--<input type="text" name="phone" title="phone" value="绑定手机" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '绑定手机';}">--%>
-            <div class="forgot">
-                <%
-                    if(request.getAttribute("FH") == null){
-                %>
-                <a href = '../../../javaWebDvdLogin.jsp'>返回</a>
-                <%
-                }else{
-                %>
-                <a href = './atb/javaWebDvdLogin.jsp'>返回</a>
-                <%
-                    }
-                %>
-                <input type="submit" value="确认">
-            </div>
-        </form>
+                <%}else{%>
+            <form action="./atbRetrieve.do" method="post">
+                <%}%>
+                <input type="text" name="name" id="name" title="" value="绑定邮箱"
+                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '绑定邮箱';}"/>
+                <input type="text" name="yzm" id="yzm" title="" value="验证码"
+                       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}">
+                <input type="hidden" name="yc" id="yc" title="<%=(int)((Math.random()*9+1)*1000)%>" value="<%=(int)((Math.random()*9+1)*1000)%>">
+                <input type="button" onclick="Code()" value="获取验证码">
+                <div class="forgot">
+                    <%if(FH == null){%>
+                    <a href = '../../../javaWebDvdLogin.jsp'>返回</a>
+                    <%}else{%>
+                    <a href = './atb/javaWebDvdLogin.jsp'>返回</a>
+                    <%}%>
+                    <input type="submit" value="确认">
+                </div>
+            </form>
     </div>
     <div class="login-bottom">
+        <h3><span id="tishi1"></span></h3>
     </div>
 </div>
 <script type="text/javascript">
     if(<%= request.getAttribute("MSG")!=null %>){
         alert('<%=request.getAttribute("MSG") %>');
+    }
+</script>
+<%if(FH == null){%>
+<script src="./jquery-3.3.1.min.js" type="text/javascript"></script>
+<%}else{%>
+<script src="./atb/javaWebDvd/jsp/register/jquery-3.3.1.min.js" type="text/javascript"></script>
+<%}%>
+<script>
+    //获取验证码
+    function Code() {
+        var userEmail = $("[name=name]").val();
+        userEmail = $.trim(userEmail);
+        var yc = $("[name=yc]").val();
+        yc = $.trim(yc);
+        <%if(FH == null){%>
+        var url = "../../../../atbEmail.do?";
+        // $.post("../../../../atbEmail.do?userEmail="+userEmail+"&yc="+yc);
+        <%}else{%>
+        var url = "./atbEmail.do?";
+        // $.post("./atbEmail.do?userEmail="+userEmail+"&yc="+yc);
+        <%}%>
+        userEmail="userEmail="+userEmail;
+        yc="&yc="+yc;
+        url = url + userEmail + yc;
+        //$.get()方法能够返回一个JQuery XMLHttpRequest对象
+        $.post(url, callback);
+    }
+    //先将提示隐藏起来
+    $("#tishi1").hide();
+    $(function() {
+        //当输入注册名的输入框获得焦点后就先隐藏提示语
+        $("#name").focus(function cls() {
+            $("#tishi1").hide();
+        });
+        //当输入框失去焦点就通过AJAX将数据传递给后端，在后端验证是否已存在该用户名
+        $("#name").blur(
+            function() {
+                var name = $(this).val();
+                name = $.trim(name);
+                if (name != "") {
+                    <%if(FH == null){%>
+                    var url = "../../../../atbdelete.do?";
+                    <%}else{%>
+                    var url = "./atbdelete.do?";
+                    <%}%>
+                    name="name="+name;
+                    url = url + name;
+                    //$.get()方法能够返回一个JQuery XMLHttpRequest对象
+                    var jqxhr = $.get(url, callback);
+                    //若执行JQuery出现错误则提示错误信息
+                    //在JQuery3.0以后需要用done()、fail()、alwayls()代替success()、error()、complete();
+                    jqxhr.fail(function(xhr, error, throwerror) {
+                        // alert("error" + xhr.status + " error=" + error + " throwerror:" + throwerror);
+                    });
+                }
+            });
+    });
+    //ajax的回调函数
+    function callback(data, status) {
+        $("#tishi1").show();
+        $("#tishi1").html(data);
     }
 </script>
 <div class="copyright">

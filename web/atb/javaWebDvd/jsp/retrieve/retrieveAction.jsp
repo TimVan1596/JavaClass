@@ -40,8 +40,10 @@
         <form action="../../../../atbRetrieve.do" method="get">
             <input type="text" name="name" id="name" title="" value="<%=request.getAttribute("name")%>" readonly />
             <%--<input type="text" name="name" id="name" title="" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>--%>
-            <input type="text" name="password" id="password" title="" value="账号密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
-            <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+            <input type="text" name="password" id="password" title="" value="输入密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"
+                   onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '输入密码';}"/>
+            <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"
+                   onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '确认密码';}"/>
             <div class="forgot">
                 <input type="submit" value="确认">
             </div>

@@ -1,15 +1,21 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.sun.mail.util.MailSSLSocketFactory;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 @WebServlet(name = "RegisterServlet",urlPatterns = {"/fy/servlet/toRegister"})
 public class RegisterServlet extends HttpServlet {
@@ -45,9 +51,9 @@ public class RegisterServlet extends HttpServlet {
         return false;
     }
 
-    public int register(String userName,String passWord,String mail){
-        String sql = "INSERT INTO user() VALUES(?,?,?)";
-        Object[] params={userName,passWord,mail};
+    public int register(String userName,String passWord){
+        String sql = "INSERT INTO user() VALUES(?,?)";
+        Object[] params={userName,passWord};
         int res = db.executeUpdate(sql, params);
         return res;
     }
@@ -59,20 +65,28 @@ public class RegisterServlet extends HttpServlet {
 @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    String userName=request.getParameter("username");
+    String email=request.getParameter("username");
     String passWord=request.getParameter("password");
-    String email=request.getParameter("email");
-    if(check(userName)){
-          int res=register(userName,passWord,email);
-          System.out.println(res);
-           if(res>0){
-               response.getWriter().write("<script language='javascript'>alert('账号注册成功');location.href='/fy/jsp/login.jsp';</script>");
-           }else{
-               response.getWriter().write("<script language='javascript'>alert('邮箱重复');location.href='/fy/jsp/register.jsp';</script>");
-           }
-    }else{
-        response.getWriter().write("<script language='javascript'>alert('账号已被注册');location.href='/fy/jsp/register.jsp';</script>");
+    String code=request.getParameter("code");
 
+    //创建session对象
+    HttpSession session = request.getSession();
+    String emailcode=(String)session.getAttribute("code");
+
+    if(code.equals(emailcode)) {
+        if (check(email)) {
+            int res = register(email, passWord);
+            System.out.println(res);
+            if (res > 0) {
+                response.getWriter().write("<script language='javascript'>alert('账号注册成功');location.href='/fy/jsp/login.jsp';</script>");
+            } else {
+                response.getWriter().write("<script language='javascript'>alert('系统错误');location.href='/fy/jsp/register.jsp';</script>");
+            }
+        } else {
+            response.getWriter().write("<script language='javascript'>alert('邮箱已被注册');location.href='/fy/jsp/register.jsp';</script>");
+        }
+    }else{
+        response.getWriter().write("<script language='javascript'>alert('验证码输入有误');location.href='/fy/jsp/register.jsp';</script>");
     }
     }
 }

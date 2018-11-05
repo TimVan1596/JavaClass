@@ -33,12 +33,13 @@
         %>
 </head>
 <body>
-<form action="/fy/servlet/toChangeDvd" method="get" onsubmit="return check()">
+<form action="/fy/servlet/toChangeDvd" method="post"  enctype="multipart/form-data" onsubmit="return check()">
     <fieldset>
         <legend>修改</legend>
     <br>
-    你选择要修改的DVD编号<input style="color:	#D0D0D0" type=" text" name="dvdid" value="<%=id%>" id="dvdId" readonly="readonly"/><br>
-    请输入修改后的DVD名称<input type=" text" name="dvdname" value="<%=name%>" id="dvdName"/><br>
+    你选择要修改的DVD编号<input style="color:	#D0D0D0" type="text" name="dvdid" value="<%=id%>" id="dvdId" readonly="readonly"/><br>
+    请输入修改后的DVD名称<input type="text" name="dvdname" value="<%=name%>" id="dvdName"/><br>
+    请选择修改后的DVD图片<input type="file" name="file"><br>
     请选择修改后的DVD状态
   <select name="dvdstate">
     <option>可以借</option>

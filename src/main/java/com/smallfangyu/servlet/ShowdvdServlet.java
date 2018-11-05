@@ -73,7 +73,7 @@ public class ShowdvdServlet extends HttpServlet {
          *查询DVD已借出和可以借的数量
          */
         public void nc(){
-        String sql = "SELECT COUNT(*) FROM dvd WHERE state=?";
+        String sql = "SELECT COUNT(*) FROM dvd WHERE state=? AND `show`=1 ";
         Object[] params={"可以借"};
         ResultSet rs = db.executeQuery(sql, params);
 

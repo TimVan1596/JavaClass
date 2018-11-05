@@ -34,17 +34,17 @@ public class registerAccount extends HttpServlet {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        String userName = request.getParameter("name");
+        String userEmail = request.getParameter("email");
         String userPassword = request.getParameter("password");
 
         Map<String, Object> ret = new HashMap<>(1);
 
         //判断输入账户是否存在
-        if (Account.register(userName, userPassword)) {
+        if (Account.register(userEmail, userPassword)) {
             ret.put("error", 0);
         } else {
             ret.put("error", 1);
-            ret.put("errorInfo", "请检查用户名是否已存在");
+            ret.put("errorInfo", "邮箱已经被注册");
         }
 
         //使用 Alibaba fastJson 序列化 ret

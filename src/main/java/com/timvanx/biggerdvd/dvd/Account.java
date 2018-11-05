@@ -23,11 +23,11 @@ public class Account implements Serializable {
      *
      * @return boolean 是否登录成功
      */
-    public static boolean login(String name, String password) {
+    public static boolean login(String email, String password) {
         boolean isLogin = false;
 
         String tableName = "account";
-        String tableWhere = "name = '" +name+"' ";
+        String tableWhere = "email = '" +email+"' ";
         tableWhere += "and password = '" +password+"' ";
 
         int cnt  = JDBCUtil.count(tableName,
@@ -44,15 +44,15 @@ public class Account implements Serializable {
      *
      * @return boolean 是否注册成功
      */
-    public static boolean register(String name, String password) {
+    public static boolean register(String email, String password) {
         //检查用户名是否已存在
-        boolean isNameIsexist = isAccountExist(name);
+        boolean isNameIsexist = isAccountExist(email);
 
         //若用户名不存在创建用户
         if (!isNameIsexist) {
             Map<String, Object> insertData =
                     new HashMap<String, Object>(1);
-            insertData.put("name", name);
+            insertData.put("email", email);
             insertData.put("password", password);
             JDBCUtil.insert("account", insertData);
         }
@@ -87,21 +87,19 @@ public class Account implements Serializable {
             updateData.put("isfirstlogin", "0");
             JDBCUtil.update("account", updateData
                     , tableWhere);
-
         }
-
 
         return isfirstlogin;
     }
 
     /**
-     * 通过用户名检查该账户是否存在
+     * 通过邮箱检查该账户是否存在
      */
-    public static boolean isAccountExist(String name) {
+    public static boolean isAccountExist(String email) {
         boolean isNameIsexist = false;
 
         String tableName = "account";
-        String tableWhere = "name = '" +name+"' ";
+        String tableWhere = "email = '" +email+"' ";
 
         int cnt  = JDBCUtil.count(tableName,
                 "id",tableWhere);

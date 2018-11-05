@@ -44,15 +44,25 @@ public class CheckNameServlet extends HttpServlet {
       //取值
       String name=  request.getParameter("login");
       //判断  (数据库判断，留给你一个坑)
+      int atpos = name.indexOf("@");
+      int dotpos = name.lastIndexOf(".");
+
       if(checkname(name)) {
           //跳转
       request.getSession().setAttribute("MSG", "<font color='red'>sorry,账号已被注册</font>");
       request.getSession().setAttribute("name", name);
       response.sendRedirect("/fy/jsp/register.jsp");
+
       } else {
+          if(atpos<1 || dotpos<atpos + 2 ) {
+              request.getSession().setAttribute("MSG", "<font color='red'>sorry,邮箱格式不正确</font>");
+              request.getSession().setAttribute("name", name);
+              response.sendRedirect("/fy/jsp/register.jsp");
+          }else{
        request.getSession().setAttribute("MSG", "<font color='green'>恭喜，账号可用</font>");
        request.getSession().setAttribute("name", name);
        response.sendRedirect("/fy/jsp/register.jsp");
+          }
       }
     }
 }

@@ -1,6 +1,8 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.LogUtil;
+
 import javax.servlet.annotation.WebServlet;
 import java.sql.*;
 import java.io.IOException;
@@ -51,6 +53,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
             HttpSession session = request.getSession();
             //把用户数据保存在session域对象中
             session.setAttribute("loginName", userName);
+            LogUtil.getInstance().getLogger().debug("用户名:" + session.getAttribute("loginName") + " 登录");
             response.sendRedirect("/fy/servlet/toShowDvd");
         }else{
             //response.setContentType("text/html;charset=UTF-8");

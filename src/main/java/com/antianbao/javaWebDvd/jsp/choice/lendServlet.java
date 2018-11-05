@@ -29,6 +29,7 @@ public class lendServlet extends HttpServlet {
             if (no == dvd.getNo() && dvd.getState()-dvd.getBorrow()>0) {
                 jd = jdbcUtilDvd.updateState(dvd.getBorrow()+1, dvd.getNo());
                 request.setAttribute("MSG", "借出成功！");
+//                response.sendRedirect("./atb/javaWebDvd/display.jsp");
                 request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
                 break;
             }
