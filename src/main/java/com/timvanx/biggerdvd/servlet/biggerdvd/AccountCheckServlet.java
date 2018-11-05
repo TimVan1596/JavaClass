@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,30 +37,40 @@ public class AccountCheckServlet extends HttpServlet {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
-        String userName = request.getParameter("name");
+        String userEmail = request.getParameter("email");
         String userPassword = request.getParameter("password");
-        System.out.println("name=" + userName + "   pwd=" + userPassword);
+
+        SimpleDateFormat sdf =
+                new SimpleDateFormat
+                        ("yyyy年MM月dd日 HH时mm分ss秒");
+
+        Date date = new Date();
+        String dateStringParse = sdf.format(date);
+        System.out.println(dateStringParse);
+
+        System.out.println("email =" + userEmail + "   pwd=" + userPassword+"  time:"+dateStringParse);
 
         Map<String, Object> ret = new HashMap<>(1);
 
         //判断输入账户是否存在
-        if (Account.login(userName, userPassword)) {
+        if (Account.login(userEmail, userPassword)) {
             ret.put("error", 0);
             Map<String, Object> data =
                     new HashMap<>(1);
             //判断是否初次登录
             Boolean isFirstLogin =
-                    Account.isFirstLogin("name = '"
-                            +userName+"'");
+                    Account.isFirstLogin("email = '"
+                            +userEmail+"'");
             data.put("isFirstLogin",isFirstLogin?"1":"0");
 
             ret.put("data", data);
             HttpSession session = request.getSession();
-            session.setAttribute("userName", userName);
+            session.setAttribute("userName", userEmail);
+            session.setAttribute("userEmail", userEmail);
 
         } else {
             ret.put("error", 1);
-            ret.put("errorInfo", "请检查用户名或密码是否输入错误");
+            ret.put("errorInfo", "请检查邮箱或密码是否输入错误");
         }
         //使用 Alibaba fastJson 序列化 ret
         String retJson = JSON.toJSONString(ret);
