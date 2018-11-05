@@ -28,7 +28,6 @@ public class landServlet extends HttpServlet {
             if(jd > 0){
                 //跳转到新的界面
                 request.setAttribute("MSG", "登陆成功！");
-                request.setAttribute("user", userName);
                 request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
             }else{
                 //输出登陆失败
