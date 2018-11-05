@@ -26,6 +26,14 @@ public class CodeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write("<script language='javascript'>alert('请输入邮箱！');location.href='/fy/jsp/register.jsp';</script>");
     }
+
+    int atpos = email.indexOf("@");
+    int dotpos = email.lastIndexOf(".");
+
+    if(atpos<1 || dotpos<atpos + 2 ) {
+        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().write("<script language='javascript'>alert('邮箱格式不可用！');location.href='/fy/jsp/register.jsp';</script>");
+        }
     // 1.创建连接对象javax.mail.Session
     // 2.创建邮件对象 javax.mail.Message
     // 3.发送一封激活邮件

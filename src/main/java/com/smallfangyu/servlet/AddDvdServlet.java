@@ -17,7 +17,6 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
 @WebServlet(name = "AddDvdServlet",urlPatterns = {"/fy/servlet/toAddDvd"})
 public class AddDvdServlet extends HttpServlet {
 
@@ -58,7 +57,6 @@ public class AddDvdServlet extends HttpServlet {
         }
     }
 
-
     private String processFormField(FileItem item){
         //String name=item.getFieldName();
         String value="";
@@ -71,13 +69,10 @@ public class AddDvdServlet extends HttpServlet {
         return value;
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
       }
-
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -95,8 +90,7 @@ public class AddDvdServlet extends HttpServlet {
              ServletFileUpload upload=new ServletFileUpload(factory);
              upload.setHeaderEncoding("UTF-8");
              upload.setFileSizeMax(1028*1028*2);
-
-
+             
              try {
                  List<FileItem> items = upload.parseRequest(request);
                  Iterator<FileItem> iter=items.iterator();
@@ -111,12 +105,8 @@ public class AddDvdServlet extends HttpServlet {
              } catch (FileUploadException e) {
                  e.printStackTrace();
              }
-
          }else{
-
          }
-        System.out.println("名称"+dvdname);
-        System.out.println("图片"+photo);
         if(addDvd(dvdname,photo)>0){
         //response.setContentType("text/html;charset=UTF-8");
          response.getWriter().write("<script language='javascript'>alert('DVD添加成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");

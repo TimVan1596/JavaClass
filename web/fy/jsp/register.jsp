@@ -30,7 +30,7 @@
     %> <br> <% } %>
 <p><input  placeholder="邮箱"  type="text" name="username" id="username"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%>" onblur="checkl()"/><br></p>
 
-  <input type="textarea" style="width: 202px;height: 45px" name="code" id="code" placeholder="           请输入验证码"/><input style="height:45px;margin-left:2px" type="button"  value="获取验证码" onclick="return sendcode()" /> <br><br>
+  <input type="textarea" style="width: 202px;height: 45px;background-color: #eae7e7" name="code" id="code" placeholder="           请输入验证码"/><input style="height:45px;margin-left:2px" type="button"  value="获取验证码" onclick="return sendcode()" /> <br><br>
 
     <p><input placeholder="密码" type="password" name="password" id="password"/><br></p>
 <p><input placeholder="重复密码" type="password" name="passsword" id="passsword"/><br></p>
@@ -90,7 +90,7 @@
         var dotpos = name.lastIndexOf(".");
 
         if(name!=""){
-            if(atpos<1 || dotpos<atpos + 2 || dotpos + 2>=x.length) {
+            if(atpos<1 || dotpos<atpos + 2 ) {
                 alert("邮箱格式不可用");
                 return false;
             }

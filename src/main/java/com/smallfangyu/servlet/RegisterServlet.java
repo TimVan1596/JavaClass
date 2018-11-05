@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,18 +69,24 @@ public class RegisterServlet extends HttpServlet {
     String passWord=request.getParameter("password");
     String code=request.getParameter("code");
 
+    //创建session对象
+    HttpSession session = request.getSession();
+    String emailcode=(String)session.getAttribute("code");
 
-    if(check(email)){
-          int res=register(email,passWord);
-          System.out.println(res);
-           if(res>0){
-               response.getWriter().write("<script language='javascript'>alert('账号注册成功');location.href='/fy/jsp/login.jsp';</script>");
-           }else{
-               response.getWriter().write("<script language='javascript'>alert('系统错误');location.href='/fy/jsp/register.jsp';</script>");
-           }
+    if(code.equals(emailcode)) {
+        if (check(email)) {
+            int res = register(email, passWord);
+            System.out.println(res);
+            if (res > 0) {
+                response.getWriter().write("<script language='javascript'>alert('账号注册成功');location.href='/fy/jsp/login.jsp';</script>");
+            } else {
+                response.getWriter().write("<script language='javascript'>alert('系统错误');location.href='/fy/jsp/register.jsp';</script>");
+            }
+        } else {
+            response.getWriter().write("<script language='javascript'>alert('邮箱已被注册');location.href='/fy/jsp/register.jsp';</script>");
+        }
     }else{
-        response.getWriter().write("<script language='javascript'>alert('邮箱已被注册');location.href='/fy/jsp/register.jsp';</script>");
-
+        response.getWriter().write("<script language='javascript'>alert('验证码输入有误');location.href='/fy/jsp/register.jsp';</script>");
     }
     }
 }
