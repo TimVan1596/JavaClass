@@ -91,12 +91,11 @@ public class JDBCUtilUser {
                 return rlt;
             }
         }
-        String sql = "insert into User(name,password,phone) values(?,?,?)";
+        String sql = "insert into User(name,password) values(?,?)";
         PreparedStatement pstmt = getPrepareStatement(sql);
         try {
             pstmt.setString(1, stu.getName());
             pstmt.setString(2, stu.getPassword());
-            pstmt.setString(3, stu.getPhone());
             rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
@@ -119,19 +118,7 @@ public class JDBCUtilUser {
         }
         return rlt;
     }
-    /**
-     * 找回密码：手机号
-     */
-    public int isPhone(String name, String phone) {
-        int rlt = 0;
-        List<User> list = queryStu();
-        for (User ls : list) {
-            if (ls.getName().equals(name) && ls.getPhone().equals(phone)) {
-                return 1;
-            }
-        }
-        return rlt;
-    }
+
     /**
      * 修改密码
      */
@@ -166,7 +153,6 @@ public class JDBCUtilUser {
                 bd = new User();
                 bd.setName(rs.getString("name"));
                 bd.setPassword(rs.getString("password"));
-                bd.setPhone(rs.getString("phone"));
                 list.add(bd);
             }
             close();

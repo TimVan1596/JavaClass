@@ -39,14 +39,12 @@
     <div class="login-top">
         <h1>欢迎注册</h1>
         <form action="../../../../atbRegister.do" method="post">
-            <input type="text" name="name" id="name" title="" value="用户账号" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = '用户账号';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="password" id="password" title="" value="账号密码" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = '账号密码';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
+            <input type="text" name="name" id="name" title="" value="绑定邮箱" onfocus="this.value = '';"
+                   onblur="if (this.value == '') {this.value = '绑定邮箱';}" />
+            <input type="text" name="password" id="password" title="" value="输入密码" onfocus="this.value = '';"
+                   onblur="if (this.value == '') {this.value = '输入密码';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" />
             <input type="text" name="cpassword" id="cpassword" title="" value="确认密码" onfocus="this.value = '';"
                    onblur="if (this.value == '') {this.value = '确认密码';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="phone" id="phone" title="" value="绑定邮箱" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = '绑定邮箱';}">
             <input type="text" name="yzm" id="yzm" title="" value="验证码"
                    onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}">
             <input type="hidden" name="yc" id="yc" title="<%=(int)((Math.random()*9+1)*1000)%>" value="<%=(int)((Math.random()*9+1)*1000)%>">
@@ -76,9 +74,19 @@
         alert('<%=request.getAttribute("MSG") %>');
     }
     function Code() {
-        var userEmail = $("[name=phone]").val();
+        var userEmail = $("[name=name]").val();
         var yc = $("[name=yc]").val();
+        <%
+        if(request.getAttribute("FH") == null){
+        %>
         $.post("../../../../atbEmail.do?userEmail="+userEmail+"&yc="+yc);
+        <%
+        }else{
+        %>
+        $.post("./atbEmail.do?userEmail="+userEmail+"&yc="+yc);
+        <%
+        }
+        %>
     }
 </script>
 <script src="jquery-3.3.1.min.js" type="text/javascript"></script>
@@ -128,32 +136,6 @@
                     cpassword="cpassword="+cpassword;
                     password="&password="+password;
                     url = url + cpassword + password;
-                    //$.get()方法能够返回一个JQuery XMLHttpRequest对象
-                    var jqxhr = $.get(url, callback);
-                    //若执行JQuery出现错误则提示错误信息
-                    //在JQuery3.0以后需要用done()、fail()、alwayls()代替success()、error()、complete();
-                    jqxhr.fail(function(xhr, error, throwerror) {
-                        // alert("error" + xhr.status + " error=" + error + " throwerror:" + throwerror);
-                    });
-                }
-            });
-    });
-    //先将提示隐藏起来
-    $("#tishi1").hide();
-    $(function() {
-        //当输入注册名的输入框获得焦点后就先隐藏提示语
-        $("#phone").focus(function cls() {
-            $("#tishi1").hide();
-        });
-        //当输入框失去焦点就通过AJAX将数据传递给后端，在后端验证是否已存在该用户名
-        $("#phone").blur(
-            function() {
-                var phone = $(this).val();
-                phone = $.trim(phone);
-                if (phone != "") {
-                    var url = "../../../../atbdelete.do?";
-                    phone="phone="+phone;
-                    url = url + phone;
                     //$.get()方法能够返回一个JQuery XMLHttpRequest对象
                     var jqxhr = $.get(url, callback);
                     //若执行JQuery出现错误则提示错误信息

@@ -16,6 +16,7 @@ public class emailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码
         request.setCharacterEncoding("utf-8");
+        System.out.println(1);
         String userEmail = request.getParameter("userEmail");
         String yc = request.getParameter("yc");
         //正则表达式邮箱
@@ -24,7 +25,9 @@ public class emailServlet extends HttpServlet {
         //String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(userEmail);
+        System.out.println(2);
         if (m.matches()) {
+            System.out.println(3);
             //跳转到登陆界面
             try {
                 //不用更改
@@ -39,7 +42,7 @@ public class emailServlet extends HttpServlet {
                 //此处填写邮箱地址和客户端授权码
                 email.setAuthentication("32336077@qq.com", "lhddogtibsurcbcc");
                 //此处填写邮件名，邮件名可任意填写
-                email.setSubject("管理员");
+                email.setSubject("安天宝");
                 //此处填写邮件内容
                 email.setMsg("尊敬的用户您好,您本次注册的验证码是:" + yc);
                 email.send();

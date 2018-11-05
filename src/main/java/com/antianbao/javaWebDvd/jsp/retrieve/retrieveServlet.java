@@ -18,10 +18,9 @@ public class retrieveServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         //获取输入信息
         String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
         String yzm = request.getParameter("yzm");
         String yc = request.getParameter("yc");
-        if(name.equals("用户账号") || phone.equals("绑定邮箱") || name.equals("") || phone.equals("")){
+        if(name.equals("绑定邮箱") ||  name.equals("")){
             //跳转到登陆界面
             request.setAttribute("MSG", "请填写信息");
             request.setAttribute("FH", "就是想返回");
@@ -32,22 +31,14 @@ public class retrieveServlet extends HttpServlet {
         //手机号
         //String regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
         Pattern p = Pattern.compile(regExp);
-        Matcher m = p.matcher(phone);
+        Matcher m = p.matcher(name);
         if(yzm.equals(yc)){
             if(m.matches()) {
-                JDBCUtilUser jdbcUtil = new JDBCUtilUser();
-                int jd = jdbcUtil.isPhone(name, phone);
-                if(jd > 0){
-                    //跳转到新的界面
-                    request.setAttribute("MSG", "验证成功！");
-                    request.setAttribute("name", name);
-                    request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieveAction.jsp").forward(request, response);
-                }else{
-                    //输出登陆失败
-                    request.setAttribute("MSG", "账号或手机号错误！");
-                    request.setAttribute("FH", "就是想返回");
-                    request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieve.jsp").forward(request, response);
-                }
+                //跳转到新的界面
+                request.setAttribute("MSG", "验证成功！");
+                request.setAttribute("name", name);
+                request.getRequestDispatcher("./atb/javaWebDvd/jsp/retrieve/retrieveAction.jsp").forward(request, response);
+
             }else {
                 //输出两次密码不一致,跳回注册界面
                 request.setAttribute("MSG", "邮箱格式不正确！");
