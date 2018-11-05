@@ -29,7 +29,7 @@
 <form action="/fy/servlet/toAddDvd" method="post" enctype="multipart/form-data" onsubmit="return check()">
     <fieldset>
         <legend>添加</legend>
-     DVD名称：<input style="margin-top: 10px" type=" text" name="dvdname" id="dvdId"/><br>
+     DVD名称：<input style="margin-top: 10px" type="text" name="dvdname" id="dvdId"/><br>
     <input type="file" name="file" /><br>
     PS:如果不加图片，将会添加默认图片
     <input type="submit" class="button" value="添加">

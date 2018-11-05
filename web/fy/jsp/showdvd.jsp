@@ -1,6 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.smallfangyu.data.DVD" %>
-<%@ page import="com.smallfangyu.data.LogUtil" %><%--
+<%@ page import="com.smallfangyu.data.DVD" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/10/8 0008
@@ -15,7 +14,6 @@
     ArrayList<DVD> list=(ArrayList<DVD>)session.getAttribute("listDVD");
     int pag= (int) session.getAttribute("page");
     int pageNumber= (int) session.getAttribute("pageNumber");
-
 %>
 <html>
 <head>
@@ -94,7 +92,7 @@
         <input  type='button' id='sc' class="button" value='批量 删除' onclick='return tishi()' />
         <a class="button" href="addDVD.jsp" target="mainFrame" >添加DVD</a><br>
     </div>
-    <iframe style="width:550px;height:200px;margin-left:30px"   name="mainFrame" frameborder="0"></iframe>
+    <iframe style="width:550px;height:200px;margin-left:30px" name="mainFrame" frameborder="0"></iframe>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -114,9 +112,7 @@
     {
         //找所有选中项
         var ck = document.getElementsByClassName("ck");
-
         var str = "";
-
         for(var i=0;i<ck.length;i++)
         {
             if(ck[i].checked)
