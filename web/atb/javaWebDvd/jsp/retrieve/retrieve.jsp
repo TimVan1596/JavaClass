@@ -37,13 +37,15 @@
     <h2>DVD Mgr 6.0 管理系统</h2>
     <div class="login-top">
         <h1>找回密码</h1>
-        <form action="../../../../atbRetrieve.do" method="post">
-            <input type="text" name="name" id="name" title="" value="用户账号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
-            <input type="text" name="phone" id="phone" title="" value="绑定手机" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
-            <%--<input type="text" name="name" title="name" value="用户账号" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '用户账号';}">--%>
-            <%--<input type="text" name="password" title="password" value="账号密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '账号密码';}">--%>
-            <%--<input type="text" name="cpassword" title="cpassword" value="确认密码" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '确认密码';}">--%>
-            <%--<input type="text" name="phone" title="phone" value="绑定手机" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '绑定手机';}">--%>
+        <form action="../../../../atbRegister.do" method="post">
+            <input type="text" name="name" id="name" title="" value="用户账号" onfocus="this.value = '';"
+                   onblur="if (this.value == '') {this.value = '用户账号';}" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"/>
+            <input type="text" name="phone" id="phone" title="" value="绑定邮箱" onfocus="this.value = '';"
+                   onblur="if (this.value == '') {this.value = '绑定邮箱';}">
+            <input type="text" name="yzm" id="yzm" title="" value="验证码"
+                   onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '验证码';}">
+            <input type="hidden" name="yc" id="yc" title="<%=(int)((Math.random()*9+1)*1000)%>" value="<%=(int)((Math.random()*9+1)*1000)%>">
+            <input type="button" onclick="Code()" value="获取验证码">
             <div class="forgot">
                 <%
                     if(request.getAttribute("FH") == null){
@@ -67,7 +69,13 @@
     if(<%= request.getAttribute("MSG")!=null %>){
         alert('<%=request.getAttribute("MSG") %>');
     }
+    function Code() {
+        var userEmail = $("[name=phone]").val();
+        var yc = $("[name=yc]").val();
+        $.post("../../../../atbEmail.do?userEmail="+userEmail+"&yc="+yc);
+    }
 </script>
+<script src="jquery-3.3.1.min.js" type="text/javascript"></script>
 <div class="copyright">
     <p>安徽信息工程学院 2016级 JAVA①班 安天宝 JavaWeb项目作业</p>
 </div>
