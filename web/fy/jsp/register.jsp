@@ -11,6 +11,7 @@
     <title>注册</title>
     <link rel="stylesheet" type="text/css" href="/fy/css/style.css" />
     <link rel="stylesheet" type="text/css" href="/fy/css/body.css"/>
+
 </head>
 
 <body>
@@ -27,9 +28,12 @@
             out.print(msg);
         }else{
     %> <br> <% } %>
-<p>邮箱：<input  style="margin-left:30px " type="text" name="username" id="username"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%>" onblur="checkl()"/><br></p>
-<p>密码：<input style="margin-left:30px " type="password" name="password" id="password"/><br></p>
-<p>重复密码：<input type="password" name="passsword" id="passsword"/><br></p>
+<p><input  placeholder="邮箱"  type="text" name="username" id="username"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%>" onblur="checkl()"/><br></p>
+
+  <input type="textarea" style="width: 202px;height: 45px" name="code" id="code" placeholder="           请输入验证码"/><input style="height:45px;margin-left:2px" type="button"  value="获取验证码" onclick="return sendcode()" /> <br><br>
+
+    <p><input placeholder="密码" type="password" name="password" id="password"/><br></p>
+<p><input placeholder="重复密码" type="password" name="passsword" id="passsword"/><br></p>
 
     <div>
      <input type="submit"  value="注册" />
@@ -39,6 +43,7 @@
       </section>
     </div>
 </div>
+
 <script type="text/javascript">
 
     function checkl(){
@@ -81,7 +86,14 @@
         var  pass=document.getElementById("password").value;
         var  passs=document.getElementById("passsword").value;
         //2.判断
+        var atpos = name.indexOf("@");
+        var dotpos = name.lastIndexOf(".");
+
         if(name!=""){
+            if(atpos<1 || dotpos<atpos + 2 || dotpos + 2>=x.length) {
+                alert("邮箱格式不可用");
+                return false;
+            }
             if(pass!="") {
                 if(passs!="") {
                     if(pass==passs) {
@@ -108,6 +120,12 @@
             document.getElementById("username").focus(); //光标占位
             return false;
         }
+    }
+
+    function sendcode() {
+        //1.取值
+        var  name=document.getElementById("username").value;
+        window.location.href="/fy/servlet/code?username="+name;
     }
 </script>
 </body>

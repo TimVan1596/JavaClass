@@ -54,7 +54,7 @@
         }
         else
         {
-            alert("亲，账号不能为空哦~");
+            alert("亲，邮箱账号不能为空哦~");
             document.getElementById("username").focus(); //光标占位
             return false;
         }

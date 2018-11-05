@@ -1,7 +1,11 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.sun.mail.util.MailSSLSocketFactory;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 @WebServlet(name = "RegisterServlet",urlPatterns = {"/fy/servlet/toRegister"})
 public class RegisterServlet extends HttpServlet {
@@ -59,10 +64,13 @@ public class RegisterServlet extends HttpServlet {
 @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    String userName=request.getParameter("username");
+    String email=request.getParameter("username");
     String passWord=request.getParameter("password");
-    if(check(userName)){
-          int res=register(userName,passWord);
+    String code=request.getParameter("code");
+
+
+    if(check(email)){
+          int res=register(email,passWord);
           System.out.println(res);
            if(res>0){
                response.getWriter().write("<script language='javascript'>alert('账号注册成功');location.href='/fy/jsp/login.jsp';</script>");
