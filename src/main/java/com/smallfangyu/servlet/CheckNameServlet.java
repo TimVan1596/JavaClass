@@ -39,6 +39,10 @@ public class CheckNameServlet extends HttpServlet {
 
     }
 
+    @Override
+    protected  void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    doGet(request,response);
+    }
   @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       //取值
@@ -53,15 +57,18 @@ public class CheckNameServlet extends HttpServlet {
       request.getSession().setAttribute("name", name);
       response.sendRedirect("/fy/jsp/register.jsp");
 
+         // response.getWriter().print("账号已被注册");
       } else {
           if(atpos<1 || dotpos<atpos + 2 ) {
               request.getSession().setAttribute("MSG", "<font color='red'>sorry,邮箱格式不正确</font>");
               request.getSession().setAttribute("name", name);
               response.sendRedirect("/fy/jsp/register.jsp");
+              //response.getWriter().print("邮箱格式不正确");
           }else{
        request.getSession().setAttribute("MSG", "<font color='green'>恭喜，账号可用</font>");
        request.getSession().setAttribute("name", name);
        response.sendRedirect("/fy/jsp/register.jsp");
+              //response.getWriter().print("账号可用");
           }
       }
     }

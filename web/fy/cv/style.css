@@ -1,0 +1,120 @@
+div.page {
+	width: 800px;
+	height: 842px;
+	margin: 50px auto;
+	font-family:SimHei;
+}
+
+div.top, div.footer {
+	background-color: #2BA4DD;
+}
+
+div.top {
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	color: #fff;
+	font-size: 18px;
+}
+
+div.footer {
+	height: 15px;
+	margin-top: 30px;
+}
+
+li {
+	list-style-type: none;
+}
+
+li.topContact {
+	display: inline-block;
+	padding: 0px 70px;
+}
+
+div.header {
+	height: 130px;
+	padding: 30px 0px;
+	text-align: center;
+}
+
+div.name {
+	height: 100px;
+	line-height: 100px;
+	font-size: 50px;
+}
+
+div.job {
+	height: 30px;
+	line-height: 30px;
+	font-size: 20px;
+}
+
+div.content {
+
+}
+
+/* Panel 是简历信息具体的内容面板，即可伸缩面板 */
+.panel {
+	margin-top: 20px;
+	padding: 0px 0px 20px 0px;
+}
+
+.panelTitle {
+	height: 35px;
+	width: 100%;
+	border-bottom: 2px solid #2BA4DD;
+}
+
+div.colorBlock, div.title {
+	float: left;
+}
+
+div.scrollBtn {
+	float: right;
+}
+
+/* 伸缩面板的伸缩按钮 */
+span.scroIcon {
+	height:20px; width:40px; display:block; position:relative;
+	cursor: pointer;
+}
+
+.scroIcon:before{
+	content:''; height:0; width:0; display:block; border:15px transparent double;
+	border-bottom-width:0; border-top-color:#2BA4DD; position:absolute;
+	top:0px; left:0px; }
+
+.colorBlock {
+	height: 100%;
+	width: 25px;
+	margin-right: 15px;
+	background-color: #2BA4DD;
+}
+
+.title {
+	width: 400px;
+	height: 100%;
+	line-height: 35px;
+	font-size: 24px;
+}
+
+/* 简历项 */
+li.resumeItem {
+	padding: 5px 0px;
+}
+
+li.resumeItem span, input {
+	display: inline-block;
+}
+
+li.resumeItem span {
+	width: 150px;
+}
+
+li.resumeItem select {
+	width: 100px;
+}
+
+.clear {
+	clear:both;
+}

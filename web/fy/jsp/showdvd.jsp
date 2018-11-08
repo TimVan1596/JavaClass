@@ -50,8 +50,8 @@
 <jsp:include page="navigationBar.jsp"></jsp:include>
 <h3 style="margin-left: 3px">欢迎你:<%=session.getAttribute("loginName")%></h3>
 <p id = "timeP"></p>
-<p id = "nameP"></p>
-<input type="button" id="change" value="显示名字" />
+<%--<p id = "nameP"></p>--%>
+<%--<input type="button" id="change" value="显示名字" />--%>
 
 <div  style="text-align:center;margin: 0 auto">
     <form action="/fy/servlet/toShowDvd" method="get" >
@@ -66,7 +66,7 @@
         <tr>
             <td style="width:110px"><input name="atask" type="checkbox" id="ask" value="<%=dvd.getId() %>" class="ck"></td>
             <td style="width:110px"><%=dvd.getId() %></td>
-            <td style="width:110px"><img style="width:110px;height:80px" src="<%= dvd.getPicture()%>" /></td>
+            <td style="width:110px"><img style="width:110px;height:80px" src="<%=dvd.getPicture() %>" /></td>
             <td style="width:110px"> <%=dvd.getDvdname() %></td>
             <% if(dvd.getState().equals("可以借")){%><td style="width:110px;background-color: limegreen"><%=dvd.getState() %></td><% }%>
             <% if(dvd.getState().equals("已借出")){%><td style="width:110px;background-color: red"><%=dvd.getState() %></td><% }%>
@@ -139,11 +139,11 @@
             time();
         });
 
-    $(function(){
-           $("#change").click(function(){
-           $("#timeP").html("宇哥");
-                       });
-            });
+    // $(function(){
+    //        $("#change").click(function(){
+    //        $("#timeP").html("哈哈");
+    //                    });
+    //         });
 
 </script>
 
