@@ -5,7 +5,7 @@
   Time: 16:44
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -62,16 +62,16 @@
                         </select>&nbsp;月&nbsp;
                     </li>
                     <li class="resumeItem">
-                        <span>户籍所在地</span><select class="province">
+                        <span>户籍所在地</span><select class="province" onchange="getCity()">
                         <option value="">--请选择--</option>
                         <!-- 利用js把省份添加到下拉列表里-->
-                        <script type="text/javascript">
-                            for(var i=0;i<provinceArr.length;i++) {
-                                document.write("<option value='"+i+"'>"+provinceArr[i]+"</option>");
-                            }
-                        </script>
+                        <%--<script type="text/javascript"  charset="UTF-8">--%>
+                            <%--for(var i=0;i<provinceArr.length;i++) {--%>
+                                <%--document.write("<option value='"+i+"'>"+provinceArr[i]+"</option>");--%>
+                            <%--}--%>
+                        <%--</script>--%>
                     </select>
-                        <select class="city">
+                        <select class="city" >
                             <option value="">--请选择--</option>
                         </select>
                     </li>
@@ -158,6 +158,36 @@
             $(".panelContent").eq(2).toggle();
         });
     });
+
+    $(function() {
+        var current = new Date();
+        var cur_year = current.getFullYear();
+        for (var i = 1990; i <=cur_year; i++) {
+            $(".brithYear").append("<option>"+i+"</option>");
+        }
+    });
+
+    $(function(){
+        for (var i=1;i<=12;i++) {
+            $(".brithMonth").append("<option>"+i+"</option>")
+        }
+    });
+
+    $(function() {
+        //初始化省份下拉列表
+        for (var i = 0; i < provinceArr.length; i++) {
+            $(".province").append($("<option></option>").val(i + 1).html(provinceArr[i]));
+        }
+    });
+
+    $(".province").change(function(){
+        var index=$(this).val()-1;//获取当前省的下标
+        $(".city").prop("length",1);//清空原有的数据
+        for(var i=1;i<cityArr[index].length;i++){//重新为市赋值
+            $(".city").append($("<option>").val(i+1).html(cityArr[index][i]));
+        }
+    });
+
 </script>
 </body>
 </html>

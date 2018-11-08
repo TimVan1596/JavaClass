@@ -1,5 +1,4 @@
-//省份
-
+﻿//省份
 var provinceArr = [];
 provinceArr[0] = ['北京市'];
 provinceArr[1] = ['天津市'];
