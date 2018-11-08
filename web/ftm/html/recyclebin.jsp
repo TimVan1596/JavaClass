@@ -78,9 +78,6 @@
 
     if (session.getAttribute("userName") != null) {
         userName = (String) session.getAttribute("userName");
-    } else {
-        response.sendRedirect("../index.html");
-        return;
     }
 %>
 
