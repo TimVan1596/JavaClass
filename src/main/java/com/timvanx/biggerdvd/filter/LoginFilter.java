@@ -36,7 +36,6 @@ public class LoginFilter implements Filter{
         String redirectUrl = "/ftm/index.html";
         Object user = httpRequest.getSession().getAttribute("userEmail");
         if ((user == null)) {
-
             redirectUrl =  httpRequest.getContextPath() + redirectUrl;
             httpResponse.sendRedirect(redirectUrl);
             return;

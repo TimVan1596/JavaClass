@@ -9,10 +9,10 @@
     <title>BiggerDVD - 注册</title>
 
     <link rel="stylesheet"
-          href="../../common/util/layui/css/layui.css"
+          href="../common/util/layui/css/layui.css"
           media="all">
-    <link rel="stylesheet" type="text/css" href="../style/html/biggerdvd/default.css">
-    <link rel="stylesheet" type="text/css" href="../style/html/biggerdvd/styles.css">
+    <link rel="stylesheet" type="text/css" href="style/html/biggerdvd/default.css">
+    <link rel="stylesheet" type="text/css" href="style/html/biggerdvd/styles.css">
     <style>
         body{
             background: linear-gradient(135deg, #EA5C54 0%, #bb6dec 100%);
@@ -44,8 +44,8 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../../common/util/layui/layui.js"></script>
-    <script src="../js/common-js.js"></script>
+    <script src="../common/util/layui/layui.js"></script>
+    <script src="js/common-js.js"></script>
 </head>
 <body>
 
@@ -57,43 +57,43 @@
     <div class="login_fields" style="width: 100%;">
         <div class="login_fields__user">
             <div class="icon">
-                <img src="../img/biggerdvd/user_icon_copy.png">
+                <img src="img/biggerdvd/user_icon_copy.png">
             </div>
             <input placeholder="邮箱" type="email"
                    autocomplete="off" id="user-email"
                    style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;width: 100%" name="email">
             <div class="validation">
-                <img src="../img/biggerdvd/tick.png">
+                <img src="img/biggerdvd/tick.png">
             </div>
 
         </div>
         <div class="login_fields__password">
             <div class="icon">
-                <img src="../img/biggerdvd/lock_icon_copy.png">
+                <img src="img/biggerdvd/lock_icon_copy.png">
             </div>
 
             <input placeholder="密码" type="password"
                    autocomplete="off" id="user-password"
                    style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;width: 100%" name="password">
             <div class="validation">
-                <img src="../img/biggerdvd/tick.png">
+                <img src="img/biggerdvd/tick.png">
             </div>
         </div>
         <div class="login_fields__password">
             <div class="icon">
-                <img src="../img/biggerdvd/lock_icon_copy.png">
+                <img src="img/biggerdvd/lock_icon_copy.png">
             </div>
             <input placeholder="重复密码" type="password"
                    autocomplete="off" id="user-re-password"
                    style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;width: 100%" name="re-password">
             <div class="validation">
-                <img src="../img/biggerdvd/tick.png">
+                <img src="img/biggerdvd/tick.png">
             </div>
         </div>
         <div class="login_fields__submit">
             <input type="submit" value="提交" id="login-submit"   onclick="register()">
             <div class="forgot">
-                <a href="../index.html">返回登录</a>
+                <a href="index.html">返回登录</a>
             </div>
         </div>
     </div>
@@ -107,11 +107,11 @@
 </div>
 <%--加载页面--%>
 <div class="authent">
-    <img src="../img/biggerdvd/puff.svg">
+    <img src="img/biggerdvd/puff.svg">
     <p>注册中...</p>
 </div>
 
-<script src = "../js/html/register.js"></script>
+<script src = "js/html/register.js"></script>
 
 
 </body>
