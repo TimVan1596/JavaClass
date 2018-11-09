@@ -21,6 +21,7 @@
         <section id="content">
 <h2>MiniDVD 网页版</h2>
 <h4>用户注册</h4>
+            <div id="msg"></div>
 <form action="/fy/servlet/toRegister" method="get" onsubmit=" return checkRegister()">
     <%
         String msg=(String)session.getAttribute("MSG");
@@ -28,7 +29,7 @@
             out.print(msg);
         }else{
     %> <br> <% } %>
-<p><input  placeholder="邮箱"  type="text" name="username" id="username"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%>" onblur="checkl()"/><br></p>
+<p><input  placeholder="邮箱"  type="text" name="username" id="username"  value="<%if(session.getAttribute("name")!=null){out.print(session.getAttribute("name"));}%> " onblur="checkl()"/><br></p>
 
   <input type="textarea" style="width: 202px;height: 45px;background-color: #eae7e7" name="code" id="code" placeholder="           请输入验证码"/><input style="height:45px;margin-left:2px" type="button"  value="获取验证码" onclick="return sendcode()" /> <br><br>
 
@@ -47,7 +48,6 @@
 <script type="text/javascript">
 
     function checkl(){
-
         var  myName=document.getElementById("username").value;
 //1.创建Ajax 的 异步交互通信对象
         var xmlhttp;

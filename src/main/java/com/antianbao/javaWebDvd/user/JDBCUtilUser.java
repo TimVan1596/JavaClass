@@ -1,8 +1,8 @@
 package com.antianbao.javaWebDvd.user;
 
+import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author 安天宝
@@ -28,20 +28,27 @@ public class JDBCUtilUser {
     private Connection conn = null;
     private PreparedStatement pstmt = null;
     private Statement stmt = null;
+    private static  String DB_URL;
+    private static  String USER ;
+    private static  String PASS ;
 
     /**
      * 获得数据库连接对象Connection
      */
     private void openConnection() {
-        //位置
-        String DB_URL = "jdbc:mysql://" +
-                "120.79.210.170" +
-                "/atb" +
-                "?useSSL=false&serverTimezone=UTC&characterEncoding=UTF8";
-        //账号
-        String USER = "316202070101";
-        //密码
-        String PASS = "070101";
+        //初始化数据库连接配置
+        Properties properties=new Properties();
+        InputStream in = JDBCUtilUser.class.getClassLoader().getResourceAsStream("atbdb.properties");
+        //读取db.properties
+        try {
+            properties.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //赋值
+        DB_URL=properties.getProperty("DB_URL");
+        USER=properties.getProperty("USER");
+        PASS=properties.getProperty("PASS");
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
