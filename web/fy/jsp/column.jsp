@@ -10,6 +10,7 @@
 <head>
     <title>柱形图</title>
     <script type="text/javascript" src="/fy/js/echarts.simple.min.js"> </script>
+    <link rel="stylesheet" href="/common/util/layui/css/layui.css"  media="all">
     <style>
         ul {
             list-style-type: none;

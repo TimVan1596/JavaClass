@@ -9,8 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="/common/util/layui/css/layui.css"  media="all">
     <title>回收站</title>
     <style>
+
         table{
             border:1px solid blue;
         }
@@ -55,6 +57,7 @@
         }
 
     </style>
+
 </head>
 <%
 session.getAttribute("deletelistDVD");
