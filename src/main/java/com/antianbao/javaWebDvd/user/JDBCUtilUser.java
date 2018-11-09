@@ -38,7 +38,7 @@ public class JDBCUtilUser {
     private void openConnection() {
         //初始化数据库连接配置
         Properties properties=new Properties();
-        InputStream in = JDBCUtilUser.class.getClassLoader().getResourceAsStream("atb.properties");
+        InputStream in = JDBCUtilUser.class.getClassLoader().getResourceAsStream("atbdb.properties");
         //读取db.properties
         try {
             properties.load(in);
