@@ -75,7 +75,7 @@
     </div>
     <iframe style="width:550px;height:200px;margin-left:30px" name="mainFrame" frameborder="0"></iframe>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/common/util/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(document).ready(function(){

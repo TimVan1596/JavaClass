@@ -33,12 +33,11 @@ public class resetPassword extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
-        String userName = request.getParameter("name");
-        String userPassword = request.getParameter("password");
+        String userEmail = request.getParameter("email");
 
         Map<String, Object> ret = new HashMap<>(1);
 
-        if (!Account.changePasswordByName(userName, userPassword)) {
+        if (!Account.changePasswordByName(userEmail, userEmail)) {
             ret.put("error", 1);
             ret.put("errorInfo", "用户名未找到！");
         } else {
@@ -50,5 +49,7 @@ public class resetPassword extends HttpServlet {
         out.write(retJson);
 
     }
+
+
 
 }

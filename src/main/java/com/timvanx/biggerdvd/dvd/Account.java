@@ -44,7 +44,7 @@ public class Account implements Serializable {
      *
      * @return boolean 是否注册成功
      */
-    public static boolean register(String email, String password) {
+    public static boolean register(String email, String password,String name) {
         //检查用户名是否已存在
         boolean isNameIsexist = isAccountExist(email);
 
@@ -54,10 +54,22 @@ public class Account implements Serializable {
                     new HashMap<String, Object>(1);
             insertData.put("email", email);
             insertData.put("password", password);
+            if (name != null){
+                insertData.put("name", name);
+            }
             JDBCUtil.insert("account", insertData);
         }
 
         return !isNameIsexist;
+    }
+
+    /**
+     * 注册
+     *
+     * @return boolean 是否注册成功
+     */
+    public static boolean register(String email, String password){
+        return register(email,password,null);
     }
 
 
