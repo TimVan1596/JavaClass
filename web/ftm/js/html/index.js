@@ -15,7 +15,11 @@ $('#login-submit').click(function () {
 
     //非空判断
     if (isNull(email) || isNull(password)) {
-        alert("邮箱或密码不能为空！");
+        let errorInfo = "邮箱或密码不能为空！";
+        layer.msg("登录失败！" + errorInfo, {
+            anim: 6
+        });
+
     }
     else {
 

@@ -4,8 +4,6 @@
  * @author TimVan
  * */
 
-
-
 /**
  * 判断输入字符串是否为空或者全部都是空格
  **/
@@ -39,4 +37,17 @@ var $_GET = (function(){
         return {};
     }
 })();
+
+/**
+ * 判断JS邮箱格式验证-正则验证
+ **/
+function checkEmail(email){
+    var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
+    //正则验证不通过，格式不对
+     if(!reg.test(email)){
+        return false;
+    }else{
+        return true;
+    }
+}
 
