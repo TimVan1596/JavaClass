@@ -372,12 +372,41 @@
     </script>
     <%--layui监听--%>
     <script>
-        //Demo
-        layui.use('form', function(){
-            var form = layui.form;
+        layui.use(['form', 'layedit', 'laydate'], function(){
+            var form = layui.form
+                ,layer = layui.layer
+                ,layedit = layui.layedit
+                ,laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+
+            //创建一个编辑器
+            var editIndex = layedit.build('LAY_demo_editor');
+
+            //自定义验证规则
+            form.verify({
+                title: function(value){
+                    if(value.length < 2){
+                        return '标题至少得2个字符啊';
+                    }
+                }
+                ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+                ,content: function(value){
+                    layedit.sync(editIndex);
+                }
+            });
+
             //监听提交
-            form.on('submit(formDemo)', function(data){
-                layer.msg(JSON.stringify(data.field));
+            form.on('submit(demo1)', function(data){
+                layer.alert(JSON.stringify(data.field), {
+                    title: '最终的提交信息'
+                });
                 return false;
             });
         });
@@ -398,26 +427,24 @@
         </div>
         <div class="panelContent">
             <div class="layui-form-item">
-                <label class="layui-form-label">姓名</label>
+                <label class="layui-form-label">尊姓大名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="name" id="name" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别是啥</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <input type="radio" name="sex" value="女" title="女">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">出生年月</label>
-                    <div class="layui-inline" style="width: 150px;">
-                        <select class="brithYear">
-                            <option value="">--请选择--</option>
-                        </select>
+                    <div class="layui-input-inline">
+                        <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                     </div>
-                    &nbsp;年&nbsp;
-                    <div class="layui-inline" style="width: 150px;">
-                        <select class="brithMonth" >
-                            <option value="">--请选择--</option>
-                        </select>
-                    </div>
-                    &nbsp;月&nbsp;
                 </div>
             </div>
             <div class="layui-form-item">
@@ -438,6 +465,14 @@
                     </select>
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">兴趣爱好</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="like[write]" title="写作">
+                    <input type="checkbox" name="like[read]" title="阅读">
+                    <input type="checkbox" name="like[game]" title="游戏" checked="">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -450,15 +485,15 @@
         </div>
         <div class="panelContent">
             <div class="layui-form-item">
-                <label class="layui-form-label">手机号码</label>
-                <div class="layui-input-block">
-                    <input type="text" name="phone" required  lay-verify="required" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">验证手机</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">电子邮箱</label>
-                <div class="layui-input-block">
-                    <input type="text" name="email" required  lay-verify="required" placeholder="请输入电子邮箱" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">验证邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -530,14 +565,14 @@
             </div>
         </div>
     </div>
-<div class="footer">
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            安徽信息工程学院 2016级 JAVA①班 安天宝 动态简历
-            <button class="layui-btn" lay-submit lay-filter="formDemo" style="float:right">提交验证</button>
+    <div class="footer">
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                安徽信息工程学院 2016级 JAVA①班 安天宝 动态简历
+                <button class="layui-btn" lay-submit lay-filter="formDemo" style="float:right">提交验证</button>
+            </div>
         </div>
     </div>
-</div>
 </form>
 <%--</div>--%>
 </body>
