@@ -69,9 +69,21 @@
                 </div>
                 请按住滑块，拖动到最右边
             </div>
+            <div class="login_fields__user" style="    margin-top: 4%;">
+
+                <input placeholder="输入发送给您的邮箱验证码" type="hidden"
+                       name="capcha" id="user-capcha"
+                       lay-verify="text" style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;width: 100%" autocomplete="off">
+                <div class="validation">
+                    <img src="img/biggerdvd/tick.png">
+                </div>
+
+            </div>
+
             <div class="login_fields__submit">
-                <input class="resetpwd-login-submit" type="hidden" value="提交"
+                <input class="resetpwd-login-submit" type="hidden" value="发送验证邮件"
                        id="login-submit" onclick="resetPassword()">
+                <input class="resetpwd-capcha-submit" type="hidden" value="提交" style="margin-top: 5%;" id="capcha-submit" onclick="resetCapchaPassword()">
                 <div class="forgot">
                     <a href="index.html">返回登录</a>
                 </div>

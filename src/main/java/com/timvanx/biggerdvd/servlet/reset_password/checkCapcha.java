@@ -2,7 +2,6 @@ package com.timvanx.biggerdvd.servlet.reset_password;
 
 import com.alibaba.fastjson.JSON;
 import com.timvanx.biggerdvd.dvd.Account;
-import com.timvanx.biggerdvd.util.RandomCAPCHA;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,13 +16,13 @@ import java.util.Map;
 import static com.timvanx.biggerdvd.util.EmailUtil.sendHtmlEmail;
 
 /**
- * 修改密码
+ * 验证验证码是否正确，并跳转到真正的修改密码页
  *
  * @author TimVan
  */
 @WebServlet(name = "resetPassword",
         urlPatterns = {"/ftm/resetPassword.do"}, loadOnStartup = 1)
-public class resetPassword extends HttpServlet {
+public class checkCapcha extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -124,6 +124,12 @@ function resetPassword() {
     }
     else {
 
+        let uploadLoading = layer.msg('发送邮件中', {
+            icon: 16
+            ,shade: 0.01
+        });
+
+
         //通过ajax检查是否正常登录
         $.post('resetPassword.do', {
             email: email
@@ -131,14 +137,41 @@ function resetPassword() {
             //解析ret
             ret = eval("(" + ret + ")");
             if (ret['error'] === 0) {
-                alert("密码修改成功！");
-                window.location.href = '../index.html?username='+email;
+                let info = "密码修改成功!";
+                layer.msg(info, {
+                    anim: 6
+                });
+                setTimeout(function () {
+                    //隐藏提交按钮
+                    let submitBTN = $('#login-submit');
+                    submitBTN.attr('value','重新发送');
+
+                    //显示验证码之后的提交按钮
+                    let capchaBTN = $('#capcha-submit');
+                    capchaBTN.attr('type','submit');
+
+                    //显示验证码输入框
+                    let userCapchaInput = $('#user-capcha');
+                    userCapchaInput.attr('type','text');
+                    }, 2000);
+
+                //删除滑动控件
+                let slideBox = $('#slide_box');
+                slideBox.remove();
 
             } else if (ret['error'] === 1) {
-                let errorInfo = ret['errorInfo'];
-                alert("修改失败！" + errorInfo);
-                location.reload();
+                let errorInfo = "修改失败！" +ret['errorInfo'];
+
+                layer.msg(errorInfo, {
+                    anim: 6
+                });
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
             }
+
+            //关闭上传loading
+            layer.closeAll();
         });
     }
 
@@ -149,4 +182,19 @@ function slideSuccess() {
     //显示提交按钮
     let submitBTN = $('#login-submit');
     submitBTN.attr('type','submit');
+}
+
+//修改密码（输入验证码后）
+function resetCapchaPassword() {
+    let capcha = $("#user-capcha").val();
+    //非空判断
+    if (isNull(capcha)) {
+        let errorInfo = "验证码不能为空！";
+        layer.msg(errorInfo, {
+            anim: 6
+        });
+    }
+    else {
+        alert(capcha)
+    }
 }

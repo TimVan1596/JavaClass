@@ -1,6 +1,7 @@
 package com.timvanx.biggerdvd.dvd;
 
 import com.timvanx.biggerdvd.util.JDBCUtil;
+import com.timvanx.biggerdvd.util.RandomCAPCHA;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import java.util.Map;
  * @date 2018年10月27日19:40:46
  */
 public class Account implements Serializable {
-
 
     /**
      * 登录
@@ -72,7 +72,6 @@ public class Account implements Serializable {
         return register(email,password,null);
     }
 
-
     /**
      * 获取用户是否首次登录
      * @param tableWhere 查询条件
@@ -122,7 +121,6 @@ public class Account implements Serializable {
         return isNameIsexist;
     }
 
-
     /**
      * 通过用户名修改密码
      */
@@ -144,6 +142,24 @@ public class Account implements Serializable {
         }
 
         return isAccountExist;
+    }
+
+    /**
+     * 通过用户名修改密码
+     */
+    public static String updateCAPCHA(String email){
+
+        String CAPTCHA =  RandomCAPCHA.createRandomCAPCHA();
+        String tableWhere = "email = " + " '" + email + "' ";
+
+        //更新用户表中的验证码
+        Map<String, Object> updateData =
+                new HashMap<>(1);
+        updateData.put("capcha", CAPTCHA);
+        JDBCUtil.update("account", updateData
+                , tableWhere);
+
+        return CAPTCHA;
     }
 
 
