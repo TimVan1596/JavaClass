@@ -1,58 +1,202 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2018\11\1 0001
-  Time: 15:50
+  Date: 2018\11\9 0009
+  Time: 9:00
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>日期</title>
+    <meta charset="UTF-8">
+    <title>showImages</title>
     <style type="text/css">
-        h1{
-            font-family: 微软雅黑;
-            color: red;
+        .float{
+            float:left;
+            width : 200px;
+            height: 200px;
+            overflow: hidden;
+            border: 1px solid #CCCCCC;
+            border-radius: 10px;
+            padding: 5px;
+            margin: 5px;
         }
-        div{
-            font-size: 20px;
-            color: #00aeef;
+        img{
+            position: relative;
         }
-        button {
-            background-color: #4183c4;
-            border: none;
-            color: white;
+        .result{
+            width: 200px;
+            height: 200px;
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            width: 150px;
-            height: 30px;
-            font-size: 16px;
-            margin: 4px 2px;
+            box-sizing: border-box;
+        }
+
+        #file_input{
+            display: none;
+        }
+
+        .delete{
+            width: 200px;
+            height:200px;
+            position: absolute;
+            text-align: center;
+            line-height: 200px;
+            z-index: 10;
+            font-size: 30px;
+            background-color: rgba(255,255,255,0.8);
+            color: #777;
+            opacity: 0;
+            transition-duration:0.7s;
+            -webkit-transition-duration: 0.7s;
+        }
+
+        .delete:hover{
             cursor: pointer;
+            opacity: 1;
         }
     </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+    <script type="text/javascript">
+
+        window.onload = function(){
+            var input = document.getElementById("file_input");
+            var result;
+            var dataArr = []; // 储存所选图片的结果(文件名和base64数据)
+            var fd;  //FormData方式发送请求
+            var oSelect = document.getElementById("select");
+            var oAdd = document.getElementById("add");
+            var oSubmit = document.getElementById("submit");
+            var oInput = document.getElementById("file_input");
+
+            if(typeof FileReader==='undefined'){
+                alert("抱歉，你的浏览器不支持 FileReader");
+                input.setAttribute('disabled','disabled');
+            }else{
+                input.addEventListener('change',readFile,false);
+            }　　　　　//handler
+
+
+            function readFile(){
+                fd = new FormData();
+                var iLen = this.files.length;
+                var index = 0;
+                for(var i=0;i<iLen;i++){
+                    if (!input['value'].match(/.jpg|.gif|.png|.jpeg|.bmp/i)){　　//判断上传文件格式
+                        return alert("上传的图片格式不正确，请重新选择");
+                    }
+                    var reader = new FileReader();
+                    reader.index = i;
+                    fd.append(i,this.files[i]);
+                    reader.readAsDataURL(this.files[i]);  //转成base64
+                    reader.fileName = this.files[i].name;
+
+
+                    reader.onload = function(e){
+                        var imgMsg = {
+                            name : this.fileName,//获取文件名
+                            base64 : this.result   //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
+                        };
+                        dataArr.push(imgMsg);
+                        result = '<div class="delete">删除</div><div class="result"><img src="'+this.result+'" alt=""/></div>';
+                        var div = document.createElement('div');
+                        div.innerHTML = result;
+                        div['className'] = 'float';
+                        div['index'] = index;
+                        document.getElementsByTagName('body')[0].appendChild(div);  　　//插入dom树
+                        var img = div.getElementsByTagName('img')[0];
+                        img.onload = function(){
+                            var nowHeight = ReSizePic(this); //设置图片大小
+                            this.parentNode.style.display = 'block';
+                            var oParent = this.parentNode;
+                            if(nowHeight){
+                                oParent.style.paddingTop = (oParent.offsetHeight - nowHeight)/2 + 'px';
+                            }
+                        };
+                        div.onclick = function(){
+                            this.remove();                  // 在页面中删除该图片元素
+                            delete dataArr[this.index];  // 删除dataArr对应的数据
+                        };
+                        index++;
+                    }
+                }
+            }
+
+            function send(){
+                var submitArr = [];
+                for (var i = 0; i < dataArr.length; i++) {
+                    if (dataArr[i]) {
+                        submitArr.push(dataArr[i]);
+                    }
+                }
+                // console.log('提交的数据：'+JSON.stringify(submitArr))
+                $.ajax({
+                    url : 'http://123.206.89.242:9999',
+                    type : 'post',
+                    data : JSON.stringify(submitArr),
+                    dataType: 'json',
+                    //processData: false,   用FormData传fd时需有这两项
+                    //contentType: false,
+                    success : function(data){
+                        console.log('返回的数据：'+JSON.stringify(data))
+                    }
+                })
+            }
+
+            oSelect.onclick=function(){
+                oInput.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+                //清空已选图片
+                $('.float').remove();
+                dataArr = [];
+                index = 0;
+                oInput.click();
+            };
+
+            oAdd.onclick=function(){
+                oInput.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+                oInput.click();
+            };
+
+            oSubmit.onclick=function(){
+                if(!dataArr.length){
+                    return alert('请先选择文件');
+                }
+                send();
+            }
+        };
+        /*
+         用ajax发送fd参数时要告诉jQuery不要去处理发送的数据，
+         不要去设置Content-Type请求头才可以发送成功，否则会报“Illegal invocation”的错误，
+         也就是非法调用，所以要加上“processData: false,contentType: false,”
+         * */
+        function ReSizePic(ThisPic) {
+            var RePicWidth = 200; //这里修改为您想显示的宽度值
+            var TrueWidth = ThisPic.width; //图片实际宽度
+            var TrueHeight = ThisPic.height; //图片实际高度
+            if(TrueWidth>TrueHeight){
+                //宽大于高
+                var reWidth = RePicWidth;
+                ThisPic.width = reWidth;
+                //垂直居中
+                var nowHeight = TrueHeight * (reWidth/TrueWidth);
+                return nowHeight;  //将图片修改后的高度返回，供垂直居中用
+            }else{
+                //宽小于高
+                var reHeight = RePicWidth;
+                ThisPic.height = reHeight;
+            }
+        }
+    </script>
 </head>
 <body>
-<script type="text/javascript">
-    function yzm() {
-        alert(123);
-    }
-    function press() {
-        document.getElementById("timeShow").innerHTML = "安天宝";
-    }
-    var t = null;
-    function time(){
-        dt = new Date();
-        document.getElementById("timeShow").innerHTML=dt;
-        t = setTimeout(time,1000);
-    }
-    window.onload=function(){time()}
-</script>
-<h1>当前日期</h1>
-<div id="timeShow"></div>
-<button onclick="press()">显示名字</button>
-<button onclick="yzm()">验证码</button>
-<input type="button" onclick="yzm()" value="获取验证码">
+<div class="container">
+    <label>请选择一个图像文件：</label>
+    <button id="select">(重新)选择图片</button>
+    <button id="add">(追加)图片</button>
+    <input type="file" id="file_input" multiple/>
+    <!--用input标签并选择type=file，记得带上multiple，不然就只能单选图片了-->
+    <button id="submit">提交</button>
+</div>
 </body>
 </html>
+

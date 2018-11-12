@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>表格</title>
+</head>
+
+<body>
+<input type="file" onchange="c(this);"/>
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script>
+    function c(v)
+    {
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            $(v).after('<img src="' + evt.target.result + '" />');
+        }
+        reader.readAsDataURL(v.files[0]);
+
+
+    }
+</script>
+</body>
+
+</html>

@@ -260,26 +260,32 @@
             </div>
             <div class="panelContent">
                 <ul>
-                    <li class="resumeItem"><span>姓名</span><input type="text" /></li>
                     <li class="resumeItem">
-                        <span>性别</span><select>
-                        <option value="">--请选择--</option>
-                        <option value="男">男</option>
-                        <option value="女">女</option>
-                    </select>
+                        <span>姓名</span>
+                        <input type="text" />
                     </li>
                     <li class="resumeItem">
-                        <span>出生年月</span><select class="brithYear">
-                        <option value="">--请选择--</option>
-                    </select>&nbsp;年&nbsp;
+                        <span>性别</span>
+                        <select>
+                            <option value="">--请选择--</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </li>
+                    <li class="resumeItem">
+                        <span>出生年月</span>
+                        <select class="brithYear">
+                            <option value="">--请选择--</option>
+                        </select>&nbsp;年&nbsp;
                         <select class="brithMonth">
                             <option value="">--请选择--</option>
                         </select>&nbsp;月&nbsp;
                     </li>
                     <li class="resumeItem">
-                        <span>户籍所在地</span><select class="province">
-                        <option value="">--请选择--</option>
-                    </select>
+                        <span>户籍所在地</span>
+                        <select class="province">
+                            <option value="">--请选择--</option>
+                        </select>
                         <select class="city">
                             <option value="">--请选择--</option>
                         </select>
