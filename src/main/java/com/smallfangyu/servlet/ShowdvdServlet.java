@@ -187,6 +187,7 @@ if(panduan==0) {
 
        if(str_pageX!=null){
            session.setAttribute("page",pageX);
+           updatepage(pageX);
        }else{
            //把当前页数保存在session域对象中
            session.setAttribute("page", page);

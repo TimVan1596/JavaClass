@@ -51,7 +51,7 @@
             <% if(dvd.getState().equals("可以借")){%><td style="width:110px;background-color: limegreen"><%=dvd.getState() %></td><% }%>
             <% if(dvd.getState().equals("已借出")){%><td style="width:110px;background-color: red"><%=dvd.getState() %></td><% }%>
             <td style="width:110px"><a  href="/fy/servlet/loanreturn?idstate=<%=dvd.getId() %>,<%=dvd.getState() %>&page=<%=pag%>"><%if(dvd.getState().equals("可以借")){%>借出<%}else{%>归还<%} %></a></td>
-            <td style="width:110px"><a class="layui-btn" href="changeDVD.jsp?id=<%=dvd.getId() %>&name=<%=dvd.getDvdname()%>&state=<%=dvd.getState()%>" target="mainFrame" >修改</a></td>
+            <td style="width:110px"><a class="layui-btn" href="changeDVD.jsp?id=<%=dvd.getId() %>&name=<%=dvd.getDvdname()%>&state=<%=dvd.getState()%>&picture=<%=dvd.getPicture()%>" target="mainFrame" >修改</a></td>
         </tr>
    <%  }%>
     </table>
@@ -72,7 +72,7 @@
         <%--<input  type='button' id='sc' class="layui-btn layui-btn-sm layui-btn-normal" value='批量 删除' onclick='return tishi()' ><i class="layui-icon"></i>--%>
         <a class="layui-btn layui-btn-normal" href="addDVD.jsp" target="mainFrame" >添加DVD</a><br>
     </div>
-    <iframe style="width:550px;height:200px;margin-left:30px" name="mainFrame" frameborder="0"></iframe>
+    <iframe style="width:550px;height:300px;margin-left:30px" name="mainFrame" frameborder="0"></iframe>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/common/util/layui/layui.js" charset="utf-8"></script>
