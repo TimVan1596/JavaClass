@@ -1,5 +1,6 @@
 package com.smallfangyu.servlet;
 
+import com.smallfangyu.data.DVD;
 import com.smallfangyu.data.DbUtil;
 import com.smallfangyu.data.LogUtil;
 
@@ -13,7 +14,21 @@ import javax.servlet.http.HttpSession;
         urlPatterns = {"/fy/servlet/login.do"}, loadOnStartup = 1)
 public class LoginServlet extends javax.servlet.http.HttpServlet {
     DbUtil db = new DbUtil();
+    private int number=0;
 
+    public int recy(){
+        String sql = "SELECT * FROM dvd WHERE `show`=0 ";
+        ResultSet rs = db.executeQuery(sql, null);
+        try {
+            while (rs.next()) {
+                number++;
+            }
+            db.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return number;
+    }
     public boolean check(String userName,String passWord){
         String sql = "SELECT * FROM user ";
         ResultSet rs = db.executeQuery(sql, null);
@@ -48,11 +63,14 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         //request.setCharacterEncoding("UTF-8");
         String userName=request.getParameter("username");
         String passWord=request.getParameter("password");
+
         if(check(userName,passWord)){
             //创建session对象
+            recy();
             HttpSession session = request.getSession();
             //把用户数据保存在session域对象中
             session.setAttribute("loginName", userName);
+            session.setAttribute("recycle", number);
             LogUtil.getInstance().getLogger().debug("用户名:" + session.getAttribute("loginName") + " 登录");
             response.sendRedirect("/fy/servlet/toShowDvd");
         }else{

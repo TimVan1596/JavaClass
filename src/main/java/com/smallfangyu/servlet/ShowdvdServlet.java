@@ -47,27 +47,29 @@ public class ShowdvdServlet extends HttpServlet {
      */
     static int pageNumber=0;
 
+    //dvd数据总数
+    static int len = 0;
 
         /**
          * 查询数据库一共几条数据
          */
-        public void count() {
-            String sq = "SELECT COUNT(*) FROM dvd ";
-            ResultSet rst = db.executeQuery(sq, null);
-            try {
-                while (rst.next()) {
-                    dvdLength = rst.getInt("COUNT(*)");
-                }
-                db.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            if (dvdLength % pageSize == 0) {
-                pageNumber = (dvdLength / pageSize) - 1;
-            } else {
-                pageNumber = dvdLength / pageSize;
-            }
-        }
+//        public void count() {
+//            String sq = "SELECT COUNT(*) FROM dvd ";
+//            ResultSet rst = db.executeQuery(sq, null);
+//            try {
+//                while (rst.next()) {
+//                    dvdLength = rst.getInt("COUNT(*)");
+//                }
+//                db.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//            if (dvdLength % pageSize == 0) {
+//                pageNumber = (dvdLength / pageSize) - 1;
+//            } else {
+//                pageNumber = dvdLength / pageSize;
+//            }
+//        }
 
         /**
          *查询DVD已借出和可以借的数量
@@ -95,6 +97,7 @@ public class ShowdvdServlet extends HttpServlet {
      * 把数据库dvd表里的数据添加进数组里
      */
     public static void dvdList(String data) {
+        len=0;
         if (!list.isEmpty()) {
             list.clear();
         }
@@ -106,8 +109,6 @@ public class ShowdvdServlet extends HttpServlet {
         String sql = "SELECT * FROM dvd WHERE `show`=1 AND (dvdno like ? OR dvdname like ? OR state like ?)";
             Object[] params = {"%" + data + "%", "%" + data + "%", "%" + data + "%"};
             rs = db.executeQuery(sql, params);
-
-        int len = 0;
         try {
             while (rs.next()) {
                 list.add(new DVD(rs.getInt("dvdno"), rs.getString("dvdname"), rs.getString("state"), rs.getString("picture")));
@@ -141,16 +142,24 @@ public class ShowdvdServlet extends HttpServlet {
        //request.setCharacterEncoding("UTF-8");
        //得到传过来的当前页
        String str_page=request.getParameter("page");
+       //得到修改时传过来的当前页
+       String str_pageX=request.getParameter("pageX");
+       int pageX=0;
+       if(str_pageX!=null){
+           pageX=Integer.parseInt(str_pageX);
+       }
        //得到传过来的搜索关键字
        String data=request.getParameter("selectDVD");
        //定义当前页数
        int page;
-       //count();
-
+       int panduan;
        if(str_page==null){
+           dvdList(data);
+           panduan=0;
           page=0;
        }else{
-          page=Integer.parseInt(str_page);
+           panduan=1;
+           page=Integer.parseInt(str_page);
           if(page<0){
               page=0;
           }
@@ -160,9 +169,9 @@ public class ShowdvdServlet extends HttpServlet {
        }
 
        //根据查询的数据把数据添加进数组
-
-       dvdList(data);
-
+if(panduan==0) {
+    dvdList(data);
+}
        //换页
        updatepage(page);
 
@@ -175,8 +184,15 @@ public class ShowdvdServlet extends HttpServlet {
        //把最大页数保存在session域对象中
        session.setAttribute("pageNumber", pageNumber);
 
-       //把当前页数保存在session域对象中
-       session.setAttribute("page", page);
+
+       if(str_pageX!=null){
+           session.setAttribute("page",pageX);
+       }else{
+           //把当前页数保存在session域对象中
+           session.setAttribute("page", page);
+       }
+      //把dvd数据总数保存在session域对象中
+       session.setAttribute("count", len);
 
        nc();
        //把当前DVD已借出和可以借的数量保存在session域对象中

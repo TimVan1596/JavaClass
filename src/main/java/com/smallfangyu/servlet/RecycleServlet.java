@@ -33,7 +33,6 @@ public class RecycleServlet extends HttpServlet {
         try {
             while (rs.next()) {
                 list.add(new DVD(rs.getInt("dvdno"), rs.getString("dvdname"), rs.getString("state"), rs.getString("picture")));
-
             }
             db.close();
         } catch (SQLException e) {

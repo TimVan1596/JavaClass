@@ -29,7 +29,7 @@ public class LoanReturnServlet extends HttpServlet {
         int res = db.executeUpdate(sql, params);
         if(res>0){
             response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().write("<script language='javascript'>alert('操作成功');window.location.href='/fy/servlet/toShowDvd?page="+page+"';</script>");
+            response.getWriter().write("<script language='javascript'>alert('操作成功');window.location.href='/fy/servlet/toShowDvd?pageX="+page+"';</script>");
 
             //location.href='/fy/servlet/toShowDvd';
         }
