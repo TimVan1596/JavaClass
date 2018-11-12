@@ -4,6 +4,15 @@ $(function () {
     slide();
 });
 
+//layui
+layui.use(['layer','form'], function () {
+    let layer = layui.layer;
+    let form = layui.form;
+
+});
+
+
+
 window.onresize = function () {
     if(locked==true){
         var boxWidth = $('#slide_box').width();
@@ -11,7 +20,7 @@ window.onresize = function () {
     }else{
         slide();
     }
-}
+};
 
 //滑动解锁移动
 function slide() {
@@ -92,23 +101,36 @@ function slide() {
 
 //修改账号密码
 function resetPassword() {
+    let email = $("#user-email").val();
 
-    let name = $("[name=name]").val();
-    let password = $("[name=password]").val();
-    let rePassword = $("[name=re-password]").val();
-
-    if (password !== rePassword) {
-        alert("两次输入的密码不同！");
+    //非空判断
+    if (!locked) {
+        let errorInfo = "请按住滑块，拖动到最右边";
+        layer.msg(errorInfo, {
+            anim: 6
+        });
+    }
+    else if (isNull(email)) {
+        let errorInfo = "邮箱不能为空！";
+        layer.msg(errorInfo, {
+            anim: 6
+        });
+    }
+    else if(!checkEmail(email)){
+        let errorInfo = "邮箱格式有误！";
+        layer.msg(errorInfo, {
+            anim: 6
+        });
     }
     else {
+
         //通过ajax检查是否正常登录
         $.post('../resetPassword.do', {
             name: name,
-            password: password
+            email: email
         }, function (ret) {
             //解析ret
             ret = eval("(" + ret + ")");
-
             if (ret['error'] === 0) {
                 alert("密码修改成功！");
                 window.location.href = '../index.html?username='+name;
@@ -118,8 +140,6 @@ function resetPassword() {
                 alert("修改失败！" + errorInfo);
                 location.reload();
             }
-
-
         });
     }
 
@@ -127,5 +147,8 @@ function resetPassword() {
 
 //验证成功
 function slideSuccess() {
-    alert("验证成功");
+    //显示提交按钮
+    //测试代码
+    let submitBTN = $('#login-submit');
+    submitBTN.attr('type','submit');
 }
