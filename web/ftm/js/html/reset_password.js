@@ -125,15 +125,14 @@ function resetPassword() {
     else {
 
         //通过ajax检查是否正常登录
-        $.post('../resetPassword.do', {
-            name: name,
+        $.post('resetPassword.do', {
             email: email
         }, function (ret) {
             //解析ret
             ret = eval("(" + ret + ")");
             if (ret['error'] === 0) {
                 alert("密码修改成功！");
-                window.location.href = '../index.html?username='+name;
+                window.location.href = '../index.html?username='+email;
 
             } else if (ret['error'] === 1) {
                 let errorInfo = ret['errorInfo'];
@@ -148,7 +147,6 @@ function resetPassword() {
 //验证成功
 function slideSuccess() {
     //显示提交按钮
-    //测试代码
     let submitBTN = $('#login-submit');
     submitBTN.attr('type','submit');
 }

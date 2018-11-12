@@ -99,15 +99,6 @@ $('#login-submit').click(function () {
 
         });
     }
-
-    let isSuccess = false;
-    if (isSuccess){
-
-
-
-    }
-
-
 });
 
 $('input[type="text"],input[type="password"]').focus(function () {
