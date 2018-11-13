@@ -126,8 +126,6 @@
         }
 
     </style>
-    <%--jquery--%>
-    <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
     <%--layui引用--%>
     <script src="../../common/util/layui/layui.js"></script>
     <link rel="stylesheet" href="../../common/util/layui/css/layui.css">
