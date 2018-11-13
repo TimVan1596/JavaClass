@@ -216,7 +216,7 @@ function resetCapchaPassword() {
                 layer.msg(info, {
                 });
                 setTimeout(function () {
-                   window.location.href = '';
+                   window.location.href = 'index.html';
                 }, 2000);
 
 
@@ -227,8 +227,8 @@ function resetCapchaPassword() {
                     anim: 6
                 });
                 setTimeout(function () {
-                    location.reload();
-                }, 2000);
+                    window.location.href = 'index.html';
+                    }, 2000);
             }
 
             //关闭上传loading
