@@ -518,30 +518,29 @@
                 <div class="layui-input-block">
                     <select>
                         <option value="">--请选择--</option>
-                        <option value="1">工作中</option>
-                        <option value="2">正在找工作</option>
+                        <option value="1">我目前处于离职状态，可立刻上岗</option>
+                        <option value="2">我目前在职，正考虑换个新环境（如有合适的工作机会，到岗时间一个月左右）</option>
+                        <option value="3">我对现有工作还算满意，如有更好的工作机会，我也可以考虑。（到岗时间另议）</option>
+                        <option value="4">目前暂无跳槽打算</option>
+                        <option value="5">应届毕业生</option>
                     </select>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">目标薪资</label>
+                <label class="layui-form-label">期望薪资</label>
                 <div class="layui-inline" style="width: 150px;">
                     <select>
                         <option value="">--请选择--</option>
-                        <option value="1">月薪</option>
-                    </select>
-                </div>
-                <div class="layui-inline" style="width: 150px;">
-                    <select>
-                        <option value="">--请选择--</option>
-                        <option value="1">3K~4K</option>
-                        <option value="2">5K~6K</option>
-                        <option value="2">5K~6K</option>
-                        <option value="2">7K~8K</option>
-                        <option value="2">9K~10K</option>
-                        <option value="2">11K~15K</option>
-                        <option value="2">16K~20K</option>
-                        <option value="2">20K以上</option>
+                        <option value="1">1000元以下/月</option>
+                        <option value="2">1000-2000元/月</option>
+                        <option value="2">2001-4000元/月</option>
+                        <option value="2">4001-6000元/月</option>
+                        <option value="2">6001-8000元/月</option>
+                        <option value="2">8001-10000元/月</option>
+                        <option value="2">10001-15000元/月</option>
+                        <option value="2">15000-25000元/月</option>
+                        <option value="2">25000-35000元/月</option>
+                        <option value="2">膨胀！</option>
                     </select>
                 </div>
             </div>

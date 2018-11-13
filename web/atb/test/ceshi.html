@@ -1,96 +1,171 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%">
 <head>
     <meta charset="utf-8">
-    <title>layui</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script src="../../common/util/layui/layui.js" charset="utf-8"></script>
-    <link rel="stylesheet" href="../../common/util/layui/css/layui.css" media="all">
-    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
-<body>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0.rc2/echarts.min.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    var posList = [
+        'left', 'right', 'top', 'bottom',
+        'inside',
+        'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+        'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+    ];
 
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-    <legend>常规使用：普通图片上传</legend>
-</fieldset>
-
-<div class="layui-upload">
-    <button type="button" class="layui-btn" id="test1">上传图片</button>
-    <div class="layui-upload-list">
-        <img class="layui-upload-img" id="demo1">
-        <p id="demoText"></p>
-    </div>
-</div>
-
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-    <legend>上传多张图片</legend>
-</fieldset>
-
-<div class="layui-upload">
-    <button type="button" class="layui-btn" id="test2">多图片上传</button>
-    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
-        预览图：
-        <div class="layui-upload-list" id="demo2"></div>
-    </blockquote>
-</div>
-
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-    <legend>拖拽上传</legend>
-</fieldset>
-
-<div class="layui-upload-drag" id="test10">
-    <i class="layui-icon"></i>
-    <p>点击上传，或将文件拖拽到此处</p>
-</div>
-
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script>
-    layui.use('upload', function(){
-        var $ = layui.jquery
-            ,upload = layui.upload;
-
-        //普通图片上传
-        upload.render({
-            elem: '#test1'
-            // ,url: '/upload/'
-            ,before: function(obj){
-                //预读本地文件示例，不支持ie8
-                obj.preview(function(index, file, result){
-                    $('#demo1').attr('src', result); //图片链接（base64）
-                    // $('#demo1').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="width: 100px;height: 100px">')
-                });
+    app.configParameters = {
+        rotate: {
+            min: -90,
+            max: 90
+        },
+        align: {
+            options: {
+                left: 'left',
+                center: 'center',
+                right: 'right'
             }
-        });
+        },
+        verticalAlign: {
+            options: {
+                top: 'top',
+                middle: 'middle',
+                bottom: 'bottom'
+            }
+        },
+        position: {
+            options: echarts.util.reduce(posList, function (map, pos) {
+                map[pos] = pos;
+                return map;
+            }, {})
+        },
+        distance: {
+            min: 0,
+            max: 100
+        }
+    };
 
-        //多图片上传
-        // upload.render({
-        //     elem: '#test2'
-        //     ,url: '/upload/'
-        //     ,multiple: true
-        //     ,before: function(obj){
-        //         //预读本地文件示例，不支持ie8
-        //         obj.preview(function(index, file, result){
-        //             $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="width: 100px;height: 100px">')
-        //         });
-        //     }
-        //     ,done: function(res){
-        //         //上传完毕
-        //     }
-        // });
-        //
-        // //拖拽上传
-        // upload.render({
-        //     elem: '#test10'
-        //     ,url: '/upload/'
-        //     ,done: function(res){
-        //         console.log(res)
-        //     }
-        // });
+    app.config = {
+        rotate: 90,
+        align: 'left',
+        verticalAlign: 'middle',
+        position: 'insideBottom',
+        distance: 15,
+        onChange: function () {
+            var labelOption = {
+                normal: {
+                    rotate: app.config.rotate,
+                    align: app.config.align,
+                    verticalAlign: app.config.verticalAlign,
+                    position: app.config.position,
+                    distance: app.config.distance
+                }
+            };
+            myChart.setOption({
+                series: [{
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }]
+            });
+        }
+    };
 
-    });
+
+    var labelOption = {
+        normal: {
+            show: true,
+            position: app.config.position,
+            distance: app.config.distance,
+            align: app.config.align,
+            verticalAlign: app.config.verticalAlign,
+            rotate: app.config.rotate,
+            formatter: '{c}  {name|{a}}',
+            fontSize: 16,
+            rich: {
+                name: {
+                    textBorderColor: '#fff'
+                }
+            }
+        }
+    };
+
+    option = {
+        color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['Forest', 'Steppe', 'Desert', 'Wetland']
+        },
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                axisTick: {show: false},
+                data: ['2012', '2013', '2014', '2015', '2016']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'Forest',
+                type: 'bar',
+                barGap: 0,
+                label: labelOption,
+                data: [320, 332, 301, 334, 390]
+            },
+            {
+                name: 'Steppe',
+                type: 'bar',
+                label: labelOption,
+                data: [220, 182, 191, 234, 290]
+            },
+            {
+                name: 'Desert',
+                type: 'bar',
+                label: labelOption,
+                data: [150, 232, 201, 154, 190]
+            },
+            {
+                name: 'Wetland',
+                type: 'bar',
+                label: labelOption,
+                data: [98, 77, 101, 99, 40]
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
 </script>
-
 </body>
 </html>
