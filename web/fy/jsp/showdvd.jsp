@@ -41,7 +41,7 @@
     </form>
 
   <table   class="layui-table" style="text-align:center;width:1000px;margin: 0 auto" border="1">
-   <tr><th><input name="selectall" type="checkbox" id="selectall" >全选</th><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>操作</th><th>修改操作</th></tr>
+   <tr style="background-color: #f3f3f3"><th><input name="selectall" type="checkbox" id="selectall" >全选</th><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>操作</th><th>修改操作</th></tr>
         <% for(DVD dvd:list){ %>
         <tr>
             <td style="width:110px"><input name="atask" type="checkbox" id="ask" value="<%=dvd.getId() %>" class="ck"></td>
@@ -70,7 +70,7 @@
         <br>
         <button class="layui-btn layui-btn-normal" onclick='return tishi()'><i class="layui-icon" ></i>-删除-  </button><br><br>
         <%--<input  type='button' id='sc' class="layui-btn layui-btn-sm layui-btn-normal" value='批量 删除' onclick='return tishi()' ><i class="layui-icon"></i>--%>
-        <a class="layui-btn layui-btn-normal" href="addDVD.jsp" target="mainFrame" >添加DVD</a><br>
+        <a  target="mainFrame" href="addDVD.jsp" class="layui-btn layui-btn-normal"   >添加DVD</a><br>
     </div>
     <iframe style="width:550px;height:300px;margin-left:30px" name="mainFrame" frameborder="0"></iframe>
 </div>

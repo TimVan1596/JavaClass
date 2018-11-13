@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>柱形图</title>
-    <script type="text/javascript" src="/fy/js/echarts.simple.min.js"> </script>
+    <title>DVD柱形图</title>
+    <script type="text/javascript" src="/fy/js/echarts.min.js"> </script>
     <link rel="stylesheet" href="/common/util/layui/css/layui.css"  media="all">
     <style>
         ul {
@@ -49,7 +49,7 @@
     <li><a href="/fy/recycle">回收站<span class="layui-badge"><%=(int)session.getAttribute("recycle")%></span></a></li>
     <li><a href="/fy/servlet/toCancelling" style="margin-left:1200px;">退出登录</a></li>
 </ul>
-<h3 style="margin-left: 240px">DVD状态柱形图</h3>
+
 <div id="main" style="width: 400px;height:350px;margin-left: 190px;">
 
 </div>
@@ -82,6 +82,7 @@
                 }
             }
         }]
+
     };
     // 使用刚指定的配置项和数据显示图表
     myChart.setOption(option);

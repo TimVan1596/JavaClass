@@ -17,6 +17,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
     private int number=0;
 
     public int recy(){
+        number=0;
         String sql = "SELECT * FROM dvd WHERE `show`=0 ";
         ResultSet rs = db.executeQuery(sql, null);
         try {
