@@ -12,11 +12,16 @@ function register() {
     if (password !== rePassword) {
 
         let errorInfo = "您两次输入的密码不同";
-
         layer.msg(errorInfo, {
             anim: 6
         });
 
+    }
+    else if(!checkEmail(email)){
+        let errorInfo = "请输入正确格式的邮箱";
+        layer.msg(errorInfo, {
+            anim: 6
+        });
     }
     else {
 

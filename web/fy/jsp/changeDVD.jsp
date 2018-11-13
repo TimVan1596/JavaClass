@@ -29,6 +29,7 @@
         String name=request.getParameter("name");
         name=name.substring(1,name.length()-1);
         String state=request.getParameter("state");
+        String picture=request.getParameter("picture");
 
         %>
 </head>
@@ -39,7 +40,8 @@
     <br>
     你选择要修改的DVD编号<input style="color:	#D0D0D0" type="text" name="dvdid" value="<%=id%>" id="dvdId" readonly="readonly"/><br>
     请输入修改后的DVD名称<input type="text" name="dvdname" value="<%=name%>" id="dvdName"/><br>
-    请选择修改后的DVD图片<input type="file" name="file"><br>
+    请选择修改后的DVD图片<input type="file" name="file" id="file0"><br>
+        <img src="<%=picture%>" id="img0" style="width:100px;height:100px;"><br>
     请选择修改后的DVD状态
   <select name="dvdstate">
     <option>可以借</option>
@@ -48,7 +50,29 @@
     <input type="submit" class="button" value="修改" />
     </fieldset>
 </form>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
+
+    $("#file0").change(function(){
+        var objUrl = getObjectURL(this.files[0]) ;//获取文件信息
+        console.log("objUrl = "+objUrl);
+        if (objUrl) {
+            $("#img0").attr("src", objUrl);
+        }
+    }) ;
+
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) {
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+
     function check(){
         var id=document.getElementById("dvdId").value;
         var name=document=document.getElementById("dvdName").value;

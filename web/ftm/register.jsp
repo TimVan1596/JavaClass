@@ -43,7 +43,7 @@
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script src="../common/util/layui/layui.js"></script>
     <script src="js/common-js.js"></script>
 </head>
@@ -66,6 +66,16 @@
                 <img src="img/biggerdvd/tick.png">
             </div>
 
+        </div>
+        <div class="login_fields__user">
+            <div class="icon">
+                <img src="img/biggerdvd/user_icon_copy.png">
+            </div>
+            <input placeholder="用户名" type="text" name="name" id="user-name"
+                   style="-webkit-box-shadow: 0 0 0px 1000px #32364a inset;width: 100%" autocomplete="off">
+            <div class="validation">
+                <img src="img/biggerdvd/tick.png">
+            </div>
         </div>
         <div class="login_fields__password">
             <div class="icon">

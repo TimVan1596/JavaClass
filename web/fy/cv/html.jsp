@@ -45,36 +45,36 @@
             </div>
             <div class="panelContent">
                 <ul>
-                    <li class="resumeItem"><span>姓名</span><input type="text" /></li>
+                    <li class="resumeItem"><span>姓名</span><input type="text" id="name" /></li>
+                    <div id="yname" style="color: red"></div>
                     <li class="resumeItem">
-                        <span>性别</span><select>
+                        <span>性别</span><select id="sex">
                         <option value="">--请选择--</option>
                         <option value="男">男</option>
                         <option value="女">女</option>
                     </select>
+                        <div id="ysex" style="color: red"></div>
                     </li>
                     <li class="resumeItem">
-                        <span>出生年月</span><select class="brithYear">
+                        <span>出生年月</span><select id="by" class="brithYear">
                         <option value="">--请选择--</option>
                     </select>&nbsp;年&nbsp;
-                        <select class="brithMonth">
+                        <select id="bm" class="brithMonth">
                             <option value="">--请选择--</option>
                         </select>&nbsp;月&nbsp;
                     </li>
+                    <div id="yYM" style="color: red"></div>
+
                     <li class="resumeItem">
-                        <span>户籍所在地</span><select class="province" onchange="getCity()">
-                        <option value="">--请选择--</option>
-                        <!-- 利用js把省份添加到下拉列表里-->
-                        <%--<script type="text/javascript"  charset="UTF-8">--%>
-                            <%--for(var i=0;i<provinceArr.length;i++) {--%>
-                                <%--document.write("<option value='"+i+"'>"+provinceArr[i]+"</option>");--%>
-                            <%--}--%>
-                        <%--</script>--%>
-                    </select>
-                        <select class="city" >
+                        <span>户籍所在地</span>
+                        <select id="pro" class="province" onchange="getCity()">
+                             <option value="">--请选择--</option>
+                        </select>
+                        <select id="city" class="city" >
                             <option value="">--请选择--</option>
                         </select>
                     </li>
+                    <div id="ycity" style="color: red"></div>
                 </ul>
             </div>
         </div>
@@ -92,9 +92,12 @@
             </div>
             <div class="panelContent">
                 <ul>
-                    <li class="resumeItem"><span>手机号码</span><input type="text" /></li>
-                    <li class="resumeItem"><span>电子邮箱</span><input type="text" /></li>
-                    <li class="resumeItem"><span>现居地址</span><input type="text" /></li>
+                    <li class="resumeItem"><span>手机号码</span><input id="phone" type="text" /></li>
+                    <div id="yphone" style="color: red"></div>
+                    <li class="resumeItem"><span>电子邮箱</span><input id="email" type="text" /></li>
+                    <div id="yemail" style="color: red"></div>
+                    <li class="resumeItem"><span>现居地址</span><input id="adress" type="text" /></li>
+                    <div id="yadress" style="color: red"></div>
                 </ul>
             </div>
         </div>
@@ -113,18 +116,19 @@
             <div class="panelContent">
                 <ul>
                     <li class="resumeItem">
-                        <span>求职状态</span><select>
+                        <span>求职状态</span><select id="qz">
                         <option value="">--请选择--</option>
                         <option value="1">工作中</option>
                         <option value="2">正在找工作</option>
                     </select>
+                        <div id="yqz" style="color: red"></div>
                     </li>
                     <li class="resumeItem">
-                        <span>目标薪资</span><select>
+                        <span>目标薪资</span><select id="xz">
                         <option value="">--请选择--</option>
                         <option value="1">月薪</option>
                     </select>
-                        <select>
+                        <select id="money">
                             <option value="">--请选择--</option>
                             <option value="1">3K~4K</option>
                             <option value="2">5K~6K</option>
@@ -135,17 +139,142 @@
                             <option value="2">16K~20K</option>
                             <option value="2">20K以上</option>
                         </select>
+                        <div id="ymoney" style="color: red"></div>
                     </li>
                 </ul>
             </div>
+            <input type="button" id="button" style="margin-left: 45%" value="提交"/>
         </div>
     </div>
     <div class="footer">
 
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script>
+
+    $(function(){
+        $("#name").blur(function() {
+            if ($("#name").val() == "") {
+                $("#yname").html("姓名不能为空");
+            }else{
+                if(2<($("#name").val().length)<8){
+                    $("#yname").html("姓名要在3到7个字符之间");
+                }else{
+                $("#yname").html("");}
+            }
+        });
+    });
+
+    $(function(){
+        $("#sex").blur(function() {
+            if ($("#sex").val() == "") {
+                $("#ysex").html("请选择性别");
+            }else{
+                $("#ysex").html("");
+            }
+        });
+    });
+
+    $(function(){
+        $("#by").blur(function() {
+            if ($("#by").val() == "") {
+                $("#yYM").html("请选择年份");
+            }else{
+                $("#yYM").html("");
+            }
+        });
+
+        $("#bm").blur(function() {
+            if ($("#bm").val() == "") {
+                $("#yYM").html("请选择月份");
+            }else{
+                $("#yYM").html("");
+            }
+        });
+
+        $("#pro").blur(function() {
+            if ($("#pro").val() == "") {
+                $("#ycity").html("请选择省份");
+            }else{
+                $("#ycity").html("");
+            }
+        });
+
+        $("#city").blur(function() {
+            if ($("#city").val() == "") {
+                $("#ycity").html("请选择城市");
+            }else{
+                $("#ycity").html("");
+            }
+        });
+
+        $("#phone").blur(function() {
+            if ($("#phone").val() == "") {
+                $("#yphone").html("请填写手机号");
+            }else{
+                if(($("#phone").val().length)!=11){
+                    $("#yphone").html("手机号格式不正确");
+                }else{
+                $("#yphone").html("");}
+            }
+        });
+
+        $("#email").blur(function() {
+            if ($("#email").val() == "") {
+                $("#yemail").html("请填写邮箱");
+            }else{
+                var atpos = $("#email").val().indexOf("@");
+                var dotpos = $("#email").val().lastIndexOf(".");
+                if(atpos<1 || dotpos<atpos + 2 ) {
+                    $("#yemail").html("邮箱格式不正确");
+               }else{
+                $("#yemail").html("");}
+            }
+        });
+
+        $("#adress").blur(function() {
+            if ($("#adress").val() == "") {
+                $("#yadress").html("请填写地址");
+            }else{
+                $("#yadress").html("");
+            }
+        });
+
+        $("#qz").blur(function() {
+            if ($("#qz").val() == "") {
+                $("#yqz").html("请选择求职状态");
+            }else{
+                $("#yqz").html("");
+            }
+        });
+
+        $("#xz").blur(function() {
+            if ($("#xz").val() == "") {
+                $("#ymoney").html("请选择薪资");
+            }else{
+                $("#ymoney").html("");
+            }
+        });
+
+        $("#money").blur(function() {
+            if ($("#money").val() == "") {
+                $("#ymoney").html("请选择薪资");
+            }else{
+                $("#ymoney").html("");
+            }
+        });
+
+        $("#button").click(function(){
+            if(($("#name").val() == "")|| ($("#sex").val() == "")|| ($("#by").val() == "")|| ($("#bm").val() == "")|| ($("#pro").val() == "")|| ($("#city").val() == "")|| ($("#phone").val() == "")|| ($("#email").val() == "")|| ($("#adress").val() == "")|| ($("#qz").val() == "")|| ($("#xz").val() == "")|| ($("#money").val() == "")){
+                alert("你还有信息未填写");
+            }else{
+                alert("提交成功");
+            }
+        });
+    });
+
+
 
     $(function(){
         $(".scroIcon").eq(0).click(function(){
@@ -182,9 +311,9 @@
 
     $(".province").change(function(){
         var index=$(this).val()-1;//获取当前省的下标
-        $(".city").prop("length",1);//清空原有的数据
+        $(".city").prop("length",1);//清空当前数据
         for(var i=1;i<cityArr[index].length;i++){//重新为市赋值
-            $(".city").append($("<option>").val(i+1).html(cityArr[index][i]));
+            $(".city").append($("<option></option>").val(i+1).html(cityArr[index][i]));
         }
     });
 

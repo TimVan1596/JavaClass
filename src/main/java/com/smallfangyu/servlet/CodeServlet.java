@@ -57,7 +57,6 @@ public class CodeServlet extends HttpServlet {
         properties.put("mail.smtp.ssl.enable", "true");
         properties.put("mail.smtp.ssl.socketFactory", sf);
 
-
         // 1.获取默认session对象
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
             @Override

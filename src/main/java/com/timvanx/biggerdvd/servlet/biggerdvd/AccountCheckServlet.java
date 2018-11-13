@@ -75,9 +75,6 @@ public class AccountCheckServlet extends HttpServlet {
         //使用 Alibaba fastJson 序列化 ret
         String retJson = JSON.toJSONString(ret);
         out.write(retJson);
-
-
-
     }
 
 }

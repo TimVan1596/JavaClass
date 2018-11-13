@@ -1,6 +1,7 @@
 package com.timvanx.biggerdvd.dvd;
 
 import com.timvanx.biggerdvd.util.JDBCUtil;
+import com.timvanx.biggerdvd.util.RandomCAPCHA;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import java.util.Map;
  * @date 2018年10月27日19:40:46
  */
 public class Account implements Serializable {
-
 
     /**
      * 登录
@@ -44,7 +44,7 @@ public class Account implements Serializable {
      *
      * @return boolean 是否注册成功
      */
-    public static boolean register(String email, String password) {
+    public static boolean register(String email, String password,String name) {
         //检查用户名是否已存在
         boolean isNameIsexist = isAccountExist(email);
 
@@ -54,12 +54,23 @@ public class Account implements Serializable {
                     new HashMap<String, Object>(1);
             insertData.put("email", email);
             insertData.put("password", password);
+            if (name != null){
+                insertData.put("name", name);
+            }
             JDBCUtil.insert("account", insertData);
         }
 
         return !isNameIsexist;
     }
 
+    /**
+     * 注册
+     *
+     * @return boolean 是否注册成功
+     */
+    public static boolean register(String email, String password){
+        return register(email,password,null);
+    }
 
     /**
      * 获取用户是否首次登录
@@ -110,7 +121,6 @@ public class Account implements Serializable {
         return isNameIsexist;
     }
 
-
     /**
      * 通过用户名修改密码
      */
@@ -132,6 +142,47 @@ public class Account implements Serializable {
         }
 
         return isAccountExist;
+    }
+
+    /**
+     * 通过用户名修改密码
+     */
+    public static String updateCAPCHA(String email){
+
+        String CAPTCHA =  RandomCAPCHA.createRandomCAPCHA();
+        String tableWhere = "email = " + " '" + email + "' ";
+
+        //更新用户表中的验证码
+        Map<String, Object> updateData =
+                new HashMap<>(1);
+        updateData.put("capcha", CAPTCHA);
+        JDBCUtil.update("account", updateData
+                , tableWhere);
+
+        return CAPTCHA;
+    }
+
+    /**
+     * 通过用户名，检查验证码是否正确
+     */
+    public static boolean checkCAPCHA(String email , String capcha){
+        boolean isSuccessful = false;
+
+        String tableWhere = "email = " + " '" + email + "' ";
+
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("capcha");
+        }};
+        List<List<String>> isfirstloginList =
+                JDBCUtil.select("account",
+                        tableField, tableWhere, null,
+                        null);
+        if ("1".equals( isfirstloginList.get(0).get(0))){
+            isSuccessful = true;
+        }
+
+        return isSuccessful;
     }
 
 

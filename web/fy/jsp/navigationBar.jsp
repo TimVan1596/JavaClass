@@ -36,14 +36,13 @@
             background-color: #4CAF50;
         }
     </style>
-
 </head>
 <body>
 
 <ul >
     <li ><a class="active" href="/fy/servlet/toShowDvd" >主页</a></li>
     <li ><a href="column.jsp">柱形图</a></li>
-    <li ><a href="/fy/recycle">回收站</a></li>
+    <li ><a href="/fy/recycle">回收站<span class="layui-badge"><%=(int)session.getAttribute("recycle")%></span></a></li>
     <li ><a href="/fy/servlet/toCancelling" style="margin-left:1200px;">退出登录</a></li>
 </ul>
 

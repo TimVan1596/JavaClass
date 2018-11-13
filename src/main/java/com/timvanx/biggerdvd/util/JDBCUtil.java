@@ -299,8 +299,7 @@ public class JDBCUtil {
 
         return affectRowCNT;
     }
-
-
+    
     /**
      * 聚合函数count
      *
@@ -438,7 +437,6 @@ public class JDBCUtil {
         }
         return affectRowCNT;
     }
-
 
     /**
      * 将ArrayList<String>转换成" ? ," 格式(PreparedStatement，SQL用)

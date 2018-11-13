@@ -46,7 +46,7 @@
         </tr>
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script src="../../common/util/layui/layui.js"></script>
     <script src="../js/html/menu.js"></script>
 </head>

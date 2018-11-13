@@ -1,5 +1,6 @@
 <%@ page import="com.sun.java.swing.plaf.windows.resources.windows" %>
-<%@ page import="com.smallfangyu.data.DbUtil" %><%--
+<%@ page import="com.smallfangyu.data.DbUtil" %>
+<%@ page import="com.smallfangyu.servlet.LoginServlet" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/10/12 0012
@@ -15,6 +16,7 @@
 
 <%
     DbUtil db=new DbUtil();
+    LoginServlet ls=new LoginServlet();
     String no=request.getParameter("no");
     String[] id=no.split(",");
     int res=0;
@@ -26,6 +28,8 @@
     }
     if(res>0){
         response.setContentType("text/html;charset=UTF-8");
+
+        session.setAttribute("recycle", ls.recy());
         response.getWriter().write("<script language='javascript'>alert('DVD删除成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
 
         //location.href='/fy/servlet/toShowDvd';
