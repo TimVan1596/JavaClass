@@ -1,5 +1,7 @@
 //是否锁定
 let locked;
+let email;
+
 $(function () {
     slide();
 });
@@ -101,7 +103,7 @@ function slide() {
 
 //修改账号密码
 function resetPassword() {
-    let email = $("#user-email").val();
+    email = $("#user-email").val();
 
     //非空判断
     if (!locked) {
@@ -139,7 +141,6 @@ function resetPassword() {
             if (ret['error'] === 0) {
                 let info = "密码修改成功!";
                 layer.msg(info, {
-                    anim: 6
                 });
                 setTimeout(function () {
                     //隐藏提交按钮
@@ -187,6 +188,7 @@ function slideSuccess() {
 //修改密码（输入验证码后）
 function resetCapchaPassword() {
     let capcha = $("#user-capcha").val();
+
     //非空判断
     if (isNull(capcha)) {
         let errorInfo = "验证码不能为空！";
@@ -195,6 +197,42 @@ function resetCapchaPassword() {
         });
     }
     else {
-        alert(capcha)
-    }
+
+        let uploadLoading = layer.msg('发送邮件中', {
+            icon: 16
+            ,shade: 0.01
+        });
+
+
+        //通过ajax检查是否正常登录
+        $.post('checkCapcha.do', {
+            email: email,
+            capcha:capcha
+        }, function (ret) {
+            //解析ret
+            ret = eval("(" + ret + ")");
+            if (ret['error'] === 0) {
+                let info = "验证成功!";
+                layer.msg(info, {
+                });
+                setTimeout(function () {
+                   window.location.href = '';
+                }, 2000);
+
+
+            } else if (ret['error'] === 1) {
+                let errorInfo = "修改失败！" +ret['errorInfo'];
+
+                layer.msg(errorInfo, {
+                    anim: 6
+                });
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+            }
+
+            //关闭上传loading
+            layer.closeAll();
+    });
+}
 }

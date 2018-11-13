@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -20,8 +21,8 @@ import static com.timvanx.biggerdvd.util.EmailUtil.sendHtmlEmail;
  *
  * @author TimVan
  */
-@WebServlet(name = "resetPassword",
-        urlPatterns = {"/ftm/resetPassword.do"}, loadOnStartup = 1)
+@WebServlet(name = "checkCapcha",
+        urlPatterns = {"/ftm/checkCapcha.do"}, loadOnStartup = 1)
 public class checkCapcha extends HttpServlet {
 
     @Override
@@ -36,17 +37,18 @@ public class checkCapcha extends HttpServlet {
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
         String userEmail = request.getParameter("email");
+        String userCapcha = request.getParameter("capcha");
 
         Map<String, Object> ret = new HashMap<>(1);
 
-        if (!Account.isAccountExist(userEmail)) {
+        if (!Account.checkCAPCHA(userEmail,userCapcha)) {
             ret.put("error", 1);
-            ret.put("errorInfo", "此邮箱并未注册");
+            ret.put("errorInfo", "验证码输入错误");
         }
         else {
-            String CAPTCHA = Account.updateCAPCHA(userEmail);
-            sendEmail(userEmail,CAPTCHA);
             ret.put("error", 0);
+            HttpSession session = request.getSession();
+            session.setAttribute("captchaEmail", userEmail);
         }
 
         //使用 Alibaba fastJson 序列化 ret

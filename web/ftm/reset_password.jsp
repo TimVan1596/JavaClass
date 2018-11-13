@@ -13,8 +13,6 @@
     <link rel="stylesheet" type="text/css" href="fonts/iconfont.css">
 
     <style>
-
-
         :root .fdad {
             display: none !important;
         }

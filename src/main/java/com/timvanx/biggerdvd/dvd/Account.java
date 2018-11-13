@@ -162,5 +162,28 @@ public class Account implements Serializable {
         return CAPTCHA;
     }
 
+    /**
+     * 通过用户名，检查验证码是否正确
+     */
+    public static boolean checkCAPCHA(String email , String capcha){
+        boolean isSuccessful = false;
+
+        String tableWhere = "email = " + " '" + email + "' ";
+
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("capcha");
+        }};
+        List<List<String>> isfirstloginList =
+                JDBCUtil.select("account",
+                        tableField, tableWhere, null,
+                        null);
+        if ("1".equals( isfirstloginList.get(0).get(0))){
+            isSuccessful = true;
+        }
+
+        return isSuccessful;
+    }
+
 
 }
