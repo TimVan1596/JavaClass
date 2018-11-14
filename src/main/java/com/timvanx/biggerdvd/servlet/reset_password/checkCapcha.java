@@ -2,6 +2,7 @@ package com.timvanx.biggerdvd.servlet.reset_password;
 
 import com.alibaba.fastjson.JSON;
 import com.timvanx.biggerdvd.dvd.Account;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +14,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.timvanx.biggerdvd.util.EmailUtil.sendHtmlEmail;
 
 /**
  * 验证验证码是否正确，并跳转到真正的修改密码页
@@ -34,6 +33,9 @@ public class checkCapcha extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Logger logger  =  Logger.getLogger(checkCapcha.class );
+
+
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
         String userEmail = request.getParameter("email");
@@ -42,13 +44,17 @@ public class checkCapcha extends HttpServlet {
         Map<String, Object> ret = new HashMap<>(1);
 
         if (!Account.checkCAPCHA(userEmail,userCapcha)) {
+            String errorInfo = "验证码输入错误";
             ret.put("error", 1);
             ret.put("errorInfo", "验证码输入错误");
+            logger.debug(userEmail+"-"+userCapcha+"-"+errorInfo);
+
         }
         else {
             ret.put("error", 0);
             HttpSession session = request.getSession();
             session.setAttribute("captchaEmail", userEmail);
+            logger.debug("保存session"+userEmail);
         }
 
         //使用 Alibaba fastJson 序列化 ret
