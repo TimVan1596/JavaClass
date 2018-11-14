@@ -29,10 +29,22 @@ class UnDirectGraph {
 
     public void createVector(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("请输入顶点的个数  ");
+        System.out.println("请输入顶点的个数");
+        vector = scanner.nextInt();
+        System.out.println("请输入边的个数");
+        edge = scanner.nextInt();
 
 
         System.out.println("请输入"+this.edge+"条边");
+        for (int i = 0; i <edge ; i++) {
+            int edgeVecStart = 0,edgeVecEnd = 0;
+            System.out.println("请输入第"+i+"条边的起点");
+            edgeVecStart = scanner.nextInt();
+            System.out.println("第"+i+"条边的终点");
+            edgeVecEnd = scanner.nextInt();
+
+
+        }
     }
 }
 
