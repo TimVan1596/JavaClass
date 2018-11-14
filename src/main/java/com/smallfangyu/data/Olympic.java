@@ -1,6 +1,6 @@
 package com.smallfangyu.data;
 
-public class Olympic {
+public class Olympic implements Comparable<Olympic>{
     private String country;
     private String photo;
     private int goldMedal;
@@ -66,5 +66,10 @@ public class Olympic {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    @Override
+    public int compareTo(Olympic arg) {
+     return this.goldMedal-arg.goldMedal;
     }
 }

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @WebServlet(name = "ShowServlet",urlPatterns = {"/auto/show"})
@@ -25,6 +26,8 @@ public class ShowServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf8");
         //先定义一个Java对象
+        String ol=request.getParameter("ol");
+        String jin="jin";
 
         Olympic ol1=new Olympic("美国","http://www.sinaimg.cn/ty/08ay/data/logo/new/USA.jpg",46,37,38,121);
         Olympic ol2=new Olympic("英国","http://www.sinaimg.cn/ty/08ay/data/logo/new/GBR.jpg",27,23,17,67);
@@ -36,6 +39,7 @@ public class ShowServlet extends HttpServlet {
         Olympic ol8=new Olympic("韩国","http://www.sinaimg.cn/ty/08ay/data/logo/new/KOR.jpg",9,3,9,21);
         Olympic ol9=new Olympic("意大利","http://www.sinaimg.cn/ty/08ay/data/logo/new/ITA.jpg",8,12,8,28);
         List<Olympic> ols=new ArrayList<Olympic>();
+        ols.clear();
         ols.add(ol1);
         ols.add(ol2);
         ols.add(ol3);
@@ -45,15 +49,17 @@ public class ShowServlet extends HttpServlet {
         ols.add(ol7);
         ols.add(ol8);
         ols.add(ol9);
+
+        if(ol.equals(jin)){
+            Collections.sort(ols);
+        }
         //String names[] =new String[dvds.size()];
         //这里可以把后台数据集 转为数组
         //把 集合 的数据装在数组中
 //        for (int i=0;i<dvds.size();i++) {
 //            names[i]=dvds.get(i).getDvdname();
 //        }
-
         String json=JSONArray.fromObject(ols).toString();
-
         response.getWriter().print(json);
     }
 }
