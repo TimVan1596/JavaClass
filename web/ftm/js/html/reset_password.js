@@ -154,6 +154,9 @@ function resetPassword() {
                     //显示验证码输入框
                     let userCapchaInput = $('#user-capcha');
                     userCapchaInput.attr('type','text');
+
+                    //禁用邮件，不能复制
+                    $('#user-name').attr("disabled","disabled");
                     }, 2000);
 
                 //删除滑动控件
@@ -212,11 +215,10 @@ function resetCapchaPassword() {
             //解析ret
             ret = eval("(" + ret + ")");
             if (ret['error'] === 0) {
-                let info = "验证成功!";
-                layer.msg(info, {
-                });
+                let info = "验证成功!跳转到修改页面";
+                layer.msg(info, {});
                 setTimeout(function () {
-                   window.location.href = 'index.html';
+                   window.location.href = 'realresetpwd.jsp';
                 }, 2000);
 
 
