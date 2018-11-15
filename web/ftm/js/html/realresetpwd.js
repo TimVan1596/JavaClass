@@ -1,6 +1,5 @@
 
 $(function () {
-    slide();
 });
 
 //layui
@@ -14,7 +13,6 @@ layui.use(['layer','form'], function () {
 //修改账号密码
 function resetPassword() {
 
-    let name = $("[name=name]").val();
     let password = $("[name=password]").val();
     let rePassword = $("[name=re-password]").val();
 
@@ -25,14 +23,13 @@ function resetPassword() {
         });
     }
     else {
-        let uploadLoading = layer.msg('发送邮件中', {
+        let uploadLoading = layer.msg('修改中', {
             icon: 16
             ,shade: 0.01
         });
 
         //通过ajax检查是否正常登录
         $.post('resetPassword.do', {
-            name: name,
             password: password
         }, function (ret) {
             //解析ret
@@ -41,9 +38,9 @@ function resetPassword() {
             if (ret['error'] === 0) {
 
                 let info = "密码修改成功!";
-                layer.msg(info);
+                alert(info);
                 setTimeout(function () {
-                    window.location.href = '../index.html?username='+name;
+                    window.location.href = 'index.html';
                 }, 2000);
 
 
@@ -55,7 +52,7 @@ function resetPassword() {
                     anim: 6
                 });
                 setTimeout(function () {
-                    location.reload();
+                    window.location.href = 'index.html';
                 }, 2000);
             }
 

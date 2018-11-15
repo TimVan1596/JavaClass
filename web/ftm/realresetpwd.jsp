@@ -87,21 +87,20 @@
                         <img src="img/biggerdvd/tick.png">
                     </div>
                 </div>
-                <div class="login_fields__submit">
+                <br>
+                <div class="login_fields__submit" style="position: initial">
                     <input type="submit" value="提交" id="login-submit"   onclick="resetPassword()">
                     <div class="forgot">
                         <a href="index.html">返回登录</a>
                     </div>
                 </div>
+
             </div>
 
         </div>
         <div class="success">
             <h2>密码修改成功</h2>
             <p>返回首页</p>
-        </div>
-        <div class="disclaimer">
-            <p>© 2018-2019 TimVanX.com 版权所有 皖ICP备18002720号 .</p>
         </div>
     </div>
 
