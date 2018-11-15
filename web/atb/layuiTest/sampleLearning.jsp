@@ -491,6 +491,73 @@
     <%--});--%>
 <%--</script>--%>
 
+<%--数据表格--%>
+<%--<table class="layui-hide" id="test" lay-filter="test"></table>--%>
+<%--<script type="text/html" id="barDemo">--%>
+    <%--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>--%>
+    <%--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>--%>
+<%--</script>--%>
+<%--<script>--%>
+    <%--layui.use('table', function(){--%>
+        <%--var table = layui.table;--%>
+
+        <%--table.render({--%>
+            <%--elem: '#test'--%>
+            <%--,url:'./user'--%>
+            <%--,cellMinWidth: 80--%>
+            <%--,toolbar: true--%>
+            <%--,title: '用户数据表'--%>
+            <%--,cols: [[--%>
+                <%--{type: 'checkbox', fixed: 'left'}--%>
+                <%--,{field:'id', title:'ID', fixed: 'left', unresize: true, sort: true}--%>
+                <%--,{field:'username', title:'用户名', edit: 'text'}--%>
+                <%--,{field:'email', title:'邮箱', edit: 'text', templet: function(res){--%>
+                        <%--return '<em>'+ res.email +'</em>'--%>
+                    <%--}}--%>
+                <%--,{field:'sex', title:'性别', edit: 'text', sort: true}--%>
+                <%--,{field:'city', title:'城市'}--%>
+                <%--,{field:'sign', title:'签名'}--%>
+                <%--,{field:'experience', title:'积分', sort: true}--%>
+                <%--,{field:'ip', title:'IP'}--%>
+                <%--,{field:'logins', title:'登入次数', sort: true}--%>
+                <%--,{field:'joinTime', title:'加入时间'}--%>
+                <%--,{fixed: 'right', title:'操作', toolbar: '#barDemo'}--%>
+            <%--]]--%>
+            <%--,page: true--%>
+        <%--});--%>
+
+        <%--//监听单元格编辑--%>
+        <%--table.on('edit(test)', function(obj){--%>
+            <%--var value = obj.value //得到修改后的值--%>
+                <%--,data = obj.data //得到所在行所有键值--%>
+                <%--,field = obj.field; //得到字段--%>
+            <%--layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);--%>
+        <%--});--%>
+
+        <%--//监听行工具事件--%>
+        <%--table.on('tool(test)', function(obj){--%>
+            <%--var data = obj.data;--%>
+            <%--//console.log(obj)--%>
+            <%--if(obj.event === 'del'){--%>
+                <%--layer.confirm('真的删除行么', function(index){--%>
+                    <%--obj.del();--%>
+                    <%--layer.close(index);--%>
+                <%--});--%>
+            <%--} else if(obj.event === 'edit'){--%>
+                <%--layer.prompt({--%>
+                    <%--formType: 2--%>
+                    <%--,value: data.email--%>
+                <%--}, function(value, index){--%>
+                    <%--obj.update({--%>
+                        <%--email: value--%>
+                    <%--});--%>
+                    <%--layer.close(index);--%>
+                <%--});--%>
+            <%--}--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
+
 
 </body>
 </html>
