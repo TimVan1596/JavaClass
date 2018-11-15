@@ -47,14 +47,12 @@ public class checkCapcha extends HttpServlet {
             String errorInfo = "验证码输入错误";
             ret.put("error", 1);
             ret.put("errorInfo", "验证码输入错误");
-            logger.debug(userEmail+"-"+userCapcha+"-"+errorInfo);
 
         }
         else {
             ret.put("error", 0);
             HttpSession session = request.getSession();
             session.setAttribute("captchaEmail", userEmail);
-            logger.debug("保存session"+userEmail);
         }
 
         //使用 Alibaba fastJson 序列化 ret
