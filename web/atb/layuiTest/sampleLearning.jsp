@@ -669,6 +669,32 @@
     <%--});--%>
 <%--</script>--%>
 
+<%--评分--%>
 
+<%--轮播--%>
+<%--<div class="layui-carousel" id="test10">--%>
+    <%--<div carousel-item="">--%>
+        <%--<div><img src="./image/比噶就.jpg"></div>--%>
+        <%--<div><img src="./image/比噶就.jpg"></div>--%>
+        <%--<div><img src="./image/比噶就.jpg"></div>--%>
+        <%--<div><img src="./image/比噶就.jpg"></div>--%>
+    <%--</div>--%>
+<%--</div>--%>
+<%--<script>--%>
+    <%--layui.use(['carousel'], function(){--%>
+        <%--var carousel = layui.carousel;--%>
+        <%--//图片轮播--%>
+        <%--carousel.render({--%>
+            <%--elem: '#test10'--%>
+            <%--,width: '778px'--%>
+            <%--,height: '440px'--%>
+            <%--,interval: 2000--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
+
+<%--模板引擎--%>
+
+<%--信息流--%>
 </body>
 </html>

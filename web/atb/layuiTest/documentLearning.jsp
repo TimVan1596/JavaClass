@@ -425,44 +425,44 @@
 <%--</script>--%>
 
 <%--轮播--%>
-<%--<div class="layui-carousel" id="test1">--%>
-    <%--<div carousel-item>--%>
-        <%--<div>条目1</div>--%>
-        <%--<div>条目2</div>--%>
-        <%--<div>条目3</div>--%>
-        <%--<div>条目4</div>--%>
-        <%--<div>条目5</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-<%--<!-- 条目中可以是任意内容，如：<img src=""> -->--%>
-<%--<script>--%>
-    <%--layui.use('carousel', function(){--%>
-        <%--var carousel = layui.carousel;--%>
-        <%--//建造实例--%>
-        <%--carousel.render({--%>
-            <%--elem: '#test1'--%>
-            <%--,width: '100%' //设置容器宽度--%>
-            <%--,arrow: 'always' //始终显示箭头--%>
-            <%--//,anim: 'updown' //切换动画方式--%>
-        <%--});--%>
-    <%--});--%>
-<%--</script>--%>
-
-<%--流加载--%>
-<div id="test"></div>
+<div class="layui-carousel" id="test1">
+    <div carousel-item>
+        <div>条目1</div>
+        <div>条目2</div>
+        <div>条目3</div>
+        <div>条目4</div>
+        <div>条目5</div>
+    </div>
+</div>
+<!-- 条目中可以是任意内容，如：<img src=""> -->
 <script>
-    layui.use('util', function(){
-        var util = layui.util;
-
-        //示例
-        var endTime = new Date(2099,1,1).getTime() //假设为结束日期
-            ,serverTime = new Date().getTime(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
-
-        util.countdown(endTime, serverTime, function(date, serverTime, timer){
-            var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';
-            layui.$('#test').html('距离2099年1月1日还有：'+ str);
+    layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            ,width: '100%' //设置容器宽度
+            ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
         });
     });
 </script>
+
+<%--流加载--%>
+<%--<div id="test"></div>--%>
+<%--<script>--%>
+    <%--layui.use('util', function(){--%>
+        <%--var util = layui.util;--%>
+
+        <%--//示例--%>
+        <%--var endTime = new Date(2099,1,1).getTime() //假设为结束日期--%>
+            <%--,serverTime = new Date().getTime(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的--%>
+
+        <%--util.countdown(endTime, serverTime, function(date, serverTime, timer){--%>
+            <%--var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';--%>
+            <%--layui.$('#test').html('距离2099年1月1日还有：'+ str);--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
 </body>
 </html>
