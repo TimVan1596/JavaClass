@@ -27,15 +27,11 @@
 </style>
 <body>
 <form action="/fy/servlet/toAddDvd" method="post" enctype="multipart/form-data" onsubmit="return check()">
-    <fieldset>
-        <legend>添加</legend>
      DVD名称：<input style="margin-top: 10px" type="text" name="dvdname" id="dvdId"/><br>
     <input type="file" name="file" id="file0"/><br>
         <img src="" id="img0" style="width:100px;height:100px;"><br>
     <span style="color: red">PS:如果不加图片，将会添加默认图片</span>
     <input type="submit" class="button" value="添加">
-
-    </fieldset>
 </form>
 
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
