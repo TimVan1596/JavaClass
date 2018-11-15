@@ -1,5 +1,9 @@
 package com.zhangmin.com.aiit.jisaunqi2;
 
+/*
+* 计算工厂
+*
+* */
 public class Main {
     public Main() {
     }
@@ -16,6 +20,6 @@ public class Main {
             operation = new divOperation();
         }
 
-        return (Operation)operation;
+        return operation;
     }
 }
