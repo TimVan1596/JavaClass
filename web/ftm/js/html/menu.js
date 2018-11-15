@@ -9,8 +9,6 @@ let pageNum = 1;
 let pageSize = 5;
 let query = "";
 
-
-
 //模块化初始化 LayUI 框架
 layui.use(['layer','element'], function(){
     var layer = layui.layer;
@@ -433,7 +431,6 @@ function refreshSearch(){
     window.location.replace("menu.jsp");
 }
 
-
 //打开黑科技
 function openLab() {
     //黑科技 iframe层
@@ -520,6 +517,11 @@ function onclickImg(obj){
         content: "<img height="+reImgHeight+" width="
         +reImgWidth+" src=" + src + "   />"
     });
+}
+
+//申请管理员 applyAdmin
+function applyAdmin() {
+    alert("申请管理员");
 }
 
 

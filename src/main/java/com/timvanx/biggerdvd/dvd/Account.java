@@ -185,4 +185,48 @@ public class Account implements Serializable {
         return isSuccessful;
     }
 
+    /**
+     * 获取权限值
+     * @param tableWhere 查询条件
+     * @return authority String authority=权限值
+     */
+    public static String getAuthority(String tableWhere) {
+
+        String authority = "";
+
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("authority");
+        }};
+        List<List<String>> isfirstloginList =
+                JDBCUtil.select("account",
+                        tableField, tableWhere, null,
+                        null);
+
+        authority = isfirstloginList.get(0).get(0);
+
+        return authority;
+    }
+
+    /**
+     * 获取权限值
+     * @param tableWhere 查询条件
+     * @return authority String authority=权限值
+     */
+    public static String getName(String tableWhere){
+        String name = "";
+
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("name");
+        }};
+        List<List<String>> isfirstloginList =
+                JDBCUtil.select("account",
+                        tableField, tableWhere, null,
+                        null);
+
+        name = isfirstloginList.get(0).get(0);
+
+        return name;
+    }
 }
