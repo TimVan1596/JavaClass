@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @WebServlet(name = "ShowServlet",urlPatterns = {"/auto/show"})
 public class ShowServlet extends HttpServlet {
@@ -50,9 +48,9 @@ public class ShowServlet extends HttpServlet {
         ols.add(ol8);
         ols.add(ol9);
 
-        if(ol.equals(jin)){
-            Collections.sort(ols);
-        }
+//        if(ol.equals(jin)){
+//            Collections.sort(ols);
+//        }
         //String names[] =new String[dvds.size()];
         //这里可以把后台数据集 转为数组
         //把 集合 的数据装在数组中
@@ -60,6 +58,12 @@ public class ShowServlet extends HttpServlet {
 //            names[i]=dvds.get(i).getDvdname();
 //        }
         String json=JSONArray.fromObject(ols).toString();
-        response.getWriter().print(json);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", "100");
+        result.put("data", json);
+
+        response.getWriter().print(result);
     }
 }

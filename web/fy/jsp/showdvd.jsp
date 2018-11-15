@@ -36,7 +36,7 @@
 
 <div  style="float: left" >
     <form action="/fy/servlet/toShowDvd" method="get" >
-        <input  style="margin-left: 710px;margin-top: 20px;height:36px;"  type="text" name="selectDVD" id="select"/>
+        <input  style="margin-left: 710px;margin-top: 20px;height:36px;"  type="text" name="selectDVD" id="select" />
         <input  type="submit" class="layui-btn layui-btn-normal" value="查询DVD" />
     </form>
 
@@ -98,6 +98,7 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
+
         $("#selectall").click(
             function(){
                 if(this.checked){
