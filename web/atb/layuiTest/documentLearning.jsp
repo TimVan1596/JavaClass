@@ -297,36 +297,36 @@
 <%--<hr class="layui-bg-blue">--%>
 
 <%--15-弹出层--%>
-<%--<div class="layui-input-inline">--%>
-    <%--<button type="button" onclick="selectRole()" class="layui-btn layui-btn-primary layui-btn-radius">iframe-多媒体</button>--%>
-<%--</div>--%>
-<%--<script>--%>
-    <%--//选择角色弹层--%>
-    <%--function selectRole(){--%>
-        <%--layui.use('layer', function(){--%>
-            <%--//页面层-佟丽娅--%>
-            <%--var img = "<img src='../javaWebDvd/images/banner.jpg' />";--%>
-            <%--layer.open({--%>
-                <%--type:1,--%>
-                <%--shift: 2,--%>
-                <%--shade:0,--%>
-                <%--title:'查看图片',--%>
-                <%--shadeClose:true,--%>
-                <%--content:img--%>
-            <%--});--%>
-            <%--//iframe层-多媒体--%>
-            <%--// layer.open({--%>
-            <%--//     type: 2,--%>
-            <%--//     title: false,--%>
-            <%--//     area: ['630px', '360px'],--%>
-            <%--//     shade: 0.8,--%>
-            <%--//     closeBtn: 0,--%>
-            <%--//     shadeClose: true,--%>
-            <%--//     content: '//player.youku.com/embed/XMjY3MzgzODg0'--%>
-            <%--// });--%>
-        <%--});--%>
-    <%--}--%>
-<%--</script>--%>
+<div class="layui-input-inline">
+    <button type="button" onclick="selectRole()" class="layui-btn layui-btn-primary layui-btn-radius">iframe-多媒体</button>
+</div>
+<script>
+    //选择角色弹层
+    function selectRole(){
+        layui.use('layer', function(){
+            //页面层-佟丽娅
+            var img = "<img src='../javaWebDvd/images/banner.jpg' />";
+            layer.open({
+                type:1,
+                shift: 2,
+                shade:0,
+                title:'查看图片',
+                shadeClose:true,
+                content:img
+            });
+            //iframe层-多媒体
+            // layer.open({
+            //     type: 2,
+            //     title: false,
+            //     area: ['630px', '360px'],
+            //     shade: 0.8,
+            //     closeBtn: 0,
+            //     shadeClose: true,
+            //     content: '//player.youku.com/embed/XMjY3MzgzODg0'
+            // });
+        });
+    }
+</script>
 
 <%--16-分页--%>
 <%--<div id="test1"></div>--%>
@@ -425,28 +425,28 @@
 <%--</script>--%>
 
 <%--轮播--%>
-<div class="layui-carousel" id="test1">
-    <div carousel-item>
-        <div>条目1</div>
-        <div>条目2</div>
-        <div>条目3</div>
-        <div>条目4</div>
-        <div>条目5</div>
-    </div>
-</div>
-<!-- 条目中可以是任意内容，如：<img src=""> -->
-<script>
-    layui.use('carousel', function(){
-        var carousel = layui.carousel;
-        //建造实例
-        carousel.render({
-            elem: '#test1'
-            ,width: '100%' //设置容器宽度
-            ,arrow: 'always' //始终显示箭头
-            //,anim: 'updown' //切换动画方式
-        });
-    });
-</script>
+<%--<div class="layui-carousel" id="test1">--%>
+    <%--<div carousel-item>--%>
+        <%--<div>条目1</div>--%>
+        <%--<div>条目2</div>--%>
+        <%--<div>条目3</div>--%>
+        <%--<div>条目4</div>--%>
+        <%--<div>条目5</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
+<%--<!-- 条目中可以是任意内容，如：<img src=""> -->--%>
+<%--<script>--%>
+    <%--layui.use('carousel', function(){--%>
+        <%--var carousel = layui.carousel;--%>
+        <%--//建造实例--%>
+        <%--carousel.render({--%>
+            <%--elem: '#test1'--%>
+            <%--,width: '100%' //设置容器宽度--%>
+            <%--,arrow: 'always' //始终显示箭头--%>
+            <%--//,anim: 'updown' //切换动画方式--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
 
 <%--流加载--%>
 <%--<div id="test"></div>--%>
