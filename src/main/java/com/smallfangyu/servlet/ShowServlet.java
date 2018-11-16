@@ -15,18 +15,7 @@ import java.util.*;
 @WebServlet(name = "ShowServlet",urlPatterns = {"/auto/show"})
 public class ShowServlet extends HttpServlet {
 
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=utf8");
-        //先定义一个Java对象
-        String ol=request.getParameter("ol");
-        String jin="jin";
-
+    public Map<String, Object> res(){
         Olympic ol1=new Olympic("美国","http://www.sinaimg.cn/ty/08ay/data/logo/new/USA.jpg",46,37,38,121);
         Olympic ol2=new Olympic("英国","http://www.sinaimg.cn/ty/08ay/data/logo/new/GBR.jpg",27,23,17,67);
         Olympic ol3=new Olympic("中国","http://www.sinaimg.cn/ty/08ay/data/logo/new/CHN.jpg",26,18,26,70);
@@ -48,22 +37,24 @@ public class ShowServlet extends HttpServlet {
         ols.add(ol8);
         ols.add(ol9);
 
-//        if(ol.equals(jin)){
-//            Collections.sort(ols);
-//        }
-        //String names[] =new String[dvds.size()];
-        //这里可以把后台数据集 转为数组
-        //把 集合 的数据装在数组中
-//        for (int i=0;i<dvds.size();i++) {
-//            names[i]=dvds.get(i).getDvdname();
-//        }
-        String json=JSONArray.fromObject(ols).toString();
+        String json= JSONArray.fromObject(ols).toString();
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");
-        result.put("count", "100");
+        result.put("count", 9);
         result.put("data", json);
+        System.out.println(result);
+        return result;
+    }
 
-        response.getWriter().print(result);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf8");
+        //先定义一个Java对象
+        res();
     }
 }

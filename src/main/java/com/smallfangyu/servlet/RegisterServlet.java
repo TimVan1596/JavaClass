@@ -20,7 +20,7 @@ import java.util.Properties;
 @WebServlet(name = "RegisterServlet",urlPatterns = {"/fy/servlet/toRegister"})
 public class RegisterServlet extends HttpServlet {
     DbUtil db = new DbUtil();
-
+LoginServlet ls=new LoginServlet();
     /**
      * 判断用户名是否重复
      * @param userName
@@ -66,7 +66,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     String email=request.getParameter("username");
-    String passWord=request.getParameter("password");
+    String passWord=ls.mdFive(request.getParameter("password"));
     String code=request.getParameter("code");
 
     //创建session对象

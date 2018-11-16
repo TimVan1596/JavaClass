@@ -40,7 +40,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         try {
             //判断用户名密码是否正确
             while (rs.next()) {
-                if (!(userName.equals(rs.getString("username"))&&passWord.equals( mdfive(rs.getString("password"))))) {
+                if (!(userName.equals(rs.getString("username"))&&passWord.equals( rs.getString("password")))) {
                     //遍历到rs的最后位置
                     if (rs.isLast()) {
                         //用户名或密码错误
@@ -63,7 +63,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
      * @param password
      * @return
      */
-    public String mdfive(String password){
+    public String mdFive(String password){
         try {
             MessageDigest md=MessageDigest.getInstance("MD5");
             byte[] input = password.getBytes();
@@ -75,8 +75,8 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
             System.out.println("密码加密失败");
             return "";
         }
-
     }
+
     @Override
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
@@ -86,7 +86,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         String userName=request.getParameter("username");
 
         //调用MD5加密密码
-        String passWord=mdfive(request.getParameter("password"));
+        String passWord= mdFive(request.getParameter("password"));
 
         if(check(userName,passWord)){
             //创建session对象
