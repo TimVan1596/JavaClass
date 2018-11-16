@@ -1,10 +1,12 @@
 package com.smallfangyu.servlet;
 
-import com.smallfangyu.data.DVD;
 import com.smallfangyu.data.DbUtil;
 import com.smallfangyu.data.LogUtil;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.servlet.annotation.WebServlet;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.io.IOException;
 import javax.servlet.http.HttpSession;
@@ -30,6 +32,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         }
         return number;
     }
+
     public boolean check(String userName,String passWord){
         String sql = "SELECT * FROM user ";
         ResultSet rs = db.executeQuery(sql, null);
@@ -37,7 +40,7 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         try {
             //判断用户名密码是否正确
             while (rs.next()) {
-                if (!(userName.equals(rs.getString("username"))&&passWord.equals(rs.getString("password")))) {
+                if (!(userName.equals(rs.getString("username"))&&passWord.equals( mdfive(rs.getString("password"))))) {
                     //遍历到rs的最后位置
                     if (rs.isLast()) {
                         //用户名或密码错误
@@ -55,15 +58,35 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
       return true;
     }
 
+    /**
+     * md5加密密码
+     * @param password
+     * @return
+     */
+    public String mdfive(String password){
+        try {
+            MessageDigest md=MessageDigest.getInstance("MD5");
+            byte[] input = password.getBytes();
+            byte[] output = md.digest(input);
+            //将md5处理后的output结果利用Base64转成原有的字符串,不会乱码
+            String md5 = Base64.encodeBase64String(output);
+            return md5;
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("密码加密失败");
+            return "";
+        }
+
+    }
     @Override
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
     }
     @Override
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        //request.setCharacterEncoding("UTF-8");
         String userName=request.getParameter("username");
-        String passWord=request.getParameter("password");
+
+        //调用MD5加密密码
+        String passWord=mdfive(request.getParameter("password"));
 
         if(check(userName,passWord)){
             //创建session对象
@@ -75,9 +98,6 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
             LogUtil.getInstance().getLogger().debug("用户名:" + session.getAttribute("loginName") + " 登录");
             response.sendRedirect("/fy/servlet/toShowDvd");
         }else{
-            //response.setContentType("text/html;charset=UTF-8");
-            //response.getWriter().write("账号或密码错误");
-
             response.getWriter().write("<script language='javascript'>alert('账号或密码错误');location.href='/fy/jsp/login.jsp';</script>");
         }
 
