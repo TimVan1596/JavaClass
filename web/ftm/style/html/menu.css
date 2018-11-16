@@ -28,9 +28,8 @@ input[type=checkbox]:checked::after{
     margin-top: 3px;
     margin-left: 2px;
 }
+
 /*------  结束  input checkbox 复选框样式更改  -------------*/
-
-
 td {
     text-align: center;
     white-space: nowrap;
@@ -69,3 +68,10 @@ ul.pagination li a.active {
 }
 
 ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+
+/*不同用户权限的控制*/
+.user-level-1 {
+    display: none;
+}
+
+

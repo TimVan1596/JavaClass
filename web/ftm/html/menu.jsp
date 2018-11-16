@@ -73,7 +73,7 @@
     <!-- DVD表格的表头（列表填充模板 template）-->
     <script type="text/html" id="DVD_TABLE_TH_TEMPLATE">
         <tr >
-            <th width="30" height="30"></th>
+            <th width="30" height="30" ></th>
             <th width="100">编号</th>
             <th width="110">封面</th>
             <th width="250">名称</th>
@@ -129,14 +129,15 @@
     <div  style="display: inline-block;margin-left: -24%;">
         <div class="layui-btn-group">
             <button class="layui-btn layui-btn-normal hidden"
-                    id="refresh-Search-btn"
+                    id="refresh-Search-btn lev"
                     onclick="refreshSearch()">
                 <i class="layui-icon">&#xe9aa;</i> 重置搜索
             </button>
             <button class="layui-btn layui-btn-normal"  onclick="addDVD()">
                 <i class="layui-icon">&#xe608;</i> 添加
             </button>
-            <button class="layui-btn layui-btn-danger " onclick="deleteDVD()" style="display: none">
+            <button class="layui-btn layui-btn-danger user-level-1"
+                    onclick="deleteDVD()" >
                 <i class="layui-icon">&#xe640;</i>一键删除
             </button>
         </div>
