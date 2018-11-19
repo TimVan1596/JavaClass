@@ -10,6 +10,14 @@
 
     <dependencies>
 
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.4.6</version>
+        </dependency>
+
+
         <!--net.sf.json的jar包：JSONArray-->
         <!--net.sf.json添加的时候需要添加jdk的版本号-->
         <!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib -->
