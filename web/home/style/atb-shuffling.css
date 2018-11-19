@@ -1,0 +1,19 @@
+#test2 ul{
+    list-style: none;
+    width: 1000px;
+    text-align: center;
+}
+#test2 li {
+    float: left;
+    width: 250px;
+    height: 57px;
+}
+#test2 li a {
+    display: block;
+    padding: 19px;
+    color: black;
+    text-decoration: none;
+}
+#test2 li a:hover {
+    background-color: #74777b;
+}

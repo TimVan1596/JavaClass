@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="Book" type="com.smallfangyu.bookjavaweb.Book" />
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://120.79.210.170:3306/fy?serverTimezone=UTC" />
+                <property name="username" value="316202061008" />
+                <property name="password" value="061008" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- // power by http://www.yiibai.com -->
+        <mapper resource="Book.xml" />
+    </mappers>
+</configuration>
