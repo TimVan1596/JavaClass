@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="../../common/util/layui/css/layui.css"
+          media="all">
+    <link rel="stylesheet"
+          href="../style/html/ftm-board.css"
+          media="all">
+
+    <!-- 留言板信息（列表填充模板）-->
+    <script type="text/html" id="BORDER_MSG_TEMPLATE">
+        <li><a>
+        <span class="ftm-border-name">匿名</span>：
+            <span class="ftm-border-msg">这是我留言的内容</span>
+            <br>
+            </a></li>
+    </script>
+    <!-- 留言板信息 结束-->
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../script/ftm-l-slide.js"></script>
+    <script src="../script/html/ftm-board.js"></script>
+</head>
+<body>
+
+    <div >
+        <!-- 竖向滚动实例 -->
+        <ul id="ftm-board-box">
+            <li><a>
+                <span class="ftm-border-name">Tim</span>：
+                <span class="ftm-border-msg">这是我留言的内容</span>
+                <br>
+            </a></li>
+            <li><a>
+                <span class="ftm-border-name">小明</span>：
+                <span class="ftm-border-msg">这是另一条留言</span>
+                <br>
+            </a></li>
+            <li><a>
+                <span class="ftm-border-name">方宇</span>：
+                <span class="ftm-border-msg">最后一条留言</span>
+                <br>
+            </a></li>
+        </ul>
+        <br>
+        <div >
+            <input type="text" id="ftm-board-msg"
+                   name="message" placeholder="请输入留言内容"
+            style="height: 32px;width: 70%">
+            <button class="layui-btn" onclick="addBorderMsg()">
+                立即提交</button>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            <!--获取li每行的高度，动画移动的高度-->
+            let liHeight = $('li').height();
+            <!--调用插件-->
+            $('#ftm-board-box').lSlide({nTop:liHeight});
+        })
+    </script>
+</body>
+
+
+</html>
