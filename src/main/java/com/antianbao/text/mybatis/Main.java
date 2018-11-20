@@ -15,7 +15,7 @@ public class Main {
 
     static {
         try {
-            reader = Resources.getResourceAsReader("config/Configure.xml");
+            reader = Resources.getResourceAsReader("Configure.xml");
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         } catch (Exception e) {
             e.printStackTrace();
