@@ -34,7 +34,6 @@ public class ChangeDvdServlet extends HttpServlet {
             Object[] params= {"《" + dvdName + "》", dvdState, dvdId};
             res = db.executeUpdate(sql, params);
         }else {
-            System.out.println("hahahha");
             sql = "UPDATE dvd SET dvdname=?,state=?,picture=? WHERE dvdno=?";
             Object[] params ={"《" + dvdName + "》", dvdState, photo, dvdId};
             res = db.executeUpdate(sql, params);

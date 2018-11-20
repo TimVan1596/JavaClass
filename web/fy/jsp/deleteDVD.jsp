@@ -21,8 +21,8 @@
     String[] id=no.split(",");
     int res=0;
     for(String i:id) {
-        //String sql = "DELETE FROM dvd WHERE dvdno=?";
-        String sql="UPDATE dvd SET `show`=0 WHERE dvdno=?";
+        //String sql = "DELETE FROM dvd WHERE id=?";
+        String sql="UPDATE dvd SET `show`=0 WHERE id=?";
         Object[] params = {i};
         res = db.executeUpdate(sql, params);
     }

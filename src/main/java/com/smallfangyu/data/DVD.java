@@ -2,25 +2,25 @@ package com.smallfangyu.data;
 import java.io.Serializable;
 
 public class DVD implements Serializable{
-   private int id;
+   private int dvdno;
    private String dvdname;
    private String state;
     private String picture;
 
     public DVD(){}
-   public DVD(int id, String dvdname, String state,String picture) {
-	   this.id=id;
+   public DVD(int dvdno, String dvdname, String state,String picture) {
+	   this.dvdno =dvdno;
 	   this.dvdname=dvdname;
 	   this.state=state;
 	   this.picture=picture;
    }
    
-   public int getId() {
-	   return id;
+   public int getDvdno() {
+	   return dvdno;
    }
    
-   public void setId(int id) {
-       this.id=id;
+   public void setDvdno(int dvdno) {
+       this.dvdno = dvdno;
    }
    
    public String getDvdname() {
@@ -42,7 +42,7 @@ public class DVD implements Serializable{
    public  void show()
    {
    	
-   	System.out.println(this.id+"\t"+this.dvdname+"\t"+this.state);
+   	System.out.println(this.dvdno +"\t"+this.dvdname+"\t"+this.state);
    }
 
     public String getPicture() {
@@ -52,4 +52,6 @@ public class DVD implements Serializable{
     public void setPicture(String picture) {
         this.picture = picture;
     }
+
+
 }

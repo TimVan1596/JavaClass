@@ -44,14 +44,14 @@
    <tr style="background-color: #f3f3f3"><th><input name="selectall" type="checkbox" id="selectall" >全选</th><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>操作</th><th>修改操作</th></tr>
         <% for(DVD dvd:list){ %>
         <tr>
-            <td style="width:110px"><input name="atask" type="checkbox" id="ask" value="<%=dvd.getId() %>" class="ck"></td>
-            <td style="width:110px"><%=dvd.getId() %></td>
+            <td style="width:110px"><input name="atask" type="checkbox" id="ask" value="<%=dvd.getDvdno() %>" class="ck"></td>
+            <td style="width:110px"><%=dvd.getDvdno() %></td>
             <td style="width:110px"><img style="width:110px;height:80px" src="<%=dvd.getPicture() %>" /></td>
             <td style="width:110px"> <%=dvd.getDvdname() %></td>
             <% if(dvd.getState().equals("可以借")){%><td style="width:110px;background-color: limegreen"><%=dvd.getState() %></td><% }%>
             <% if(dvd.getState().equals("已借出")){%><td style="width:110px;background-color: red"><%=dvd.getState() %></td><% }%>
-            <td style="width:110px"><a  href="/fy/servlet/loanreturn?idstate=<%=dvd.getId() %>,<%=dvd.getState() %>&page=<%=pag%>"><%if(dvd.getState().equals("可以借")){%>借出<%}else{%>归还<%} %></a></td>
-            <td style="width:110px"><a class="layui-btn" href="changeDVD.jsp?id=<%=dvd.getId() %>&name=<%=dvd.getDvdname()%>&state=<%=dvd.getState()%>&picture=<%=dvd.getPicture()%>"  target="mainFrame" >修改</a></td>
+            <td style="width:110px"><a  href="/fy/servlet/loanreturn?idstate=<%=dvd.getDvdno() %>,<%=dvd.getState() %>&page=<%=pag%>"><%if(dvd.getState().equals("可以借")){%>借出<%}else{%>归还<%} %></a></td>
+            <td style="width:110px"><a class="layui-btn" href="changeDVD.jsp?id=<%=dvd.getDvdno() %>&name=<%=dvd.getDvdname()%>&state=<%=dvd.getState()%>&picture=<%=dvd.getPicture()%>" target="mainFrame" >修改</a></td>
         </tr>
    <%  }%>
       <tr>
