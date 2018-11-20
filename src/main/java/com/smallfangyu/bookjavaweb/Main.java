@@ -34,13 +34,13 @@ public class Main {
         try {
             //sqlSessionFactory.getConfiguration().addMapper(IUser.class);
             //User user = (User) session.selectOne( "com.yiibai.mybatis.models.UserMapper.getUserByID", 1);
-// 更新用户
-            testUpdate();
+            // 更新用户
+            //testUpdate();
 
             // 用户数据列表
-            getUserList();
+            //getUserList();
             // 插入数据
-            // testInsert();
+             testInsert();
 
             // 删除数据
             //testDelete();
@@ -67,6 +67,7 @@ public class Main {
             book.setAuthor("Tech");
             book.setPrice(100);
             book.setDate("2018/11/19");
+            book.setType("1");
             userMapper.insertUser(book);
             // 提交事务
             session.commit();
@@ -106,9 +107,9 @@ public class Main {
             printUsers(ibook.getUserList());
             // 执行更新
             Book book = ibook.getUser(2);
-            book.setName("New name");
-            book.setAuthor("啧啧");
-            book.setPrice(99);
+            book.setName("天蚕土豆");
+           book.setAuthor("啧啧");
+           book.setPrice(99);
             book.setDate("111");
             ibook.updateUser(book);
             // 提交事务
@@ -135,7 +136,7 @@ public class Main {
             System.out.println("Before delete");
             printUsers(ibook.getUserList());
             // 执行删除
-            ibook.deleteUser(2);
+            ibook.deleteUser(22);
             // 提交事务
             session.commit();
             // 显示删除之后User信息
