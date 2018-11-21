@@ -1,9 +1,12 @@
 package com.antianbao.MinDVD.login;
 
+import org.junit.Test;
+
 import java.util.Scanner;
 
 public class Login {
 
+	@Test
 	@SuppressWarnings({ "resource" })
 	public void loginManager() {
 		System.out.println("********欢迎使用MiniDVD Mgr 1.0 管理系统********");

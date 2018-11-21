@@ -1,20 +1,21 @@
-package com.antianbao.text.cs;
+package com.antianbao.text.mybatisAnnotations;
 
-import java.io.Reader;
-import java.text.MessageFormat;
-import java.util.List;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class Main {
+import java.io.Reader;
+import java.text.MessageFormat;
+import java.util.List;
+
+public class MainAnnotations {
     private static SqlSessionFactory sqlSessionFactory;
     private static Reader reader;
 
     static {
         try {
-            reader = Resources.getResourceAsReader("Configure.xml");
+            reader = Resources.getResourceAsReader("ConfigureAnnotations.xml");
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,16 +60,16 @@ public class Main {
             // 获取Session连接
             SqlSession session = sqlSessionFactory.openSession();
             // 获取Mapper
-            IBook userMapper = session.getMapper(IBook.class);
+            IUser userMapper = session.getMapper(IUser.class);
             System.out.println("Test insert start...");
             // 执行插入
-            Book book = new Book();
-            book.setId(0);
-            book.setName("Google");
-            book.setAuthor("Tech");
-            book.setPrice(100);
-            book.setDate("2018/11/19");
-            userMapper.insertUser(book);
+            User user = new User();
+            user.setId(0);
+            user.setName("Google");
+            user.setDept("Tech");
+            user.setWebsite("http://www.google.com");
+            user.setPhone("120");
+            userMapper.insertUser(user);
             // 提交事务
             session.commit();
 
@@ -87,10 +88,10 @@ public class Main {
     public static void getUserList() {
         try {
             SqlSession session = sqlSessionFactory.openSession();
-            IBook ibook = session.getMapper(IBook.class);
+            IUser iuser = session.getMapper(IUser.class);
             // 显示User信息
             System.out.println("Test Get start...");
-            printUsers(ibook.getUserList());
+            printUsers(iuser.getUserList());
             System.out.println("Test Get finished...");
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,18 +103,18 @@ public class Main {
         try
         {
             SqlSession session = sqlSessionFactory.openSession();
-            IBook ibook = session.getMapper(IBook.class);
+            IUser iuser = session.getMapper(IUser.class);
             System.out.println("Test update start...");
-            printUsers(ibook.getUserList());
+            printUsers(iuser.getUserList());
             // 执行更新
-            Book user = ibook.getUser(1);
+            User user = iuser.getUser(1);
             user.setName("New name");
-            ibook.updateUser(user);
+            iuser.updateUser(user);
             // 提交事务
             session.commit();
             // 显示更新之后User信息
             System.out.println("After update");
-            printUsers(ibook.getUserList());
+            printUsers(iuser.getUserList());
             System.out.println("Test update finished...");
         }catch (Exception e)
         {
@@ -127,18 +128,18 @@ public class Main {
         try
         {
             SqlSession session = sqlSessionFactory.openSession();
-            IBook ibook = session.getMapper(IBook.class);
+            IUser iuser = session.getMapper(IUser.class);
             System.out.println("Test delete start...");
             // 显示删除之前User信息
             System.out.println("Before delete");
-            printUsers(ibook.getUserList());
+            printUsers(iuser.getUserList());
             // 执行删除
-            ibook.deleteUser(2);
+            iuser.deleteUser(2);
             // 提交事务
             session.commit();
             // 显示删除之后User信息
             System.out.println("After delete");
-            printUsers(ibook.getUserList());
+            printUsers(iuser.getUserList());
             System.out.println("Test delete finished...");
         }catch (Exception e)
         {
@@ -152,17 +153,16 @@ public class Main {
      *
      * @param users
      */
-    private static void printUsers(final List<Book> users) {
+    private static void printUsers(final List<User> users) {
         int count = 0;
 
-        for (Book book : users) {
+        for (User user : users) {
             System.out.println(MessageFormat.format(
-                    "============= Book[{0}]=================", ++count));
-            System.out.println("Id: " + book.getId());
-            System.out.println("Name: " + book.getName());
-            System.out.println("作者: " + book.getAuthor());
-            System.out.println("价格: " + book.getPrice());
-            System.out.println("日期: " + book.getDate());
+                    "============= User[{0}]=================", ++count));
+            System.out.println("User Id: " + user.getId());
+            System.out.println("User Name: " + user.getName());
+            System.out.println("User Dept: " + user.getDept());
+            System.out.println("User Website: " + user.getWebsite());
         }
     }
 }
