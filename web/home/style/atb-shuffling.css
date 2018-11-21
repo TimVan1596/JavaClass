@@ -1,15 +1,15 @@
 #atb-entrance ul{
     list-style: none;
-    width: 1000px;
     text-align: center;
 }
 #atb-entrance li {
     float: left;
-    width: 23%;
+    width: 25%;
     height: 57px;
 }
 #atb-entrance li a {
     display: block;
+    /*padding: 8%;*/
     padding: 19px;
     color: black;
     text-decoration: none;
