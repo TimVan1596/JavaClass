@@ -33,11 +33,12 @@ div {
 }
 
 #div1 ul li a{
-    font-size: 28px;
+    font-size: 26px;
 }
 
 #div3 ul li .a-active {
-    color: black;
+    font-size: 16px;
+    color: -webkit-link;
     width: 100%
 }
 
