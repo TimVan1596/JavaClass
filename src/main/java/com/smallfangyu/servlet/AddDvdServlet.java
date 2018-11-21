@@ -2,6 +2,7 @@ package com.smallfangyu.servlet;
 
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.Main;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -22,8 +23,10 @@ public class AddDvdServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     String dvdname = null;
     String photo = null;
-
+    //jdbc类
     DbUtil db = new DbUtil();
+    //mybatis操作类
+    Main ma=new Main();
 
     public int addDvd(String dvdName, String photo) {
         String sql = "INSERT INTO dvd(dvdname,state,picture) VALUES(?,?,?)";
@@ -95,7 +98,12 @@ public class AddDvdServlet extends HttpServlet {
              }
          }else{
          }
-        if(addDvd(dvdname,photo)>0){
+
+         //jdbc添加
+        //if(addDvd(dvdname,photo)>0){
+
+        //mybatis映射添加
+        if(ma.dvdInsert(dvdname,photo)>0){
          response.getWriter().write("<script language='javascript'>alert('DVD添加成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
         }
     }

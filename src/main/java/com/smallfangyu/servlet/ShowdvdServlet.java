@@ -90,21 +90,24 @@ public class ShowdvdServlet extends HttpServlet {
        if(data==null){
             data="";
        }
-//        String sql = "SELECT * FROM dvd WHERE `show`=1 AND (dvdno like ? OR dvdname like ? OR state like ?)";
-//            Object[] params = {"%" + data + "%", "%" + data + "%", "%" + data + "%"};
-//            rs = db.executeQuery(sql, params);
-//        try {
-//            while (rs.next()) {
-//                list.add(new DVD(rs.getInt("dvdno"), rs.getString("dvdname"), rs.getString("state"), rs.getString("picture")));
-        list=ma.getDvdList();
-//                len++;
-//            }
-//            db.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        dvdLength = len;
-        dvdLength=list.size();
+        String sql = "SELECT * FROM dvd WHERE `show`=1 AND (dvdno like ? OR dvdname like ? OR state like ?)";
+            Object[] params = {"%" + data + "%", "%" + data + "%", "%" + data + "%"};
+            rs = db.executeQuery(sql, params);
+        try {
+            while (rs.next()) {
+                list.add(new DVD(rs.getInt("dvdno"), rs.getString("dvdname"), rs.getString("state"), rs.getString("picture")));
+
+        //mybatis映射修改
+        //list=ma.getDvdList();
+
+                len++;
+            }
+            db.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        dvdLength = len;
+        //dvdLength=list.size();
     }
 
     public void updatepage(int page){
