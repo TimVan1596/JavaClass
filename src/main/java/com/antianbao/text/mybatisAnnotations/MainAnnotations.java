@@ -39,7 +39,7 @@ public class MainAnnotations {
             // 用户数据列表
             getUserList();
             // 插入数据
-            // testInsert();
+            //testInsert();
 
             // 更新用户
             //testUpdate();
@@ -53,30 +53,26 @@ public class MainAnnotations {
     }
 
     //
-    public static void testInsert()
-    {
+    public static void testInsert() {
         try
         {
             // 获取Session连接
             SqlSession session = sqlSessionFactory.openSession();
             // 获取Mapper
             IUser userMapper = session.getMapper(IUser.class);
-            System.out.println("Test insert start...");
+            System.out.println("开始插入");
             // 执行插入
             User user = new User();
-            user.setId(0);
-            user.setName("Google");
-            user.setDept("Tech");
-            user.setWebsite("http://www.google.com");
-            user.setPhone("120");
+            user.setEmail("atb");
+            user.setPassword("123");
             userMapper.insertUser(user);
             // 提交事务
             session.commit();
 
             // 显示插入之后User信息
-            System.out.println("After insert");
+            System.out.println("插入前");
             getUserList();
-            System.out.println("Test insert finished...");
+            System.out.println("插入后");
         }
         catch (Exception e)
         {
@@ -90,32 +86,31 @@ public class MainAnnotations {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
             // 显示User信息
-            System.out.println("Test Get start...");
+            System.out.println("开始显示数据库内容");
             printUsers(iuser.getUserList());
-            System.out.println("Test Get finished...");
+            System.out.println("显示完毕");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void testUpdate()
-    {
+    public static void testUpdate() {
         try
         {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
-            System.out.println("Test update start...");
+            System.out.println("开始修改");
             printUsers(iuser.getUserList());
             // 执行更新
-            User user = iuser.getUser(1);
-            user.setName("New name");
+            User user = iuser.getUser(5);
+            user.setEmail("New name");
             iuser.updateUser(user);
             // 提交事务
             session.commit();
             // 显示更新之后User信息
-            System.out.println("After update");
+            System.out.println("修改前");
             printUsers(iuser.getUserList());
-            System.out.println("Test update finished...");
+            System.out.println("修改后");
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -123,24 +118,23 @@ public class MainAnnotations {
     }
 
     // 删除用户信息
-    public static void testDelete()
-    {
+    public static void testDelete() {
         try
         {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
-            System.out.println("Test delete start...");
+            System.out.println("开始删除");
             // 显示删除之前User信息
-            System.out.println("Before delete");
+            System.out.println("删除借书");
             printUsers(iuser.getUserList());
             // 执行删除
-            iuser.deleteUser(2);
+            iuser.deleteUser(5);
             // 提交事务
             session.commit();
             // 显示删除之后User信息
-            System.out.println("After delete");
+            System.out.println("删除前");
             printUsers(iuser.getUserList());
-            System.out.println("Test delete finished...");
+            System.out.println("删除后");
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -159,10 +153,8 @@ public class MainAnnotations {
         for (User user : users) {
             System.out.println(MessageFormat.format(
                     "============= User[{0}]=================", ++count));
-            System.out.println("User Id: " + user.getId());
-            System.out.println("User Name: " + user.getName());
-            System.out.println("User Dept: " + user.getDept());
-            System.out.println("User Website: " + user.getWebsite());
+            System.out.println("User Id: " + user.getEmail());
+            System.out.println("User Name: " + user.getPassword());
         }
     }
 }
