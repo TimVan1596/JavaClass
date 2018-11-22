@@ -62,7 +62,7 @@ public class MainAnnotations {
             IUser userMapper = session.getMapper(IUser.class);
             System.out.println("开始插入");
             // 执行插入
-            User user = new User();
+            EUser user = new EUser();
             user.setEmail("atb");
             user.setPassword("123");
             userMapper.insertUser(user);
@@ -102,7 +102,7 @@ public class MainAnnotations {
             System.out.println("开始修改");
             printUsers(iuser.getUserList());
             // 执行更新
-            User user = iuser.getUser(5);
+            EUser user = iuser.getUser(5);
             user.setEmail("New name");
             iuser.updateUser(user);
             // 提交事务
@@ -150,12 +150,11 @@ public class MainAnnotations {
     private static void printUsers(final List<EUser> users) {
         int count = 0;
 
-        for (User user : users) {
+        for (EUser user : users) {
             System.out.println(MessageFormat.format(
                     "============= User[{0}]=================", ++count));
             System.out.println("User Id: " + user.getEmail());
             System.out.println("User Name: " + user.getPassword());
-            System.out.println("User Name: " + user.getNo());
         }
     }
 }

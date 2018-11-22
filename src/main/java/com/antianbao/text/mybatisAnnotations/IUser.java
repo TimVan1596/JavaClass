@@ -15,18 +15,18 @@ import java.util.List;
 public interface IUser {
     //@Select("select * from user where id= #{id}")
     //public User getUserByID(int id);
-    @Select("SELECT *FROM user,dvd")
+    @Select("SELECT *FROM user")
     public List<EUser> getUserList();
 
     @Insert("INSERT INTO user(email,password) VALUES(#{email}, #{password})")
-    public void insertUser(User user);
+    public void insertUser(EUser user);
 
     @Update("UPDATE user SET email=#{email},password=#{password} WHERE id=#{id}")
-    public void updateUser(User user);
+    public void updateUser(EUser user);
 
     @Delete("DELETE FROM user WHERE id = #{id}")
-    public void deleteUser(int userId);
+    public void deleteUser(int id);
 
     @Select("SELECT *FROM user WHERE id = #{id}")
-    public User getUser(int id);
+    public EUser getUser(int id);
 }
