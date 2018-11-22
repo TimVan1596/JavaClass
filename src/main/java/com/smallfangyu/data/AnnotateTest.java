@@ -94,7 +94,7 @@ public class AnnotateTest {
             session.close();
         }
 
-       // System.out.println(deleteDvd(1099));
+        System.out.println(deleteDvd(1101));
 
 //        DVD dvd=new DVD();
 //        dvd.setDvdname("mybatis插入");

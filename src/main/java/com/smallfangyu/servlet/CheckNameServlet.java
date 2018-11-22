@@ -1,6 +1,7 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,9 @@ import java.sql.SQLException;
 
 @WebServlet(name = "CheckNameServlet",urlPatterns = {"/fy/toCheckName"})
 public class CheckNameServlet extends HttpServlet {
-    DbUtil db = new DbUtil();
+   // DbUtil db = new DbUtil();
+   //阿里巴巴druid连接数据库
+   JdbcDruid db=new JdbcDruid();
     public boolean checkname(String userName){
         String sql = "SELECT * FROM user ";
         ResultSet rs = db.executeQuery(sql, null);

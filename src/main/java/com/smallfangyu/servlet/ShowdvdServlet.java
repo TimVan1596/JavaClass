@@ -2,6 +2,7 @@ package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DVD;
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 import com.smallfangyu.data.Main;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,9 @@ import java.util.List;
 
 @WebServlet(name = "ShowdvdServlet",urlPatterns = {"/fy/servlet/toShowDvd"})
 public class ShowdvdServlet extends HttpServlet {
-    static DbUtil db=new DbUtil();
+    //static DbUtil db=new DbUtil();
+    //阿里巴巴druid连接数据库
+    static JdbcDruid db=new JdbcDruid();
     static Main ma=new Main();
     /**所有DVD集合
      *

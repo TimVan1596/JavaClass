@@ -1,6 +1,7 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,9 @@ import java.io.IOException;
 @WebServlet(name = "ReduceServlet",urlPatterns = {"/fy/reduce"})
 public class ReduceServlet extends HttpServlet {
 
-    DbUtil db=new DbUtil();
+    //DbUtil db=new DbUtil();
+    //阿里巴巴druid连接数据库
+    JdbcDruid db=new JdbcDruid();
     LoginServlet ls=new LoginServlet();
     public int reduce(String dvdId){
         String sql="UPDATE dvd SET `show`=1 WHERE dvdno=?";

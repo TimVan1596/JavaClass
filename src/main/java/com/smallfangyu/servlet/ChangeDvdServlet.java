@@ -1,6 +1,7 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 import com.smallfangyu.data.Main;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -23,7 +24,9 @@ import javax.servlet.ServletException;
 @WebServlet(name = "ChangeDvdServlet",urlPatterns = {"/fy/servlet/toChangeDvd"})
 public class ChangeDvdServlet extends HttpServlet {
  private String photo;
- DbUtil db=new DbUtil();
+ //DbUtil db=new DbUtil();
+ //阿里巴巴druid连接数据库
+ JdbcDruid db=new JdbcDruid();
  Main ma=new Main();
  AddDvdServlet ad=new AddDvdServlet();
  ArrayList<String> text=new ArrayList<String>();

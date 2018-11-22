@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
         urlPatterns = {"/fy/servlet/login.do"}, loadOnStartup = 1)
 public class LoginServlet extends javax.servlet.http.HttpServlet {
     //DbUtil db = new DbUtil();
+    //阿里巴巴druid连接数据库
     JdbcDruid db=new JdbcDruid();
     private int number=0;
 

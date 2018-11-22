@@ -2,6 +2,7 @@ package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DVD;
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +17,9 @@ import java.util.ArrayList;
 
 @WebServlet(name = "RecycleServlet",urlPatterns = {"/fy/recycle"})
 public class RecycleServlet extends HttpServlet {
-    DbUtil db=new DbUtil();
-
+    //DbUtil db=new DbUtil();
+//阿里巴巴druid连接数据库
+    JdbcDruid db=new JdbcDruid();
     /**所有DVD集合
      *
      */

@@ -2,6 +2,7 @@ package com.smallfangyu.servlet;
 
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 import com.smallfangyu.data.Main;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -24,7 +25,9 @@ public class AddDvdServlet extends HttpServlet {
     String dvdname = null;
     String photo = null;
     //jdbc类
-    DbUtil db = new DbUtil();
+    //DbUtil db = new DbUtil();
+    //阿里巴巴druid连接数据库
+    JdbcDruid db=new JdbcDruid();
     //mybatis操作类
     Main ma=new Main();
 
