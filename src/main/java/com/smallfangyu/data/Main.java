@@ -165,7 +165,7 @@ public class Main {
     /**
      * 修改dvd数据
      */
-    public int dvdUpdate(int dvdno,String dvdname,String state) {
+    public int dvdUpdate(int dvdno,String dvdname,String state,String picture) {
         int sucess=0;
         try
         {
@@ -173,14 +173,21 @@ public class Main {
             IDvd idvd= session.getMapper(IDvd.class);
 
             // 执行更新
-            DVD dvd = idvd.getDvd(dvdno);
-            dvd.setDvdname(dvdname);
-            dvd.setState(state);
-            //dvd.setPicture(picture);
+                DVD dvd = idvd.getDvd(dvdno);
+                dvd.setDvdname(dvdname);
+                dvd.setState(state);
+                if(picture.length()!=0) {
+                    //改图片修改
+                   dvd.setPicture(picture);
+                   idvd.updateDvdd(dvd);
+                }else {
+                    //不改图片修改
+                    idvd.updateDvd(dvd);
+                }
             // 提交事务
-            idvd.updateDvd(dvd);
-            session.commit();
-            sucess=1;
+                session.commit();
+                sucess = 1;
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -210,6 +217,25 @@ public class Main {
         {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 删除dvd数据
+     */
+    public  int dvdDelete(int dvdno) {
+        int result=0;
+        try {
+            SqlSession session = sqlSessionFactory.openSession();
+            IDvd idvd = session.getMapper(IDvd.class);
+            // 执行删除
+            idvd.deleteDvd(dvdno);
+            // 提交事务
+            session.commit();
+            result=1;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**

@@ -4,9 +4,8 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import com.smallfangyu.data.IDvdAnnotate;
 import java.io.Reader;
-import java.util.List;
+
 
 public class AnnotateTest {
     private static SqlSessionFactory sqlSessionFactory;
@@ -89,7 +88,7 @@ public class AnnotateTest {
             session.close();
         }
 
-        System.out.println(deleteDvd(1098));
+        System.out.println(deleteDvd(1099));
 
 //        DVD dvd=new DVD();
 //        dvd.setDvdname("mybatis插入");

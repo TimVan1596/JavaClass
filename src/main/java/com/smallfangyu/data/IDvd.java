@@ -9,6 +9,8 @@ public interface IDvd {
 
     public void updateDvd(DVD dvd);
 
+    public void updateDvdd(DVD dvd);
+
     public void deleteDvd(int id);
 
     public DVD  getDvd(int id);

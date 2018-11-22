@@ -84,6 +84,7 @@ public class ChangeDvdServlet extends HttpServlet {
             try {
                 List<FileItem> items = upload.parseRequest(request);
                 Iterator<FileItem> iter=items.iterator();
+                text.clear();
                 while(iter.hasNext()){
                     FileItem item=iter.next();
                     if(item.isFormField()){
@@ -104,11 +105,10 @@ public class ChangeDvdServlet extends HttpServlet {
         //if(change(text.get(0),text.get(1),text.get(2),photo)>0){
 
         //mybatis映射修改
-        if(ma.dvdUpdate(a,text.get(1),text.get(2))>0){
+        if(ma.dvdUpdate(a,text.get(1),text.get(2),photo)>0){
             response.getWriter().write("<script language='javascript'>alert('DVD修改成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
         }else{
             response.getWriter().write("<script language='javascript'>alert('DVD修改失败')</script>");
-        }
-
+            }
     }
 }
