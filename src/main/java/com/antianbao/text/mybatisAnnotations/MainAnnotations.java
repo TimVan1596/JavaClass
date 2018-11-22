@@ -147,7 +147,7 @@ public class MainAnnotations {
      *
      * @param users
      */
-    private static void printUsers(final List<User> users) {
+    private static void printUsers(final List<EUser> users) {
         int count = 0;
 
         for (User user : users) {
@@ -155,6 +155,7 @@ public class MainAnnotations {
                     "============= User[{0}]=================", ++count));
             System.out.println("User Id: " + user.getEmail());
             System.out.println("User Name: " + user.getPassword());
+            System.out.println("User Name: " + user.getNo());
         }
     }
 }

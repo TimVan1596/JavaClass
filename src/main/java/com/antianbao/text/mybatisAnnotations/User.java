@@ -1,16 +1,16 @@
 package com.antianbao.text.mybatisAnnotations;
 
 public class User {
-    private int no;
+    private int id;
     private String email;
     private String password;
 
     public int getNo() {
-        return no;
+        return id;
     }
 
-    public void setNo(int no) {
-        this.no = no;
+    public void setNo(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
