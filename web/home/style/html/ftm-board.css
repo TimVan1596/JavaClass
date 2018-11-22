@@ -1,0 +1,16 @@
+#ftm-board-box{
+    width:99%;
+    height:150px;
+    border:10px outset #CCC;
+    text-align: center;
+    padding: 2% 1% 2%;
+}
+
+#ftm-board-box li{
+    font-size: large;
+    line-height: 32px;
+}
+
+#ftm-board-box .ftm-border-name{
+    color: #ff006f;
+}

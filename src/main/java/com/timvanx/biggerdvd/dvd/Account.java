@@ -124,21 +124,20 @@ public class Account implements Serializable {
     /**
      * 通过用户名修改密码
      */
-    public static boolean changePasswordByName(String name, String password) {
+    public static boolean changePasswordByEmail(String email, String password) {
         boolean isAccountExist = false;
 
         //判断账户名是否存在
-        if (isAccountExist(name)) {
+        if (isAccountExist(email)) {
 
             isAccountExist = true;
             //在数据库中update密码
             Map<String, Object> updateData =
                     new HashMap<>(1);
             updateData.put("password", password);
-            String tableWhere = "name = " + " '" + name + "' ";
+            String tableWhere = "email = " + " '" + email + "' ";
             JDBCUtil.update("account", updateData
                     , tableWhere);
-
         }
 
         return isAccountExist;
@@ -169,21 +168,65 @@ public class Account implements Serializable {
         boolean isSuccessful = false;
 
         String tableWhere = "email = " + " '" + email + "' ";
+        tableWhere += " and capcha = " + " '" + capcha + "' ";
 
         //设置查询条件
         ArrayList<String> tableField = new ArrayList<String>() {{
-            add("capcha");
+            add("email");
+        }};
+
+        int cnt  = JDBCUtil.count("account",
+                "email",tableWhere);
+        if (cnt == 1){
+            isSuccessful = true;
+        }
+
+
+        return isSuccessful;
+    }
+
+    /**
+     * 获取权限值
+     * @param tableWhere 查询条件
+     * @return authority String authority=权限值
+     */
+    public static String getAuthority(String tableWhere) {
+
+        String authority = "";
+
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("authority");
         }};
         List<List<String>> isfirstloginList =
                 JDBCUtil.select("account",
                         tableField, tableWhere, null,
                         null);
-        if ("1".equals( isfirstloginList.get(0).get(0))){
-            isSuccessful = true;
-        }
 
-        return isSuccessful;
+        authority = isfirstloginList.get(0).get(0);
+
+        return authority;
     }
 
+    /**
+     * 获取权限值
+     * @param tableWhere 查询条件
+     * @return authority String authority=权限值
+     */
+    public static String getName(String tableWhere){
+        String name = "";
 
+        //设置查询条件
+        ArrayList<String> tableField = new ArrayList<String>() {{
+            add("name");
+        }};
+        List<List<String>> isfirstloginList =
+                JDBCUtil.select("account",
+                        tableField, tableWhere, null,
+                        null);
+
+        name = isfirstloginList.get(0).get(0);
+
+        return name;
+    }
 }

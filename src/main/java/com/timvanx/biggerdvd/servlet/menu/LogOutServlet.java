@@ -29,17 +29,16 @@ public class LogOutServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.removeAttribute("username");
         }
-        CommonUtil.popAlert(out, "注销成功"
+        CommonUtil.popAlert(out,"退出登录", "您已安全退出 BiggerDVD"
                 , "index.html");
 
-        return;
     }
 
 }

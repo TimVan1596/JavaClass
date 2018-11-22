@@ -1,0 +1,51 @@
+div {
+    /*border:black solid 1px;*/
+    float: left;
+}
+
+#div1 {
+    width:100%;
+    height: 60px;
+}
+
+#div2 {
+   margin-top:20px;
+    width: 100%
+}
+
+#div3{
+    width:240px;
+    height:1000px;
+    background-color: #DDDDDD;
+}
+
+#div4{
+    width: 178px;
+    padding:30px
+}
+
+#div5{
+    margin-top:80px;
+    height:1005px;
+    background-color:#007bff;
+    margin-left: 4%;
+    width: 77%;
+}
+
+#div1 ul li a{
+    font-size: 26px;
+}
+
+#div3 ul li .a-active {
+    font-size: 16px;
+    color: -webkit-link;
+    width: 100%
+}
+
+#div3 ul{
+    background-color: #DDDDDD
+}
+
+#div4 h3 span{
+    font-size: 20px;
+}

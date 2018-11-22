@@ -2,6 +2,7 @@ package com.timvanx.biggerdvd.servlet.biggerdvd;
 
 import com.alibaba.fastjson.JSON;
 import com.timvanx.biggerdvd.dvd.Account;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +35,8 @@ public class AccountCheckServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Logger logger  =  Logger.getLogger(AccountCheckServlet.class );
+
         response.setContentType("application/text; charset=utf-8");
         PrintWriter out = response.getWriter();
 
@@ -54,20 +57,26 @@ public class AccountCheckServlet extends HttpServlet {
 
         //判断输入账户是否存在
         if (Account.login(userEmail, userPassword)) {
+            String tableWhere = "email = '"
+                    +userEmail+"'";
             ret.put("error", 0);
             Map<String, Object> data =
                     new HashMap<>(1);
             //判断是否初次登录
             Boolean isFirstLogin =
-                    Account.isFirstLogin("email = '"
-                            +userEmail+"'");
+                    Account.isFirstLogin(tableWhere);
             data.put("isFirstLogin",isFirstLogin?"1":"0");
+
+            String authority =  Account.getAuthority(tableWhere);
+
+            String userName =  Account.getName(tableWhere);
 
             ret.put("data", data);
             HttpSession session = request.getSession();
-            session.setAttribute("userName", userEmail);
+            session.setAttribute("userName", userName);
             session.setAttribute("userEmail", userEmail);
-
+            session.setAttribute("authority", authority);
+            logger.debug("authority = "+authority);
         } else {
             ret.put("error", 1);
             ret.put("errorInfo", "请检查邮箱或密码是否输入错误");

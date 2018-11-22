@@ -1,15 +1,13 @@
-//注销页面
-function logout() {
-    window.location.href = '../LogOutServlet.do';
-}
-
 //pageNum = 当前页
 //pageSize = 每页行数
 let pageNum = 1;
 let pageSize = 5;
 let query = "";
 
-
+//注销页面
+function logout() {
+    window.location.href = '../LogOutServlet.do';
+}
 
 //模块化初始化 LayUI 框架
 layui.use(['layer','element'], function(){
@@ -83,7 +81,10 @@ layui.use(['layer','element'], function(){
 
     });
 
+    let $authority = ajaxGetAuthority();
+
 });
+
 
 //添加DVD
 function addDVD() {
@@ -433,7 +434,6 @@ function refreshSearch(){
     window.location.replace("menu.jsp");
 }
 
-
 //打开黑科技
 function openLab() {
     //黑科技 iframe层
@@ -520,6 +520,36 @@ function onclickImg(obj){
         content: "<img height="+reImgHeight+" width="
         +reImgWidth+" src=" + src + "   />"
     });
+}
+
+//申请管理员 applyAdmin
+function applyAdmin() {
+    alert("申请管理员");
+}
+
+//ajax获取当前用户权限值
+function ajaxGetAuthority() {
+    //权限值
+    let $authority = 1;
+    $.post('GetAuthority.do', {}, function (ret) {
+
+        //解析ret
+        ret = eval("(" + ret + ")");
+
+        if (ret['error'] === 0) {
+            $authority = ret['data']['authority'];
+            alert("$authority = " +$authority);
+
+        }
+        else {
+
+            layer.msg(ret['errorInfo'], function(){
+                logout();
+            });
+
+        }
+    });
+    return $authority;
 }
 
 

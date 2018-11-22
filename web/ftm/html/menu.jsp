@@ -73,8 +73,8 @@
     <!-- DVD表格的表头（列表填充模板 template）-->
     <script type="text/html" id="DVD_TABLE_TH_TEMPLATE">
         <tr >
-            <th width="30" height="30"></th>
-            <th width="100" >编号</th>
+            <th width="30" height="30" ></th>
+            <th width="100">编号</th>
             <th width="110">封面</th>
             <th width="250">名称</th>
             <th width="150">操作</th>
@@ -92,6 +92,7 @@
 <%
     //初始化常量信息
     String userName = "非法用户";
+    String userEmail = (String) session.getAttribute("userEmail") ;
 
     if (session.getAttribute("userName") != null) {
         userName = (String) session.getAttribute("userName");
@@ -112,6 +113,9 @@
         <li class="layui-nav-item" >
             <a href=""><img src="https://cloud.timvanx.com/Fu7yXecEjIMj2_g2CPRmYEKGuIK3" class="layui-nav-img"><%=userName%></a>
             <dl class="layui-nav-child">
+                <dd><a href="javascript:;"><%=userEmail%></a></dd>
+                <dd><a href="javascript:;"
+                       onclick="applyAdmin();">申请管理员</a></dd>
                 <dd><a href="javascript:;" onclick="logout();">退出登录</a></dd>
             </dl>
         </li>
@@ -125,14 +129,15 @@
     <div  style="display: inline-block;margin-left: -24%;">
         <div class="layui-btn-group">
             <button class="layui-btn layui-btn-normal hidden"
-                    id="refresh-Search-btn"
+                    id="refresh-Search-btn lev"
                     onclick="refreshSearch()">
                 <i class="layui-icon">&#xe9aa;</i> 重置搜索
             </button>
             <button class="layui-btn layui-btn-normal"  onclick="addDVD()">
                 <i class="layui-icon">&#xe608;</i> 添加
             </button>
-            <button class="layui-btn layui-btn-danger" onclick="deleteDVD()">
+            <button class="layui-btn layui-btn-danger user-level-1"
+                    onclick="deleteDVD()" >
                 <i class="layui-icon">&#xe640;</i>一键删除
             </button>
         </div>

@@ -297,51 +297,172 @@
 <%--<hr class="layui-bg-blue">--%>
 
 <%--15-弹出层--%>
-<%--<div class="layui-input-inline">--%>
-    <%--<button type="button" onclick="selectRole()" class="layui-btn layui-btn-primary layui-btn-radius">iframe-多媒体</button>--%>
-<%--</div>--%>
-<%--<script>--%>
-    <%--//选择角色弹层--%>
-    <%--function selectRole(){--%>
-        <%--layui.use('layer', function(){--%>
-            <%--//页面层-佟丽娅--%>
-            <%--var img = "<img src='../javaWebDvd/images/banner.jpg' />";--%>
-            <%--layer.open({--%>
-                <%--type:1,--%>
-                <%--shift: 2,--%>
-                <%--shade:0,--%>
-                <%--title:'查看图片',--%>
-                <%--shadeClose:true,--%>
-                <%--content:img--%>
-            <%--});--%>
-            <%--//iframe层-多媒体--%>
-            <%--// layer.open({--%>
-            <%--//     type: 2,--%>
-            <%--//     title: false,--%>
-            <%--//     area: ['630px', '360px'],--%>
-            <%--//     shade: 0.8,--%>
-            <%--//     closeBtn: 0,--%>
-            <%--//     shadeClose: true,--%>
-            <%--//     content: '//player.youku.com/embed/XMjY3MzgzODg0'--%>
-            <%--// });--%>
-        <%--});--%>
-    <%--}--%>
-<%--</script>--%>
-
-<%--16-分页--%>
-<div id="test1"></div>
+<div class="layui-input-inline">
+    <button type="button" onclick="selectRole()" class="layui-btn layui-btn-primary layui-btn-radius">iframe-多媒体</button>
+</div>
 <script>
-    layui.use('laypage', function(){
-        var laypage = layui.laypage;
-
-        //执行一个laypage实例
-        laypage.render({
-            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
-            ,count: 40 //数据总数，从服务端得到
+    //选择角色弹层
+    function selectRole(){
+        layui.use('layer', function(){
+            //页面层-佟丽娅
+            var img = "<img src='../javaWebDvd/images/banner.jpg' />";
+            layer.open({
+                type:1,
+                shift: 2,
+                shade:0,
+                title:'查看图片',
+                shadeClose:true,
+                content:img
+            });
+            //iframe层-多媒体
+            // layer.open({
+            //     type: 2,
+            //     title: false,
+            //     area: ['630px', '360px'],
+            //     shade: 0.8,
+            //     closeBtn: 0,
+            //     shadeClose: true,
+            //     content: '//player.youku.com/embed/XMjY3MzgzODg0'
+            // });
         });
-    });
+    }
 </script>
 
+<%--16-分页--%>
+<%--<div id="test1"></div>--%>
+<%--<script>--%>
+    <%--layui.use('laypage', function(){--%>
+        <%--var laypage = layui.laypage;--%>
+        <%--//执行一个laypage实例--%>
+        <%--laypage.render({--%>
+            <%--elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号--%>
+            <%--,count: 40 //数据总数，从服务端得到--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
 
+<%--17-文件上传--%>
+<%--<button type="button" class="layui-btn" id="test1">--%>
+    <%--<i class="layui-icon">&#xe67c;</i>上传图片--%>
+<%--</button>--%>
+<%--<script>--%>
+    <%--layui.use('upload', function(){--%>
+        <%--var upload = layui.upload;--%>
+        <%--//执行实例--%>
+        <%--var uploadInst = upload.render({--%>
+            <%--elem: '#test1' //绑定元素--%>
+            <%--,url: '../../ftm/html/menu/adddvd/UploadPreview.do' //上传接口--%>
+            <%--,done: function(res){--%>
+                <%--//上传完毕回调--%>
+            <%--}--%>
+            <%--,error: function(){--%>
+                <%--//请求异常回调--%>
+            <%--}--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
+
+<%--常用元素操作--%>
+<%--<div class="layui-tab" lay-filter="demo">--%>
+    <%--<ul class="layui-tab-title">--%>
+        <%--<li class="layui-this">网站设置</li>--%>
+        <%--<li>商品管理</li>--%>
+        <%--<li>订单管理</li>--%>
+    <%--</ul>--%>
+    <%--<div class="layui-tab-content">--%>
+        <%--<div class="layui-tab-item layui-show">内容1</div>--%>
+        <%--<div class="layui-tab-item">内容2</div>--%>
+        <%--<div class="layui-tab-item">内容3</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
+<%--<script>--%>
+    <%--layui.use('element', function(){--%>
+        <%--var element = layui.element;--%>
+
+<%--//一些事件监听--%>
+        <%--element.on('tab(demo)', function(data){--%>
+            <%--console.log(data);--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
+
+<%--颜色选择器--%>
+<%--<div id="test1"></div>--%>
+<%--<script>--%>
+    <%--layui.use('colorpicker', function(){--%>
+        <%--var colorpicker = layui.colorpicker;--%>
+        <%--//渲染--%>
+        <%--colorpicker.render({--%>
+            <%--elem: '#test1'  //绑定元素--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
+
+<%--滑块--%>
+<%--<div id="slideTest1"></div>--%>
+<%--<script>--%>
+    <%--layui.use('slider', function(){--%>
+        <%--var slider = layui.slider;--%>
+
+        <%--//渲染--%>
+        <%--slider.render({--%>
+            <%--elem: '#slideTest1'  //绑定元素--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
+
+<%--评分组件--%>
+<%--<div id="test1"></div>--%>
+<%--<script>--%>
+    <%--layui.use('rate', function(){--%>
+        <%--var rate = layui.rate;--%>
+
+        <%--//渲染--%>
+        <%--var ins1 = rate.render({--%>
+            <%--elem: '#test1'  //绑定元素--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
+
+<%--轮播--%>
+<%--<div class="layui-carousel" id="test1">--%>
+    <%--<div carousel-item>--%>
+        <%--<div>条目1</div>--%>
+        <%--<div>条目2</div>--%>
+        <%--<div>条目3</div>--%>
+        <%--<div>条目4</div>--%>
+        <%--<div>条目5</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
+<%--<!-- 条目中可以是任意内容，如：<img src=""> -->--%>
+<%--<script>--%>
+    <%--layui.use('carousel', function(){--%>
+        <%--var carousel = layui.carousel;--%>
+        <%--//建造实例--%>
+        <%--carousel.render({--%>
+            <%--elem: '#test1'--%>
+            <%--,width: '100%' //设置容器宽度--%>
+            <%--,arrow: 'always' //始终显示箭头--%>
+            <%--//,anim: 'updown' //切换动画方式--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
+
+<%--流加载--%>
+<%--<div id="test"></div>--%>
+<%--<script>--%>
+    <%--layui.use('util', function(){--%>
+        <%--var util = layui.util;--%>
+
+        <%--//示例--%>
+        <%--var endTime = new Date(2099,1,1).getTime() //假设为结束日期--%>
+            <%--,serverTime = new Date().getTime(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的--%>
+
+        <%--util.countdown(endTime, serverTime, function(date, serverTime, timer){--%>
+            <%--var str = date[0] + '天' + date[1] + '时' +  date[2] + '分' + date[3] + '秒';--%>
+            <%--layui.$('#test').html('距离2099年1月1日还有：'+ str);--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
 </body>
 </html>

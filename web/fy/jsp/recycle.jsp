@@ -76,12 +76,12 @@ ArrayList<DVD> list=(ArrayList<DVD>)session.getAttribute("deletelistDVD");
     <tr><th>DVD编号</th><th>DVD预览</th><th>DVD名称</th><th>DVD状态</th><th>操作</th></tr>
     <% for(DVD dvd:list){ %>
     <tr>
-        <td style="width:110px"><%=dvd.getId() %></td>
+        <td style="width:110px"><%=dvd.getDvdno() %></td>
         <td style="width:110px"><img style="width:110px;height:80px" src="<%= dvd.getPicture()%>" /></td>
         <td style="width:110px"> <%=dvd.getDvdname() %></td>
         <% if(dvd.getState().equals("可以借")){%><td style="width:110px;background-color: limegreen"><%=dvd.getState() %></td><% }%>
         <% if(dvd.getState().equals("已借出")){%><td style="width:110px;background-color: red"><%=dvd.getState() %></td><% }%>
-        <td style="width:110px"><a class="button" href="/fy/reduce?id=<%=dvd.getId() %>" >还原</a></td>
+        <td style="width:110px"><a class="button" href="/fy/reduce?id=<%=dvd.getDvdno() %>" >还原</a></td>
     </tr>
     <%  }%>
 </table>

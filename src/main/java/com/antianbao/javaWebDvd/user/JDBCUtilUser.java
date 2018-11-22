@@ -1,6 +1,7 @@
 package com.antianbao.javaWebDvd.user;
 
 import java.io.*;
+import java.security.MessageDigest;
 import java.sql.*;
 import java.util.*;
 
@@ -94,15 +95,15 @@ public class JDBCUtilUser {
         int rlt = 0;
         List<User> list = queryStu();
         for (User ls : list) {
-            if (ls.getName().equals(stu.getName())) {
+            if (ls.getEmail().equals(stu.getEmail())) {
                 return rlt;
             }
         }
-        String sql = "insert into User(name,password) values(?,?)";
+        String sql = "insert into User(email,password) values(?,?)";
         PreparedStatement pstmt = getPrepareStatement(sql);
         try {
-            pstmt.setString(1, stu.getName());
-            pstmt.setString(2, stu.getPassword());
+            pstmt.setString(1, stu.getEmail());
+            pstmt.setString(2, MD5(stu.getPassword()));
             rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
@@ -116,10 +117,11 @@ public class JDBCUtilUser {
      * 判断输入账号密码是否正确
      */
     public int isReally(String name, String password) {
+        System.out.println(MD5(password));
         int rlt = 0;
         List<User> list = queryStu();
         for (User ls : list) {
-            if (ls.getName().equals(name) && ls.getPassword().equals(password)) {
+            if (ls.getEmail().equals(name) && ls.getPassword().equals(MD5(password))) {
                 return 1;
             }
         }
@@ -132,9 +134,9 @@ public class JDBCUtilUser {
     public int updateStu(String name, String password) {
         int rlt = 0;
         try {
-            String sql = "update user SET password = ? where name = ?";
+            String sql = "update user SET password = ? where email = ?";
             PreparedStatement pstat = getPrepareStatement(sql);
-            Object[] params = {password, name};
+            Object[] params = {MD5(password), name};
             for (int i = 1; i <= params.length; i++) {
                 pstat.setObject(i, params[i - 1]);
             }
@@ -158,7 +160,7 @@ public class JDBCUtilUser {
             User bd = null;
             while (rs.next()) {
                 bd = new User();
-                bd.setName(rs.getString("name"));
+                bd.setEmail(rs.getString("email"));
                 bd.setPassword(rs.getString("password"));
                 list.add(bd);
             }
@@ -173,10 +175,39 @@ public class JDBCUtilUser {
         int rlt = 0;
         List<User> list = queryStu();
         for (User ls : list) {
-            if (ls.getName().equals(name)) {
+            if (ls.getEmail().equals(name)) {
                 return 1;
             }
         }
         return rlt;
+    }
+
+    //MD5加密
+    public static String MD5(String inStr) {
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+            return "";
+        }
+        char[] charArray = inStr.toCharArray();
+        byte[] byteArray = new byte[charArray.length];
+
+        for (int i = 0; i < charArray.length; i++)
+            byteArray[i] = (byte) charArray[i];
+
+        byte[] md5Bytes = md5.digest(byteArray);
+
+        StringBuffer hexValue = new StringBuffer();
+
+        for (int i = 0; i < md5Bytes.length; i++) {
+            int val = ((int) md5Bytes[i]) & 0xff;
+            if (val < 16)
+                hexValue.append("0");
+            hexValue.append(Integer.toHexString(val));
+        }
+        return hexValue.toString();
     }
 }

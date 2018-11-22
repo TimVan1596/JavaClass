@@ -133,7 +133,7 @@ function resetPassword() {
 
 
         //通过ajax检查是否正常登录
-        $.post('resetPassword.do', {
+        $.post('CheckAccountExist.do', {
             email: email
         }, function (ret) {
             //解析ret
@@ -164,14 +164,11 @@ function resetPassword() {
                 slideBox.remove();
 
             } else if (ret['error'] === 1) {
-                let errorInfo = "修改失败！" +ret['errorInfo'];
+                let errorInfo = "发送失败！" +ret['errorInfo'];
 
-                layer.msg(errorInfo, {
-                    anim: 6
-                });
-                setTimeout(function () {
-                    location.reload();
-                }, 2000);
+                alert(errorInfo);
+                window.location.href = 'index.html';
+
             }
 
             //关闭上传loading
@@ -201,7 +198,7 @@ function resetCapchaPassword() {
     }
     else {
 
-        let uploadLoading = layer.msg('发送邮件中', {
+        let uploadLoading = layer.msg('检查中', {
             icon: 16
             ,shade: 0.01
         });
@@ -216,7 +213,8 @@ function resetCapchaPassword() {
             ret = eval("(" + ret + ")");
             if (ret['error'] === 0) {
                 let info = "验证成功!跳转到修改页面";
-                layer.msg(info, {});
+
+                alert(info);
                 setTimeout(function () {
                    window.location.href = 'realresetpwd.jsp';
                 }, 2000);

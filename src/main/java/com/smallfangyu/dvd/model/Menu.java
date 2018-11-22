@@ -2,8 +2,8 @@ package com.smallfangyu.dvd.model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import com.smallfangyu.dvd.data.Data;
+
 
 public class Menu {
     

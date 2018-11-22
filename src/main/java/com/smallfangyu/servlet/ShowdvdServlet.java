@@ -2,6 +2,7 @@ package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DVD;
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.Main;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +13,16 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "ShowdvdServlet",urlPatterns = {"/fy/servlet/toShowDvd"})
 public class ShowdvdServlet extends HttpServlet {
     static DbUtil db=new DbUtil();
+    static Main ma=new Main();
     /**所有DVD集合
      *
      */
-    static ArrayList<DVD> list=new ArrayList<DVD>();
+    static List<DVD> list=new ArrayList<DVD>();
 
     /**当前页面DVD集合
      *
@@ -47,29 +50,10 @@ public class ShowdvdServlet extends HttpServlet {
      */
     static int pageNumber=0;
 
-    //dvd数据总数
+    /**
+     * dvd数据总数
+     */
     static int len = 0;
-
-        /**
-         * 查询数据库一共几条数据
-         */
-//        public void count() {
-//            String sq = "SELECT COUNT(*) FROM dvd ";
-//            ResultSet rst = db.executeQuery(sq, null);
-//            try {
-//                while (rst.next()) {
-//                    dvdLength = rst.getInt("COUNT(*)");
-//                }
-//                db.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            if (dvdLength % pageSize == 0) {
-//                pageNumber = (dvdLength / pageSize) - 1;
-//            } else {
-//                pageNumber = dvdLength / pageSize;
-//            }
-//        }
 
         /**
          *查询DVD已借出和可以借的数量
@@ -112,6 +96,10 @@ public class ShowdvdServlet extends HttpServlet {
         try {
             while (rs.next()) {
                 list.add(new DVD(rs.getInt("dvdno"), rs.getString("dvdname"), rs.getString("state"), rs.getString("picture")));
+
+        //mybatis映射修改
+        //list=ma.getDvdList();
+
                 len++;
             }
             db.close();
@@ -119,6 +107,7 @@ public class ShowdvdServlet extends HttpServlet {
             e.printStackTrace();
         }
         dvdLength = len;
+        //dvdLength=list.size();
     }
 
     public void updatepage(int page){

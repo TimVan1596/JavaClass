@@ -8,6 +8,7 @@ function register() {
     let password = $("[name=password]").val();
     let rePassword = $("[name=re-password]").val();
     let email = $("[name=email]").val();
+    let name = $("[name=name]").val();
 
     if (password !== rePassword) {
 
@@ -44,9 +45,10 @@ function register() {
 
 
         //通过ajax检查是否正常登录
-        $.post('../registerAccount.do', {
+        $.post('registerAccount.do', {
             email:email,
-            password: password
+            password: password,
+            name: name
         }, function (ret) {
             //解析ret
             ret = eval("(" + ret + ")");
@@ -77,7 +79,7 @@ function register() {
                 }, 3200);
 
                 alert("注册成功！");
-                window.location.href = '../index.html?username='+name;
+                window.location.href = 'index.html?username='+name;
 
             } else if (ret['error'] === 1) {
                 var errorInfo = ret['errorInfo'];

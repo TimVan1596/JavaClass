@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎来到Java1班 第三组 项目平台</title>
+    <link rel="stylesheet" href="../style/fy-navigator.css">
+    <!--layui引用-->
+    <link rel="stylesheet" href="../../common/util/layui/css/layui.css">
+    <link rel="stylesheet" href="../style/atb-shuffling.css">
+    <link rel="stylesheet"
+          href="../style/html/ftm-board.css"
+          media="all">
+
+    <!-- 留言板信息（列表填充模板）-->
+    <script type="text/html" id="BORDER_MSG_TEMPLATE">
+        <li><a>
+            <span class="ftm-border-name">匿名</span>：
+            <span class="ftm-border-msg">这是我留言的内容</span>
+            <br>
+        </a></li>
+    </script>
+    <!-- 留言板信息 结束-->
+
+
+    <script src="../../common/util/layui/layui.js"></script>
+    <script src="../script/atb-shuffling.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../script/ftm-l-slide.js"></script>
+    <script src="../script/html/ftm-board.js"></script>
+</head>
+<body>
+<div id="div1" >
+    <ul class="layui-nav layui-bg-black" >
+        <li class="layui-nav-item"><a href="" class="layui-icon layui-icon-home" ><span>主页</span></a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right" >
+        <li class="layui-nav-item">
+        </li>
+        <li class="layui-nav-item" ><a href="" class="layui-icon layui-icon-username" ><span>登录</span></a></li>
+    </ul>
+</div>
+
+<div id="div2">
+    <div id="div3">
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" >
+            <div id="div4" class="layui-timeline-content layui-text" >
+                <h3 class="layui-timeline-title"><span class="layui-icon layui-icon-rate-half" ></span>JAVA一班 第三组</h3>
+                <p>
+                    项目平台的一切准备工作似乎都已到位。发布之弦，一触即发。
+                    <br>我的内心毫无波动。
+                    <br>甚至还有点想笑 <i class="layui-icon"></i>
+                </p>
+                <hr class="layui-bg-blue">
+                <h3 class="layui-timeline-title" ><span class="layui-icon layui-icon-rate-half" ></span>项目完整代码已在 Gitee码云 平台开源，您可以关注我们</h3>
+                <hr class="layui-bg-blue">
+            </div>
+
+            <li class="layui-nav-item"><a class="a-active" href="" >1.链接</a></li>
+            <li class="layui-nav-item"><a class="a-active" href="" >2.链接</a></li>
+            <li class="layui-nav-item"><a class="a-active" href="" >3.链接</a></li>
+            <li class="layui-nav-item"><a class="a-active" href="" >4.链接</a></li>
+        </ul>
+    </div>
+    <div  id="div5" class="layui-body" >
+        <!--轮播-->
+        <div class="layui-carousel" id="atb-shuffling" style="width: 100%">
+            <div carousel-item="">
+                <div><img src="../image/atb/1.jpg"></div>
+                <div><img src="../image/atb/2.jpg"></div>
+                <div><img src="../image/atb/3.jpg"></div>
+                <div><img src="../image/atb/4.jpg"></div>
+            </div>
+        </div>
+        <!--列表入口-->
+        <div id="atb-entrance">
+            <ul>
+                <li class="layui-bg-blue"><a href="">管理数据</a></li>
+                <li class="layui-bg-green"><a href="">借阅情况</a></li>
+                <li class="layui-bg-orange"><a href="">历史数据</a></li>
+                <li class="layui-bg-cyan"><a href="">用户管理</a></li>
+            </ul>
+        </div>
+
+        <div  style="width: 100%; background-color: white;padding-top: 1%;" >
+            <!-- 竖向滚动实例 -->
+            <ul id="ftm-board-box">
+                <li><a>
+                    <span class="ftm-border-name">Tim</span>：
+                    <span class="ftm-border-msg">这是我留言的内容</span>
+                    <br>
+                </a></li>
+                <li><a>
+                    <span class="ftm-border-name">小明</span>：
+                    <span class="ftm-border-msg">这是另一条留言</span>
+                    <br>
+                </a></li>
+                <li><a>
+                    <span class="ftm-border-name">方宇</span>：
+                    <span class="ftm-border-msg">最后一条留言</span>
+                    <br>
+                </a></li>
+            </ul>
+            <br>
+            <div style="width: 100%;">
+                <input type="text" id="ftm-board-msg"
+                       name="message" placeholder="请输入留言内容"
+                       style="height: 32px;width: 70%">
+                <button class="layui-btn" onclick="addBorderMsg()">
+                    立即提交</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    $(function(){
+        <!--获取li每行的高度，动画移动的高度-->
+        let liHeight = $('li').height();
+        <!--调用插件-->
+        $('#ftm-board-box').lSlide({nTop:liHeight});
+    })
+</script>
+</body>
+</html>
