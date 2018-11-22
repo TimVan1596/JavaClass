@@ -100,10 +100,10 @@ public class AddDvdServlet extends HttpServlet {
          }
 
          //jdbc添加
-        //if(addDvd(dvdname,photo)>0){
+        if(addDvd(dvdname,photo)>0){
 
         //mybatis映射添加
-        if(ma.dvdInsert(dvdname,photo)>0){
+        //if(ma.dvdInsert(dvdname,photo)>0){
          response.getWriter().write("<script language='javascript'>alert('DVD添加成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
         }
     }

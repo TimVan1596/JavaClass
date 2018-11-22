@@ -22,7 +22,7 @@
     int res=0;
     for(String i:id) {
         //String sql = "DELETE FROM dvd WHERE id=?";
-        String sql="UPDATE dvd SET `show`=0 WHERE id=?";
+        String sql="UPDATE dvd SET `show`=0 WHERE dvdno=?";
         Object[] params = {i};
         res = db.executeUpdate(sql, params);
     }

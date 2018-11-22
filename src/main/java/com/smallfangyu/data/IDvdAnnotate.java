@@ -1,9 +1,6 @@
 package com.smallfangyu.data;
 
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Update;
-import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.*;
 import com.smallfangyu.data.DVD;
 import java.util.List;
 
@@ -11,8 +8,13 @@ import java.util.List;
  * @author smallfangyu.com
  */
 public interface IDvdAnnotate {
-    @Select("SELECT * FROM dvd WHERE dvdno= #{dvdno}")
-    public DVD getDvdByID(int dvdno);
+
+    @Select("SELECT * FROM dvd,dvdrecy WHERE dvd.`show`=dvdrecy.`show`")
+    /*
+     * 查询
+     * @return List<DVD>
+     */
+    public List<DVD> getDvd();
 
     @Delete("DELETE FROM dvd WHERE dvdno = #{dvdno}")
     public int deleteDvdById(int dvdno);

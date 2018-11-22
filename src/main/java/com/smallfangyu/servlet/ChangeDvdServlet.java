@@ -102,10 +102,10 @@ public class ChangeDvdServlet extends HttpServlet {
         int a=Integer.parseInt(text.get(0));
 
         //jdbc修改
-        //if(change(text.get(0),text.get(1),text.get(2),photo)>0){
+        if(change(text.get(0),text.get(1),text.get(2),photo)>0){
 
         //mybatis映射修改
-        if(ma.dvdUpdate(a,text.get(1),text.get(2),photo)>0){
+        //if(ma.dvdUpdate(a,text.get(1),text.get(2),photo)>0){
             response.getWriter().write("<script language='javascript'>alert('DVD修改成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
         }else{
             response.getWriter().write("<script language='javascript'>alert('DVD修改失败')</script>");

@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.Reader;
+import java.util.List;
 
 
 public class AnnotateTest {
@@ -79,16 +80,21 @@ public class AnnotateTest {
         SqlSession session = sqlSessionFactory.openSession();
         try {
             IDvdAnnotate ida = session.getMapper(IDvdAnnotate.class);
-            DVD dvd = ida.getDvdByID(1024);
-            System.out.println(dvd.getDvdno());
-            System.out.println(dvd.getDvdname());
-            System.out.println(dvd.getState());
-            System.out.println(dvd.getPicture());
+            List<DVD> dvds= ida.getDvd();
+            int i=1;
+            for(DVD dvd:dvds) {
+                System.out.println("--------"+(i++)+"--------");
+                System.out.println(dvd.getDvdno());
+                System.out.println(dvd.getDvdname());
+                System.out.println(dvd.getState());
+                System.out.println(dvd.getPicture());
+                System.out.println(dvd.getSta());
+            }
         }finally {
             session.close();
         }
 
-        System.out.println(deleteDvd(1099));
+       // System.out.println(deleteDvd(1099));
 
 //        DVD dvd=new DVD();
 //        dvd.setDvdname("mybatis插入");
@@ -96,11 +102,11 @@ public class AnnotateTest {
 //        dvd.setPicture("mybatis");
 //        System.out.println(insertDvd(dvd));
 
-        DVD dvd=new DVD();
-        dvd.setDvdno(1101);
-        dvd.setDvdname("mybatis插入");
-        dvd.setState("已借出");
-        dvd.setPicture("zzzzz");
-        System.out.println(updateDvd(dvd));
+//        DVD dvd=new DVD();
+//        dvd.setDvdno(1101);
+//        dvd.setDvdname("mybatis插入");
+//        dvd.setState("已借出");
+//        dvd.setPicture("zzzzz");
+//        System.out.println(updateDvd(dvd));
 }
 }

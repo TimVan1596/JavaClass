@@ -1,6 +1,7 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 import com.smallfangyu.data.LogUtil;
 import org.apache.commons.codec.binary.Base64;
 
@@ -15,7 +16,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LoginServlet",
         urlPatterns = {"/fy/servlet/login.do"}, loadOnStartup = 1)
 public class LoginServlet extends javax.servlet.http.HttpServlet {
-    DbUtil db = new DbUtil();
+    //DbUtil db = new DbUtil();
+    JdbcDruid db=new JdbcDruid();
     private int number=0;
 
     public int recy(){
