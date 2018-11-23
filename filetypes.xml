@@ -1,6 +1,7 @@
 <application>
   <component name="FileTypeManager" version="17">
     <extensionMap>
+      <mapping pattern="history" type="PLAIN_TEXT" />
       <mapping pattern="medals" type="PLAIN_TEXT" />
       <mapping pattern="user" type="PLAIN_TEXT" />
     </extensionMap>
