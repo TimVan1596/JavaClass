@@ -27,10 +27,10 @@ public class JdbcDruid {
         try {
             properties.load(JdbcDruid.class.getClassLoader().getResourceAsStream("fydb.properties"));
             druidDataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
-            druidDataSource.setUrl(properties.getProperty("DB_URL"));
-            druidDataSource.setUsername(properties.getProperty("USER"));
-            druidDataSource.setPassword(properties.getProperty("PASS"));
-            druidDataSource.setDriverClassName(properties.getProperty("JDBC_DRIVER"));
+//            druidDataSource.setUrl(properties.getProperty("url"));
+//            druidDataSource.setUsername(properties.getProperty("username"));
+//            druidDataSource.setPassword(properties.getProperty("password"));
+//            druidDataSource.setDriverClassName(properties.getProperty("driverClassName"));
         } catch (Exception e) {
             e.printStackTrace();
         }

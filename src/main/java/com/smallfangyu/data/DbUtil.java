@@ -34,10 +34,10 @@ public class DbUtil {
            e.printStackTrace();
        }
        //赋值
-       JDBC_DRIVER=properties.getProperty("JDBC_DRIVER");
-       DB_URL=properties.getProperty("DB_URL");
-       USER=properties.getProperty("USER");
-       PASS=properties.getProperty("PASS");
+       JDBC_DRIVER=properties.getProperty("driverClassName");
+       DB_URL=properties.getProperty("url");
+       USER=properties.getProperty("username");
+       PASS=properties.getProperty("password");
 
        //注册JDBC驱动
         try {

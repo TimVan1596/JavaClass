@@ -18,9 +18,9 @@ import java.util.List;
 
 @WebServlet(name = "ShowdvdServlet",urlPatterns = {"/fy/servlet/toShowDvd"})
 public class ShowdvdServlet extends HttpServlet {
-    //static DbUtil db=new DbUtil();
+    static DbUtil db=new DbUtil();
     //阿里巴巴druid连接数据库
-    static JdbcDruid db=new JdbcDruid();
+    //static JdbcDruid db=new JdbcDruid();
     static Main ma=new Main();
     /**所有DVD集合
      *
@@ -30,7 +30,7 @@ public class ShowdvdServlet extends HttpServlet {
     /**当前页面DVD集合
      *
      */
-    ArrayList<DVD> list_page = new ArrayList<DVD>();
+    List<DVD> list_page = new ArrayList<DVD>();
 
     /**定义已借出和可以借数量
      *
