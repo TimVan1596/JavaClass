@@ -1,6 +1,7 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 import com.smallfangyu.data.Main;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -23,7 +24,9 @@ import javax.servlet.ServletException;
 @WebServlet(name = "ChangeDvdServlet",urlPatterns = {"/fy/servlet/toChangeDvd"})
 public class ChangeDvdServlet extends HttpServlet {
  private String photo;
- DbUtil db=new DbUtil();
+ //DbUtil db=new DbUtil();
+ //阿里巴巴druid连接数据库
+ JdbcDruid db=new JdbcDruid();
  Main ma=new Main();
  AddDvdServlet ad=new AddDvdServlet();
  ArrayList<String> text=new ArrayList<String>();
@@ -102,10 +105,10 @@ public class ChangeDvdServlet extends HttpServlet {
         int a=Integer.parseInt(text.get(0));
 
         //jdbc修改
-        //if(change(text.get(0),text.get(1),text.get(2),photo)>0){
+        if(change(text.get(0),text.get(1),text.get(2),photo)>0){
 
         //mybatis映射修改
-        if(ma.dvdUpdate(a,text.get(1),text.get(2),photo)>0){
+        //if(ma.dvdUpdate(a,text.get(1),text.get(2),photo)>0){
             response.getWriter().write("<script language='javascript'>alert('DVD修改成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
         }else{
             response.getWriter().write("<script language='javascript'>alert('DVD修改失败')</script>");

@@ -1,6 +1,7 @@
 <%@ page import="com.sun.java.swing.plaf.windows.resources.windows" %>
 <%@ page import="com.smallfangyu.data.DbUtil" %>
-<%@ page import="com.smallfangyu.servlet.LoginServlet" %><%--
+<%@ page import="com.smallfangyu.servlet.LoginServlet" %>
+<%@ page import="com.smallfangyu.data.JdbcDruid" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/10/12 0012
@@ -15,14 +16,17 @@
 <body>
 
 <%
-    DbUtil db=new DbUtil();
+    //DbUtil db=new DbUtil();
+    //阿里巴巴druid连接数据库
+    JdbcDruid db=new JdbcDruid();
+
     LoginServlet ls=new LoginServlet();
     String no=request.getParameter("no");
     String[] id=no.split(",");
     int res=0;
     for(String i:id) {
         //String sql = "DELETE FROM dvd WHERE id=?";
-        String sql="UPDATE dvd SET `show`=0 WHERE id=?";
+        String sql="UPDATE dvd SET `show`=0 WHERE dvdno=?";
         Object[] params = {i};
         res = db.executeUpdate(sql, params);
     }

@@ -2,6 +2,7 @@ package com.smallfangyu.servlet;
 
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 import com.smallfangyu.data.Main;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -24,7 +25,9 @@ public class AddDvdServlet extends HttpServlet {
     String dvdname = null;
     String photo = null;
     //jdbc类
-    DbUtil db = new DbUtil();
+    //DbUtil db = new DbUtil();
+    //阿里巴巴druid连接数据库
+    JdbcDruid db=new JdbcDruid();
     //mybatis操作类
     Main ma=new Main();
 
@@ -100,10 +103,10 @@ public class AddDvdServlet extends HttpServlet {
          }
 
          //jdbc添加
-        //if(addDvd(dvdname,photo)>0){
+        if(addDvd(dvdname,photo)>0){
 
         //mybatis映射添加
-        if(ma.dvdInsert(dvdname,photo)>0){
+        //if(ma.dvdInsert(dvdname,photo)>0){
          response.getWriter().write("<script language='javascript'>alert('DVD添加成功');window.parent.location.href='/fy/servlet/toShowDvd';</script>");
         }
     }

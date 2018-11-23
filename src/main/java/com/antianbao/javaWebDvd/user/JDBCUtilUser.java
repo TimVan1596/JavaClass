@@ -1,6 +1,8 @@
 package com.antianbao.javaWebDvd.user;
 
-import java.io.*;
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+
 import java.security.MessageDigest;
 import java.sql.*;
 import java.util.*;
@@ -12,63 +14,39 @@ import java.util.*;
  * 链接数据库
  */
 public class JDBCUtilUser {
-    //加载驱动
-    static {
+
+    private static DruidDataSource druidDataSource = null;
+    private Connection conn = null;
+    private PreparedStatement pstmt = null;
+    private ResultSet rs = null;
+
+    //初始化JDBC-MySQL连接(只做一次)
+    static{
+        //初始化数据库连接配置
+        Properties properties = new Properties();
+
         try {
-            // 用来检查给定的类名存不存在
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("驱动不存在，请添加驱动包！");
+            properties.load(JDBCUtilUser.class.getClassLoader().getResourceAsStream("atbdb.properties"));
+            druidDataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     /**
-     * 关系：PreparedStatement继承自Statement,都是接口
-     * 区别：PreparedStatement可以使用占位符，是预编译的，批处理比Statement效率高
+     *获取数据库连接
+     * @return
      */
-    private Connection conn = null;
-    private PreparedStatement pstmt = null;
-    private Statement stmt = null;
-    private static  String DB_URL;
-    private static  String USER ;
-    private static  String PASS ;
-
-    /**
-     * 获得数据库连接对象Connection
-     */
-    private void openConnection() {
-        //初始化数据库连接配置
-        Properties properties=new Properties();
-        InputStream in = JDBCUtilUser.class.getClassLoader().getResourceAsStream("atbdb.properties");
-        //读取db.properties
+    public Connection getConn(){
+        //获取数据库连接
         try {
-            properties.load(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //赋值
-        DB_URL=properties.getProperty("DB_URL");
-        USER=properties.getProperty("USER");
-        PASS=properties.getProperty("PASS");
-        try {
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            return druidDataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    /**
-     * 获得PreparedStatement
-     */
-    public PreparedStatement getPrepareStatement(String sql) {
-        openConnection();
-        try {
-            pstmt = conn.prepareStatement(sql);
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return pstmt;
-    }
     /**
      * 释放资源
      */
@@ -76,9 +54,6 @@ public class JDBCUtilUser {
         try {
             if (pstmt != null && !pstmt.isClosed()) {
                 pstmt.close();
-            }
-            if (stmt != null && !stmt.isClosed()) {
-                stmt.close();
             }
             if (conn != null && !conn.isClosed()) {
                 conn.close();
@@ -99,9 +74,10 @@ public class JDBCUtilUser {
                 return rlt;
             }
         }
+        conn=getConn();
         String sql = "insert into User(email,password) values(?,?)";
-        PreparedStatement pstmt = getPrepareStatement(sql);
         try {
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, stu.getEmail());
             pstmt.setString(2, MD5(stu.getPassword()));
             rlt = pstmt.executeUpdate();
@@ -117,7 +93,6 @@ public class JDBCUtilUser {
      * 判断输入账号密码是否正确
      */
     public int isReally(String name, String password) {
-        System.out.println(MD5(password));
         int rlt = 0;
         List<User> list = queryStu();
         for (User ls : list) {
@@ -133,14 +108,15 @@ public class JDBCUtilUser {
      */
     public int updateStu(String name, String password) {
         int rlt = 0;
+        conn=getConn();
         try {
             String sql = "update user SET password = ? where email = ?";
-            PreparedStatement pstat = getPrepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             Object[] params = {MD5(password), name};
             for (int i = 1; i <= params.length; i++) {
-                pstat.setObject(i, params[i - 1]);
+                pstmt.setObject(i, params[i - 1]);
             }
-            rlt = pstat.executeUpdate();
+            rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -154,9 +130,10 @@ public class JDBCUtilUser {
     public List<User> queryStu() {
         List<User> list = new ArrayList<User>();
         String sql = "select *from User";
-        PreparedStatement pstat = getPrepareStatement(sql);
+        conn=getConn();
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             User bd = null;
             while (rs.next()) {
                 bd = new User();

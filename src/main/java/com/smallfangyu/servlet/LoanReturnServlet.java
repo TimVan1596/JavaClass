@@ -1,6 +1,7 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,9 @@ import java.io.IOException;
 
 @WebServlet(name = "LoanReturnServlet",urlPatterns = {"/fy/servlet/loanreturn"})
 public class LoanReturnServlet extends HttpServlet {
-    DbUtil db=new DbUtil();
+    //DbUtil db=new DbUtil();
+    //阿里巴巴druid连接数据库
+    JdbcDruid db=new JdbcDruid();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

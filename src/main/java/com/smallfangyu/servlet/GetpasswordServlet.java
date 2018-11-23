@@ -1,6 +1,7 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import javax.mail.*;
@@ -18,7 +19,9 @@ import java.util.Properties;
 
 @WebServlet(name = "GetpasswordServlet",urlPatterns = {"/servlet/toGetPassWord"})
 public class GetpasswordServlet extends HttpServlet {
-    DbUtil db = new DbUtil();
+    //DbUtil db = new DbUtil();
+    //阿里巴巴druid连接数据库
+    JdbcDruid db=new JdbcDruid();
     RegisterServlet reg=new RegisterServlet();
    private String name;
    private String password;

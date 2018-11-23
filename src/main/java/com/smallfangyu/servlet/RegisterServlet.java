@@ -1,6 +1,7 @@
 package com.smallfangyu.servlet;
 
 import com.smallfangyu.data.DbUtil;
+import com.smallfangyu.data.JdbcDruid;
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import javax.mail.*;
@@ -19,7 +20,9 @@ import java.util.Properties;
 
 @WebServlet(name = "RegisterServlet",urlPatterns = {"/fy/servlet/toRegister"})
 public class RegisterServlet extends HttpServlet {
-    DbUtil db = new DbUtil();
+   // DbUtil db = new DbUtil();
+   //阿里巴巴druid连接数据库
+   JdbcDruid db=new JdbcDruid();
 LoginServlet ls=new LoginServlet();
     /**
      * 判断用户名是否重复

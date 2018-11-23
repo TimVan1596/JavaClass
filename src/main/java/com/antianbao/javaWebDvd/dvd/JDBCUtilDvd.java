@@ -1,5 +1,8 @@
 package com.antianbao.javaWebDvd.dvd;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+
 import java.io.*;
 import java.sql.*;
 import java.util.*;
@@ -11,75 +14,37 @@ import java.util.*;
  * 链接数据库
  */
 public class JDBCUtilDvd {
+
+    private static DruidDataSource druidDataSource = null;
+    private PreparedStatement pstmt = null;
+    private Connection conn = null;
+    private ResultSet rs = null;
+
     //加载驱动
     static {
-        try {
-            // 用来检查给定的类名存不存在
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("驱动不存在，请添加驱动包！");
-        }
-    }
-
-    /**
-     * 关系：PreparedStatement继承自Statement,都是接口
-     * 区别：PreparedStatement可以使用占位符，是预编译的，批处理比Statement效率高
-     */
-    private Connection conn = null;
-    private PreparedStatement pstmt = null;
-    private Statement stmt = null;
-    private static  String DB_URL;
-    private static  String USER ;
-    private static  String PASS ;
-
-    /**
-     * 获得数据库连接对象Connection
-     */
-    private void openConnection() {
         //初始化数据库连接配置
-        Properties properties=new Properties();
-        InputStream in = JDBCUtilDvd.class.getClassLoader().getResourceAsStream("atbdb.properties");
-        //读取db.properties
+        Properties properties = new Properties();
+
         try {
-            properties.load(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //赋值
-        DB_URL=properties.getProperty("DB_URL");
-        USER=properties.getProperty("USER");
-        PASS=properties.getProperty("PASS");
-        try {
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        } catch (SQLException e) {
+            properties.load(JDBCUtilDvd.class.getClassLoader().getResourceAsStream("atbdb.properties"));
+            druidDataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * 获得Statement
+     *获取数据库连接
+     * @return
      */
-    public Statement getStatment() {
-        openConnection();
+    public Connection getConn(){
+        //获取数据库连接
         try {
-            stmt = conn.createStatement();
+            return druidDataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return stmt;
-    }
-
-    /**
-     * 获得PreparedStatement
-     */
-    public PreparedStatement getPrepareStatement(String sql) {
-        openConnection();
-        try {
-            pstmt = conn.prepareStatement(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return pstmt;
+        return null;
     }
 
     /**
@@ -89,9 +54,6 @@ public class JDBCUtilDvd {
         try {
             if (pstmt != null && !pstmt.isClosed()) {
                 pstmt.close();
-            }
-            if (stmt != null && !stmt.isClosed()) {
-                stmt.close();
             }
             if (conn != null && !conn.isClosed()) {
                 conn.close();
@@ -112,9 +74,10 @@ public class JDBCUtilDvd {
                 return rlt;
             }
         }
+        conn=getConn();
         String sql = "insert into dvd(name,state,image) values(?,?,?)";
-        PreparedStatement pstmt = getPrepareStatement(sql);
         try {
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, dvd.getName());
             pstmt.setInt(2, dvd.getState());
             pstmt.setString(3, dvd.getImage());
@@ -132,9 +95,10 @@ public class JDBCUtilDvd {
      */
     public int deleteDvd(int no) {
         int rlt = 0;
+        conn=getConn();
         try {
             String sql = "DELETE FROM dvd where no = ?";
-            PreparedStatement pstmt = getPrepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setObject(1, no);
             rlt = pstmt.executeUpdate();
             close();
@@ -150,11 +114,12 @@ public class JDBCUtilDvd {
      */
     public int deleteImage(int no) {
         int rlt = 0;
+        conn=getConn();
         List<Dvd> list = new ArrayList<Dvd>();
         String sql = "select image from recovery where no = "+no+" ";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             Dvd bd = null;
             while (rs.next()) {
                 bd = new Dvd();
@@ -177,9 +142,10 @@ public class JDBCUtilDvd {
      */
     public int deleteRecovery(int no) {
         int rlt = 0;
+        conn=getConn();
         try {
             String sql = "DELETE FROM recovery where no = ?";
-            PreparedStatement pstmt = getPrepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setObject(1, no);
             rlt = pstmt.executeUpdate();
             close();
@@ -195,11 +161,12 @@ public class JDBCUtilDvd {
      */
     public int reductionAddDvd(int no) {
         int rlt = 0;
+        conn=getConn();
         List<Dvd> list = new ArrayList<Dvd>();
         String sql = "select *from recovery where no = "+no+" ";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
             Dvd bd = null;
             while (rs.next()) {
                 bd = new Dvd();
@@ -212,7 +179,7 @@ public class JDBCUtilDvd {
             }
             for (Dvd ls : list) {
                 String sql1 = "insert into dvd(name,state,borrow,image) values(?,?,?,?)";
-                PreparedStatement pstmt = getPrepareStatement(sql1);
+                pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, ls.getName());
                 pstmt.setInt(2, ls.getState());
                 pstmt.setInt(3, ls.getBorrow());
@@ -231,11 +198,12 @@ public class JDBCUtilDvd {
      */
     public int recoveryAddDvd(int no) {
         int rlt = 0;
+        conn=getConn();
         List<Dvd> list = new ArrayList<Dvd>();
         String sql = "select *from dvd where no = "+no+"";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
             Dvd bd = null;
             while (rs.next()) {
                 bd = new Dvd();
@@ -248,7 +216,7 @@ public class JDBCUtilDvd {
             }
             for (Dvd ls : list) {
                 String sql1 = "insert into recovery(name,state,borrow,image) values(?,?,?,?)";
-                PreparedStatement pstmt = getPrepareStatement(sql1);
+                pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, ls.getName());
                 pstmt.setInt(2, ls.getState());
                 pstmt.setInt(3, ls.getBorrow());
@@ -267,14 +235,15 @@ public class JDBCUtilDvd {
      */
     public int updateState(int borrow,int no) {
         int rlt = 0;
+        conn=getConn();
         try {
             String sql = "update dvd SET borrow = ? where no = ?";
-            PreparedStatement pstat = getPrepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             Object[] params = {borrow, no};
             for (int i = 1; i <= params.length; i++) {
-                pstat.setObject(i, params[i - 1]);
+                pstmt.setObject(i, params[i - 1]);
             }
-            rlt = pstat.executeUpdate();
+            rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -288,14 +257,15 @@ public class JDBCUtilDvd {
      */
     public int recoveryState(int borrow,int no) {
         int rlt = 0;
+        conn=getConn();
         try {
             String sql = "update recovery SET borrow = ? where no = ?";
-            PreparedStatement pstat = getPrepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             Object[] params = {borrow, no};
             for (int i = 1; i <= params.length; i++) {
-                pstat.setObject(i, params[i - 1]);
+                pstmt.setObject(i, params[i - 1]);
             }
-            rlt = pstat.executeUpdate();
+            rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -309,14 +279,15 @@ public class JDBCUtilDvd {
      */
     public int updateDvd(int no,String image, String name, int state,int borrow) {
         int rlt = 0;
+        conn=getConn();
         try {
             String sql = "update dvd SET name = ?,state = ?,borrow = ?,image = ? where no = ?";
-            PreparedStatement pstat = getPrepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             Object[] params = {name,state,borrow,image,no};
             for (int i = 1; i <= params.length; i++) {
-                pstat.setObject(i, params[i - 1]);
+                pstmt.setObject(i, params[i - 1]);
             }
-            rlt = pstat.executeUpdate();
+            rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -330,14 +301,15 @@ public class JDBCUtilDvd {
      */
     public int updateDvd(int no, String name, int state,int borrow) {
         int rlt = 0;
+        conn=getConn();
         try {
             String sql = "update dvd SET name = ?,state = ?,borrow = ? where no = ?";
-            PreparedStatement pstat = getPrepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             Object[] params = {name,state,borrow,no};
             for (int i = 1; i <= params.length; i++) {
-                pstat.setObject(i, params[i - 1]);
+                pstmt.setObject(i, params[i - 1]);
             }
-            rlt = pstat.executeUpdate();
+            rlt = pstmt.executeUpdate();
             close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -351,10 +323,11 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> queryStu() {
         List<Dvd> list = new ArrayList<Dvd>();
+        conn=getConn();
         String sql = "select *from dvd";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
             Dvd bd = null;
             while (rs.next()) {
                 bd = new Dvd();
@@ -377,10 +350,11 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> recovery() {
         List<Dvd> list = new ArrayList<Dvd>();
+        conn=getConn();
         String sql = "select *from recovery";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             Dvd bd = null;
             while (rs.next()) {
                 bd = new Dvd();
@@ -403,10 +377,11 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> search(String search){
         List<Dvd> list = new ArrayList<>();
+        conn=getConn();
         String sql = "SELECT *FROM dvd WHERE no like '%"+search+"%' or name like '%"+search+"%' or state-borrow like '%"+search+"%'";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             Dvd bd;
             while (rs.next()) {
                 bd = new Dvd();
@@ -431,10 +406,11 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> find(int page){
         List<Dvd> list = new ArrayList<>();
+        conn=getConn();
         String sql = "SELECT *FROM dvd LIMIT "+(page-1)*Dvd.PAGE_SIZE+","+Dvd.PAGE_SIZE+"";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             Dvd bd;
             while (rs.next()) {
                 bd = new Dvd();
@@ -459,10 +435,11 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> revokefind(int page){
         List<Dvd> list = new ArrayList<>();
+        conn=getConn();
         String sql = "SELECT *FROM recovery LIMIT "+(page-1)*Dvd.PAGE_SIZE+","+Dvd.PAGE_SIZE+"";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             Dvd bd;
             while (rs.next()) {
                 bd = new Dvd();
@@ -486,10 +463,11 @@ public class JDBCUtilDvd {
      */
     public int findCount(){
         int count = 0;
+        conn=getConn();
         String sql = "select count(*) from dvd";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             if (rs.next()){
                 count = rs.getInt(1);
             }
@@ -507,10 +485,11 @@ public class JDBCUtilDvd {
      */
     public int revokeFindCount(){
         int count = 0;
+        conn=getConn();
         String sql = "select count(*) from recovery";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             if (rs.next()){
                 count = rs.getInt(1);
             }
@@ -529,12 +508,13 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> findPage(int page,String search){
         List<Dvd> list = new ArrayList<>();
+        conn=getConn();
         String sql = "SELECT *FROM dvd " +
                 "WHERE no like '%"+search+"%' or name like '%"+search+"%' or state-borrow like '%"+search+"%' " +
                 "LIMIT "+(page-1)*Dvd.PAGE_SIZE+","+Dvd.PAGE_SIZE+"";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             Dvd bd;
             while (rs.next()) {
                 bd = new Dvd();
@@ -559,12 +539,13 @@ public class JDBCUtilDvd {
      */
     public List<Dvd> revokeFindPage(int page,String search){
         List<Dvd> list = new ArrayList<>();
+        conn=getConn();
         String sql = "SELECT *FROM recovery " +
                 "WHERE no like '%"+search+"%' or name like '%"+search+"%' or state like '%"+search+"%' or borrow like '%"+search+"%' " +
                 "LIMIT "+(page-1)*Dvd.PAGE_SIZE+","+Dvd.PAGE_SIZE+"";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             Dvd bd;
             while (rs.next()) {
                 bd = new Dvd();
@@ -588,11 +569,12 @@ public class JDBCUtilDvd {
      */
     public int revokeFindCountPage(String search){
         int count = 0;
+        conn=getConn();
         String sql = "select count(*) from recovery " +
                 "WHERE no like '%"+search+"%' or name like '%"+search+"%' or state like '%"+search+"%' or borrow like '%"+search+"%'";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             if (rs.next()){
                 count = rs.getInt(1);
             }
@@ -610,11 +592,12 @@ public class JDBCUtilDvd {
      */
     public int findCountPage(String search){
         int count = 0;
+        conn=getConn();
         String sql = "select count(*) from dvd " +
                 "WHERE no like '%"+search+"%' or name like '%"+search+"%' or state-borrow like '%"+search+"%'";
-        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            ResultSet rs = pstat.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
             if (rs.next()){
                 count = rs.getInt(1);
             }
