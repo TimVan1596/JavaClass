@@ -3,47 +3,51 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charsetutf-8">
     <title>签到</title>
-    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/common/util/layui/css/layui.css"  media="all">
 </head>
 <body>
-<div  style="border: black solid 1px;height: 600px">
-    <span style="margin-left: 30%">人员情况</span><input type="text" >
-    <span style="margin-left: 22%">考勤情况</span><select >
+<div style="">
+    <span style="margin-left: 26%">人员情况</span>
+    <input  type="text" >
+    <span style="margin-left: 26%">考勤情况</span><select >
               <option>正常</option>
               <option>迟到</option>
               <option>缺勤</option>
               <option>早退</option>
            </select><br>
-    <span style="margin-left: 30%">考勤日期</span><input type="text" >
-    <button style="margin-left: 22%">查询</button><button>考勤</button><button>删除</button>
-
-    <table id="test"  class="display" style="border: black solid 1px;margin-left: 30%;width: 800px">
-        <thead>
-        <tr>
-            <th>工号</th><th>姓名</th><th>入职时间</th><th>考勤情况</th><th>考勤日期</th>
-        </tr>
-        </thead>
+    <span style="margin-left: 26%">考勤日期</span><input  type="text" >
+    <button class="layui-btn layui-btn-primary" style="margin-left: 22%">查询</button><button class="layui-btn layui-btn-primary">考勤</button><button class="layui-btn layui-btn-primary">删除</button>
+ <div style="margin-left: 26%">
+    <table class="layui-hide" id="test" >
     </table>
-    <button style="margin-left: 50%">统计分析</button>
+ <div>
+    <button class="layui-btn layui-btn-primary" style="margin-left: 30%">统计分析</button>
 </div>
 
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="/common/util/layui/layui.js" charset="utf-8"></script>
 <script>
-    $(function() {
-        $('#test').DataTable({
-            "ajax": {
-                "url": "/fy/addendance",
-            },
-            "columns": [
-                {"data": "pno"},
-                {"data": "name"},
-                {"data": "entrytime"},
-                {"data": "state"},
-                {"data": "time"}
-            ]
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#test'
+            ,url:'/fy/attendance'
+            ,toolbar: true
+            ,title: '考勤表'
+            ,totalRow: true
+            ,width:900
+            ,cols: [[
+                {type: 'checkbox',fixed: 'left'}
+                ,{field:'pno', title:'工号', width:120,  unresize: true, sort: true}
+                ,{field:'name', title:'姓名', width:150, edit: 'text'}
+                ,{field:'entrytime', title:'入职时间', width:200, edit: 'text'}
+                ,{field:'state', title:'考勤情况', width:180, edit: 'text'}
+                ,{field:'time', title:'考勤日期', width:200}
+            ]]
+            ,page: true
         });
     });
 </script>
+
 </body>
 </html>
