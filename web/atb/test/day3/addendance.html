@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>考勤表</title>
+    <!--layui引用-->
+    <script src="/common/util/layui/layui.js"></script>
+    <link rel="stylesheet" href="/common/util/layui/css/layui.css">
+</head>
+<body>
+<!--表格-->
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //展示已知数据
+        table.render({
+            elem: '#test'
+            ,cellMinWidth: 80
+            ,url:'/atb/attendance.do'
+            ,toolbar: true
+            ,page: true
+            ,cols: [[ //标题栏
+                {type: 'checkbox',fixed: 'left'}
+                ,{field:'no', title:'学号', width:120,  unresize: true, sort: true}
+                ,{field:'name', title:'姓名', width:150}
+                ,{field:'time', title:'入学时间', width:200}
+                ,{field:'state', title:'考勤情况', width:180}
+                ,{field:'note', title:'备注', width:180}
+                ,{field:'date', title:'考勤日期', width:200}
+            ]]
+            ,even: true
+        });
+    });
+</script>
+</body>
+</html>

@@ -2,9 +2,7 @@ package com.antianbao.text.day3;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.antianbao.javaWebDvd.user.User;
 
-import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +14,9 @@ import java.util.Properties;
 /**
  * @author 安天宝
  * JAVA一班
- * 9月20日
- * 链接数据库
+ * 11月26日
+ * Properties储存数据
+ * 阿里巴巴连接池druid链接数据库
  */
 public class JDBC {
 
@@ -32,8 +31,10 @@ public class JDBC {
         Properties properties = new Properties();
 
         try {
-            properties.load(JDBC.class.getClassLoader().getResourceAsStream("atbTest.properties"));
-            druidDataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
+            properties.load(JDBC.class.getClassLoader()
+                    .getResourceAsStream("atbTest.properties"));
+            druidDataSource = (DruidDataSource) DruidDataSourceFactory
+                    .createDataSource(properties);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,7 +121,7 @@ public class JDBC {
      */
     public List<attendance> queryStu() {
         List<attendance> list = new ArrayList<attendance>();
-        String sql = "select *from timesheets";
+        String sql = "SELECT *FROM timesheets";
         conn=getConn();
         try {
             pstmt = conn.prepareStatement(sql);

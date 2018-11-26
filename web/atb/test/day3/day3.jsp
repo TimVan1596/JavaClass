@@ -34,7 +34,7 @@
         <%
             //遍历结果集
             JDBC jdbc = new JDBC();
-            List<attendance> atts = jdbc.queryStu();;
+            List<attendance> atts = jdbc.queryStu();
             for (attendance att : atts) {
         %>
         <tr>

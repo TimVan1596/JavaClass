@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>奖牌排序-安天宝</title>
+    <!--layui引用-->
+    <script src="/common/util/layui/layui.js"></script>
+    <link rel="stylesheet" href="/common/util/layui/css/layui.css">
+</head>
+<body>
+<!--表格-->
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //展示已知数据
+        table.render({
+            elem: '#test'
+            ,cellMinWidth: 80
+            ,toolbar: true
+            ,cols: [[ //标题栏
+                {field: 'countries', title: '国家', sort: true}
+                ,{field: 'nationalFlag', title: '国旗'}
+                ,{field: 'gold', title: '金牌', sort: true, edit: 'text'}
+                ,{field: 'silver', title: '银牌', sort: true, edit: 'text'}
+                ,{field: 'copper', title: '铜牌', sort: true, edit: 'text'}
+                ,{field: 'number', title: '总数', sort: true, edit: 'text'}
+            ]]
+            ,even: true
+        });
+
+        //监听单元格编辑
+        table.on('edit(test)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            layer.msg('[国家: '+ data.countries +'] ' + field + ' 更改为：'+ value);
+        });
+    });
+</script>
+</body>
+</html>
