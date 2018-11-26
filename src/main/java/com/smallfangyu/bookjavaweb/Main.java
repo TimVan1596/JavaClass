@@ -50,7 +50,7 @@ public class Main {
         }
     }
 
-    //
+    //插入
     public static void testInsert()
     {
         try
@@ -97,6 +97,7 @@ public class Main {
         }
     }
 
+    //修改
     public static void testUpdate()
     {
         try

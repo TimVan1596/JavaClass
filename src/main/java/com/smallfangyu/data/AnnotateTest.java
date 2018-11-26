@@ -88,7 +88,7 @@ public class AnnotateTest {
                 System.out.println(dvd.getDvdname());
                 System.out.println(dvd.getState());
                 System.out.println(dvd.getPicture());
-                System.out.println(dvd.getSta());
+                //System.out.println(dvd.getSta());
             }
         }finally {
             session.close();

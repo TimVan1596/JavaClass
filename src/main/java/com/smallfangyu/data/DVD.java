@@ -6,9 +6,9 @@ public class DVD implements Serializable{
    private int dvdno;
    private String dvdname;
    private String state;
-    private String picture;
-    private String sta;
-//private List<DvdRecy> dvdRecies;
+   private String picture;
+   //private String sta;
+   private DvdRecy dvdrecy;
 
     public DVD(){}
    public DVD(int dvdno, String dvdname, String state,String picture) {
@@ -56,11 +56,19 @@ public class DVD implements Serializable{
         this.picture = picture;
     }
 
-    public String getSta() {
-        return sta;
+//    public String getSta() {
+//        return sta;
+//    }
+//
+//    public void setSta(String sta) {
+//        this.sta = sta;
+//    }
+
+    public DvdRecy getDvdrecy() {
+        return dvdrecy;
     }
 
-    public void setSta(String sta) {
-        this.sta = sta;
+    public void setDvdrecy(DvdRecy dvdrecy) {
+        this.dvdrecy = dvdrecy;
     }
 }

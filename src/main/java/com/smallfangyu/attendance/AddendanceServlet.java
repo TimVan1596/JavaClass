@@ -17,10 +17,15 @@ import java.util.Map;
 
 @WebServlet(name = "AddendanceServlet",urlPatterns = {"/fy/attendance"})
 public class AddendanceServlet extends HttpServlet {
-    static JdbcDruid db=new JdbcDruid();
+    /**
+     * 阿里巴巴druid连接数据库
+     */
+   static JdbcDruid db=new JdbcDruid();
    static ArrayList<Attendance> att=new ArrayList<>();
 
-
+    /**
+     * 查询数据
+     */
     public static void select(){
         if(att.size()!=0){
             att.clear();
