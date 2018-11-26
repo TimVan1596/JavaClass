@@ -15,7 +15,7 @@ import java.util.List;
 public interface IUser {
     //@Select("select * from user where id= #{id}")
     //public User getUserByID(int id);
-    @Select("SELECT *FROM user")
+    @Select("SELECT *FROM user,dvd")
     public List<EUser> getUserList();
 
     @Insert("INSERT INTO user(email,password) VALUES(#{email}, #{password})")
