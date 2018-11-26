@@ -36,10 +36,14 @@ public class Main {
             //sqlSessionFactory.getConfiguration().addMapper(IUser.class);
             //User user = (User) session.selectOne( "com.yiibai.mybatis.models.UserMapper.getUserByID", 1);
             // 更新用户
-            testUpdate();
+            //testUpdate();
 
-            // 用户数据列表
-           // getUserList();
+            // dvd数据列表
+            //getUserList();
+
+            // dvdrecy数据列表
+            getDvdRecyList();
+
             // 插入数据
              //testInsert();
 
@@ -114,9 +118,23 @@ public class Main {
         try {
             SqlSession session = sqlSessionFactory.openSession();
             IDvd idvd = session.getMapper(IDvd.class);
-            // 显示User信息
+
             System.out.println("Test Get start...");
-            printUsers(idvd.getDvdList());
+            printUsers(idvd.getDvdAndDvdrecy());
+            System.out.println("Test Get finished...");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 获取dvdrecy列表
+    public static void getDvdRecyList() {
+        try {
+            SqlSession session = sqlSessionFactory.openSession();
+            IDvdRecy idvd = session.getMapper(IDvdRecy.class);
+
+            System.out.println("Test Get start...");
+            printDvdrecy(idvd.getDvdRecyAndDvd());
             System.out.println("Test Get finished...");
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,63 +154,63 @@ public class Main {
         return dvds;
     }
 
-    public static void testUpdate()
-    {
-        try
-        {
-            SqlSession session = sqlSessionFactory.openSession();
-            IDvd idvd= session.getMapper(IDvd.class);
-            System.out.println("Test update start...");
-            printUsers(idvd.getDvdList());
-            // 执行更新
-            DVD dvd = idvd.getDvd(1099);
-            dvd.setDvdname("天蚕土豆");
-           dvd.setState("可以借");
-           dvd.setPicture("...");
-            // 提交事务
-            idvd.updateDvd(dvd);
-            session.commit();
-            // 显示更新之后User信息
-            System.out.println("After update");
-            printUsers(idvd.getDvdList());
-            System.out.println("Test update finished...");
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
+//    public static void testUpdate()
+//    {
+//        try
+//        {
+//            SqlSession session = sqlSessionFactory.openSession();
+//            IDvd idvd= session.getMapper(IDvd.class);
+//            System.out.println("Test update start...");
+//            printUsers(idvd.getDvdList());
+//            // 执行更新
+//            DVD dvd = idvd.getDvdAndDvdrecy(1099);
+//            dvd.setDvdname("天蚕土豆");
+//           dvd.setState("可以借");
+//           dvd.setPicture("...");
+//            // 提交事务
+//            idvd.updateDvd(dvd);
+//            session.commit();
+//            // 显示更新之后User信息
+//            System.out.println("After update");
+//            printUsers(idvd.getDvdList());
+//            System.out.println("Test update finished...");
+//        }catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 修改dvd数据
      */
-    public int dvdUpdate(int dvdno,String dvdname,String state,String picture) {
-        int sucess=0;
-        try
-        {
-            SqlSession session = sqlSessionFactory.openSession();
-            IDvd idvd= session.getMapper(IDvd.class);
-
-            // 执行更新
-                DVD dvd = idvd.getDvd(dvdno);
-                dvd.setDvdname(dvdname);
-                dvd.setState(state);
-                if(picture.length()!=0) {
-                    //改图片修改
-                   dvd.setPicture(picture);
-                   idvd.updateDvdd(dvd);
-                }else {
-                    //不改图片修改
-                    idvd.updateDvd(dvd);
-                }
-            // 提交事务
-                session.commit();
-                sucess = 1;
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return sucess;
-    }
+//    public int dvdUpdate(int dvdno,String dvdname,String state,String picture) {
+//        int sucess=0;
+//        try
+//        {
+//            SqlSession session = sqlSessionFactory.openSession();
+//            IDvd idvd= session.getMapper(IDvd.class);
+//
+//            // 执行更新
+//                DVD dvd = idvd.getDvdAndDvdrecy(dvdno);
+//                dvd.setDvdname(dvdname);
+//                dvd.setState(state);
+//                if(picture.length()!=0) {
+//                    //改图片修改
+//                   dvd.setPicture(picture);
+//                   idvd.updateDvdd(dvd);
+//                }else {
+//                    //不改图片修改
+//                    idvd.updateDvd(dvd);
+//                }
+//            // 提交事务
+//                session.commit();
+//                sucess = 1;
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return sucess;
+//    }
 
     // 删除用户信息
     public static void testDelete()
@@ -253,6 +271,24 @@ public class Main {
             System.out.println("Name: " + dvd.getDvdname());
             System.out.println("状态: " + dvd.getState());
             System.out.println("图片: " + dvd.getPicture());
+            System.out.println("show: " + dvd.getDvdrecy().getSta());
+        }
+    }
+
+    private static void printDvdrecy(final List<DvdRecy> dvds) {
+        int count = 0;
+
+        for (DvdRecy dvdrecy : dvds) {
+            for(DVD dvd:dvdrecy.getDvd()) {
+            System.out.println(MessageFormat.format("============= DVDRECY[{0}]=================", ++count));
+            System.out.println("show: " + dvdrecy.getShow());
+            System.out.println("sta: " + dvdrecy.getSta());
+
+                System.out.println("id: " + dvd.getDvdno());
+                System.out.println("name: " + dvd.getDvdname());
+                System.out.println("状态: " + dvd.getState());
+                System.out.println("图片: " + dvd.getPicture());
+            }
         }
     }
 }

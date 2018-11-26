@@ -13,5 +13,5 @@ public interface IDvd {
 
     public void deleteDvd(int id);
 
-    public DVD  getDvd(int id);
+    public List<DVD> getDvdAndDvdrecy();
 }

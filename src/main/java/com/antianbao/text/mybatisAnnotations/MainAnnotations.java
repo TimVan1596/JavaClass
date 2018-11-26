@@ -153,8 +153,9 @@ public class MainAnnotations {
         for (EUser user : users) {
             System.out.println(MessageFormat.format(
                     "============= User[{0}]=================", ++count));
-            System.out.println("User Id: " + user.getEmail());
-            System.out.println("User Name: " + user.getPassword());
+            System.out.println("User email: " + user.getEmail());
+            System.out.println("User password: " + user.getPassword());
+            System.out.println("User name: " + user.getName());
         }
     }
 }

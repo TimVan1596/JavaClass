@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @WebServlet(name = "RecycleServlet",urlPatterns = {"/fy/recycle"})
 public class RecycleServlet extends HttpServlet {
     //DbUtil db=new DbUtil();
-//阿里巴巴druid连接数据库
+    //阿里巴巴druid连接数据库
     JdbcDruid db=new JdbcDruid();
     /**所有DVD集合
      *

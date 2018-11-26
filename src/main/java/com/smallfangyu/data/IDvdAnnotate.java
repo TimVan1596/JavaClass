@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IDvdAnnotate {
 
-    @Select("SELECT * FROM dvd,dvdrecy WHERE dvd.`show`=dvdrecy.`show`")
+    @Select("SELECT * FROM dvd")
     /*
      * 查询
      * @return List<DVD>
