@@ -8,33 +8,65 @@
     <link rel="stylesheet" href="/common/util/layui/css/layui.css">
 </head>
 <body>
-<!--表格-->
-<table class="layui-hide" id="test" lay-filter="test"></table>
+<div class="demoTable">
+    搜索ID：
+    <div class="layui-inline">
+        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+</div>
+
+<table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
+
+
+<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function(){
         var table = layui.table;
-        //展示已知数据
+
+        //方法级渲染
         table.render({
-            elem: '#test'
-            ,cellMinWidth: 80
-            ,toolbar: true
-            ,cols: [[ //标题栏
-                {field: 'countries', title: '国家', sort: true}
-                ,{field: 'nationalFlag', title: '国旗'}
-                ,{field: 'gold', title: '金牌', sort: true, edit: 'text'}
-                ,{field: 'silver', title: '银牌', sort: true, edit: 'text'}
-                ,{field: 'copper', title: '铜牌', sort: true, edit: 'text'}
-                ,{field: 'number', title: '总数', sort: true, edit: 'text'}
+            elem: '#LAY_table_user'
+            ,url: '/atb/attendance.do'
+            ,cols: [[
+                {checkbox: true, fixed: true}
+                ,{field:'id', title: 'ID', width:80, sort: true, fixed: true}
+                ,{field:'username', title: '用户名', width:80}
+                ,{field:'sex', title: '性别', width:80, sort: true}
+                ,{field:'city', title: '城市', width:80}
+                ,{field:'sign', title: '签名'}
+                ,{field:'experience', title: '积分', sort: true, width:80}
+                ,{field:'score', title: '评分', sort: true, width:80}
+                ,{field:'classify', title: '职业', width:80}
+                ,{field:'wealth', title: '财富', sort: true, width:135}
             ]]
-            ,even: true
+            ,id: 'testReload'
+            ,page: true
+            ,height: 315
         });
 
-        //监听单元格编辑
-        table.on('edit(test)', function(obj){
-            var value = obj.value //得到修改后的值
-                ,data = obj.data //得到所在行所有键值
-                ,field = obj.field; //得到字段
-            layer.msg('[国家: '+ data.countries +'] ' + field + ' 更改为：'+ value);
+        var $ = layui.$, active = {
+            reload: function(){
+                var demoReload = $('#demoReload');
+
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        key: {
+                            id: demoReload.val()
+                        }
+                    }
+                });
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
         });
     });
 </script>

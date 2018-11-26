@@ -21,6 +21,7 @@ public class Servlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //get解决中文乱码
+        response.setContentType("application/text; charset=utf-8");
         //阿里巴巴druid连接数据库
         JDBC jdbc = new JDBC();
         //遍历结果集
@@ -31,7 +32,7 @@ public class Servlet extends HttpServlet {
         mjs.put("count",att.size());
         mjs.put("data",att);
         //把数据转化为json格式
-        String Json = JSON.toJSONString(att);
+        String Json = JSON.toJSONString(mjs);
         response.getWriter().write(Json);
     }
 }
