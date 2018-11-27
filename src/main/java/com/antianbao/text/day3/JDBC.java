@@ -71,31 +71,27 @@ public class JDBC {
     }
 
     /**
-     * 用户注册
+     * 添加
      */
-//    public int addStu(attendance stu) {
-//        int rlt = 0;
-//        conn=getConn();
-//        String sql = "insert into User(email,password) values(?,?)";
-//        try {
-//            pstmt = conn.prepareStatement(sql);
-//            pstmt.setInt(1, stu.getNo());
-//            pstmt.setString(2, stu.getName());
-//            pstmt.setString(3, stu.getTime());
-//            pstmt.setString(4, stu.getState());
-//            pstmt.setString(5, stu.getNote());
-//            pstmt.setString(6, stu.getDate());
-//            rlt = pstmt.executeUpdate();
-//            close();
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//            e.printStackTrace();
-//        }
-//        return rlt;
-//    }
+    public int addStu(attendance stu) {
+        int rlt = 0;
+        conn=getConn();
+        String sql = "insert into User(email,password) values(?,?)";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, stu.getNo());
+            pstmt.setString(2, stu.getName());
+            rlt = pstmt.executeUpdate();
+            close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return rlt;
+    }
 
     /**
-     * 修改密码
+     * 修改
      */
     public int updateStu(String name, String password) {
         int rlt = 0;
@@ -117,7 +113,26 @@ public class JDBC {
     }
 
     /**
-     * 将数据库中用户信息转为集合
+     * 删除
+     */
+    public int deleteDvd(int no) {
+        int rlt = 0;
+        conn=getConn();
+        try {
+            String sql = "DELETE FROM dvd where no = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setObject(1, no);
+            rlt = pstmt.executeUpdate();
+            close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return rlt;
+    }
+
+    /**
+     * 将数据库中用户信息转为集合（查询）
      */
     public List<attendance> queryStu() {
         List<attendance> list = new ArrayList<attendance>();
