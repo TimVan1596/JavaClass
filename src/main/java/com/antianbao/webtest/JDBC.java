@@ -1,4 +1,4 @@
-package com.antianbao.text.day3;
+package com.antianbao.webtest;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
@@ -71,62 +71,15 @@ public class JDBC {
     }
 
     /**
-     * 添加
+     * 判断输入账号密码是否正确
      */
-    public int addStu(attendance stu) {
+    public int isReally(String name, String password) {
         int rlt = 0;
-        conn=getConn();
-        String sql = "insert into User(email,password) values(?,?)";
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, stu.getNo());
-            pstmt.setString(2, stu.getName());
-            rlt = pstmt.executeUpdate();
-            close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return rlt;
-    }
-
-    /**
-     * 修改
-     */
-    public int updateStu(String name, String password) {
-        int rlt = 0;
-        conn=getConn();
-        try {
-            String sql = "update user SET password = ? where email = ?";
-            pstmt = conn.prepareStatement(sql);
-            Object[] params = {password, name};
-            for (int i = 1; i <= params.length; i++) {
-                pstmt.setObject(i, params[i - 1]);
+        List<User> list = queryStu();
+        for (User ls : list) {
+            if (ls.getUsername().equals(name) && ls.getUserpassword().equals(password)) {
+                return 1;
             }
-            rlt = pstmt.executeUpdate();
-            close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return rlt;
-    }
-
-    /**
-     * 删除
-     */
-    public int deleteDvd(int no) {
-        int rlt = 0;
-        conn=getConn();
-        try {
-            String sql = "DELETE FROM dvd where no = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setObject(1, no);
-            rlt = pstmt.executeUpdate();
-            close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
         }
         return rlt;
     }
@@ -134,22 +87,18 @@ public class JDBC {
     /**
      * 将数据库中用户信息转为集合（查询）
      */
-    public List<attendance> queryStu() {
-        List<attendance> list = new ArrayList<attendance>();
-        String sql = "SELECT *FROM timesheets";
+    public List<User> queryStu() {
+        List<User> list = new ArrayList<User>();
+        String sql = "SELECT *FROM webtestuser";
         conn=getConn();
         try {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
-            attendance bd = null;
+            User bd = null;
             while (rs.next()) {
-                bd = new attendance();
-                bd.setNo(rs.getInt("no"));
-                bd.setName(rs.getString("name"));
-                bd.setTime(rs.getString("time"));
-                bd.setState(rs.getString("state"));
-                bd.setNote(rs.getString("note"));
-                bd.setDate(rs.getString("date"));
+                bd = new User();
+                bd.setUsername(rs.getString("username"));
+                bd.setUserpassword(rs.getString("userpassword"));
                 list.add(bd);
             }
             close();

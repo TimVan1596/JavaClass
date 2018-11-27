@@ -10,12 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 @WebServlet(name = "ShowServlet",urlPatterns = {"/auto/show"})
 public class ShowServlet extends HttpServlet {
 
-    public Map<String, Object> res(){
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf8");
         Olympic ol1=new Olympic("美国","http://www.sinaimg.cn/ty/08ay/data/logo/new/USA.jpg",46,37,38,121);
         Olympic ol2=new Olympic("英国","http://www.sinaimg.cn/ty/08ay/data/logo/new/GBR.jpg",27,23,17,67);
         Olympic ol3=new Olympic("中国","http://www.sinaimg.cn/ty/08ay/data/logo/new/CHN.jpg",26,18,26,70);
@@ -36,25 +43,15 @@ public class ShowServlet extends HttpServlet {
         ols.add(ol7);
         ols.add(ol8);
         ols.add(ol9);
-
-        String json= JSONArray.fromObject(ols).toString();
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");
         result.put("count", 9);
-        result.put("data", json);
-        System.out.println(result);
-        return result;
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        result.put("data", ols);
+        String json= JSONArray.fromObject(result).toString();
+        json=json.substring(1,json.length()-1);
+        response.getWriter().write(json);
 
     }
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=utf8");
-        //先定义一个Java对象
-        res();
-    }
+
 }

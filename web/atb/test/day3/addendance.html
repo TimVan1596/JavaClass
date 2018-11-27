@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="/common/util/layui/css/layui.css">
 </head>
 <body>
+<div class="demoTable">
+    搜索ID：
+    <div class="layui-inline">
+        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+</div>
 <!--表格-->
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <script>
@@ -21,15 +28,39 @@
             ,toolbar: true
             ,page: true
             ,cols: [[ //标题栏
-                {type: 'checkbox',fixed: 'left'}
-                ,{field:'no', title:'学号', width:120,  unresize: true, sort: true}
+                {checkbox: true, fixed: true}
+                ,{field:'no', title:'学号', width:120}
                 ,{field:'name', title:'姓名', width:150}
                 ,{field:'time', title:'入学时间', width:200}
                 ,{field:'state', title:'考勤情况', width:180}
                 ,{field:'note', title:'备注', width:180}
-                ,{field:'date', title:'考勤日期', width:200}
+                ,{field:'date', title:'考勤日期', width:200, sort: true}
             ]]
             ,even: true
+            ,id: 'testReload'
+        });
+
+        var $ = layui.$, active = {
+            reload: function(){
+                var demoReload = $('#demoReload');
+
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        key: {
+                            no: demoReload.val()
+                        }
+                    }
+                });
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
         });
     });
 </script>

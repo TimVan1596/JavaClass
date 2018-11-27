@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webTest</title>
+    <style>
+        .button {
+            background-color: #4183c4;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 150px;
+            height: 30px;
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+<form action="" method="post" onsubmit="return sub()">
+    <table border="1" width="300">
+        <tr>
+            <th width=150px>用户名：</th>
+            <th><input type="text" id="name" title="用户名"/></th>
+        </tr>
+        <tr>
+            <th width=150px>邮 箱：</th>
+            <th><input type="text" id="email" title="邮箱"/></th>
+        </tr>
+        <tr>
+            <th colspan = '2'>
+                <button type="submit" class="button">提交</button>
+            </th>
+        </tr>
+    </table>
+</form>
+<script>
+    //jquery验证邮箱
+    function sub() {
+        if ($("#name").val() == "") {
+            alert("用户名不能为空!");
+            $("#name").focus();
+            return false;
+        }
+        if (!($("#name").val().length > 10 && $("#name").val().length < 20)) {
+            alert("用户名必须为10-20长度之间");
+            $("#name").focus();
+            return false;
+        }
+        if ($("#email").val() == "") {
+            alert("邮箱不能为空!");
+            $("#email").focus();
+            return false;
+        }
+        if (!$("#email").val().match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
+            alert("邮箱格式不正确");
+            $("#email").focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

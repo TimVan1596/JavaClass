@@ -26,12 +26,22 @@ public class AddendanceServlet extends HttpServlet {
     /**
      * 查询数据
      */
-    public static void select(){
+    public static void select(String id,String state,String time){
         if(att.size()!=0){
             att.clear();
         }
-      String sql="SELECT * FROM people,attendance WHERE people.ano=attendance.ano";
-      ResultSet res=db.executeQuery(sql,null);
+        if(id==null){
+            id="";
+        }
+        if(state==null){
+            state="";
+        }
+        if(time==null){
+            time="";
+        }
+      String sql="SELECT * FROM people,attendance WHERE people.ano=attendance.ano AND ((pno like ? OR name like ?)AND people.ano like ? AND time like ?)";
+      Object[] params={"%"+id+"%","%"+id+"%","%"+state+"%","%"+time+"%"};
+      ResultSet res=db.executeQuery(sql,params);
       try {
           while (res.next()) {
             att.add(new Attendance(res.getInt("pno"),res.getString("name"),res.getString("entrytime"),res.getString("state"),res.getString("time")));
@@ -44,11 +54,10 @@ public class AddendanceServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        select();
+        String pno=request.getParameter("id");
+        String state=request.getParameter("state");
+        String time=request.getParameter("time");
+        select(pno,state,time);
         Map<String, Object> mjs = new HashMap<String, Object>();
         mjs.put("code",0);
         mjs.put("msg","");
@@ -59,6 +68,10 @@ public class AddendanceServlet extends HttpServlet {
         //去掉第一个字符串和最后一个字符串
         json=json.substring(1,json.length()-1);
         response.getWriter().write(json);
+    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 
 }
