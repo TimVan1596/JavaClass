@@ -1,4 +1,4 @@
-package com.antianbao.webtest;
+package com.antianbao.book;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
@@ -108,4 +108,53 @@ public class JDBC {
         return list;
     }
 
+    /**
+     * 总记录数
+     * @return
+     */
+    public int findCount(){
+        int count = 0;
+        conn=getConn();
+        String sql = "select count(*) from webtestbook";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            if (rs.next()){
+                count = rs.getInt(1);
+            }
+            close();
+        } catch (Exception e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    /**
+     * 查询指定页（page这页）的记录
+     * @param page
+     * @return
+     */
+    public List<book> find(int page){
+        List<book> list = new ArrayList<>();
+        conn=getConn();
+        String sql = "SELECT *FROM webtestbook LIMIT "+(page-1)*book.PAGE_SIZE+","+book.PAGE_SIZE+"";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            book bd;
+            while (rs.next()) {
+                bd = new book();
+                bd.setBookid(rs.getString("bookid"));
+                bd.setBookname(rs.getString("bookname"));
+                bd.setDouble(rs.getString("double"));
+                bd.setDatetime(rs.getString("datetime"));
+                list.add(bd);
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

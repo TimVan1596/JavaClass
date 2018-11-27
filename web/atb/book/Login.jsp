@@ -26,7 +26,7 @@
     </style>
 </head>
 <body>
-<form action="/webTestLogin.do" method="post">
+<form action="../../webTestLogin.do" method="post">
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>账号：</th>
@@ -45,5 +45,10 @@
         </tr>
     </table>
 </form>
+<script type="text/javascript">
+    if(<%= request.getAttribute("MSG")!=null %>){
+        alert('<%=request.getAttribute("MSG") %>');
+    }
+</script>
 </body>
 </html>
