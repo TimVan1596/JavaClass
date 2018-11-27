@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+</head>
+<body>
+<div class="box">
+    <ul id="gallary">
+        <li>
+            <a href="./img/1.png" title="菠萝">
+                <img src="./img/1.png" alt="" style="height: 50px;width: 50px">
+            </a>
+        </li>
+        <li>
+            <a href="./img/2.jpg" title="派大星">
+                <img src="./img/2.jpg" alt="" style="height: 50px;width: 50px">
+            </a>
+        </li>
+        <li>
+            <a href="./img/3.jpg" title="皮卡丘">
+                <img src="./img/3.jpg" alt="" style="height: 50px;width: 50px">
+            </a>
+        </li>
+    </ul>
+    <div style="clear: both;"></div>
+    <img src="" alt="" class="show" id="image">
+    <p id="des" style="text-align: center;">图片信息</p>
+</div>
+
+<script>
+    //获取所有的a标签
+    var alA=document.getElementById("gallary").getElementsByTagName("a");
+    //循环遍历所有a标签
+    for(var i=0;i<alA.length;i++){
+        //为a设置点击事件
+        alA[i].onclick=function(){
+            //把a标签中的href 中存储的图片路径给需要展示图片的标签。
+            document.getElementById("image").src=this.href;
+            //把a标签中存储的title中存储的内容给需要展示的标签。
+            document.getElementById("des").innerText=this.title;
+            //阻止a链接的默认跳转。
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
