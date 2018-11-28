@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>图片</title>
+</head>
+<style>
+    .ty{
+        float: left;
+    }
+    .big{
+        visibility:hidden;
+        /*display: none;*/
+    }
+
+    #no1:hover .big{
+        visibility:visible;
+        /*display: block;*/
+     }
+    #no2:hover .big{
+        visibility:visible;
+        /*display: block;*/
+    }
+    #no3:hover .big{
+        visibility:visible;
+        /*display: block;*/
+    }
+</style>
+<body>
+    <div id="no1" class="ty">
+        <div style="height: 280px;width: 490px" class="big">
+            <img src="/fy/uploads/1.jpg" alt="" class="show"  style="height: 280px;width: 490px">
+        </div>
+     <img src="/fy/uploads/1.jpg"  style="height: 100px;width: 160px;">
+    </div>
+
+    <div id="no2" class="ty">
+        <div style="height: 280px;width: 490px" class="big">
+            <img src="/fy/uploads/2.jpg" alt="" class="show" style="height: 280px;width: 490px">
+        </div>
+        <img src="/fy/uploads/2.jpg"  style="height: 100px;width: 160px">
+    </div>
+
+    <div id="no3" class="ty">
+        <div style="height: 280px;width: 490px" class="big">
+            <img src="/fy/uploads/3.jpg" alt="" class="show"  style="height: 280px;width: 490px">
+        </div>
+        <img src="/fy/uploads/3.jpg"  style="height: 100px;width: 160px">
+    </div>
+
+
+<!--<script>-->
+    <!--var xx=document.getElementById("zzz").getElementsByTagName("a");-->
+    <!--//循环遍历所有a标签-->
+    <!--for(var i=0;i<xx.length;i++){-->
+    <!--//为a设置点击事件-->
+    <!--xx[i].onclick=function(){-->
+    <!--document.getElementById("image").src=this.href;-->
+    <!--document.getElementById("max").innerText=this.title;-->
+    <!--return false;-->
+        <!--}-->
+    <!--}-->
+<!--</script>-->
+</body>
+</html>
