@@ -40,7 +40,7 @@ public class MainAnnotations {
 //            InsertUser();
 
             // 3、更改张三的部门，调到总裁办
-            UpdateUser();
+//            UpdateUser();
 
             // 4、把技术部的员工，都合并到市场部
 //            UpdateDept();
@@ -109,9 +109,11 @@ public class MainAnnotations {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
             // 执行更新
-            User user = iuser.getUser("张三");
-            user.setUserDept("总裁办");
-            iuser.updateUser(user);
+            List<User> users = iuser.getUser("张三");
+            for (User user : users) {
+                user.setUserDept("总裁办");
+                iuser.updateUser(user);
+            }
             // 提交事务
             session.commit();
         }catch (Exception e) {
@@ -125,9 +127,11 @@ public class MainAnnotations {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
             // 执行更新
-            User user = iuser.getDept("技术部");
-            user.setUserDept("市场部");
-            iuser.updateUser(user);
+            List<User> users = iuser.getDept("技术部");
+            for (User user : users) {
+                user.setUserDept("市场部");
+                iuser.updateUser(user);
+            }
             // 提交事务
             session.commit();
         }catch (Exception e) {

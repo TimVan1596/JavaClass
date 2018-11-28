@@ -17,13 +17,13 @@ public interface IUser {
     @Select("SELECT *FROM user")
     public List<User> getUserList();
 
-    // 通过员工姓名查找
+    // 通过员工姓名查找  单数据：public User getUser(String userName); 多数据：如下
     @Select("SELECT *FROM user WHERE userName = #{userName}")
-    public User getUser(String userName);
+    public List<User> getUser(String userName);
 
     // 通过员工部门查找
     @Select("SELECT *FROM user WHERE userDept = #{userDept}")
-    public User getDept(String userDept);
+    public List<User> getDept(String userName);
 
     // 添加员工信息
     @Insert("INSERT INTO user(userName,userAge,userSex,userDept) " +
