@@ -40,13 +40,22 @@ public class MainAnnotations {
 //            InsertUser();
 
             // 3、更改张三的部门，调到总裁办
-//            UpdateUser();
+            UpdateUser();
 
             // 4、把技术部的员工，都合并到市场部
 //            UpdateDept();
 
+            // 5、全部展示所有部门的所有员工
+//            getUserList();
+
+            // 6、查询80后的员工有哪些
+//            getUserAge();
+
+            // 7、查询80后的且性别为男的员工有哪些
+//            getUserAgeSex();
+
             // 删除数据
-            //testDelete();
+//            DeleteUser();
 
         } finally {
             session.close();
@@ -55,8 +64,7 @@ public class MainAnnotations {
 
     // 添加部门
     public static void InsertDept() {
-        try
-        {
+        try {
             // 获取Session连接
             SqlSession session = sqlSessionFactory.openSession();
             // 获取Mapper
@@ -68,16 +76,14 @@ public class MainAnnotations {
             // 提交事务
             session.commit();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // 添加员工
     public static void InsertUser() {
-        try
-        {
+        try {
             // 获取Session连接
             SqlSession session = sqlSessionFactory.openSession();
             // 获取Mapper
@@ -85,22 +91,21 @@ public class MainAnnotations {
             // 执行插入
             User user = new User();
             user.setUserName("赵六");
+            user.setUserAge(33);
+            user.setUserSex("男");
             user.setUserDept("总裁办");
-            user.setUserAge(23);
             userMapper.insertUser(user);
             // 提交事务
             session.commit();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // 修改用户列表
+    // 通过姓名修改用户部门
     public static void UpdateUser() {
-        try
-        {
+        try {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
             // 执行更新
@@ -109,45 +114,90 @@ public class MainAnnotations {
             iuser.updateUser(user);
             // 提交事务
             session.commit();
-        }catch (Exception e)
-        {
+        }catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // 修改用户部门
+    // 通过部门修改用户部门
     public static void UpdateDept() {
-        try
-        {
+        try {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
             // 执行更新
             User user = iuser.getDept("技术部");
-            user.setUserDept("总裁办");
+            user.setUserDept("市场部");
             iuser.updateUser(user);
             // 提交事务
             session.commit();
-        }catch (Exception e)
-        {
+        }catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    // 获取用户列表
+    public static void getUserList() {
+        try {
+            SqlSession session = sqlSessionFactory.openSession();
+            IUser iuser = session.getMapper(IUser.class);
+            // 显示User信息
+            printUsers(iuser.getUserList());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 查询80后的员工
+    public static void getUserAge() {
+        try {
+            SqlSession session = sqlSessionFactory.openSession();
+            IUser iuser = session.getMapper(IUser.class);
+            // 显示User信息
+            printUsers(iuser.getUserAge());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 查询80后且性别为男的员工
+    public static void getUserAgeSex() {
+        try {
+            SqlSession session = sqlSessionFactory.openSession();
+            IUser iuser = session.getMapper(IUser.class);
+            // 显示User信息
+            printUsers(iuser.getUserAgeSex());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //打印用户信息到控制台
+    private static void printUsers(final List<User> users) {
+        int count = 0;
+        for (User user : users) {
+            System.out.println(MessageFormat.format(
+                    "============= 员工表[{0}]=================", ++count));
+            System.out.println("工号: " + user.getUserId());
+            System.out.println("姓名: " + user.getUserName());
+            System.out.println("年龄: " + user.getUserAge());
+            System.out.println("性别: " + user.getUserSex());
+            System.out.println("部门: " + user.getUserDept());
+
         }
     }
 
     // 删除用户信息
     public static void DeleteUser() {
-        try
-        {
+        try {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
             // 执行删除
             iuser.deleteUser(5);
             // 提交事务
             session.commit();
-        }catch (Exception e)
-        {
+        }catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
 }

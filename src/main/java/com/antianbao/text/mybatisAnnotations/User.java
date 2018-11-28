@@ -3,6 +3,7 @@ package com.antianbao.text.mybatisAnnotations;
 public class User extends Dept {
     private int userId;
     private String userName;
+    private String userSex;
     private String userDept;
     private int userAge;
 
@@ -36,5 +37,13 @@ public class User extends Dept {
 
     public void setUserAge(int userAge) {
         this.userAge = userAge;
+    }
+
+    public String getUserSex() {
+        return userSex;
+    }
+
+    public void setUserSex(String userSex) {
+        this.userSex = userSex;
     }
 }
