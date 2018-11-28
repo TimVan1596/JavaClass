@@ -283,11 +283,10 @@ public class Main {
             System.out.println(MessageFormat.format("============= DVDRECY[{0}]=================", ++count));
             System.out.println("show: " + dvdrecy.getShow());
             System.out.println("sta: " + dvdrecy.getSta());
-
-                System.out.println("id: " + dvd.getDvdno());
-                System.out.println("name: " + dvd.getDvdname());
-                System.out.println("状态: " + dvd.getState());
-                System.out.println("图片: " + dvd.getPicture());
+            System.out.println("id: " + dvd.getDvdno());
+            System.out.println("name: " + dvd.getDvdname());
+            System.out.println("状态: " + dvd.getState());
+            System.out.println("图片: " + dvd.getPicture());
             }
         }
     }

@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charsetutf-8">
+    <!--<meta http-equiv="Content-Type" content="text/html;charsetutf-8">-->
+    <meta charset="UTF-8">
     <title>签到</title>
     <link rel="stylesheet" href="/common/util/layui/css/layui.css"  media="all">
 </head>
 <body>
 <div class="demoTable" style="margin-left: 26%">
-    人员：
+    人员信息:
     <div class="layui-inline">
         <input class="layui-input" name="id" id="demoReload" autocomplete="off">
     </div>
 </div>
 
-    <div style="margin-left: 26%">考勤情况:
+    <div style="margin-left: 26%">
+        考勤情况:
         <div class="layui-inline">
         <select id="state" class="layui-select">
               <option value="">-请选择-</option>
@@ -25,52 +27,30 @@
         </div>
     </div>
 
-    <div style="margin-left: 26%">考勤日期:
+    <div style="margin-left: 26%">
+        考勤日期:
         <div class="layui-inline">
         <input type="text" class="layui-input" id="test31" placeholder="yyyy-MM-dd">
         </div>
         <button class="layui-btn" data-type="reload" style="margin-left: 28%">查询</button>
         <button class="layui-btn layui-btn-primary" >考勤</button>
-        <button class="layui-btn layui-btn-primary" id="del" onclick="return tishi()">删除</button>
     </div>
 
  <div style="margin-left: 26%">
-    <table class="layui-hide" id="test" >
+    <table class="layui-hide" id="test" lay-filter="test" >
     </table>
+     <script type="text/html" id="toolbarDemo">
+         <div class="layui-btn-container">
+             <button class="layui-btn layui-btn-sm" lay-event="getCheckData">删除选中行</button>
+         </div>
+     </script>
  </div>
-    <button class="layui-btn layui-btn-primary" style="margin-left: 30%">统计分析</button>
+
+    <button class="layui-btn layui-btn-primary" style="margin-left: 46%">统计分析</button>
 
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/common/util/layui/layui.js" charset="utf-8"></script>
 <script>
-    function tishi() {
-        //找所有选中项
-        //var ck = document.get;
-        var domList = document.getElementsByTagName("input");
-        var ck = [];
-        var len = domList.length;　　
-        while (len--) {　　
-            if (domList[len].type == 'checkbox') {
-                ck.push(domList[len]);
-            }
-        }
-        var str = "";
-        for(var i=0;i<ck.length;i++)
-        {
-            if(ck[i].checked)
-            {
-                str += ck[i]+",";
-            }
-        }
-        str=str.substring(0,str.length-1);
-        if(str==""){
-            alert("你未选择要删除的项");
-            return false;
-        }
-        if(confirm("确定要删除么："+str+"")){
-            window.location.href="deleteDVD.jsp?no="+str;
-        }
-    }
     layui.use('laydate', function() {
         var laydate = layui.laydate;
         //日期时间选择器
@@ -85,21 +65,50 @@
             elem: '#test'
             ,url:'/fy/attendance'
             ,method :'post'
-            ,toolbar: true
+            ,toolbar: '#toolbarDemo'
             ,title: '考勤表'
             ,totalRow: true
-            ,width:905
+            ,width:870
             ,cols: [[
                 {type: 'checkbox',fixed: 'left'}
-                ,{field:'pno', title:'工号', width:120, sort: true}
-                ,{field:'name', title:'姓名', width:150}
-                ,{field:'entrytime', title:'入职时间', width:200, sort: true}
-                ,{field:'state', title:'考勤情况', width:180}
-                ,{field:'time', title:'考勤日期', width:200, sort: true}
+                ,{field:'pno', title:'工号', width:161, sort: true}
+                ,{field:'name', title:'姓名', width:162}
+                ,{field:'entrytime', title:'入职时间', width:164, sort: true}
+                ,{field:'state', title:'考勤情况', width:164}
+                ,{field:'time', title:'考勤日期', width:164, sort: true}
             ]]
             ,id: 'testReload'
             ,page: true
         });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.confirm('真的删除行么', function (index) {
+                        $.ajax({
+                            url: "/fy/addendanceDelete",
+                            type: "POST",
+                            data: {dat:JSON.stringify(data)},
+                            success: function (msg) {
+                                if(msg==200) {
+                                    location.reload(true);
+                                    //关闭弹框
+                                    layer.close(index);
+                                    layer.msg("删除成功", {icon: 6});
+                                }else{
+                                    layer.close(index);
+                                    layer.msg("删除失败", {icon: 5});
+                                }
+                            }
+                        });
+                     });
+                    break;
+            }
+        });
+
         var $ = layui.$, active = {
             reload: function(){
                 var demoReload = $('#demoReload');
@@ -123,6 +132,7 @@
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
+
     });
 </script>
 

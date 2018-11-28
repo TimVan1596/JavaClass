@@ -24,9 +24,9 @@ public class AddendanceServlet extends HttpServlet {
    static ArrayList<Attendance> att=new ArrayList<>();
 
     /**
-     * 查询数据
+     * 按条件查询数据
      */
-    public static void select(String id,String state,String time){
+    public static void select(int page,int limit,String id,String state,String time){
         if(att.size()!=0){
             att.clear();
         }
@@ -39,8 +39,8 @@ public class AddendanceServlet extends HttpServlet {
         if(time==null){
             time="";
         }
-      String sql="SELECT * FROM people,attendance WHERE people.ano=attendance.ano AND ((pno like ? OR name like ?)AND people.ano like ? AND time like ?)";
-      Object[] params={"%"+id+"%","%"+id+"%","%"+state+"%","%"+time+"%"};
+      String sql="SELECT * FROM people,attendance WHERE people.ano=attendance.ano AND ((pno like ? OR name like ?)AND people.ano like ? AND time like ?) LIMIT ?,?";
+      Object[] params={"%"+id+"%","%"+id+"%","%"+state+"%","%"+time+"%",(page-1)*limit,page*limit};
       ResultSet res=db.executeQuery(sql,params);
       try {
           while (res.next()) {
@@ -52,16 +52,41 @@ public class AddendanceServlet extends HttpServlet {
       }
     }
 
+    /**
+     * 查询一共多少条数据
+     * @return
+     */
+    public static int count(){
+        int count=0;
+        String sql="SELECT COUNT(*) FROM people";
+        ResultSet res=db.executeQuery(sql,null);
+        try {
+            while (res.next()) {
+              count=res.getInt("COUNT(*)");
+            }
+            db.close();
+        }catch(SQLException e){
+             e.printStackTrace();
+        }
+        return count;
+    }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        //接收传过来的页数
+        int page=Integer.parseInt(request.getParameter("page"));
+        //接受传过来每页几行数据
+        int limit=Integer.parseInt(request.getParameter("limit"));
         String pno=request.getParameter("id");
         String state=request.getParameter("state");
         String time=request.getParameter("time");
-        select(pno,state,time);
+        //查数据
+        select(page,limit,pno,state,time);
         Map<String, Object> mjs = new HashMap<String, Object>();
         mjs.put("code",0);
         mjs.put("msg","");
-        mjs.put("count",att.size());
+        mjs.put("count",count());
         mjs.put("data",att);
         //把数据转化为json格式
         String json= JSONArray.fromObject(mjs).toString();
