@@ -2,47 +2,101 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Test</title>
+    <title>css3鼠标滑过小图显示大图背景特效</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function fixHeight() {
+                var headerHeight = $("#switcher").height();
+                $("#iframe").attr("height", $(window).height()-54+ "px");
+            }
+            $(window).resize(function () {
+                fixHeight();
+            }).resize();
+
+            $('.icon-monitor').addClass('active');
+
+            $(".icon-mobile-3").click(function () {
+                $("#by").css("overflow-y", "auto");
+                $('#iframe-wrap').removeClass().addClass('mobile-width-3');
+                $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+
+            $(".icon-mobile-2").click(function () {
+                $("#by").css("overflow-y", "auto");
+                $('#iframe-wrap').removeClass().addClass('mobile-width-2');
+                $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+
+            $(".icon-mobile-1").click(function () {
+                $("#by").css("overflow-y", "auto");
+                $('#iframe-wrap').removeClass().addClass('mobile-width');
+                $('.icon-tablet,.icon-mobile,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+
+            $(".icon-tablet").click(function () {
+                $("#by").css("overflow-y", "auto");
+                $('#iframe-wrap').removeClass().addClass('tablet-width');
+                $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+
+            $(".icon-monitor").click(function () {
+                $("#by").css("overflow-y", "hidden");
+                $('#iframe-wrap').removeClass().addClass('full-width');
+                $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function Responsive($a) {
+            if ($a == true) $("#Device").css("opacity", "100");
+            if ($a == false) $("#Device").css("opacity", "0");
+            $('#iframe-wrap').removeClass().addClass('full-width');
+            $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+            $(this).addClass('active');
+            return false;
+        };
+    </script>
 </head>
-<body>
-<div class="box">
-    <ul id="gallary">
-        <li>
-            <a href="./img/1.png" title="菠萝">
-                <img src="./img/1.png" alt="" style="height: 50px;width: 50px">
-            </a>
-        </li>
-        <li>
-            <a href="./img/2.jpg" title="派大星">
-                <img src="./img/2.jpg" alt="" style="height: 50px;width: 50px">
-            </a>
-        </li>
-        <li>
-            <a href="./img/3.jpg" title="皮卡丘">
-                <img src="./img/3.jpg" alt="" style="height: 50px;width: 50px">
-            </a>
-        </li>
-    </ul>
-    <div style="clear: both;"></div>
-    <img src="" alt="" class="show" id="image">
-    <p id="des" style="text-align: center;">图片信息</p>
+<body id="by">
+
+<div id="switcher">
+    <div class="center">
+            <div id="Device">
+                <a href="javascript:"><div class="icon-monitor active"></div></a>
+                <a href="javascript:"><div class="icon-tablet"></div></a>
+                <a href="javascript:"><div class="icon-mobile-1"></div></a>
+                <a href="javascript:"><div class="icon-mobile-2"></div></a>
+                <a href="javascript:"><div class="icon-mobile-3"></div></a>
+            </div>
+    </div>
 </div>
 
+<div id="iframe-wrap">
+    <iframe id="iframe" src="http://www.17sucai.com/preview/11/2015-03-09/css3-images-view/index.html" frameborder="0" width="100%" height="500px"></iframe>
+</div>
+
+<!--百度流量统计代码-->
 <script>
-    //获取所有的a标签
-    var alA=document.getElementById("gallary").getElementsByTagName("a");
-    //循环遍历所有a标签
-    for(var i=0;i<alA.length;i++){
-        //为a设置点击事件
-        alA[i].onclick=function(){
-            //把a标签中的href 中存储的图片路径给需要展示图片的标签。
-            document.getElementById("image").src=this.href;
-            //把a标签中存储的title中存储的内容给需要展示的标签。
-            document.getElementById("des").innerText=this.title;
-            //阻止a链接的默认跳转。
-            return false;
-        }
-    }
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?382f81c966395258f239157654081890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 </script>
+
+
 </body>
 </html>

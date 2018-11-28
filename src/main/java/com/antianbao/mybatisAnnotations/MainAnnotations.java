@@ -1,4 +1,4 @@
-package com.antianbao.text.mybatisAnnotations;
+package com.antianbao.mybatisAnnotations;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -186,7 +186,6 @@ public class MainAnnotations {
             System.out.println("年龄: " + user.getUserAge());
             System.out.println("性别: " + user.getUserSex());
             System.out.println("部门: " + user.getUserDept());
-
         }
     }
 

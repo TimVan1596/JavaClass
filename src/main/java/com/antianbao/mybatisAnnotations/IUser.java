@@ -1,4 +1,4 @@
-package com.antianbao.text.mybatisAnnotations;
+package com.antianbao.mybatisAnnotations;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;

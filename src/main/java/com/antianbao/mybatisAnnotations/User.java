@@ -1,4 +1,4 @@
-package com.antianbao.text.mybatisAnnotations;
+package com.antianbao.mybatisAnnotations;
 
 public class User extends Dept {
     private int userId;
