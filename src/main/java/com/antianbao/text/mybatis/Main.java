@@ -34,7 +34,7 @@ public class Main {
         SqlSession session = sqlSessionFactory.openSession();
         try {
             //sqlSessionFactory.getConfiguration().addMapper(IUser.class);
-            //User user = (User) session.selectOne( "com.yiibai.mybatis.models.UserMapper.getUserByID", 1);
+            //Dept user = (Dept) session.selectOne( "com.yiibai.mybatis.models.UserMapper.getUserByID", 1);
 
             // 用户数据列表
             getUserList();
@@ -158,11 +158,11 @@ public class Main {
 
         for (User user : users) {
             System.out.println(MessageFormat.format(
-                    "============= User[{0}]=================", ++count));
-            System.out.println("User Id: " + user.getId());
-            System.out.println("User Name: " + user.getName());
-            System.out.println("User Dept: " + user.getDept());
-            System.out.println("User Website: " + user.getWebsite());
+                    "============= Dept[{0}]=================", ++count));
+            System.out.println("Dept Id: " + user.getId());
+            System.out.println("Dept Name: " + user.getName());
+            System.out.println("Dept Dept: " + user.getDept());
+            System.out.println("Dept Website: " + user.getWebsite());
         }
     }
 }

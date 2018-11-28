@@ -33,16 +33,17 @@ public class MainAnnotations {
         // TODO Auto-generated method stub
         SqlSession session = sqlSessionFactory.openSession();
         try {
-            //sqlSessionFactory.getConfiguration().addMapper(IUser.class);
-            //User user = (User) session.selectOne( "com.yiibai.mybatis.models.UserMapper.getUserByID", 1);
+            // 1、新增一个部门，总裁办
+//            InsertDept();
 
-            // 用户数据列表
-            getUserList();
-            // 插入数据
-            //testInsert();
+            // 2、新增一个员工，叫 赵六，分配到总裁办
+//            InsertUser();
 
-            // 更新用户
-            //testUpdate();
+            // 3、更改张三的部门，调到总裁办
+//            UpdateUser();
+
+            // 4、把技术部的员工，都合并到市场部
+//            UpdateDept();
 
             // 删除数据
             //testDelete();
@@ -52,27 +53,20 @@ public class MainAnnotations {
         }
     }
 
-    //
-    public static void testInsert() {
+    // 添加部门
+    public static void InsertDept() {
         try
         {
             // 获取Session连接
             SqlSession session = sqlSessionFactory.openSession();
             // 获取Mapper
             IUser userMapper = session.getMapper(IUser.class);
-            System.out.println("开始插入");
             // 执行插入
-            EUser user = new EUser();
-            user.setEmail("atb");
-            user.setPassword("123");
-            userMapper.insertUser(user);
+            User user = new User();
+            user.setDeptName("总裁办");
+            userMapper.insertDept(user);
             // 提交事务
             session.commit();
-
-            // 显示插入之后User信息
-            System.out.println("插入前");
-            getUserList();
-            System.out.println("插入后");
         }
         catch (Exception e)
         {
@@ -80,37 +74,59 @@ public class MainAnnotations {
         }
     }
 
-    // 获取用户列表
-    public static void getUserList() {
-        try {
+    // 添加员工
+    public static void InsertUser() {
+        try
+        {
+            // 获取Session连接
             SqlSession session = sqlSessionFactory.openSession();
-            IUser iuser = session.getMapper(IUser.class);
-            // 显示User信息
-            System.out.println("开始显示数据库内容");
-            printUsers(iuser.getUserList());
-            System.out.println("显示完毕");
-        } catch (Exception e) {
+            // 获取Mapper
+            IUser userMapper = session.getMapper(IUser.class);
+            // 执行插入
+            User user = new User();
+            user.setUserName("赵六");
+            user.setUserDept("总裁办");
+            user.setUserAge(23);
+            userMapper.insertUser(user);
+            // 提交事务
+            session.commit();
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
-    public static void testUpdate() {
+    // 修改用户列表
+    public static void UpdateUser() {
         try
         {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
-            System.out.println("开始修改");
-            printUsers(iuser.getUserList());
             // 执行更新
-            EUser user = iuser.getUser(5);
-            user.setEmail("New name");
+            User user = iuser.getUser("张三");
+            user.setUserDept("总裁办");
             iuser.updateUser(user);
             // 提交事务
             session.commit();
-            // 显示更新之后User信息
-            System.out.println("修改前");
-            printUsers(iuser.getUserList());
-            System.out.println("修改后");
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    // 修改用户部门
+    public static void UpdateDept() {
+        try
+        {
+            SqlSession session = sqlSessionFactory.openSession();
+            IUser iuser = session.getMapper(IUser.class);
+            // 执行更新
+            User user = iuser.getDept("技术部");
+            user.setUserDept("总裁办");
+            iuser.updateUser(user);
+            // 提交事务
+            session.commit();
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -118,44 +134,20 @@ public class MainAnnotations {
     }
 
     // 删除用户信息
-    public static void testDelete() {
+    public static void DeleteUser() {
         try
         {
             SqlSession session = sqlSessionFactory.openSession();
             IUser iuser = session.getMapper(IUser.class);
-            System.out.println("开始删除");
-            // 显示删除之前User信息
-            System.out.println("删除借书");
-            printUsers(iuser.getUserList());
             // 执行删除
             iuser.deleteUser(5);
             // 提交事务
             session.commit();
-            // 显示删除之后User信息
-            System.out.println("删除前");
-            printUsers(iuser.getUserList());
-            System.out.println("删除后");
         }catch (Exception e)
         {
             e.printStackTrace();
         }
     }
 
-    /**
-     *
-     * 打印用户信息到控制台
-     *
-     * @param users
-     */
-    private static void printUsers(final List<EUser> users) {
-        int count = 0;
 
-        for (EUser user : users) {
-            System.out.println(MessageFormat.format(
-                    "============= User[{0}]=================", ++count));
-            System.out.println("User email: " + user.getEmail());
-            System.out.println("User password: " + user.getPassword());
-            System.out.println("User name: " + user.getName());
-        }
-    }
 }

@@ -14,19 +14,29 @@ import java.util.List;
  */
 public interface IUser {
     //@Select("select * from user where id= #{id}")
-    //public User getUserByID(int id);
-    @Select("SELECT *FROM user,dvd")
-    public List<EUser> getUserList();
+    //public Dept getUserByID(int id);
+    @Select("SELECT *FROM user WHERE userName = #{userName}")
+    public User getUser(String userName);
 
-    @Insert("INSERT INTO user(email,password) VALUES(#{email}, #{password})")
-    public void insertUser(EUser user);
+    @Select("SELECT *FROM user WHERE userDept = #{userDept}")
+    public User getDept(String userDept);
 
-    @Update("UPDATE user SET email=#{email},password=#{password} WHERE id=#{id}")
-    public void updateUser(EUser user);
+    @Insert("INSERT INTO user(userName,userDept,userAge) VALUES(#{userName},#{userDept},#{userAge})")
+    public void insertUser(User user);
 
-    @Delete("DELETE FROM user WHERE id = #{id}")
+    @Insert("INSERT INTO dept(deptName) VALUES(#{deptName})")
+    public void insertDept(User user);
+
+    @Update("UPDATE user SET userDept=#{userDept} WHERE userDept=#{userDept}")
+    public void updateUserDept(User user);
+
+    @Update("UPDATE user SET userDept=#{userDept} WHERE userName=#{userName}")
+    public void updateUser(User user);
+
+    @Update("UPDATE user SET userDept=#{userDept} WHERE userName=#{userName}")
+    public void updateDept(User user);
+
+    @Delete("DELETE FROM user WHERE userId = #{userId}")
     public void deleteUser(int id);
 
-    @Select("SELECT *FROM user WHERE id = #{id}")
-    public EUser getUser(int id);
 }

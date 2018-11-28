@@ -1,31 +1,40 @@
 package com.antianbao.text.mybatisAnnotations;
 
-public class User {
-    private int id;
-    private String email;
-    private String password;
+public class User extends Dept {
+    private int userId;
+    private String userName;
+    private String userDept;
+    private int userAge;
 
-    public int getNo() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setNo(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserDept() {
+        return userDept;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserDept(String userDept) {
+        this.userDept = userDept;
+    }
+
+    public int getUserAge() {
+        return userAge;
+    }
+
+    public void setUserAge(int userAge) {
+        this.userAge = userAge;
     }
 }
