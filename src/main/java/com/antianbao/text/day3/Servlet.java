@@ -22,14 +22,29 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //get解决中文乱码
         response.setContentType("application/text; charset=utf-8");
+        //接收传过来的页数
+        int page = Integer.parseInt(request.getParameter("page"));
+        //接受传过来每页几行数据
+        int limit = Integer.parseInt(request.getParameter("limit"));
+        //接受需要搜索数据
+        String no = request.getParameter("no[no]");
+        String name = request.getParameter("name[name]");
+        if(no == null){
+            no="";
+        }
+        if(name == null){
+            name="";
+        }
         //阿里巴巴druid连接数据库
         JDBC jdbc = new JDBC();
         //遍历结果集
-        List<attendance> att = jdbc.queryStu();
+//        List<attendance> att = jdbc.find(page,limit);
+        List<attendance> att = jdbc.findPage(page,limit,no);
         Map<String, Object> mjs = new HashMap<String, Object>();
         mjs.put("code",0);
         mjs.put("msg","");
-        mjs.put("count",att.size());
+//        mjs.put("count",jdbc.findCount());
+        mjs.put("count",jdbc.findCountPage(no));
         mjs.put("data",att);
         //把数据转化为json格式
         String Json = JSON.toJSONString(mjs);

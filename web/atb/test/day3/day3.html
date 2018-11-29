@@ -18,8 +18,6 @@
 
 <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
 
-
-<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function(){
@@ -28,18 +26,18 @@
         //方法级渲染
         table.render({
             elem: '#LAY_table_user'
-            ,url: '/atb/attendance.do'
+            ,url: 'user'
             ,cols: [[
                 {checkbox: true, fixed: true}
-                ,{field:'id', title: 'ID', width:80, sort: true, fixed: true}
-                ,{field:'username', title: '用户名', width:80}
-                ,{field:'sex', title: '性别', width:80, sort: true}
-                ,{field:'city', title: '城市', width:80}
+                ,{field:'id', title: 'ID', sort: true, fixed: true}
+                ,{field:'username', title: '用户名'}
+                ,{field:'sex', title: '性别', sort: true}
+                ,{field:'city', title: '城市'}
                 ,{field:'sign', title: '签名'}
-                ,{field:'experience', title: '积分', sort: true, width:80}
-                ,{field:'score', title: '评分', sort: true, width:80}
-                ,{field:'classify', title: '职业', width:80}
-                ,{field:'wealth', title: '财富', sort: true, width:135}
+                ,{field:'experience', title: '积分', sort: true}
+                ,{field:'score', title: '评分', sort: true}
+                ,{field:'classify', title: '职业'}
+                ,{field:'wealth', title: '财富', sort: true}
             ]]
             ,id: 'testReload'
             ,page: true

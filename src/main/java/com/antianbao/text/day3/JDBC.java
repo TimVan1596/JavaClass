@@ -134,14 +134,44 @@ public class JDBC {
     /**
      * 将数据库中用户信息转为集合（查询）
      */
-    public List<attendance> queryStu() {
-        List<attendance> list = new ArrayList<attendance>();
-        String sql = "SELECT *FROM timesheets";
+//    public List<attendance> queryStu() {
+//        List<attendance> list = new ArrayList<attendance>();
+//        String sql = "SELECT *FROM timesheets";
+//        conn=getConn();
+//        try {
+//            pstmt = conn.prepareStatement(sql);
+//            rs = pstmt.executeQuery();
+//            attendance bd = null;
+//            while (rs.next()) {
+//                bd = new attendance();
+//                bd.setNo(rs.getInt("no"));
+//                bd.setName(rs.getString("name"));
+//                bd.setTime(rs.getString("time"));
+//                bd.setState(rs.getString("state"));
+//                bd.setNote(rs.getString("note"));
+//                bd.setDate(rs.getString("date"));
+//                list.add(bd);
+//            }
+//            close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return list;
+//    }
+
+    /**
+     * 查询指定页（page这页）的记录
+     * @param page
+     * @return 查询到的结果
+     */
+    public List<attendance> find(int page,int limit){
+        List<attendance> list = new ArrayList<>();
         conn=getConn();
+        String sql = "SELECT *FROM timesheets LIMIT "+(page-1)*limit+","+limit+"";
         try {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
-            attendance bd = null;
+            attendance bd;
             while (rs.next()) {
                 bd = new attendance();
                 bd.setNo(rs.getInt("no"));
@@ -157,6 +187,82 @@ public class JDBC {
             e.printStackTrace();
         }
         return list;
+    }
+
+    /**
+     * 总记录数
+     * @return
+     */
+    public int findCount(){
+        int count = 0;
+        conn=getConn();
+        String sql = "select count(*) from timesheets";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            if (rs.next()){
+                count = rs.getInt(1);
+            }
+            close();
+        } catch (Exception e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    /**
+     * 总记录数
+     * @return
+     */
+    public List<attendance> findPage(int page,int limit,String no){
+        List<attendance> list = new ArrayList<>();
+        conn=getConn();
+        String sql = "SELECT *FROM timesheets " +
+                "WHERE no like '%"+no+"%' " +
+                "LIMIT "+(page-1)*limit+","+limit+"";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            attendance bd;
+            while (rs.next()) {
+                bd = new attendance();
+                bd.setNo(rs.getInt("no"));
+                bd.setName(rs.getString("name"));
+                bd.setTime(rs.getString("time"));
+                bd.setState(rs.getString("state"));
+                bd.setNote(rs.getString("note"));
+                bd.setDate(rs.getString("date"));
+                list.add(bd);
+            }
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * 总记录数
+     * @return
+     */
+    public int findCountPage(String no){
+        int count = 0;
+        conn=getConn();
+        String sql = "select count(*) from timesheets " +
+                "WHERE no like '%"+no+"%'";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            if (rs.next()){
+                count = rs.getInt(1);
+            }
+            close();
+        } catch (Exception e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+        return count;
     }
 
 }
