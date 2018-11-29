@@ -39,12 +39,12 @@ public class Servlet extends HttpServlet {
         JDBC jdbc = new JDBC();
         //遍历结果集
 //        List<attendance> att = jdbc.find(page,limit);
-        List<attendance> att = jdbc.findPage(page,limit,no);
+        List<attendance> att = jdbc.findPage(page,limit,no,name);
         Map<String, Object> mjs = new HashMap<String, Object>();
         mjs.put("code",0);
         mjs.put("msg","");
 //        mjs.put("count",jdbc.findCount());
-        mjs.put("count",jdbc.findCountPage(no));
+        mjs.put("count",jdbc.findCountPage(no,name));
         mjs.put("data",att);
         //把数据转化为json格式
         String Json = JSON.toJSONString(mjs);
