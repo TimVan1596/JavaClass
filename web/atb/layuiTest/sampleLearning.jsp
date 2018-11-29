@@ -675,10 +675,10 @@
 <%--轮播--%>
 <%--<div class="layui-carousel" id="test10">--%>
     <%--<div carousel-item="">--%>
-        <%--<div><img src="./image/比噶就.jpg"></div>--%>
-        <%--<div><img src="./image/比噶就.jpg"></div>--%>
-        <%--<div><img src="./image/比噶就.jpg"></div>--%>
-        <%--<div><img src="./image/比噶就.jpg"></div>--%>
+        <%--<div><img src="./image/3.jpg"></div>--%>
+        <%--<div><img src="./image/3.jpg"></div>--%>
+        <%--<div><img src="./image/3.jpg"></div>--%>
+        <%--<div><img src="./image/3.jpg"></div>--%>
     <%--</div>--%>
 <%--</div>--%>
 <%--<script>--%>

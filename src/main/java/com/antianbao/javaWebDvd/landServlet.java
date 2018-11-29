@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "landServlet",urlPatterns = {"/atblogin.do"})
@@ -26,8 +27,12 @@ public class landServlet extends HttpServlet {
             JDBCUtilUser jdbcUtil = new JDBCUtilUser();
             int jd = jdbcUtil.isReally(userName, userPassword);
             if(jd > 0){
-                //跳转到新的界面
+                HttpSession session = request.getSession();
+                //把用户数据保存在session域对象中
+                session.setAttribute("loginName", userName);
+                log4j.getInstance().getLogger().debug("用户名:" + session.getAttribute("loginName") + " 登录");
                 request.setAttribute("MSG", "登陆成功！");
+                //跳转到新的界面
                 request.getRequestDispatcher("./atb/javaWebDvd/display.jsp").forward(request, response);
             }else{
                 //输出登陆失败

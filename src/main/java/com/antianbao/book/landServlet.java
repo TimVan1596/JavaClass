@@ -19,11 +19,10 @@ public class landServlet extends HttpServlet {
         JDBC jdbcUtil = new JDBC();
         int jd = jdbcUtil.isReally(userName, userPassword);
         if(jd > 0){
-            HttpSession session = request.getSession();
-            //把用户数据保存在session域对象中
-            session.setAttribute("loginName", userName);
-            log4j.getInstance().getLogger()
-                    .debug("用户名:" + session.getAttribute("loginName") + " 登录");
+//            HttpSession session = request.getSession();
+//            //把用户数据保存在session域对象中
+//            session.setAttribute("loginName", userName);
+//            log4j.getInstance().getLogger().debug("用户名:" + session.getAttribute("loginName") + " 登录");
 
             request.setAttribute("MSG", "登陆成功！");
             //跳转到新的界面

@@ -1,9 +1,8 @@
-package com.antianbao.text.mybatis;
+package com.zhangmin.com.aiit.myBatis;
 
 import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.List;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -33,16 +32,15 @@ public class Main {
         // TODO Auto-generated method stub
         SqlSession session = sqlSessionFactory.openSession();
         try {
-            //sqlSessionFactory.getConfiguration().addMapper(IUser.class);
-            //Dept user = (Dept) session.selectOne( "com.yiibai.mybatis.models.UserMapper.getUserByID", 1);
+            //sqlSessionFactory.getConfiguration().addMapper(IStu.class);
+            //Student user = (Student) session.selectOne( "com.yiibai.mybatis.models.StuMapper.getStuByID", 1);
+             //更新用户
+            //testUpdate();
 
             // 用户数据列表
-            getUserList();
+//            getStuList();
             // 插入数据
-            // testInsert();
-
-            // 更新用户
-            //testUpdate();
+            testInsert();
 
             // 删除数据
             //testDelete();
@@ -60,23 +58,20 @@ public class Main {
             // 获取Session连接
             SqlSession session = sqlSessionFactory.openSession();
             // 获取Mapper
-            IUser userMapper = session.getMapper(IUser.class);
+            IStu stuMapper = session.getMapper(IStu.class);
             System.out.println("Test insert start...");
             // 执行插入
-            User user = new User();
-            user.setId(0);
-            user.setName("Google");
-            user.setDept("Tech");
-            user.setWebsite("http://www.google.com");
-            user.setPhone("120");
-            userMapper.insertUser(user);
+            Student stu = new Student();
+            stu.setStuId(666);
+            stu.setStuName("zhangsan");
+            stuMapper.insertStu(stu);
             // 提交事务
             session.commit();
 
-            // 显示插入之后User信息
-            System.out.println("After insert");
-            getUserList();
-            System.out.println("Test insert finished...");
+//            // 显示插入之后User信息
+//            System.out.println("After insert");
+//            getStuList();
+//            System.out.println("Test insert finished...");
         }
         catch (Exception e)
         {
@@ -85,13 +80,15 @@ public class Main {
     }
 
     // 获取用户列表
-    public static void getUserList() {
+    public static void getStuList() {
         try {
             SqlSession session = sqlSessionFactory.openSession();
-            IUser iuser = session.getMapper(IUser.class);
-            // 显示User信息
+//            IStu istu= session.getMapper(IStu.class);
+            Student student =  session.selectOne("getStuList");
+            session.commit();
+            // 显示stu信息
             System.out.println("Test Get start...");
-            printUsers(iuser.getUserList());
+            System.out.println(student.getStuName());
             System.out.println("Test Get finished...");
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,18 +100,18 @@ public class Main {
         try
         {
             SqlSession session = sqlSessionFactory.openSession();
-            IUser iuser = session.getMapper(IUser.class);
+            IStu istu = session.getMapper(IStu.class);
             System.out.println("Test update start...");
-            printUsers(iuser.getUserList());
+//            printUsers(ibook.getUserList());
             // 执行更新
-            User user = iuser.getUser(1);
-            user.setName("New name");
-            iuser.updateUser(user);
+            Student student = istu.getStu(2);
+            student.setStuName("Lucy");
+            istu.updateStu(student);
             // 提交事务
             session.commit();
             // 显示更新之后User信息
             System.out.println("After update");
-            printUsers(iuser.getUserList());
+            printStu(istu.getStuList());
             System.out.println("Test update finished...");
         }catch (Exception e)
         {
@@ -128,18 +125,18 @@ public class Main {
         try
         {
             SqlSession session = sqlSessionFactory.openSession();
-            IUser iuser = session.getMapper(IUser.class);
+            IStu istu = session.getMapper(IStu.class);
             System.out.println("Test delete start...");
             // 显示删除之前User信息
             System.out.println("Before delete");
-            printUsers(iuser.getUserList());
+            printStu(istu.getStuList());
             // 执行删除
-            iuser.deleteUser(2);
+            istu.deleteStu(22);
             // 提交事务
             session.commit();
             // 显示删除之后User信息
             System.out.println("After delete");
-            printUsers(iuser.getUserList());
+//            printStu(ibook.getStuList());
             System.out.println("Test delete finished...");
         }catch (Exception e)
         {
@@ -151,18 +148,16 @@ public class Main {
      *
      * 打印用户信息到控制台
      *
-     * @param users
+     * @param students
      */
-    private static void printUsers(final List<User> users) {
+    private static void printStu(final List<Student> students) {
         int count = 0;
 
-        for (User user : users) {
+        for (Student student : students) {
             System.out.println(MessageFormat.format(
-                    "============= Dept[{0}]=================", ++count));
-            System.out.println("Dept Id: " + user.getId());
-            System.out.println("Dept Name: " + user.getName());
-            System.out.println("Dept Dept: " + user.getDept());
-            System.out.println("Dept Website: " + user.getWebsite());
+                    "============= Student[{0}]=================", ++count));
+            System.out.println("学号: " + student.getStuId());
+            System.out.println("姓名: " + student.getStuId());
         }
     }
 }

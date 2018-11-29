@@ -14,9 +14,15 @@
     <title>管理数据</title>
 </head>
 <body>
-<h3 class="name" style="margin-left: 3px">欢迎你:<%=session.getAttribute("loginName")%></h3>
+<div align='center'>
+    <form action='./search.jsp' method='post'>
+        <h4 >搜关键字：<input type='text' title="序号书名库存" name='search' style="width: 150px; height: 30px"/>
+            <input type='submit' value='搜索' style="width: 50px; height: 30px"/>
+        </h4>
+    </form>
+</div>
 <form action='' method='post'>
-    <table border="1" width="750">
+    <table border="1" width="750" align = "center">
         <tr>
             <th>选择</th>
             <th>序号</th>
@@ -57,37 +63,37 @@
         %>
         <tr>
             <td colspan = '4' align="right">
-                <a href = './webTestLogin.do?page=1'>首页</a>
+                <a href = '../../webTestLogin.do?page=1'>首页</a>
                 <%
                     if(page1 == 1){
                 %>
-                <a href = './webTestLogin.do?page=1'>上一页</a>
+                <a href = '../../webTestLogin.do?page=1'>上一页</a>
                 <%
                 }else{
                 %>
-                <a href = './webTestLogin.do?page=<%= page1-1%>'>上一页</a>
+                <a href = '../../webTestLogin.do?page=<%= page1-1%>'>上一页</a>
                 <%
                     }
                 %>
                 <%
                     for(int i=1;i<pages+1;i++){
                 %>
-                <a href = './webTestLogin.do?page=<%= i %>'><%= i %></a>
+                <a href = '../../webTestLogin.do?page=<%= i %>'><%= i %></a>
                 <%
                     }
                 %>
                 <%
                     if(page1 == pages){
                 %>
-                <a href = './webTestLogin.do?page=<%= pages%>'>下一页</a>
+                <a href = '../../webTestLogin.do?page=<%= pages%>'>下一页</a>
                 <%
                 }else{
                 %>
-                <a href = './webTestLogin.do?page=<%= page1+1%>'>下一页</a>
+                <a href = '../../webTestLogin.do?page=<%= page1+1%>'>下一页</a>
                 <%
                     }
                 %>
-                <a href = './webTestLogin.do?page=<%= pages%>'>尾页</a>
+                <a href = '../../webTestLogin.do?page=<%= pages%>'>尾页</a>
             </td>
         </tr>
     </table>
