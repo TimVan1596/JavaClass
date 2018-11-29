@@ -1,4 +1,4 @@
-package com.zhangmin.com.aiit;
+package com.zhangmin.com.aiit.test;
 
 public class sss {
     public static void replaceSpace(StringBuffer str) {

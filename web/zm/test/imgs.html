@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+</head>
+<body>
+<div class="box">
+    <ul id="gallary">
+        <li>
+            <a href="./img/1.png" title="OPPO R11s">
+                <img src="./img/1.png" alt="" style="height: 100px;width: 100px">
+            </a>
+        </li>
+        <li>
+            <a href="./img/2.jpg" title="OPPOphone">
+                <img src="./img/2.jpg" alt="" style="height: 100px;width: 100px">
+            </a>
+        </li>
+        <li>
+            <a href="./img/3.jpg" title="京东">
+                <img src="./img/3.jpg" alt="" style="height: 100px;width: 100px">
+            </a>
+        </li>
+    </ul>
+    <div style="clear: both;"></div>
+    <img src="" alt="" class="show" id="ima">
+    <p id="inf" style="text-align: center;">图片展示</p>
+</div>
+
+<script>
+    var alA=document.getElementById("gallary").getElementsByTagName("a");
+    for(var i=0;i<alA.length;i++){
+        alA[i].onclick=function(){
+            document.getElementById("ima").src=this.href;
+            document.getElementById("inf").innerText=this.title;
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
