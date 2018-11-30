@@ -135,11 +135,12 @@ public class JDBC {
      * 查询数据
      * @return
      */
-    public List<attendance> findPage(int page,int limit,String no,String name){
+    public List<attendance> findPage(int page,int limit,String no,String name,String entranceStart,String entranceEnd){
         List<attendance> list = new ArrayList<>();
         conn=getConn();
         String sql = "SELECT *FROM timesheets " +
-                "WHERE no like '%"+no+"%' AND name like '%"+name+"%'" +
+                "WHERE no like '%"+no+"%' AND name like '%"+name+"%' " +
+                "AND time > '"+entranceStart+"' AND time < '"+entranceEnd+"' " +
                 "LIMIT "+(page-1)*limit+","+limit+"";
         try {
             pstmt = conn.prepareStatement(sql);
@@ -166,11 +167,12 @@ public class JDBC {
      * 查询数据总数
      * @return
      */
-    public int findCountPage(String no,String name){
+    public int findCountPage(String no,String name,String entranceStart,String entranceEnd){
         int count = 0;
         conn=getConn();
         String sql = "select count(*) from timesheets " +
-                "WHERE no like '%"+no+"%' AND name like '%"+name+"%'";
+                "WHERE no like '%"+no+"%' AND name like '%"+name+"%' " +
+                "AND time > '"+entranceStart+"' AND time < '"+entranceEnd+"' ";
         try {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();

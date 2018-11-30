@@ -8,22 +8,43 @@
     <link rel="stylesheet" href="/common/util/layui/css/layui.css">
 </head>
 <body>
-<div class="demoTable">
-    学号：
-    <div class="layui-inline">
-        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+<div class="layui-form-item">
+    <div class="demoTable">
+        <div class="layui-inline">
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input class="layui-input" name="id" id="demoName" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">入学日期</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="demoDate" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn" data-type="reload">搜索</button>
+        </div>
     </div>
-    姓名：
-    <div class="layui-inline">
-        <input class="layui-input" name="id" id="demoName" autocomplete="off">
-    </div>
-    <button class="layui-btn" data-type="reload">搜索</button>
 </div>
 <!--表格-->
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','laydate'], function(){
         var table = layui.table;
+        var laydate = layui.laydate;
+        //日期范围
+        laydate.render({
+            elem: '#demoDate'
+            ,range: true
+        });
+
         //展示已知数据
         table.render({
             elem: '#test'
@@ -49,19 +70,18 @@
             reload: function(){
                 var demoReload = $('#demoReload');
                 var demoName = $('#demoName');
+                var demoDate = $('#demoDate');
                 //执行重载
                 table.reload('testReload', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                     ,where: {
-                        no: {
+                        key: {
                             //搜索学号参数no[no]
-                            no: demoReload.val()
-                        },
-                        name: {
-                            //搜索学号参数name[name]
-                            name: demoName.val()
+                            no: demoReload.val(),
+                            name: demoName.val(),
+                            date: demoDate.val()
                         }
                     }
                 });

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,27 +29,47 @@ public class Servlet extends HttpServlet {
         //接受传过来每页几行数据
         int limit = Integer.parseInt(request.getParameter("limit"));
         //接受需要搜索数据
-        String no = request.getParameter("no[no]");
-        String name = request.getParameter("name[name]");
+        String no = request.getParameter("key[no]");
+        String name = request.getParameter("key[name]");
+        String date = request.getParameter("key[date]");
+        // 获取入学日期范围
+        String[] temp,day = new String[2];
+        // 指定分割字符
+        String symbol = " - ";
+        if(date != null){
+            // 分割字符串
+            temp = date.split(symbol);
+            // 普通 for 循环
+            for(int i =0; i < temp.length ; i++){
+                day[i] = temp[i];
+            }
+        }
+        // 获取时间
+        Date day1 = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        // 查询数据前判断
         if(no == null){
             no="";
         }
         if(name == null){
             name="";
         }
-        //阿里巴巴druid连接数据库
+        if(day[0] == null || day[1] == null){
+            day[0] = "2010-1-1";
+            day[1] = df.format(day1);
+        }
+        // 阿里巴巴druid连接数据库
         JDBC jdbc = new JDBC();
-        //遍历结果集
-//        List<attendance> att = jdbc.find(page,limit);
-        List<attendance> att = jdbc.findPage(page,limit,no,name);
+        // 遍历结果集
+        List<attendance> att = jdbc.findPage(page,limit,no,name,day[0],day[1]);
         Map<String, Object> mjs = new HashMap<String, Object>();
         mjs.put("code",0);
         mjs.put("msg","");
-//        mjs.put("count",jdbc.findCount());
-        mjs.put("count",jdbc.findCountPage(no,name));
+        mjs.put("count",jdbc.findCountPage(no,name,day[0],day[1]));
         mjs.put("data",att);
-        //把数据转化为json格式
+        // 把数据转化为json格式
         String Json = JSON.toJSONString(mjs);
+        System.out.println(Json);
         response.getWriter().write(Json);
     }
 }
