@@ -1,6 +1,8 @@
-package com.antianbao.text.day3;
+package com.antianbao.javaWebDvdLayui.servlet;
 
 import com.alibaba.fastjson.JSON;
+import com.antianbao.javaWebDvdLayui.table.Dvd;
+import com.antianbao.javaWebDvdLayui.tool.JDBC;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(name = "managementServlet",urlPatterns = {"/atb/attendance.do"})
-public class Servlet extends HttpServlet {
+@WebServlet(name = "managementServlet",urlPatterns = {"/atb/management.do"})
+public class managementServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码
         //request.setCharacterEncoding("utf-8");
@@ -61,7 +63,7 @@ public class Servlet extends HttpServlet {
         // 阿里巴巴druid连接数据库
         JDBC jdbc = new JDBC();
         // 遍历结果集
-        List<attendance> att = jdbc.findPage(page,limit,no,name,day[0],day[1]);
+        List<Dvd> att = jdbc.findPage(page,limit,no,name,day[0],day[1]);
         Map<String, Object> mjs = new HashMap<String, Object>();
         mjs.put("code",0);
         mjs.put("msg","");
@@ -69,7 +71,6 @@ public class Servlet extends HttpServlet {
         mjs.put("data",att);
         // 把数据转化为json格式
         String Json = JSON.toJSONString(mjs);
-        System.out.println(Json);
         response.getWriter().write(Json);
     }
 }

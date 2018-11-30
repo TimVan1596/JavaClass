@@ -8,18 +8,43 @@
     <link rel="stylesheet" href="/common/util/layui/css/layui.css">
 </head>
 <body>
-<div class="demoTable">
-    搜索ID：
-    <div class="layui-inline">
-        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+<div class="layui-form-item">
+    <div class="demoTable">
+        <div class="layui-inline">
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input class="layui-input" name="id" id="demoName" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">入学日期</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="demoDate" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn" data-type="reload">搜索</button>
+        </div>
     </div>
-    <button class="layui-btn" data-type="reload">搜索</button>
 </div>
 <!--表格-->
 <table class="layui-hide" id="test" lay-filter="test"></table>
 <script>
-    layui.use('table', function(){
+    layui.use(['table','laydate'], function(){
         var table = layui.table;
+        var laydate = layui.laydate;
+        //日期范围
+        laydate.render({
+            elem: '#demoDate'
+            ,range: true
+        });
+
         //展示已知数据
         table.render({
             elem: '#test'
@@ -29,21 +54,23 @@
             ,page: true
             ,cols: [[ //标题栏
                 {checkbox: true, fixed: true}
-                ,{field:'no', title:'学号', width:120}
-                ,{field:'name', title:'姓名', width:150}
-                ,{field:'time', title:'入学时间', width:200}
-                ,{field:'state', title:'考勤情况', width:180}
-                ,{field:'note', title:'备注', width:180}
-                ,{field:'date', title:'考勤日期', width:200, sort: true}
+                ,{field:'no', title:'学号'}
+                ,{field:'name', title:'姓名'}
+                ,{field:'time', title:'入学时间'}
+                ,{field:'state', title:'考勤情况'}
+                ,{field:'note', title:'备注'}
+                ,{field:'date', title:'考勤日期', sort: true}
             ]]
             ,even: true
             ,id: 'testReload'
         });
 
+        //搜索
         var $ = layui.$, active = {
             reload: function(){
                 var demoReload = $('#demoReload');
-
+                var demoName = $('#demoName');
+                var demoDate = $('#demoDate');
                 //执行重载
                 table.reload('testReload', {
                     page: {
@@ -51,7 +78,10 @@
                     }
                     ,where: {
                         key: {
-                            no: demoReload.val()
+                            //搜索学号参数no[no]
+                            no: demoReload.val(),
+                            name: demoName.val(),
+                            date: demoDate.val()
                         }
                     }
                 });

@@ -1,7 +1,8 @@
-package com.antianbao.text.day3;
+package com.antianbao.javaWebDvdLayui.tool;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.antianbao.javaWebDvdLayui.table.Dvd;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +33,7 @@ public class JDBC {
 
         try {
             properties.load(JDBC.class.getClassLoader()
-                    .getResourceAsStream("atbTest.properties"));
+                    .getResourceAsStream("atbdb.properties"));
             druidDataSource = (DruidDataSource) DruidDataSourceFactory
                     .createDataSource(properties);
         } catch (Exception e) {
@@ -71,89 +72,27 @@ public class JDBC {
     }
 
     /**
-     * 添加
-     */
-    public int addStu(attendance stu) {
-        int rlt = 0;
-        conn=getConn();
-        String sql = "insert into User(email,password) values(?,?)";
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, stu.getNo());
-            pstmt.setString(2, stu.getName());
-            rlt = pstmt.executeUpdate();
-            close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return rlt;
-    }
-
-    /**
-     * 修改
-     */
-    public int updateStu(String name, String password) {
-        int rlt = 0;
-        conn=getConn();
-        try {
-            String sql = "update user SET password = ? where email = ?";
-            pstmt = conn.prepareStatement(sql);
-            Object[] params = {password, name};
-            for (int i = 1; i <= params.length; i++) {
-                pstmt.setObject(i, params[i - 1]);
-            }
-            rlt = pstmt.executeUpdate();
-            close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return rlt;
-    }
-
-    /**
-     * 删除
-     */
-    public int deleteDvd(int no) {
-        int rlt = 0;
-        conn=getConn();
-        try {
-            String sql = "DELETE FROM dvd where no = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setObject(1, no);
-            rlt = pstmt.executeUpdate();
-            close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return rlt;
-    }
-
-    /**
      * 查询数据
      * @return
      */
-    public List<attendance> findPage(int page,int limit,String no,String name,String entranceStart,String entranceEnd){
-        List<attendance> list = new ArrayList<>();
+    public List<Dvd> findPage(int page, int limit, String no, String name, String entranceStart, String entranceEnd){
+        List<Dvd> list = new ArrayList<>();
         conn=getConn();
-        String sql = "SELECT *FROM timesheets " +
+        String sql = "SELECT *FROM dvd " +
                 "WHERE no like '%"+no+"%' AND name like '%"+name+"%' " +
-                "AND time > '"+entranceStart+"' AND time < '"+entranceEnd+"' " +
+//                "AND time > '"+entranceStart+"' AND time < '"+entranceEnd+"' " +
                 "LIMIT "+(page-1)*limit+","+limit+"";
         try {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
-            attendance bd;
+            Dvd bd;
             while (rs.next()) {
-                bd = new attendance();
+                bd = new Dvd();
                 bd.setNo(rs.getInt("no"));
+                bd.setImage(rs.getString("image"));
                 bd.setName(rs.getString("name"));
-                bd.setTime(rs.getString("time"));
-                bd.setState(rs.getString("state"));
-                bd.setNote(rs.getString("note"));
-                bd.setDate(rs.getString("date"));
+                bd.setState(rs.getInt("state"));
+                bd.setBorrow(rs.getInt("borrow"));
                 list.add(bd);
             }
             close();
@@ -170,9 +109,10 @@ public class JDBC {
     public int findCountPage(String no,String name,String entranceStart,String entranceEnd){
         int count = 0;
         conn=getConn();
-        String sql = "select count(*) from timesheets " +
-                "WHERE no like '%"+no+"%' AND name like '%"+name+"%' " +
-                "AND time > '"+entranceStart+"' AND time < '"+entranceEnd+"' ";
+        String sql = "select count(*) from dvd " +
+                "WHERE no like '%"+no+"%' AND name like '%"+name+"%' "
+//                + "AND time > '"+entranceStart+"' AND time < '"+entranceEnd+"' "
+                ;
         try {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
