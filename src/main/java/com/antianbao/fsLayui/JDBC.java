@@ -1,62 +1,76 @@
 package com.antianbao.fsLayui;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.pool.DruidDataSourceFactory;
+import java.io.*;
+import java.sql.*;
+import java.util.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-/**
- * @author 安天宝
- * JAVA一班
- * 11月26日
- * Properties储存数据
- * 阿里巴巴连接池druid链接数据库
- */
-public class fsLayuiJDBC {
-
-    private DruidDataSource druidDataSource = null;
+public class JDBC {
+    /**
+     * 关系：PreparedStatement继承自Statement,都是接口
+     * 区别：PreparedStatement可以使用占位符，是预编译的，批处理比Statement效率高
+     */
     private Connection conn = null;
     private PreparedStatement pstmt = null;
+    private Statement stmt = null;
     private ResultSet rs = null;
 
     /**
-     *获取数据库连接
-     * @return
+     * 获得数据库连接对象Connection
      */
-    public Connection getConn(){
+    private void openConnection() {
         //初始化数据库连接配置
-        Properties properties = new Properties();
-        //获取数据库连接
+        Properties properties=new Properties();
+        InputStream in = JDBC.class.getClassLoader().getResourceAsStream("atbTest.properties");
+        //读取db.properties
         try {
-            properties.load(fsLayuiJDBC.class.getClassLoader()
-                    .getResourceAsStream("atbTest.properties"));
-            druidDataSource = (DruidDataSource) DruidDataSourceFactory
-                    .createDataSource(properties);
-            return druidDataSource.getConnection();
-        } catch (Exception e) {
+            properties.load(in);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        //赋值
+        String url = properties.getProperty("url");
+        String username = properties.getProperty("username");
+        String password = properties.getProperty("password");
+        String driverClassName = properties.getProperty("driverClassName");
+        try {
+            // 用来检查给定的类名存不存在
+            Class.forName(driverClassName);
+        } catch (ClassNotFoundException e) {
+            System.out.println("驱动不存在，请添加驱动包！");
+        }
+        try {
+            conn = DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * 获得PreparedStatement
+     */
+    private PreparedStatement getPrepareStatement(String sql) {
+        openConnection();
+        try {
+            pstmt = conn.prepareStatement(sql);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pstmt;
+    }
     /**
      * 释放资源
      */
     public void close() {
         try {
-            if (pstmt != null && !pstmt.isClosed()) {
-                pstmt.close();
-            }
             if (conn != null && !conn.isClosed()) {
                 conn.close();
             }
-            druidDataSource.close();
+            if (stmt != null && !stmt.isClosed()) {
+                stmt.close();
+            }
+            if (pstmt != null && !pstmt.isClosed()) {
+                pstmt.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,23 +83,22 @@ public class fsLayuiJDBC {
     public List<fsLayuiUser> findPage(int page, int limit, String id, String name
             , String birthdayStart, String birthdayEnd,String field,String order){
         List<fsLayuiUser> list = new ArrayList<>();
-        conn=getConn();
         String sql = "SELECT *FROM fsLayuiUser " +
                 "WHERE id like '%"+id+"%' AND name like '%"+name+"%' " +
                 "AND birthday > '"+birthdayStart+"' AND birthday < '"+birthdayEnd+"' " +
                 "ORDER BY "+field+" "+order+" " +
                 "LIMIT "+(page-1)*limit+","+limit+"";
+        PreparedStatement pstat = getPrepareStatement(sql);
         try {
-            pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery();
+            rs = pstat.executeQuery();
             fsLayuiUser bd;
             while (rs.next()) {
                 bd = new fsLayuiUser();
                 bd.setId(rs.getInt("id"));
                 bd.setName(rs.getString("name"));
                 bd.setSex(rs.getString("sex"));
-                bd.setType(rs.getString("type"));
                 bd.setAreal(rs.getString("areal"));
+                bd.setType(rs.getString("type"));
                 bd.setCity(rs.getString("city"));
                 bd.setProvince(rs.getString("province"));
                 bd.setBirthday(rs.getString("birthday"));
@@ -105,13 +118,11 @@ public class fsLayuiJDBC {
      */
     public int findCountPage(String id,String name,String birthdayStart,String birthdayEnd){
         int count = 0;
-        conn=getConn();
         String sql = "select count(*) from fsLayuiUser " +
                 "WHERE id like '%"+id+"%' AND name like '%"+name+"%' "
-                + "AND birthday > '"+birthdayStart+"' AND birthday < '"+birthdayEnd+"' "
-                ;
+                + "AND birthday > '"+birthdayStart+"' AND birthday < '"+birthdayEnd+"' ";
+        PreparedStatement pstmt = getPrepareStatement(sql);
         try {
-            pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
             if (rs.next()){
                 count = rs.getInt(1);

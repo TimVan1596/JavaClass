@@ -60,14 +60,20 @@ public class fsLayuiDisplayServlet extends HttpServlet {
         if(order == null){
             order = "asc";
         }
+
         // 阿里巴巴druid连接数据库
         fsLayuiJDBC jdbc = new fsLayuiJDBC();
         // 遍历结果集 和 数据总数
-//        List<fsLayuiUser> user = jdbc.test();
-//        int totalNum = jdbc.countTest();
         List<fsLayuiUser> user = jdbc.findPage(pageNum,pageSize
                 ,id,name,day[0],day[1],field,order);
         int totalNum = jdbc.findCountPage(id,name,day[0],day[1]);
+
+//        // 链接数据库
+//        JDBC jdbc1 = new JDBC();
+//        List<fsLayuiUser> user = jdbc1.findPage(pageNum,pageSize
+//                ,id,name,day[0],day[1],field,order);
+//        int totalNum = jdbc1.findCountPage(id,name,day[0],day[1]);
+
 
         Map<String, Object> ret = new HashMap<>(1);
         ret.put("errorNo", 0);
