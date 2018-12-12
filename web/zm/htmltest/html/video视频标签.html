@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>video多媒体标签</title>
+</head>
+<body>
+<!--第一种格式-->
+<video src="" autoplay="autoplay" controls="controls" poster="img/3.jpg"></video>
+<!--第二种格式
+兼容浏览器不能播放，显示多种格式可以支持播放-->
+<video autoplay="autoplay">
+<source>
+    <source src="img/1.webm" type="video/webm"></source>
+    <source src="img/1.mp4" type="video/mp4"></source>
+    <source src="img/1.ogg" type="video/ogg"></source>
+</video>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form表单学习</title>
+</head>
+<body>
+<!--表单练习-->
+<form action="http://www.baidu.com" align="center" method="get">
+    <!--label标签将文字与输入框进行绑定-->
+    <!--以下俩种格式效果一样，for和id元素要值一样，for和谁的id一样就可以绑定谁的输入框-->
+    <label> 账号：<input type="text" name="账号"><br></label>
+    <label for="pwd"> 密码：</label><input type="password" id="pwd"><br>
+    性别：
+    男<input type="radio" name="sex" checked="checked">
+    女<input type="radio" name="sex"><br>
+    <lable>爱好：
+    篮球<input type="checkbox" checked="checked">
+    排球<input type="checkbox">
+    羽毛球<input type="checkbox"><br></lable>
+    <input type="submit" value="确定">
+    <input type="reset">
+    <input type="button" name="button" value="按钮"><br>
+    <input type="image" src="img/2.jpg" height="25px">
+    <input type="color" name="color"><br>
+</form>
+</body>
+</html>

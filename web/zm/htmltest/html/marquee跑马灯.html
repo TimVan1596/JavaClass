@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>marquee标签</title>
+    <style>
+        marquee{
+            width: 200px;
+            height: 200px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+<!--这是没有被公认的一个标签但几乎所有浏览器都支持使用-->
+<marquee>跑马灯</marquee>
+<!--设置滚定方向-->
+<marquee direction="up" >666</marquee>
+<marquee direction="down">777</marquee>
+<marquee direction="right">66</marquee>
+<marquee direction="left">6666</marquee>
+<hr>
+<!--设置滚动速度-->
+<marquee scrollamount="1">6666</marquee>
+<marquee scrollamount="100">6666</marquee>
+<hr>
+<!--设置滚动次数,默认值是-1-->
+<marquee loop="1">6666</marquee>
+<marquee loop="2">6666</marquee>
+<hr>
+<!--设置滚动类型,silde:滚动到边界就停止；alternate:滚动到边界后弹回-->
+<marquee behavior="slide">6666</marquee>
+<marquee behavior="alternate">6666</marquee>
+</body>
+</html>
