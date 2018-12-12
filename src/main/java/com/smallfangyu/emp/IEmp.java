@@ -21,12 +21,14 @@ public interface IEmp {
      */
     public void updateEmp(Emp emp);
 
+    public void updateAllEmp(Emp emp);
     /**
      * 查询所有员工
      * @return
      */
     public List<Emp> selectEmp();
 
+    public List<Emp> selectEmpBy(Emp emp);
     /**
      * 连表查询所有员工
      * @return

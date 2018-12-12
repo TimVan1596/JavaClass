@@ -1,5 +1,7 @@
 package com.smallfangyu.emp;
 
+import java.util.List;
+
 public interface IDepartment {
 
     /**
@@ -8,4 +10,7 @@ public interface IDepartment {
      */
     public void addDepartment(Department depart);
 
+    public int selectDname(String dname);
+
+    public List<Department> selectDepartmentAndEmp();
 }

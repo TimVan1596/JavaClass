@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理DVD</title>
+    <!--layui引用-->
+    <script src="/common/util/layui/layui.js"></script>
+    <link rel="stylesheet" href="/common/util/layui/css/layui.css">
+</head>
+<body>
+<!--搜索栏-->
+<div class="layui-form-item">
+    <div class="demoTable">
+        <div class="layui-inline">
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">书名</label>
+            <div class="layui-input-inline" style="width: 100px;">
+                <input class="layui-input" name="id" id="demoName" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">入学日期</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="demoDate" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn" data-type="reload">
+                <i class="layui-icon">&#xe615;</i>查询
+            </button>
+        </div>
+    </div>
+</div>
+<!--表格-->
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<!--行工具栏-->
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="detail">借出</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail">归还</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    layui.use(['table','laydate'], function(){
+        var table = layui.table;
+        var laydate = layui.laydate;
+
+        //日期范围
+        laydate.render({
+            elem: '#demoDate'
+            ,range: true
+        });
+
+        //展示已知数据
+        table.render({
+            elem: '#test'
+            ,cellMinWidth: 80
+            ,url:'/atb/management.do'
+            ,page: true
+            ,toolbar: 'default'
+            ,cols: [[ //标题栏
+                {type:'numbers', title:'#', fixed: 'left'}
+                ,{type: 'checkbox', fixed: 'left'}
+                ,{field:'no', title:'学号', width: 80, sort: true}
+                ,{field:'image', title:'图片'}
+                ,{field:'name', title:'书名'}
+                ,{field:'state', title:'总数'}
+                ,{field:'borrow', title:'借出'}
+                ,{field:'time', title:'入库日期'}
+                ,{fixed:'right', title:'操作', width: 220, align:'center', toolbar: '#barDemo'}
+            ]]
+            ,even: true
+            ,id: 'testReload'
+        });
+
+        //监听头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data; //获取选中的数据
+            switch(obj.event){
+                case 'add':
+                    layer.msg('添加');
+                    break;
+                case 'update':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时编辑一个');
+                    } else {
+                        layer.alert('编辑 [id]：'+ checkStatus.data[0].no);
+                    }
+                    break;
+                case 'delete':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.msg('删除');
+                    }
+                    break;
+            }
+        });
+
+        //监听行工具事件
+        //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.on('tool(test)', function(obj){
+            //获得当前行数据
+            //获得 lay-event 对应的值
+            var data = obj.data
+                ,layEvent = obj.event;
+            if(layEvent === 'detail'){
+                layer.msg('查看操作');
+            } else if(layEvent === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    //删除对应行（tr）的DOM结构
+                    obj.del();
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+            } else if(layEvent === 'edit'){
+                layer.msg('编辑操作');
+            }
+        });
+
+        //搜索
+        var $ = layui.$, active = {
+            reload: function(){
+                var demoReload = $('#demoReload');
+                var demoName = $('#demoName');
+                var demoDate = $('#demoDate');
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        //重新从第 1 页开始
+                        curr: 1
+                    }
+                    ,where: {
+                        key: {
+                            //搜索学号参数no[no]
+                            no: demoReload.val(),
+                            name: demoName.val(),
+                            date: demoDate.val()
+                        }
+                    }
+                });
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>
+</body>
+</html>
