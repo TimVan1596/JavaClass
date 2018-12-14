@@ -18,6 +18,10 @@
           <option name="url" value="https://gitee.com/iartisan/iartisan-admin-template.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://gitee.com/Tim_Van/WeHelp-admin.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="E:\JAVA\项目" />
