@@ -4,6 +4,7 @@
       <mapping pattern="history" type="PLAIN_TEXT" />
       <mapping pattern="medals" type="PLAIN_TEXT" />
       <mapping pattern="user" type="PLAIN_TEXT" />
+      <mapping ext="ini" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
