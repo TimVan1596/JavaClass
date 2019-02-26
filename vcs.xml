@@ -30,6 +30,10 @@
           <option name="url" value="https://gitee.com/qrne0607/javaqq.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/VingeDai/SpringTransactionDemo.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="E:\JAVA\项目" />
