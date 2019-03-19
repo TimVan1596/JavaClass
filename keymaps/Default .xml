@@ -1,0 +1,7 @@
+<keymap version="1" name="Default 复制" parent="$default">
+  <action id="IntroduceField" />
+  <action id="IntroduceProperty" />
+  <action id="SearchEverywhere">
+    <keyboard-shortcut first-keystroke="ctrl alt f" />
+  </action>
+</keymap>
