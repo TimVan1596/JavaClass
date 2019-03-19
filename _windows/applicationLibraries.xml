@@ -12,6 +12,18 @@
       <JAVADOC />
       <SOURCES />
     </library>
+    <library name="echarts-en.common" type="javaScript">
+      <properties>
+        <sourceFilesUrls>
+          <item url="file://$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_cdnjs.cloudflare.com_ajax_libs_echarts_4.1.0_echarts-en.common.js" />
+        </sourceFilesUrls>
+      </properties>
+      <CLASSES>
+        <root url="file://$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_cdnjs.cloudflare.com_ajax_libs_echarts_4.1.0_echarts-en.common.js" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="jquery" type="javaScript">
       <properties>
         <sourceFilesUrls>
