@@ -16,10 +16,6 @@ import java.util.Map;
 
 @WebServlet(name = "managementServlet",urlPatterns = {"/atb/attendance.do"})
 public class Servlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //post解决中文乱码
-        //request.setCharacterEncoding("utf-8");
-    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //get解决中文乱码

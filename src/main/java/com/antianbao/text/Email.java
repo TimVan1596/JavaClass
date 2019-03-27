@@ -18,7 +18,7 @@ public class Email {
             email.setAuthentication("32336077@qq.com", "lhddogtibsurcbcc");
             //此处填写邮件名，邮件名可任意填写
             email.setSubject("管理员");
-            //此处填写邮件内容
+            //此处填写邮件内容（随机四位数）
             int Code = (int)((Math.random()*9+1)*1000);
             email.setMsg("尊敬的用户您好,您本次注册的验证码是:" + Code);
             email.send();

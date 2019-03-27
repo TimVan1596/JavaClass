@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评论列表页面</title>
+    <link rel="stylesheet" href="/common/util/layui/css/layui.css">
+    <script src="/common/util/layui/layui.js"></script>
+</head>
+<style type="text/css">
+    .comment_list {
+        padding-top: 40px;
+        width: 700px;
+        margin: 0 auto;
+    }
+
+    .comment_details {
+        float: left;
+    }
+
+    .comment_content {
+        margin-top: 10px;
+        font-size: 16px;
+    }
+
+    .comment_add_or_last {
+
+        margin: 0 auto;
+        clear: both;
+        width: 600px;
+        height: 40px;
+        background: #F0F0F0;
+        text-align: center;
+        line-height: 40px;
+    / / 行高（与div保持同高，垂直居中写法）
+    }
+
+    .imgdiv {
+        float: left;
+
+    }
+
+    .imgcss {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    .comment_name {
+        margin-left: 10px;
+        color: #3D9EEA;
+        font-size: 15px;
+        font-weight: bolder;
+    }
+
+    .layui-icon {
+        font-size: 10px;
+        color: grey;
+    }
+
+    .del {
+        margin-left: 55px;
+    }
+</style>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <input type="checkbox" name="zzz" lay-skin="switch" lay-filter="switchTest" lay-text="开启|关闭">
+        </div>
+    </div>
+</form>
+</body>
+<!--<script>-->
+    <!--// 监听是否完成-->
+    <!--form.on('switch(switchTest)', function (edit) {-->
+        <!--console.log(1);-->
+        <!--// 监听是否是状态开关-->
+        <!--table.on('tool(repairList)', function (obj) {-->
+            <!--let layEvent = obj.event;-->
+            <!--console.log(2);-->
+            <!--// 监听行单击事件（单击事件为：rowDouble）-->
+            <!--table.on('row(repairList)', function (obj1) {-->
+                <!--console.log(3);-->
+                <!--let data = obj1.data;-->
+                <!--// 开关是否开启，true或者false-->
+                <!--let x = edit.elem.checked;-->
+                <!--if (layEvent === 'switchTest') {-->
+                    <!--console.log(4);-->
+                    <!--layer.open({-->
+                        <!--content: '是否确定进行此操作？'-->
+                        <!--, btn: ['确定', '取消']-->
+                        <!--, yes: function (index, layero) {-->
+                            <!--edit.elem.checked = x;-->
+                            <!--// $.post('/admin/answer/switchTest', {-->
+                            <!--//     id: data.id,-->
+                            <!--//     solved: edit.elem.checked // 是否完成-->
+                            <!--// }, function (res) {-->
+                            <!--//     // 解析res-->
+                            <!--//     res = eval("(" + res + ")");-->
+                            <!--//     let rlt = res['rlt'];-->
+                            <!--//     if (rlt !== 1) {-->
+                            <!--//         top.layer.msg('操作失败');-->
+                            <!--//     } else {-->
+                            <!--//         top.layer.msg("状态修改成功！");-->
+                            <!--//     }-->
+                            <!--// });-->
+                            <!--form.render();-->
+                            <!--layer.close(index);-->
+                            <!--//按钮【按钮一】的回调-->
+                        <!--}-->
+                        <!--, btn2: function (index, layero) {-->
+                            <!--//按钮【按钮二】的回调-->
+                            <!--edit.elem.checked = !x;-->
+                            <!--form.render();-->
+                            <!--layer.close(index);-->
+                            <!--//return false 开启该代码可禁止点击该按钮关闭-->
+                        <!--}-->
+                        <!--, cancel: function () {-->
+                            <!--//右上角关闭回调-->
+                            <!--edit.elem.checked = !x;-->
+                            <!--form.render();-->
+                            <!--//return false 开启该代码可禁止点击该按钮关闭-->
+                        <!--}-->
+                    <!--});-->
+                <!--}-->
+            <!--});-->
+        <!--});-->
+        <!--return false;-->
+    <!--});-->
+<!--</script>-->
+<script>
+    //Demo
+    layui.use(['form', 'jquery', 'layer'], function () {
+        var form = layui.form;
+        var jquery = layui.jquery;
+        var layer = layui.layer;
+
+        //监听提交
+        form.on('switch(switchTest)', function (data) {
+            console.log(data.elem.checked); //开关是否开启，true或者false
+            var x = data.elem.checked;
+            layer.open({
+                content: 'test'
+                , btn: ['确定', '取消']
+                , yes: function (index, layero) {
+                    data.elem.checked = x;
+                    form.render();
+                    layer.close(index);
+                    //按钮【按钮一】的回调
+                }
+                , btn2: function (index, layero) {
+                    //按钮【按钮二】的回调
+                    data.elem.checked = !x;
+                    form.render();
+                    layer.close(index);
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                , cancel: function () {
+                    //右上角关闭回调
+                    data.elem.checked = !x;
+                    form.render();
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</html>

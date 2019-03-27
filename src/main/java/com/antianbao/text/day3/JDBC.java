@@ -26,7 +26,7 @@ public class JDBC {
     private ResultSet rs = null;
 
     //初始化JDBC-MySQL连接(只做一次)
-    static{
+    static {
         //初始化数据库连接配置
         Properties properties = new Properties();
 
@@ -41,10 +41,11 @@ public class JDBC {
     }
 
     /**
-     *获取数据库连接
+     * 获取数据库连接
+     *
      * @return
      */
-    public Connection getConn(){
+    public Connection getConn() {
         //获取数据库连接
         try {
             return druidDataSource.getConnection();
@@ -75,7 +76,7 @@ public class JDBC {
      */
     public int addStu(attendance stu) {
         int rlt = 0;
-        conn=getConn();
+        conn = getConn();
         String sql = "insert into User(email,password) values(?,?)";
         try {
             pstmt = conn.prepareStatement(sql);
@@ -95,7 +96,7 @@ public class JDBC {
      */
     public int updateStu(String name, String password) {
         int rlt = 0;
-        conn=getConn();
+        conn = getConn();
         try {
             String sql = "update user SET password = ? where email = ?";
             pstmt = conn.prepareStatement(sql);
@@ -117,7 +118,7 @@ public class JDBC {
      */
     public int deleteDvd(int no) {
         int rlt = 0;
-        conn=getConn();
+        conn = getConn();
         try {
             String sql = "DELETE FROM dvd where no = ?";
             pstmt = conn.prepareStatement(sql);
@@ -133,15 +134,16 @@ public class JDBC {
 
     /**
      * 查询数据
+     *
      * @return
      */
-    public List<attendance> findPage(int page,int limit,String no,String name,String entranceStart,String entranceEnd){
+    public List<attendance> findPage(int page, int limit, String no, String name, String entranceStart, String entranceEnd) {
         List<attendance> list = new ArrayList<>();
-        conn=getConn();
+        conn = getConn();
         String sql = "SELECT *FROM timesheets " +
-                "WHERE no like '%"+no+"%' AND name like '%"+name+"%' " +
-                "AND time > '"+entranceStart+"' AND time < '"+entranceEnd+"' " +
-                "LIMIT "+(page-1)*limit+","+limit+"";
+                "WHERE no like '%" + no + "%' AND name like '%" + name + "%' " +
+                "AND time > '" + entranceStart + "' AND time < '" + entranceEnd + "' " +
+                "LIMIT " + (page - 1) * limit + "," + limit + "";
         try {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
@@ -165,18 +167,19 @@ public class JDBC {
 
     /**
      * 查询数据总数
+     *
      * @return
      */
-    public int findCountPage(String no,String name,String entranceStart,String entranceEnd){
+    public int findCountPage(String no, String name, String entranceStart, String entranceEnd) {
         int count = 0;
-        conn=getConn();
+        conn = getConn();
         String sql = "select count(*) from timesheets " +
-                "WHERE no like '%"+no+"%' AND name like '%"+name+"%' " +
-                "AND time > '"+entranceStart+"' AND time < '"+entranceEnd+"' ";
+                "WHERE no like '%" + no + "%' AND name like '%" + name + "%' " +
+                "AND time > '" + entranceStart + "' AND time < '" + entranceEnd + "' ";
         try {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 count = rs.getInt(1);
             }
             close();

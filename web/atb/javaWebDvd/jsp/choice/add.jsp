@@ -44,7 +44,7 @@
             <th><input type="file" name="file" style="text-align: center; width: 150px;"/></th>
         </tr>
         <tr>
-            <th colspan = '1'><a href = '../../../../atblogin.do'>返回</a></th>
+            <th colspan = '1'><a href = '../../../../atbDvdLogin.do'>返回</a></th>
             <th colspan = '1'><button type="submit" class="button">提交</button></th>
         </tr>
         <script type="text/javascript">

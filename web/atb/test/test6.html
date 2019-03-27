@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>动态简历-安天宝</title>
+    <!--layui引用-->
+    <script src="../../common/util/layui/layui.js"></script>
+    <link rel="stylesheet" href="../../common/util/layui/css/layui.css">
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+            form.on('submit(formDemo)', function (data) {
+
+            });
+        });
+    </script>
+</head>
+<body>
+<form class="layui-form">
+        
+    <div class="layui-form-item">
+                
+        <blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 分类目录</blockquote>
+        <div class="border category">
+            <div class="">
+                <p><input type="checkbox" name="news" title="新闻" lay-skin="primary"/></p>
+                <p><input type="checkbox" name="activity" title="活动" lay-skin="primary"/></p>
+                <p><input type="checkbox" name="technology" title="技术" lay-skin="primary"/></p>
+            </div>
+        </div>
+            
+    </div>
+        
+    <div class="layui-form-item">
+                
+        <div class="layui-input-block">
+                        
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                        
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    
+        </div>
+            
+    </div>
+    <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
+</form>
+<script>
+    layui.use(['form', 'layer', 'laydate', 'table', 'laytpl'], function () {
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery,
+            laydate = layui.laydate,
+            laytpl = layui.laytpl,
+            table = layui.table;
+
+        //批量删除
+        $(".delAll_btn").click(function () {
+                // layer.msg("请选择需要删除的内容");
+            layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问")
+        });
+
+    });
+</script>
+</body>
+</html>
