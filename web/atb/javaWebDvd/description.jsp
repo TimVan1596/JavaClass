@@ -62,7 +62,7 @@
 </div>
 <div align='center'>
     <ul>
-        <li><a href="./atblogin.do">管理数据</a></li>
+        <li><a href="./atbDvdLogin.do">管理数据</a></li>
         <li><a href="./atb/javaWebDvd/jsp/choice/data.jsp">借阅情况</a></li>
         <li><a href="./atbrevoke.do">历史数据</a></li>
         <li><a href="./atbuser.do">用户管理</a></li>

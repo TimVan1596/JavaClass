@@ -37,7 +37,7 @@
     <h2>DVD Mgr 6.0 管理系统</h2>
     <div class="login-top">
         <h1>欢迎登陆</h1>
-        <form action="../atblogin.do" method="post">
+        <form action="/atbDvdLogin.do" method="post">
             <input type="text" name="username" title="username" value="绑定邮箱"
                    onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '绑定邮箱';}" />
             <input type="text" name="userpassword" title="userpassword" value="输入密码" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')"

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "landServlet",urlPatterns = {"/webTestLogin.do"})
+@WebServlet(name = "atbLandServlet",urlPatterns = {"/webTestLogin.do"})
 public class landServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //post解决中文乱码

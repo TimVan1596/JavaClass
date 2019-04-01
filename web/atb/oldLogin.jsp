@@ -29,7 +29,7 @@
 <div align='center'>
     <h2>----欢迎进入DVD Mgr 6.0 管理系统----</h2>
 </div>
-<form action="../login.do" method="post">
+<form action="../atbDvdLogin.do" method="post">
     <table border="1" width="300" align="center">
         <tr>
             <th width=150px>账号：</th>
